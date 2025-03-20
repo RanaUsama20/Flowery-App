@@ -10,7 +10,7 @@ part of 'auth_retrofit_client.dart';
 
 class _AuthRetrofitClient implements AuthRetrofitClient {
   _AuthRetrofitClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://exam.elevateegy.com/api/v1/';
+    baseUrl ??= 'https://flower.elevateegy.com/api/v1/';
   }
 
   final Dio _dio;

@@ -13,8 +13,8 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:flowery_app/core/logger/logger_module.dart' as _i495;
 import 'package:flowery_app/core/network/remote/api_manager.dart' as _i797;
 import 'package:flowery_app/core/network/remote/dio_module.dart' as _i338;
-import 'package:flowery_app/features/auth/data/api/auth_retrofit_client.dart'
-    as _i865;
+import 'package:flowery_app/features/auth/api/auth_retrofit_client.dart'
+    as _i955;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -39,8 +39,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => dioModule.provideDio());
     gh.lazySingleton<_i528.PrettyDioLogger>(
         () => dioModule.providerInterceptor());
-    gh.lazySingleton<_i865.AuthRetrofitClient>(
-        () => _i865.AuthRetrofitClient(gh<_i361.Dio>()));
+    gh.lazySingleton<_i955.AuthRetrofitClient>(
+        () => _i955.AuthRetrofitClient(gh<_i361.Dio>()));
     return this;
   }
 }
