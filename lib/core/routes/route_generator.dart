@@ -1,5 +1,6 @@
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/features/auth/presentation/view/email_verification_screen.dart';
+import 'package:flowery_app/features/auth/presentation/view/guest_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/register_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,12 @@ class RouteGenerator {
       case Routes.forgetPassword:
         return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
       case Routes.emailVerification:
-        return MaterialPageRoute(builder: (_) => const EmailVerificationScreen());
+        return MaterialPageRoute(
+            builder: (_) => const EmailVerificationScreen());
       case Routes.resetPassword:
         return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
+      case Routes.guest:
+        return MaterialPageRoute(builder: (_) => const GuestScreen());
       default:
         return _undefinedRoute();
     }

@@ -1,0 +1,1 @@
+enum StateUser { guest, login }

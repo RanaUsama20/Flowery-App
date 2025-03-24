@@ -1,3 +1,1 @@
-class AuthCubit{
-
-}
+class AuthCubit {}
