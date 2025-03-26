@@ -2,9 +2,11 @@ import 'package:equatable/equatable.dart';
 
 class LoginEntity {
   String? message;
+  String? token;
+
   UserEntity? user;
 
-  LoginEntity({this.message, this.user});
+  LoginEntity({this.message, this.user, this.token});
 
 }
 

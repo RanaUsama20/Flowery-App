@@ -5,7 +5,7 @@ import '../webServices/auth_retrofit_client.dart';
 
 @Injectable(as: LoginDataSource)
 class LoginDataSourceImpl implements LoginDataSource {
-  ApiClient apiClient;
+  AuthRetrofitClient apiClient;
 
   LoginDataSourceImpl(this.apiClient);
 

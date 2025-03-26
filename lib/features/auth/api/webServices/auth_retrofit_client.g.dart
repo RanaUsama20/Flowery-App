@@ -10,7 +10,7 @@ part of 'auth_retrofit_client.dart';
 
 class _AuthRetrofitClient implements AuthRetrofitClient {
   _AuthRetrofitClient(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://flower.elevateegy.com/api/v1/';
+    baseUrl ??= 'https://flower.elevateegy.com/api/v1';
   }
 
   final Dio _dio;
@@ -18,6 +18,33 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
   String? baseUrl;
 
   final ParseErrorLogger? errorLogger;
+
+  @override
+  Future<LoginDto?> login(String email, String password) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = {'email': email, 'password': password};
+    final _options = _setStreamType<LoginDto>(
+      Options(method: 'POST', headers: _headers, extra: _extra)
+          .compose(
+            _dio.options,
+            '/auth/signin',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+          .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
+    );
+    final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
+    late LoginDto? _value;
+    try {
+      _value = _result.data == null ? null : LoginDto.fromJson(_result.data!);
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&

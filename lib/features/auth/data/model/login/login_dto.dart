@@ -32,6 +32,7 @@ class LoginDto {
   LoginEntity toLoginEntity(){
     return LoginEntity(
       message:  message,
+      token: token,
       user: user?.toUserEntity(),
     );
   }

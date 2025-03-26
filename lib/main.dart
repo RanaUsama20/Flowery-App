@@ -1,6 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/utils/save_local.dart';
+import 'package:flowery_app/features/auth/api/webServices/auth_retrofit_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/constants/app_values.dart';
 import 'core/di/service_locator.dart';
@@ -27,15 +30,14 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return LayoutBuilder(
-      builder: (context, constraints) {
+      builder: (context, constraints)  {
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(1.0),
-          ),
+          data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0),),
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             localizationsDelegates: context.localizationDelegates,
@@ -44,10 +46,23 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             title: AppValues.appTitle,
             onGenerateRoute: RouteGenerator.getRoute,
-            initialRoute: Routes.login,
+            initialRoute:  isLogin()?Routes.home: Routes.login,
           ),
         );
       },
     );
   }
+
+  bool  isLogin() {
+     SaveLocal.getString("token").then((value){
+       if(value!=null){
+         return true;
+       }else{
+         return false;
+       }
+     });
+     return true;
+     }
 }
+
+

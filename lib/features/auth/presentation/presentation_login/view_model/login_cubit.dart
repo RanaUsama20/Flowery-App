@@ -10,27 +10,6 @@ class LoginCubit extends Cubit<LoginStates> {
 
   LoginCubit(this.loginUseCase) : super(LoginInitial());
 
-  // void login({required String email, required String password}) async {
-  //   emit(LoginLoadingState());
-  //
-  //   if (email.isEmpty || password.isEmpty) {
-  //     emit(LoginErrorState(ValidationFailure('Please enter both email and password')));
-  //     return;
-  //   }
-  //
-  //   if (Validator.validateEmail(email) != null) {
-  //     emit(LoginErrorState(ValidationFailure('Please enter a valid email address')));
-  //     return;
-  //   }
-  //
-  //   try {
-  //     final loginEntity = await loginUseCase.call(email: email, password: password);
-  //     emit(LoginSuccessState(loginEntity: loginEntity!,message: 'Login successful'));
-  //   } catch (e) {
-  //     emit(LoginErrorState(ServerFailure('Login failed: ${e.toString()}')));
-  //   }
-  // }
-
 
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
