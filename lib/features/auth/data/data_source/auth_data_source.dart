@@ -1,4 +1,5 @@
+import '../../domain/entity/login_entity.dart';
 
-class AuthDataSource {
-
+abstract class LoginDataSource {
+Future<LoginEntity?> call({required String email, required String password});
 }
