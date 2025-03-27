@@ -6,7 +6,7 @@ class ForgetPasswordScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(color: Colors.orange);
+    return Container(color: Colors.orange, );
   }
 
 }

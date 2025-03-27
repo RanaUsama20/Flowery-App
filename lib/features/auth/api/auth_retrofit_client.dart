@@ -4,6 +4,7 @@ import 'package:flowery_app/features/auth/data/model/response/register_response.
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/network/remote/api_constants.dart';
+import '../data/model/login/login_dto.dart';
 
 part 'auth_retrofit_client.g.dart';
 
@@ -16,4 +17,8 @@ abstract class AuthRetrofitClient {
   @POST(ApiConstants.signupRoute)
   Future<RegisterResponse> register(
       @Body() RegisterRequestModel registerRequest);
+
+  @POST('/auth/signin')
+  Future<LoginDto?> login(
+      @Field("email") String email, @Field("password") String password);
 }

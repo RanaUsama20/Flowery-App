@@ -174,6 +174,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.of(context).pop();
                           AppDialogs.showSuccessDialog(context,
                               message: ans.data);
+                          Navigator.of(context).pushNamed(Routes.login);
+
                         } else if (state.registerState is BaseErrorState) {
                           Navigator.of(context).pop();
                           final ans = state.registerState as BaseErrorState;
@@ -210,7 +212,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 decoration: TextDecoration.underline),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.of(context).pushNamed(Routes.login);
+                                Navigator.of(context).pushReplacementNamed(Routes.login);
                               })
                       ],
                       style: theme.titleSmall),

@@ -1,11 +1,12 @@
-import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../data/data_source/auth_data_source.dart';
-import '../webServices/auth_retrofit_client.dart';
+import '../../domain/entity/login_entity.dart';
+import '../auth_retrofit_client.dart';
 
 @Injectable(as: LoginDataSource)
 class LoginDataSourceImpl implements LoginDataSource {
-  ApiClient apiClient;
+  AuthRetrofitClient apiClient;
 
   LoginDataSourceImpl(this.apiClient);
 

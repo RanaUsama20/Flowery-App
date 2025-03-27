@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/constants/app_colors.dart';
 import '../../../../../core/dialogs/app_dialogs.dart';
+import '../../../../../core/routes/routes.dart';
 import '../../../../../core/theme/app_theme.dart';
+import '../../../../../core/utils/validator.dart';
 import '../../../../../generated/locale_keys.g.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -43,124 +45,131 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: () {},
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          child: Column(
-            children: [
-              TextFormField(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.Authentication_Email.tr(),
-                  hintText: LocaleKeys.Authentication_EnterYourEmail.tr(),
-                ),
-                onTapOutside: (_) =>
-                    FocusManager.instance.primaryFocus?.unfocus(),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              TextFormField(
-                obscureText: isPasswordVisible,
-                controller: passwordController,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                  suffixIcon: isPassword
-                      ? IconButton(
-                    icon: Icon(
-                      isPasswordVisible
-                          ? Icons.visibility_off
-                          : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isPasswordVisible = !isPasswordVisible;
-                      });
-                    },
-                  )
-                      : null,
-                  labelText: LocaleKeys.Authentication_Password.tr(),
-                  hintText: LocaleKeys.Authentication_EnterYourPassword.tr(),
-                ),
-                onTapOutside: (_) =>
-                    FocusManager.instance.primaryFocus?.unfocus(),
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: rememberMe,
-                    onChanged: (value) {
-                      setState(() => rememberMe = value!);
-                    },
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            child: Column(
+              children: [
+                TextFormField(
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  controller: emailController,
+                  validator: (val) => Validator.validateEmail(val),
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.Authentication_Email.tr(),
+                    hintText: LocaleKeys.Authentication_EnterYourEmail.tr(),
                   ),
-                  Text(
-                    LocaleKeys.Authentication_RememberMe.tr(),
-                    style: AppTheme.lightTheme.textTheme.bodyLarge,
-                  ),
-                  Spacer(),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(LocaleKeys.Authentication_ForgetPassword.tr(),
-                        style: AppTheme.lightTheme.textTheme.bodyLarge),
-                  )
-                ],
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
-                  minimumSize:
-                  MaterialStatePropertyAll(Size(double.infinity, 50)),
-                  shape: MaterialStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                 ),
-                onPressed: () {
-                  context.read<LoginCubit>().login(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-                },
-                child: Text(LocaleKeys.Authentication_Login.tr(),
-                    style: AppTheme.lightTheme.textTheme.titleSmall
-                        ?.copyWith(color: AppColors.white)),
-              ),
-              SizedBox(height: 10),
-              OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)),
+                SizedBox(
+                  height: 16,
                 ),
-                onPressed: () {},
-                child: Text(LocaleKeys.Authentication_ContinueAsGuest.tr(),
-                    style: AppTheme.lightTheme.textTheme.titleSmall
-                        ?.copyWith(color: AppColors.gray)),
-              ),
-              SizedBox(height: 10),
-              InkWell(
-                onTap: () {},
-                child: RichText(
-                  text: TextSpan(children: [
-                    TextSpan(
-                      text: LocaleKeys.Authentication_DonotHaveAnAccount.tr(),
-                      style: AppTheme.lightTheme.textTheme.titleSmall,
-                    ),
-                    TextSpan(
-                      text: LocaleKeys.Authentication_SignUp.tr(),
-                      style: AppTheme.lightTheme.textTheme.titleSmall
-                          ?.copyWith(color: AppColors.pink),
+                TextFormField(
+                  obscureText: isPasswordVisible,
+                  controller: passwordController,
+                  validator: (val) =>
+                      Validator.validatePassword(val),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    suffixIcon: isPassword
+                        ? IconButton(
+                      icon: Icon(
+                        isPasswordVisible
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
+                      },
                     )
-                  ]),
+                        : null,
+                    labelText: LocaleKeys.Authentication_Password.tr(),
+                    hintText: LocaleKeys.Authentication_EnterYourPassword.tr(),
+                  ),
+                  onTapOutside: (_) =>
+                      FocusManager.instance.primaryFocus?.unfocus(),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 16,
+                ),
+                Row(
+                  children: [
+                    Checkbox(
+                      value: rememberMe,
+                      onChanged: (value) {
+                        setState(() => rememberMe = value!);
+                      },
+                    ),
+                    Text(
+                      LocaleKeys.Authentication_RememberMe.tr(),
+                      style: AppTheme.lightTheme.textTheme.bodyLarge,
+                    ),
+                    Spacer(),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text(LocaleKeys.Authentication_ForgetPassword.tr(),
+                          style: AppTheme.lightTheme.textTheme.bodyLarge),
+                    )
+                  ],
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                    minimumSize:
+                    MaterialStatePropertyAll(Size(double.infinity, 50)),
+                    shape: MaterialStatePropertyAll(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    context.read<LoginCubit>().login(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    );
+                  },
+                  child: Text(LocaleKeys.Authentication_Login.tr(),
+                      style: AppTheme.lightTheme.textTheme.titleSmall
+                          ?.copyWith(color: AppColors.white)),
+                ),
+                SizedBox(height: 10),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
+                  ),
+                  onPressed: () {},
+                  child: Text(LocaleKeys.Authentication_ContinueAsGuest.tr(),
+                      style: AppTheme.lightTheme.textTheme.titleSmall
+                          ?.copyWith(color: AppColors.gray)),
+                ),
+                SizedBox(height: 10),
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(Routes.register);
+                  },
+                  child: RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text: LocaleKeys.Authentication_DonotHaveAnAccount.tr(),
+                        style: AppTheme.lightTheme.textTheme.titleSmall,
+                      ),
+                      TextSpan(
+                        text: LocaleKeys.Authentication_SignUp.tr(),
+                        style: AppTheme.lightTheme.textTheme.titleSmall
+                            ?.copyWith(color: AppColors.pink),
+                      )
+                    ]),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
