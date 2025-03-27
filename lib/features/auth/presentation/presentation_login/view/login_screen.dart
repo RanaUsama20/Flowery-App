@@ -110,7 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Spacer(),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Routes.forgetPassword);
+                      },
                       child: Text(LocaleKeys.Authentication_ForgetPassword.tr(),
                           style: AppTheme.lightTheme.textTheme.bodyLarge),
                     )

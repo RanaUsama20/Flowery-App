@@ -51,7 +51,9 @@ class MyApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               title: AppValues.appTitle,
               onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute:  isLogin()?Routes.appSection: Routes.login,
+              // initialRoute:  isLogin()?Routes.appSection: Routes.login,
+              initialRoute:  Routes.login,
+
 
             ),
           );
@@ -59,15 +61,15 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-  bool  isLogin() {
-    SaveLocal.getString("token").then((value){
-      if(value!=null){
-        return true;
-      }else{
-        return false;
-      }
-    });
-    return true;
-  }
+  // bool  isLogin() {
+  //   SaveLocal.getString("token").then((value){
+  //     if(value!=null){
+  //       return true;
+  //     }else{
+  //       return false;
+  //     }
+  //   });
+  //   return true;
+  // }
 
 }

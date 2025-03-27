@@ -60,7 +60,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.arrow_back_ios_new_rounded, size: context.sp(25)),
+                    InkWell(
+                      onTap: (){
+                        Navigator.of(context).pop;
+                      },
+                        child: Icon(Icons.arrow_back_ios_new_rounded, size: context.sp(25))),
                     Text(" Password", style: AppTheme.lightTheme.textTheme.titleLarge),
                   ],
                 ),
