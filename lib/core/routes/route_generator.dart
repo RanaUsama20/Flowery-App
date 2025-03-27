@@ -14,7 +14,7 @@ class RouteGenerator {
       case Routes.register:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case Routes.forgetPassword:
-        return MaterialPageRoute(builder: (_) => const ForgetPasswordScreen());
+        return MaterialPageRoute(builder: (_) =>  ForgetPasswordScreen());
       case Routes.emailVerification:
         return MaterialPageRoute(builder: (_) => const EmailVerificationScreen());
       case Routes.resetPassword:

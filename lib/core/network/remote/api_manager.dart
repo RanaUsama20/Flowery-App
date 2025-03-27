@@ -13,6 +13,8 @@ class ApiManager {
   Future<Result<T>> execute<T>(Future<T> Function() apiCall) async {
     try {
       final response = await apiCall();
+print("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
+      print(response);
       return SuccessResult<T>(response);
     } on SocketException {
       return FailureResult<T>(
@@ -20,6 +22,8 @@ class ApiManager {
             message: LocaleKeys.Error_NoInternetConnection.tr()),
       );
     } on DioException catch (e) {
+      print("==============================");
+      print(e.response);
       return _handleDioException<T>(e);
     } on FormatException {
       return FailureResult<T>(
@@ -27,6 +31,8 @@ class ApiManager {
             message: LocaleKeys.Error_DataParsingException.tr()),
       );
     } catch (e) {
+      print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+      print(e);
       return FailureResult<T>(
         UnknownApiException(message: LocaleKeys.Error_Unexpected_error.tr()),
       );
@@ -47,7 +53,11 @@ class ApiManager {
               message: LocaleKeys.Error_Invalid_certificate.tr()),
         );
       case DioExceptionType.badResponse:
+        print("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[");
+        print(e.response);
         if (e.response == null) {
+
+          print(e.response);
           return FailureResult<T>(UnknownApiException(
               message: LocaleKeys.Error_Unexpected_server_error.tr()));
         }
@@ -72,6 +82,8 @@ class ApiManager {
 
   Result<T> _handleBadResponse<T>(Response response) {
     final statusCode = response.statusCode ?? 500;
+    print(response.data);
+    print("ooooooooooooooooooooooooooooooooo");
     final errorMessage = _extractErrorMessage(response.data);
 
     switch (statusCode) {
@@ -108,7 +120,9 @@ class ApiManager {
 
   String _extractErrorMessage(dynamic data) {
     if (data is Map<String, dynamic>) {
-      return data['message']?.toString() ??
+      print("??????????????????????????????");
+      print( data['error']);
+      return data['error']?.toString() ??
           LocaleKeys.Error_Unexpected_server_error.tr();
     }
     return data.toString();
