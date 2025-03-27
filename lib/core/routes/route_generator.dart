@@ -1,4 +1,5 @@
 import 'package:flowery_app/core/routes/routes.dart';
+import 'package:flowery_app/features/app_section/app_section.dart';
 import 'package:flowery_app/features/auth/presentation/view/email_verification_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/guest_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/register_screen.dart';
@@ -23,6 +24,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
       case Routes.guest:
         return MaterialPageRoute(builder: (_) => const GuestScreen());
+      case Routes.appSection:
+        return MaterialPageRoute(builder: (_) => const AppSection());
       default:
         return _undefinedRoute();
     }

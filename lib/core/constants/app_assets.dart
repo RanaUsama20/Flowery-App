@@ -52,6 +52,6 @@ class SvgAssets {
   static const notificationSvg = 'assets/svg/notification.svg';
 }
 
-class ImageAssets {
+class PngAssets {
   static const helloUser = 'assets/png/hello-user.png';
 }
