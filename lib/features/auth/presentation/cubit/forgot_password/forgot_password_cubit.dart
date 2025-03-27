@@ -29,28 +29,37 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('email');
   }
+  bool _isValidEmail(String email) {
+    // A simple regex pattern to check if the email is valid
+    final RegExp regex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+    return regex.hasMatch(email);
+  }
+
   Future<void> forgotPassword(ForgotPasswordRequest request) async {
-    emit(ForgotPasswordLoadingState());
-    // Check if the email is null and pass the email accordingly
-
- final  result = await useCase.forgotPassword(request); // If email is null, use request as is
-
-    // Handle success and failure results
-    switch (result) {
-      case SuccessResult<Map<String, dynamic>>():
-        emit(ForgotPasswordSuccessState(result.data['message']));
-        await saveEmail(request.email);  // Save the email after success
-        break; // Add break here to prevent falling through to the failure case
-      case FailureResult<Map<String, dynamic>>():
-        emit(ForgotPasswordFailureState(result.exception.toString()));
-        break; // Add break here to prevent falling through
+    // Check if email is empty or invalid
+    if (request.email.isEmpty) {
+      emit(ForgotPasswordFailureState("Email cannot be empty"));
+      return;
+    }
+    if (!_isValidEmail(request.email)) {
+      emit(ForgotPasswordFailureState("Please enter a valid email"));
+      return;
     }
 
-    emit(ForgotPasswordInitialState());
+    emit(ForgotPasswordLoadingState());
+    final result = await useCase.forgotPassword(request);
+
+    // Handle success and failure results
+    if (result is SuccessResult<Map<String, dynamic>>) {
+      emit(ForgotPasswordSuccessState(result.data['message']));
+      await saveEmail(request.email); // Save the email after success
+    } else if (result is FailureResult<Map<String, dynamic>>) {
+      emit(ForgotPasswordFailureState(result.exception.toString()));
+    }
   }
 
   Future<void> resendCode() async {
-    emit(ForgotPasswordLoadingState());
+    emit(ForgotPasswordLoadingReSendState());
     String? email = await getEmail();
     // Check if the email is null and pass the email accordingly
 
@@ -70,12 +79,11 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
         break; // Add break here to prevent falling through
     }
 
-    emit(ForgotPasswordInitialState());
   }
 
 
   Future<void> sendResetCode({ required String code}) async {
-    emit(ForgotPasswordLoadingState());
+    emit(ForgotPasswordLoadingSendState());
     final result = await useCase.verifyResetCode(VerifyResetCodeRequest(resetCode: code, ));
     switch (result) {
       case SuccessResult<Map<String,dynamic>>():
@@ -94,7 +102,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
   }
 
   Future<void> verifyResetPassword({ required String newPassword,required String confirmPassword}) async {
-    emit(ForgotPasswordLoadingState());
+    emit(ForgotPasswordLoadingResetState());
     String? email = await getEmail();
 
     print("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[]]]]]");
@@ -104,12 +112,12 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
       case SuccessResult<Map<String,dynamic>>():
         {
           Future.delayed(Duration(seconds: 1), () {
-            emit(ForgotPasswordSuccessState(result.data['message']));
+            emit(ForgotPasswordSuccessResetState(result.data['message']));
           });
         }
       case FailureResult<Map<String,dynamic>>():
         {Future.delayed(Duration(seconds: 1), () {
-          emit(ForgotPasswordFailureState(result.exception.toString()));
+          emit(ForgotPasswordFailureResetState(result.exception.toString()));
 
         });
         }

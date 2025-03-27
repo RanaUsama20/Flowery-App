@@ -21,6 +21,11 @@ class EmailVerificationScreen extends StatefulWidget {
 final  TextEditingController codeController =TextEditingController();
 late ForgotPasswordCubit forgotPasswordCubit;
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController codeController = TextEditingController();
+  late ForgotPasswordCubit forgotPasswordCubit;
+
+  @override
   void initState() {
     super.initState();
     forgotPasswordCubit = serviceLocator.get<ForgotPasswordCubit>();
@@ -32,113 +37,127 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
       body: BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
         bloc: forgotPasswordCubit,
         listener: (context, state) {
-          // if (state is ForgotPasswordLoadingState) {
-          //   // Show loading indicator or toast
-          //   showDialog(
-          //     context: context,
-          //     builder: (_) => const Center(child: CircularProgressIndicator()),
-          //   );
-          // } else
-
-            if (state is ForgotPasswordSuccessState) {
+          if (state is ForgotPasswordLoadingSendState||state is ForgotPasswordLoadingReSendState) {
+            // Show loading indicator or toast
+            showDialog(
+              context: context,
+              builder: (_) => const Center(child: CircularProgressIndicator()),
+            );
+          } else if (state is ForgotPasswordSuccessState) {
+            Navigator.of(context).pop();
 
             Navigator.of(context).pushNamed(Routes.resetPassword);
-
-          }else if (state is ForgotPasswordSuccessResendState) {
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.message}')),
-            );
-          }
-          else if (state is ForgotPasswordFailureState) {
-
+          } else if (state is ForgotPasswordFailureState) {
             Navigator.of(context).pop(); // Close the loading dialog
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error: ${state.errorMessage}')),
-            );print("---------------------------");
-            print(state.errorMessage);
+            );
+          }
+          else if (state is ForgotPasswordSuccessResendState) {
+            Navigator.of(context).pop();
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('${state.message}')),
+            );
+          } else if (state is ForgotPasswordFailureState) {
+            Navigator.of(context).pop(); // Close the loading dialog
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${state.errorMessage}')),
+            );
           }
         },
         child: Padding(
-          padding: const EdgeInsets.only(left:25,right: 25),
-          child: SafeArea(child: Column(
-
-            children: [
-
-              Row(
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          child: SafeArea(
+            child: Form(
+              key: _formKey,
+              child: Column(
                 children: [
-                  InkWell(
-                      onTap: ()=> Navigator.of(context).pop(),
-                      child: Icon(Icons.arrow_back_ios_new_rounded,size: context.sp(25),)),
-                  Text(" Password",style: AppTheme.lightTheme.textTheme.titleLarge,),
-
-                ],
-              ),
-              SizedBox(height: context.hp(4),),
-              Text("Email verification",style:AppTheme.lightTheme.textTheme.titleLarge,),
-              SizedBox(height: context.hp(1.5),),
-              Text("Please enter your code that send to",style:AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.gray),),
-              Text("your email address",style:AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color:AppColors.gray),),
-              SizedBox(height: context.hp(3.5),),
-              SizedBox(height: context.hp(3)),
-              TextFormField(
-                controller: codeController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-
-                  hintText: "Enter Your code",
-                  hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
-                  border: AppTheme.lightTheme.inputDecorationTheme.border,
-                  focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
-                  errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
-                  focusedErrorBorder: AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
-                ),
-              ),
-              SizedBox(height: context.hp(5)),
-              InkWell(
-                onTap: () {
-                  forgotPasswordCubit.sendResetCode(code: codeController.text);
-
-                },
-                child: Container(
-                  width: context.wp(90),
-                  height: context.hp(5.6),
-                  decoration: BoxDecoration(
-                    color: AppColors.pink,
-                    borderRadius: BorderRadius.circular(context.sp(40)),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () => Navigator.of(context).pop(),
+                        child: Icon(Icons.arrow_back_ios_new_rounded, size: context.sp(25)),
+                      ),
+                      Text(" Password", style: AppTheme.lightTheme.textTheme.titleLarge),
+                    ],
                   ),
-                  child: Center(
-                    child: Text(
-                      'Submit',
-                      style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(fontSize: 16, color: Colors.white),
+                  SizedBox(height: context.hp(4)),
+                  Text("Email verification", style: AppTheme.lightTheme.textTheme.titleLarge),
+                  SizedBox(height: context.hp(1.5)),
+                  Text(
+                    "Please enter your code that was sent to",
+                    style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.gray),
+                  ),
+                  Text(
+                    "your email address",
+                    style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.gray),
+                  ),
+                  SizedBox(height: context.hp(3.5)),
+                  SizedBox(height: context.hp(3)),
+                  TextFormField(
+                    controller: codeController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      hintText: "Enter Your code",
+                      hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
+                      border: AppTheme.lightTheme.inputDecorationTheme.border,
+                      focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
+                      errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
+                      focusedErrorBorder: AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
                     ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Code cannot be empty';
+                      }
+                      if (value.length < 6) {
+                        return 'Code should be at least 6 digits';
+                      }
+                      return null;
+                    },
                   ),
-                ),
-              ),
-              SizedBox(height: context.hp(3),),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Didn't receive code? ",style:AppTheme.lightTheme.textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w400, color: AppColors.black),),
+                  SizedBox(height: context.hp(5)),
                   InkWell(
                     onTap: () {
-                      forgotPasswordCubit.resendCode();
+                      if (_formKey.currentState?.validate() ?? false) {
+                        forgotPasswordCubit.sendResetCode(code: codeController.text);
+                      }
                     },
-                    child: Text("Resend",style:AppTheme.lightTheme.textTheme.labelLarge!.copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor: AppColors.pink,      // Set the underline color
-                        fontWeight: FontWeight.w400, color: AppColors.pink),),
+                    child: Container(
+                      width: context.wp(90),
+                      height: context.hp(5.6),
+                      decoration: BoxDecoration(
+                        color: AppColors.pink,
+                        borderRadius: BorderRadius.circular(context.sp(40)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Submit',
+                          style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(fontSize: 16, color: Colors.white),
+                        ),
+                      ),
+                    ),
                   ),
-
+        SizedBox(height: context.hp(3),),
+        Row(mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Didn't receive code? ",style:AppTheme.lightTheme.textTheme.labelLarge!.copyWith(fontWeight: FontWeight.w400, color: AppColors.black),),
+            InkWell(
+              onTap: () {
+                forgotPasswordCubit.resendCode();
+              },
+              child: Text("Resend",style:AppTheme.lightTheme.textTheme.labelLarge!.copyWith(
+                  decoration: TextDecoration.underline,
+                  decorationColor: AppColors.pink,      // Set the underline color
+                  fontWeight: FontWeight.w400, color: AppColors.pink),),
+            ),
                 ],
-              )
-            ],
-
-          )),
+              ),
+            ]))
+          ),
         ),
       ),
     );
   }
 }
-

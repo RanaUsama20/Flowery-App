@@ -21,7 +21,7 @@ abstract class AuthRetrofitClient {
   @POST("auth/verifyResetCode")
   Future<Map<String,dynamic>> verifyResetCode(
       @Body() VerifyResetCodeRequest request);
-  @POST("auth/resetPassword")
+  @PUT("auth/resetPassword")
   Future<Map<String, dynamic>> resetPassword(
       @Body() ResetPasswordRequest request);
 }

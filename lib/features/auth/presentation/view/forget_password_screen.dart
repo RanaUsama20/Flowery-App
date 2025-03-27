@@ -10,21 +10,25 @@ import '../../../../core/theme/app_theme.dart';
 import '../../data/model/request/forgot_password_request.dart';
 import '../cubit/forgot_password/forgot_password_cubit.dart';
 import '../cubit/forgot_password/forgot_password_state.dart';
+
 class ForgetPasswordScreen extends StatefulWidget {
-   ForgetPasswordScreen({super.key});
+  ForgetPasswordScreen({super.key});
 
   @override
   State<ForgetPasswordScreen> createState() => _ForgetPasswordScreenState();
 }
+
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  final  TextEditingController emailController =TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   late ForgotPasswordCubit forgotPasswordCubit;
+  final _formKey = GlobalKey<FormState>();  // Add GlobalKey for form validation
 
   @override
   void initState() {
     super.initState();
     forgotPasswordCubit = serviceLocator.get<ForgotPasswordCubit>();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,15 +42,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               builder: (_) => const Center(child: CircularProgressIndicator()),
             );
           } else if (state is ForgotPasswordSuccessState) {
-
+            Navigator.of(context).pop();
             Navigator.of(context).pushNamed(Routes.emailVerification);
-
           } else if (state is ForgotPasswordFailureState) {
-
             Navigator.of(context).pop(); // Close the loading dialog
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('Error: ${state.errorMessage}')),
-            );print("---------------------------");
+            );
+            print("---------------------------");
             print(state.errorMessage);
           }
         },
@@ -73,27 +76,42 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.gray),
                 ),
                 SizedBox(height: context.hp(3)),
-                TextFormField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-
-                    labelText: LocaleKeys.Authentication_Email.tr(),
-                    labelStyle: AppTheme.lightTheme.inputDecorationTheme.labelStyle,
-                    hintText: LocaleKeys.Authentication_EnterYourEmail.tr(),
-                    hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
-                    border: AppTheme.lightTheme.inputDecorationTheme.border,
-                    focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
-                    errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
-                    focusedErrorBorder: AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                Form(  // Wrap the email field in a Form widget
+                  key: _formKey,
+                  child: TextFormField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      labelText: LocaleKeys.Authentication_Email.tr(),
+                      labelStyle: AppTheme.lightTheme.inputDecorationTheme.labelStyle,
+                      hintText: LocaleKeys.Authentication_EnterYourEmail.tr(),
+                      hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
+                      border: AppTheme.lightTheme.inputDecorationTheme.border,
+                      focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
+                      errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
+                      focusedErrorBorder: AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      // Use a regex to check for valid email format
+                      final RegExp regex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+                      if (!regex.hasMatch(value)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;  // Return null if the input is valid
+                    },
                   ),
                 ),
                 SizedBox(height: context.hp(5)),
                 InkWell(
                   onTap: () {
-                  forgotPasswordCubit.forgotPassword(ForgotPasswordRequest(email:emailController.text));
+                    if (_formKey.currentState!.validate()) {
+                      forgotPasswordCubit.forgotPassword(ForgotPasswordRequest(email: emailController.text));
+                    }
                   },
                   child: Container(
                     width: context.wp(90),

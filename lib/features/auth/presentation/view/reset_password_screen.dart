@@ -39,20 +39,18 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
       bloc: forgotPasswordCubit,
       listener: (context, state) {
-        // if (state is ForgotPasswordLoadingState) {
-        //   // Show loading indicator or toast
-        //   showDialog(
-        //     context: context,
-        //     builder: (_) => const Center(child: CircularProgressIndicator()),
-        //   );
-        // } else
+         if (state is ForgotPasswordLoadingResetState) {
+           // Show loading indicator or toast
+           showDialog(
+             context: context,
+             builder: (_) => const Center(child: CircularProgressIndicator()),
+           );
+         } else
 
-          if (state is ForgotPasswordSuccessState) {
-          Navigator.of(context).pop(); // Close the loading dialog
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        } else if (state is ForgotPasswordFailureState) {
+          if (state is ForgotPasswordSuccessResetState) {
+            Navigator.of(context).pop();
+            Navigator.of(context).pushNamed(Routes.login);
+        } else if (state is ForgotPasswordFailureResetState) {
           Navigator.of(context).pop(); // Close the loading dialog
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Error: ${state.errorMessage}')),
