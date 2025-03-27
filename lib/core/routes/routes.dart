@@ -6,4 +6,5 @@ class Routes {
   static const String emailVerification = '/emailVerification';
   static const String home = 'home';
 
+  static const String guest = '/guest';
 }

@@ -10,6 +10,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i361;
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart' as _i575;
 import 'package:flowery_app/core/logger/logger_module.dart' as _i495;
 import 'package:flowery_app/core/network/remote/api_manager.dart' as _i797;
 import 'package:flowery_app/core/network/remote/dio_module.dart' as _i338;
@@ -53,6 +54,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final loggerModule = _$LoggerModule();
     final dioModule = _$DioModule();
+    gh.factory<_i575.AppCubit>(() => _i575.AppCubit());
     gh.singleton<_i797.ApiManager>(() => _i797.ApiManager());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
     gh.lazySingleton<_i974.PrettyPrinter>(() => loggerModule.prettyPrinter);
