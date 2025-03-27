@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
+import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +23,7 @@ class _GuestScreenState extends State<GuestScreen> {
           child: Column(
             children: [
               Image.asset(
-                ImageAssets.helloUser,
+                PngAssets.helloUser,
                 width: context.wp(100),
                 height: context.hp(50),
                 fit: BoxFit.cover,
@@ -31,6 +32,7 @@ class _GuestScreenState extends State<GuestScreen> {
               _elevateButton(
                 onPressed: () {
                   //? Navigator push to home screen
+                  context.pushNamedAndRemoveUntil(Routes.appSection);
                 },
                 title: LocaleKeys.Authentication_ContinueAsGuest.tr(),
                 isBordered: true,

@@ -161,5 +161,23 @@ class AppTheme {
             WidgetStatePropertyAll((AppColors.pink[AppColors.colorCode50])),
         overlayColor:
             WidgetStatePropertyAll(AppColors.pink[AppColors.colorCode50])),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      elevation: 0,
+      selectedItemColor: AppColors.pink[AppColors.colorCode50],
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
+      unselectedItemColor: AppColors.gray,
+      selectedLabelStyle: TextStyle(
+        fontSize: 14,
+        color: AppColors.pink[AppColors.colorCode50],
+        fontWeight: FontWeight.bold,
+        fontFamily: AppFontsFamily.inter,
+      ),
+      unselectedLabelStyle: TextStyle(
+        fontSize: 14,
+        color: AppColors.gray,
+        fontFamily: AppFontsFamily.inter,
+      ),
+    ),
   );
 }

@@ -33,6 +33,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
       case Routes.guest:
         return MaterialPageRoute(builder: (_) => const GuestScreen());
+      case Routes.appSection:
+        return MaterialPageRoute(builder: (_) => const AppSection());
 
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
