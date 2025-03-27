@@ -5,7 +5,6 @@ import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/enum/status.dart';
 import 'package:flowery_app/core/utils/app_shared_preference.dart';
 import 'package:injectable/injectable.dart';
-
 part 'app_cubit_state.dart';
 
 @injectable

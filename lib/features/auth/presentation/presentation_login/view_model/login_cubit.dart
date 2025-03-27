@@ -47,6 +47,7 @@ class LoginCubit extends Cubit<LoginStates> {
         emit(LoginErrorState(ServerFailure("Incorrect email or password")));
       } else {
         emit(LoginSuccessState(loginEntity: loginEntity));
+
       }
     } catch (e) {
       emit(LoginErrorState(ServerFailure("Login failed: ${e.toString()}")));

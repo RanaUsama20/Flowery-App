@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state is LoginSuccessState) {
           AppDialogs.showSuccessDialog(context, message: state.message);
-          Navigator.pushNamed(context, 'home');
+          Navigator.of(context).pushNamed(Routes.appSection);
         }else if (state is LoginLoadingState){
           AppDialogs.showLoadingDialog(context);
         } else if (state is LoginErrorState) {
@@ -132,6 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       email: emailController.text,
                       password: passwordController.text,
                     );
+
                   },
                   child: Text(LocaleKeys.Authentication_Login.tr(),
                       style: AppTheme.lightTheme.textTheme.titleSmall
@@ -144,7 +145,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.appSection);
+                  },
                   child: Text(LocaleKeys.Authentication_ContinueAsGuest.tr(),
                       style: AppTheme.lightTheme.textTheme.titleSmall
                           ?.copyWith(color: AppColors.gray)),
