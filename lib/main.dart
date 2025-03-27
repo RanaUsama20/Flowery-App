@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
             theme: AppTheme.lightTheme,
             title: AppValues.appTitle,
             onGenerateRoute: RouteGenerator.getRoute,
-            initialRoute: Routes.login,
+            initialRoute: Routes.forgetPassword,
           ),
         );
       },
