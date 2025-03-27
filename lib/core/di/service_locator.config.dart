@@ -27,6 +27,20 @@ import 'package:flowery_app/features/auth/domain/usecase/login_use_case.dart'
     as _i541;
 import 'package:flowery_app/features/auth/presentation/presentation_login/view_model/login_cubit.dart'
     as _i488;
+import 'package:flowery_app/features/auth/api/auth_retrofit_client.dart'
+    as _i955;
+import 'package:flowery_app/features/auth/data/data_source/remote/register_remote_data_source.dart'
+    as _i1041;
+import 'package:flowery_app/features/auth/data/data_source/remote/register_remote_data_source_impl.dart'
+    as _i470;
+import 'package:flowery_app/features/auth/data/repository_imp/auth_repository_impl.dart'
+    as _i82;
+import 'package:flowery_app/features/auth/domain/repository/auth_repository.dart'
+    as _i426;
+import 'package:flowery_app/features/auth/domain/usecase/register_use_case.dart'
+    as _i318;
+import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_cubit.dart'
+    as _i475;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -62,6 +76,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i541.LoginUseCase(gh<_i426.LoginRepository>()));
     gh.factory<_i488.LoginCubit>(
         () => _i488.LoginCubit(gh<_i541.LoginUseCase>()));
+    gh.lazySingleton<_i955.AuthRetrofitClient>(
+        () => _i955.AuthRetrofitClient(gh<_i361.Dio>()));
+    gh.factory<_i1041.RegisterRemoteDataSource>(
+        () => _i470.RegisterDataSourceImpl(gh<_i955.AuthRetrofitClient>()));
+    gh.factory<_i426.AuthRepository>(() => _i82.AuthRepositoryImpl(
+          gh<_i1041.RegisterRemoteDataSource>(),
+          gh<_i797.ApiManager>(),
+        ));
+    gh.factory<_i318.RegisterUseCase>(
+        () => _i318.RegisterUseCase(gh<_i426.AuthRepository>()));
+    gh.factory<_i475.RegisterCubit>(
+        () => _i475.RegisterCubit(gh<_i318.RegisterUseCase>()));
     return this;
   }
 }
