@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
+import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
 class GuestScreen extends StatefulWidget {
@@ -30,7 +32,7 @@ class _GuestScreenState extends State<GuestScreen> {
                 onPressed: () {
                   //? Navigator push to home screen
                 },
-                title: "Continue as guest",
+                title: LocaleKeys.Authentication_ContinueAsGuest.tr(),
                 isBordered: true,
               ),
               SizedBox(height: context.hp(2)),
@@ -38,7 +40,7 @@ class _GuestScreenState extends State<GuestScreen> {
                 onPressed: () {
                   //? Navigator push to Login screen
                 },
-                title: 'Login',
+                title: LocaleKeys.Authentication_Login.tr(),
                 isBordered: false,
               ),
               SizedBox(height: context.hp(2)),
@@ -46,7 +48,7 @@ class _GuestScreenState extends State<GuestScreen> {
                 onPressed: () {
                   //? Navigator push to register screen
                 },
-                title: 'Register',
+                title: LocaleKeys.Authentication_SignUp.tr(),
                 isBordered: false,
               ),
             ],
