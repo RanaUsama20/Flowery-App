@@ -19,8 +19,7 @@ abstract class AuthRetrofitClient {
   Future<RegisterResponse> register(
       @Body() RegisterRequestModel registerRequest);
   @POST('/auth/signin')
-  Future<LoginDto?> login(
-      @Field("email") String email, @Field("password") String password);
+  Future<LoginDto?> login(@Field("email") String email, @Field("password") String password);
 
   @POST("auth/forgotPassword")
   Future<Map<String, dynamic>> forgotPassword(

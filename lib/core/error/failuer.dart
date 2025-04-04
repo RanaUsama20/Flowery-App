@@ -9,4 +9,6 @@ class ServerFailure extends Failure {
 
 class ValidationFailure extends Failure {
   ValidationFailure(String message) : super(message);
+
+
 }

@@ -13,8 +13,8 @@ class LoginLoadingState extends LoginStates {}
 
 class LoginSuccessState extends LoginStates {
    LoginEntity loginEntity;
-   String message = '';
-  LoginSuccessState({required this.loginEntity, this.message = ''});
+
+  LoginSuccessState({required this.loginEntity,});
 
   @override
   List<Object> get props => [loginEntity];

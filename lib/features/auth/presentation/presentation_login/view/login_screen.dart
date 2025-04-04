@@ -18,8 +18,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text: "amira321@gmail.com");
+  final TextEditingController passwordController = TextEditingController(text: "Amira@123");
   bool rememberMe = false;
   bool isPassword = true;
   bool isPasswordVisible = true;
@@ -29,9 +29,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          AppDialogs.showSuccessDialog(context, message: state.message);
-          Navigator.of(context).pushNamed(Routes.appSection);
-        }else if (state is LoginLoadingState){
+          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message??'');
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            Routes.appSection, (route) => false,
+            arguments: true,
+          );
+        }
+        else if (state is LoginLoadingState) {
           AppDialogs.showLoadingDialog(context);
         } else if (state is LoginErrorState) {
           AppDialogs.showFailureDialog(context, message: state.error.message);
@@ -68,24 +72,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextFormField(
                   obscureText: isPasswordVisible,
                   controller: passwordController,
-                  validator: (val) =>
-                      Validator.validatePassword(val),
+                  validator: (val) => Validator.validatePassword(val),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.visiblePassword,
                   decoration: InputDecoration(
                     suffixIcon: isPassword
                         ? IconButton(
-                      icon: Icon(
-                        isPasswordVisible
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isPasswordVisible = !isPasswordVisible;
-                        });
-                      },
-                    )
+                            icon: Icon(
+                              isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isPasswordVisible = !isPasswordVisible;
+                              });
+                            },
+                          )
                         : null,
                     labelText: LocaleKeys.Authentication_Password.tr(),
                     hintText: LocaleKeys.Authentication_EnterYourPassword.tr(),
@@ -120,9 +123,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                  style:
+                      AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
                     minimumSize:
-                    MaterialStatePropertyAll(Size(double.infinity, 50)),
+                        MaterialStatePropertyAll(Size(double.infinity, 50)),
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -131,10 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   onPressed: () {
                     context.read<LoginCubit>().login(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    );
-
+                          email: emailController.text,
+                          password: passwordController.text,
+                        );
                   },
                   child: Text(LocaleKeys.Authentication_Login.tr(),
                       style: AppTheme.lightTheme.textTheme.titleSmall
@@ -144,16 +147,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   ),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.appSection);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      Routes.appSection, (route) => false,
+                      arguments: true,
+                    );
                   },
-                  child: Text(LocaleKeys.Authentication_ContinueAsGuest.tr(),
-                      style: AppTheme.lightTheme.textTheme.titleSmall
-                          ?.copyWith(color: AppColors.gray)),
+                  child: Text(
+                    LocaleKeys.Authentication_ContinueAsGuest.tr(),
+                    style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.gray),
+                  ),
                 ),
+
                 SizedBox(height: 10),
                 InkWell(
                   onTap: () {

@@ -8,8 +8,7 @@ class ForgotPasswordRequest {
 
   ForgotPasswordRequest({required this.email});
 
-  factory ForgotPasswordRequest.fromJson(Map<String, dynamic> json) =>
-      _$ForgotPasswordRequestFromJson(json);
+  factory ForgotPasswordRequest.fromJson(Map<String, dynamic> json) => _$ForgotPasswordRequestFromJson(json);
 
   Map<String, dynamic> toJson() => _$ForgotPasswordRequestToJson(this);
 }

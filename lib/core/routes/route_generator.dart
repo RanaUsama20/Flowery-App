@@ -5,10 +5,10 @@ import 'package:flowery_app/features/auth/presentation/view/reset_password_scree
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
-import '../../features/auth/presentation/presentation_login/home_screen.dart';
 import '../../features/auth/presentation/presentation_login/view/login_screen.dart';
 import '../../features/auth/presentation/presentation_login/view_model/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
+import '../../features/home/presentation/pages/home_screen.dart';
 import '../di/service_locator.dart';
 
 class RouteGenerator {

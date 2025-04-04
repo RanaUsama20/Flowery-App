@@ -1,115 +1,121 @@
-import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
+import 'package:json_annotation/json_annotation.dart';
+import '../../../domain/entity/login_entity.dart';
+part 'login_dto.g.dart';
 
-/// message : "success"
-/// token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZTMxZGNmNTU1NGIzMjg5MTI3MmM3ZSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQyOTM3NjI2fQ.qvvHedO-M2AZFlS-UlG-ecrZ23AW25UN-hZNpGkO4q8"
-/// user : {"_id":"67e31dcf5554b32891272c7e","username":"elevate11243","firstName":"Elevate","lastName":"Tech","email":"admin134@1elevate.com","phone":"01094155711","role":"user","isVerified":false,"createdAt":"2025-03-25T21:19:11.416Z"}
-
+// LoginDto
+@JsonSerializable()
 class LoginDto {
+  final String message;
+  final String token;
+  final UserDto user;
+
   LoginDto({
-      this.message, 
-      this.token, 
-      this.user,});
+    required this.message,
+    required this.token,
+    required this.user,
+  });
 
-  LoginDto.fromJson(dynamic json) {
-    message = json['message'];
-    token = json['token'];
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-  }
-  String? message;
-  String? token;
-  User? user;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['message'] = message;
-    map['token'] = token;
-    if (user != null) {
-      map['user'] = user?.toJson();
-    }
-    return map;
-  }
-
-  LoginEntity toLoginEntity(){
+  /// تحويل DTO إلى Entity
+  LoginEntity toLoginEntity() {
     return LoginEntity(
-      message:  message,
+      message: message,
       token: token,
-      user: user?.toUserEntity(),
+      user: user.toUserEntity(),
     );
   }
 
+  factory LoginDto.fromJson(Map<String, dynamic> json) => _$LoginDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$LoginDtoToJson(this);
 }
 
-/// _id : "67e31dcf5554b32891272c7e"
-/// username : "elevate11243"
-/// firstName : "Elevate"
-/// lastName : "Tech"
-/// email : "admin134@1elevate.com"
-/// phone : "01094155711"
-/// role : "user"
-/// isVerified : false
-/// createdAt : "2025-03-25T21:19:11.416Z"
+// UserDto
+@JsonSerializable()
+class UserDto {
+  @JsonKey(name: '_id')
+  final String id;
+  final String firstName;
+  final String lastName;
+  final String email;
+  final String gender;
+  final String phone;
+  final String photo;
+  final String role;
+  final List<dynamic> wishlist;
+  final List<AddressDto> addresses;
+  final String createdAt;
 
-class User {
-  User({
-      this.id, 
-      this.username, 
-      this.firstName, 
-      this.lastName, 
-      this.email, 
-      this.phone, 
-      this.role, 
-      this.isVerified, 
-      this.createdAt,});
+  UserDto({
+    required this.id,
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.gender,
+    required this.phone,
+    required this.photo,
+    required this.role,
+    required this.wishlist,
+    required this.addresses,
+    required this.createdAt,
+  });
 
-  User.fromJson(dynamic json) {
-    id = json['_id']??'';
-    username = json['username']??'';
-    firstName = json['firstName']??'';
-    lastName = json['lastName']??'';
-    email = json['email']??'';
-    phone = json['phone']??'';
-    role = json['role']??'';
-    isVerified = json['isVerified']as bool?;
-    createdAt = json['createdAt']??'';
-  }
-  String? id;
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? email;
-  String? phone;
-  String? role;
-  bool? isVerified;
-  String? createdAt;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['_id'] = id??'';
-    map['username'] = username??'';
-    map['firstName'] = firstName??'';
-    map['lastName'] = lastName??'';
-    map['email'] = email??'';
-    map['phone'] = phone??'';
-    map['role'] = role??'';
-    map['isVerified'] = isVerified as bool?;
-    map['createdAt'] = createdAt??'';
-    return map;
-  }
-
-  UserEntity toUserEntity(){
+  /// تحويل DTO إلى Entity
+  UserEntity toUserEntity() {
     return UserEntity(
-      username: username,
+      id: id,
       firstName: firstName,
       lastName: lastName,
       email: email,
+      gender: gender,
       phone: phone,
+      photo: photo,
       role: role,
-      isVerified: isVerified,
-      id: id,
+      wishlist: wishlist,
       createdAt: createdAt,
+      addresses: addresses.map((e) => e.toAddressEntity()).toList(),
     );
   }
 
+  factory UserDto.fromJson(Map<String, dynamic> json) => _$UserDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$UserDtoToJson(this);
 }
 
+// AddressDto
+@JsonSerializable()
+class AddressDto {
+  final String street;
+  final String phone;
+  final String city;
+  final String lat;
+  final String long;
+  final String username;
+  @JsonKey(name: '_id')
+  final String id;
+
+  AddressDto({
+    required this.street,
+    required this.phone,
+    required this.city,
+    required this.lat,
+    required this.long,
+    required this.username,
+    required this.id,
+  });
+
+
+
+  factory AddressDto.fromJson(Map<String, dynamic> json) => _$AddressDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$AddressDtoToJson(this);
+
+  AddressEntity toAddressEntity() {
+    return AddressEntity(
+      street: street,
+      phone: phone,
+      city: city,
+      lat: lat,
+      long: long,
+      username: username,
+      id: id,
+    );
+  }
+}
 
