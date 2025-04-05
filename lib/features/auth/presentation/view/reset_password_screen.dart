@@ -8,8 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/theme/app_theme.dart';
-import '../cubit/forgot_password/forgot_password_cubit.dart';
-import '../cubit/forgot_password/forgot_password_state.dart';
+import '../view_model/cubit/forgot_password_cubit.dart';
+import '../view_model/cubit/forgot_password_state.dart';
 
 class ResetPasswordScreen extends StatefulWidget{
   const ResetPasswordScreen({super.key});

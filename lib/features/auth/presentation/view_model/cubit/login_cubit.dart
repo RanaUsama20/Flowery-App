@@ -1,7 +1,7 @@
-import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/features/auth/domain/usecase/login_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../../core/error/failuer.dart';
 import 'login_state.dart';
 
