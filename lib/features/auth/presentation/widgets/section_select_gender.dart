@@ -72,7 +72,7 @@ class _CustomListTile extends StatelessWidget {
       required this.onSelect,
       required this.title,
       required this.value,
-      super.key});
+      });
 
   @override
   Widget build(BuildContext context) {

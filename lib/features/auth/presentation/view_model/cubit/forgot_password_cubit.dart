@@ -1,14 +1,13 @@
-import 'package:flowery_app/features/auth/data/model/request/verify_request_model.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/features/auth/data/model/request/verify_request_model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
-import '../../../data/api/auth_retrofit_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../data/model/request/forgot_password_request.dart';
 import '../../../data/model/request/reset_password_request.dart';
 import '../../../domain/usecase/auth_use_case.dart';
 import 'forgot_password_state.dart'; // Import the states we defined
-import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {

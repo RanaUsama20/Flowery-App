@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+
 
 class LoginEntity {
   String? message;
