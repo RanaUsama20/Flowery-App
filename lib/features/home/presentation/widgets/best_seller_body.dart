@@ -40,10 +40,12 @@ class _BestSellerBodyState extends State<BestSellerBody> {
             if (state.baseState is BaseHideLoadingState) {
                 Navigator.of(context).pop();            }
             if (state.baseState is BaseErrorState) {
-              AppDialogs.showFailureDialog(
-                context,
-                message: (state.baseState as BaseErrorState).errorMessage,
-              );
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                AppDialogs.showFailureDialog(
+                  context,
+                  message: (state.baseState as BaseErrorState).errorMessage,
+                );
+              });
             }
             if (state.baseState is BaseSuccessState) {
               final bestSellerResponse = (state.baseState as BaseSuccessState).data as SuccessResult<BestSellerResponseEntity>;

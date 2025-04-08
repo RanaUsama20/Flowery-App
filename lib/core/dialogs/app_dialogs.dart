@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../generated/locale_keys.g.dart';
@@ -84,7 +86,9 @@ class AppDialogs {
               ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(buttonText ?? LocaleKeys.Ok),
+              child: Text(buttonText ?? LocaleKeys.Ok,style: TextStyle(
+                color: AppColors.black
+              ),),
             ),
           ],
         );

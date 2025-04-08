@@ -83,7 +83,7 @@
     "Invalid_certificate": "There's a security issue with our certificate. Please reach out to support for help.",
     "Unexpected_server_error": "Something went wrong on our end. We're sorry about that—please try again later.",
     "Request_cancelled": "It looks like the request was cancelled. Let us know if you need assistance!",
-    "Connection_failed": "We couldn't connect. Could you check your network and try again?",
+    "Connection_failed": "Connection failed. Could you check your network and try again?",
     "Unexpected_error": "Yikes, something unexpected happened. Please try again or let us know if it keeps occurring!",
     "Not_found": "we couldn't find what you're looking for. Double-check and try again?",
     "Internal_server_error": "Our server's having a rough moment. Please try again soon—we're on it!",
