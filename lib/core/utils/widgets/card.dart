@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import '../../../generated/locale_keys.g.dart';
@@ -15,25 +16,39 @@ class ProductCard {
   }) {
     return IntrinsicWidth(
       child: Card(
+        color: AppColors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
+          side: BorderSide(
+            color: AppColors.white[AppColors.colorCode70]!, // Pink border
+            width: 0.5
+          ),
         ),
         elevation: 1,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(7.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
+                child: Image.network(
                   imageProduct,
                   fit: BoxFit.cover,
                   height: 140,
                   width: 140,
+                  errorBuilder: (context, error, stackTrace) {
+                    return  Image.asset(PngAssets.flowerCard);
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                        child: CircularProgressIndicator());
+                  },
                 ),
               ),
+              const SizedBox(height: 8),
               Text(
                 title,
                 style: AppTheme.lightTheme.textTheme.bodyLarge,
@@ -59,7 +74,7 @@ class ProductCard {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    discount,
+                    '$discount%',
                     style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                       fontSize: 11,
                       color: AppColors.green,

@@ -2,6 +2,7 @@ import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/features/auth/presentation/view/email_verification_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/register_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
+import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -33,9 +34,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
       case Routes.appSection:
         return MaterialPageRoute(builder: (_) => const AppSection());
-
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.bestSeller:
+        return MaterialPageRoute(builder: (_) => const BestSellerScreen());
       default:
         return _undefinedRoute();
     }

@@ -7,5 +7,7 @@ class ApiConstants {
   static const String resetPasswordRoute = "auth/resetPassword";
   static const String changePasswordRoute = "auth/changePassword";
   static const String profileDataRoute = "auth/profile-data";
+  static const String bestSellerRoute = "best-seller";
+
 
 }
