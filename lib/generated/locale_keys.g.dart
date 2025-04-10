@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const Authentication_Login = 'Authentication.Login';
   static const Authentication_SignUp = 'Authentication.SignUp';
   static const Authentication_SendOtp = 'Authentication.SendOtp';
@@ -11,51 +11,36 @@ abstract class LocaleKeys {
   static const Authentication_InvalidEmail = 'Authentication.InvalidEmail';
   static const Authentication_Password = 'Authentication.Password';
   static const Authentication_ResetPassword = 'Authentication.ResetPassword';
-  static const Authentication_EnterYourPassword =
-      'Authentication.EnterYourPassword';
-  static const Authentication_ConfirmPassword =
-      'Authentication.ConfirmPassword';
-  static const Authentication_PasswordNotMatched =
-      'Authentication.PasswordNotMatched';
+  static const Authentication_EnterYourPassword = 'Authentication.EnterYourPassword';
+  static const Authentication_ConfirmPassword = 'Authentication.ConfirmPassword';
+  static const Authentication_PasswordNotMatched = 'Authentication.PasswordNotMatched';
   static const Authentication_NewPassword = 'Authentication.NewPassword';
-  static const Authentication_currentPassword =
-      'Authentication.currentPassword';
+  static const Authentication_currentPassword = 'Authentication.currentPassword';
   static const Authentication_RememberMe = 'Authentication.RememberMe';
-  static const Authentication_ContinueAsGuest =
-      'Authentication.ContinueAsGuest';
+  static const Authentication_ContinueAsGuest = 'Authentication.ContinueAsGuest';
   static const Authentication_ForgetPassword = 'Authentication.ForgetPassword';
-  static const Authentication_DonotHaveAnAccount =
-      'Authentication.DonotHaveAnAccount';
-  static const Authentication_AlreadyHaveAnAccount =
-      'Authentication.AlreadyHaveAnAccount';
+  static const Authentication_DonotHaveAnAccount = 'Authentication.DonotHaveAnAccount';
+  static const Authentication_AlreadyHaveAnAccount = 'Authentication.AlreadyHaveAnAccount';
   static const Authentication_FirstName = 'Authentication.FirstName';
   static const Authentication_LastName = 'Authentication.LastName';
   static const Authentication_EnterFirstName = 'Authentication.EnterFirstName';
   static const Authentication_EnterLastName = 'Authentication.EnterLastName';
   static const Authentication_PhoneNumber = 'Authentication.PhoneNumber';
-  static const Authentication_EnterPhoneNumber =
-      'Authentication.EnterPhoneNumber';
+  static const Authentication_EnterPhoneNumber = 'Authentication.EnterPhoneNumber';
   static const Authentication_Gender = 'Authentication.Gender';
   static const Authentication_Female = 'Authentication.Female';
   static const Authentication_Male = 'Authentication.Male';
-  static const Authentication_CreatingAnAccountYouAgreeToOur =
-      'Authentication.CreatingAnAccountYouAgreeToOur';
-  static const Authentication_TermsConditions =
-      'Authentication.TermsConditions';
-  static const Authentication_PleaseEnterYourEmail =
-      'Authentication.PleaseEnterYourEmail';
+  static const Authentication_CreatingAnAccountYouAgreeToOur = 'Authentication.CreatingAnAccountYouAgreeToOur';
+  static const Authentication_TermsConditions = 'Authentication.TermsConditions';
+  static const Authentication_PleaseEnterYourEmail = 'Authentication.PleaseEnterYourEmail';
   static const Authentication_InvalidCode = 'Authentication.InvalidCode';
-  static const Authentication_PleaseEnterYourCode =
-      'Authentication.PleaseEnterYourCode';
+  static const Authentication_PleaseEnterYourCode = 'Authentication.PleaseEnterYourCode';
   static const Authentication_Confirm = 'Authentication.Confirm';
   static const Authentication_Resend = 'Authentication.Resend';
-  static const Authentication_DidnotReceiveCode =
-      'Authentication.DidnotReceiveCode';
-  static const Authentication_EmailVerification =
-      'Authentication.EmailVerification';
+  static const Authentication_DidnotReceiveCode = 'Authentication.DidnotReceiveCode';
+  static const Authentication_EmailVerification = 'Authentication.EmailVerification';
   static const Authentication_Continue = 'Authentication.Continue';
-  static const Authentication_PasswordRequirements =
-      'Authentication.PasswordRequirements';
+  static const Authentication_PasswordRequirements = 'Authentication.PasswordRequirements';
   static const Authentication = 'Authentication';
   static const Profile_Profile = 'Profile.Profile';
   static const Profile_EditProfile = 'Profile.EditProfile';
@@ -80,20 +65,22 @@ abstract class LocaleKeys {
   static const Home_Next = 'Home.Next';
   static const Home_SortBy = 'Home.SortBy';
   static const Home_search = 'Home.search';
+  static const Home_Description = 'Home.Description';
+  static const Home_EGP = 'Home.EGP';
+  static const Home_Status = 'Home.Status';
+  static const Home_InStock = 'Home.InStock';
+  static const Home_outStock = 'Home.outStock';
+  static const Home_AllPriceIncludeTax = 'Home.AllPriceIncludeTax';
   static const Home = 'Home';
   static const Error_EmailAlreadyExists = 'Error.EmailAlreadyExists';
   static const Error_PasswordCannotBeEmpty = 'Error.PasswordCannotBeEmpty';
   static const Error_NameCannotBeEmpty = 'Error.NameCannotBeEmpty';
-  static const Error_PhoneNumberCannotBeEmpty =
-      'Error.PhoneNumberCannotBeEmpty';
+  static const Error_PhoneNumberCannotBeEmpty = 'Error.PhoneNumberCannotBeEmpty';
   static const Error_InvalidPhoneNumber = 'Error.InvalidPhoneNumber';
   static const Error_InvalidName = 'Error.InvalidName';
-  static const Error_ConfirmPasswordMustMatch =
-      'Error.ConfirmPasswordMustMatch';
-  static const Error_OtpCodeIsInvalidOrExpired =
-      'Error.OtpCodeIsInvalidOrExpired';
-  static const Error_PasswordEnterAValidPassword =
-      'Error.PasswordEnterAValidPassword';
+  static const Error_ConfirmPasswordMustMatch = 'Error.ConfirmPasswordMustMatch';
+  static const Error_OtpCodeIsInvalidOrExpired = 'Error.OtpCodeIsInvalidOrExpired';
+  static const Error_PasswordEnterAValidPassword = 'Error.PasswordEnterAValidPassword';
   static const Error_EmailCannotBeEmpty = 'Error.EmailCannotBeEmpty';
   static const Error_EnterAValidEmail = 'Error.EnterAValidEmail';
   static const Error_InvalidCredentials = 'Error.InvalidCredentials';
@@ -121,4 +108,5 @@ abstract class LocaleKeys {
   static const Ok = 'Ok';
   static const Loading = 'Loading';
   static const Retry = 'Retry';
+
 }

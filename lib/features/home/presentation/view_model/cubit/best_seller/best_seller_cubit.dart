@@ -7,14 +7,15 @@ import '../../../../../../core/network/common/api_result.dart';
 import '../../../../../product_details/presentation/models/product_details_model.dart';
 import '../../../../domain/entity/best_seller/best_seller_entity.dart';
 import '../../../../domain/entity/best_seller/best_seller_response_entity.dart';
+import '../../../../domain/usecase/best_seller_use_case.dart';
 import '../../../../domain/usecase/home_use_case.dart';
 
 
 @injectable
 class BestSellerCubit extends Cubit<BestSellerState> {
-  final HomeUseCase _homeUseCase;
+  final BestSellerUseCase _bestSellerUseCase;
 
-  BestSellerCubit(this._homeUseCase) : super(BestSellerState(baseState: BaseInitialState()));
+  BestSellerCubit(this._bestSellerUseCase) : super(BestSellerState(baseState: BaseInitialState()));
 
   void doIntent(BestSellerAction action) {
     switch (action) {
@@ -28,7 +29,7 @@ class BestSellerCubit extends Cubit<BestSellerState> {
 
   Future<BestSellerResponseEntity?> _fetchBestSeller() async {
     emit(state.copyWith(baseState: BaseLoadingState()));
-    final result = await _homeUseCase.call();
+    final result = await _bestSellerUseCase.call();
     switch (result)  {
       case SuccessResult<BestSellerResponseEntity>():
         {

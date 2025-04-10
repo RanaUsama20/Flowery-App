@@ -14,10 +14,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
         return Icon(Icons.error);
       },
       placeholder: (context, url) {
-        return SizedBox(
-          width: 30,
-          height: 30,
-          child: CircularProgressIndicator());
+        return CircularProgressIndicator();
       },
     );
   }

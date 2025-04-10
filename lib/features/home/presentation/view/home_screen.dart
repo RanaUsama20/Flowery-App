@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/base_state/base_state.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
+import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
-import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_state.dart';
@@ -117,7 +117,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .copyWith(fontWeight: FontWeight.w600),
                               ),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, Routes.bestSeller);
+                                  },
                                   child: Text(LocaleKeys.Home_ViewAll.tr()))
                             ],
                           ),
