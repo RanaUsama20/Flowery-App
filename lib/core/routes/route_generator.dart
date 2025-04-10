@@ -4,6 +4,7 @@ import 'package:flowery_app/features/auth/presentation/view/register_screen.dart
 import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
 import 'package:flowery_app/features/product_details/presentation/pages/product_details.dart';
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
+import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -38,6 +39,8 @@ class RouteGenerator {
 
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.bestSeller:
+        return MaterialPageRoute(builder: (_) => const BestSellerScreen());
       case Routes.productDetails:
         return MaterialPageRoute(builder: (_) =>  ProductDetails(product: ProductDetailsModel(name: "", description: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", price: 0.0 ,inStock: false, images: []),));
       default:

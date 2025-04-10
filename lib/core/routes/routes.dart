@@ -5,6 +5,7 @@ class Routes {
   static const String forgetPassword = '/forgetPassword';
   static const String emailVerification = '/emailVerification';
   static const String home = 'home';
+  static const String bestSeller = '/bestSeller';
   static const String appSection = '/appSection';
   static const String productDetails = '/productDetails';
 }
