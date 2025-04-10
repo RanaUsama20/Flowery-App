@@ -1,5 +1,5 @@
 name: flowery_app
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -52,6 +52,7 @@ dependencies:
   json_annotation: ^4.9.0
   flutter_secure_storage: ^9.2.4
   shared_preferences: ^2.5.2
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:
@@ -70,7 +71,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -94,14 +94,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-     - family: Inter
-       fonts:
-         - asset: assets/fonts/inter/Inter_Regular.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter_Regular.ttf
+    #         style: italic
+    - family: IM FELL English
+      fonts:
+        - asset: assets/fonts/IM_Fell_English/IMFellEnglish-Regular.ttf
+
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
