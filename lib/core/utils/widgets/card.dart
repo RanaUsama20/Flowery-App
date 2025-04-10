@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../../generated/locale_keys.g.dart';
 import '../../theme/app_theme.dart';
@@ -20,9 +21,8 @@ class ProductCard {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(
-            color: AppColors.white[AppColors.colorCode70]!, // Pink border
-            width: 0.5
-          ),
+              color: AppColors.white[AppColors.colorCode70]!, // Pink border
+              width: 0.5),
         ),
         elevation: 1,
         child: Padding(
@@ -33,19 +33,9 @@ class ProductCard {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.network(
-                  imageProduct,
-                  fit: BoxFit.cover,
+                child: CustomCacheNetworkImage(
+                  imageUrl: imageProduct,
                   height: 140,
-                  width: 140,
-                  errorBuilder: (context, error, stackTrace) {
-                    return  Image.asset(PngAssets.flowerCard);
-                  },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(
-                        child: CircularProgressIndicator());
-                  },
                 ),
               ),
               const SizedBox(height: 8),

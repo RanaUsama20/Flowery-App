@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/common/screen/empty_screen.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
@@ -24,8 +25,7 @@ class OccasionScreen extends StatefulWidget {
   State<OccasionScreen> createState() => _OccasionScreenState();
 }
 
-class _OccasionScreenState extends State<OccasionScreen>
-    with TickerProviderStateMixin {
+class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStateMixin {
   // late TabController _tabController;
   @override
   void initState() {
@@ -62,8 +62,7 @@ class _OccasionScreenState extends State<OccasionScreen>
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.wp(4)),
         child: BlocProvider<OccasionsCubit>(
-          create: (context) =>
-              serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
+          create: (context) => serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
           child: BlocBuilder<OccasionsCubit, OccasionsState>(
             builder: (context, state) {
               return Column(
@@ -72,20 +71,19 @@ class _OccasionScreenState extends State<OccasionScreen>
                   state.isOccasionsLoading
                       ? _buildDummyTabBar()
                       : _buildTabBar(
-                          state.occasions
-                              .map((e) => Tab(text: e.name))
-                              .toList(),
+                          state.occasions.map((e) => Tab(text: e.name)).toList(),
                           (index) {
                             context
                                 .read<OccasionsCubit>()
-                                .getProductsByOccasion(
-                                    state.occasions[index].id);
+                                .getProductsByOccasion(state.occasions[index].id);
                           },
                         ),
                   SizedBox(height: context.hp(2)),
                   state.isProductsLoading
                       ? _buildDummyProductOfOccasion()
-                      : _buildProducts(state.products),
+                      : state.products.isNotEmpty
+                          ? _buildProducts(state.products)
+                          : EmptyScreen(),
                 ],
               );
             },

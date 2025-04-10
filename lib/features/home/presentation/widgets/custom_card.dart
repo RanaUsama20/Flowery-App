@@ -5,10 +5,7 @@ enum TypeOfCard { Big, Small }
 
 class CardOfItem {
   static CustomCard cardType(
-      {required String image,
-      String? title,
-      int? price,
-      required TypeOfCard type}) {
+      {required String image, String? title, int? price, required TypeOfCard type}) {
     if (type == TypeOfCard.Big) {
       return BigCard(
         image: image,
@@ -36,10 +33,7 @@ class BigCard extends CustomCard {
   final String? title;
   final int? price;
   const BigCard(
-      {super.key,
-      required this.image,
-      required this.price,
-      required this.title});
+      {super.key, required this.image, required this.price, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +44,9 @@ class BigCard extends CustomCard {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-              height: 150, child: CustomCacheNetworkImage(imageUrl: image!)),
+            height: 150,
+            child: CustomCacheNetworkImage(imageUrl: image!),
+          ),
           const SizedBox(height: 5),
           Text(title!, style: theme.bodyLarge, overflow: TextOverflow.ellipsis),
           const SizedBox(height: 3),

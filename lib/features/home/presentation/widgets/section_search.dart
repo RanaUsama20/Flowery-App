@@ -19,7 +19,7 @@ class SectionSearch extends StatelessWidget {
             child: Row(
           children: [
             SvgPicture.asset(SvgAssets.flowerSvg),
-            SizedBox(width: 8),
+            SizedBox(width: 6),
             Expanded(
               child: FittedBox(
                 alignment: Alignment.centerLeft,
@@ -27,32 +27,36 @@ class SectionSearch extends StatelessWidget {
                 child: Text(
                   AppValues.appTitle,
                   style: theme.labelLarge!.copyWith(
-                      fontFamily: AppFontsFamily.imFelli,
-                      fontWeight: FontWeight.w400),
+                    fontFamily: AppFontsFamily.imFelli,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             )
           ],
         )),
         Expanded(
-            flex: 2,
-            child: TextFormField(
-              decoration: InputDecoration(
-                  enabledBorder: outLineBorder(),
-                  focusedBorder: outLineBorder(),
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: AppColors.white[AppColors.colorCode70],
-                  ),
-                  hintText: LocaleKeys.Home_Search.tr()),
-            ))
+          flex: 2,
+          child: TextFormField(
+            decoration: InputDecoration(
+              enabledBorder: outLineBorder(),
+              focusedBorder: outLineBorder(),
+              prefixIcon: Icon(
+                Icons.search,
+                color: AppColors.white[AppColors.colorCode70],
+              ),
+              hintText: LocaleKeys.Home_Search.tr(),
+            ),
+          ),
+        )
       ],
     );
   }
 }
 
-outLineBorder() {
+OutlineInputBorder outLineBorder() {
   return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
-      borderSide: BorderSide(color: AppColors.white[AppColors.colorCode70]!));
+    borderRadius: BorderRadius.circular(10),
+    borderSide: BorderSide(color: AppColors.white[AppColors.colorCode70]!),
+  );
 }

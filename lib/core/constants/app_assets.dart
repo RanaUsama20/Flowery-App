@@ -10,8 +10,7 @@ class SvgAssets {
   static const checkSvg = 'assets/svg/check.svg';
   static const checkCircleSvg = 'assets/svg/check_circle.svg';
   static const checklistSvg = 'assets/svg/Checklist.svg';
-  static const defaultMarkerComponentSvg =
-      'assets/svg/Default marker component.svg';
+  static const defaultMarkerComponentSvg = 'assets/svg/Default marker component.svg';
   static const deleteSvg = 'assets/svg/delete.svg';
   static const deliveryBoySvg = 'assets/svg/Delivery Boy.svg';
   static const diamondSvg = 'assets/svg/Diamond.svg';
@@ -53,10 +52,10 @@ class SvgAssets {
   static const defaultPhoto1 = 'assets/images/th.jpg';
   static const defaultPhoto2 = 'assets/images/th2.jpg';
   static const flowerSvg = 'assets/svg/Flower.svg';
+  static const empty = 'assets/svg/empty-screen.svg';
 }
 
 class PngAssets {
   static const helloUser = 'assets/png/hello-user.png';
   static const flowerCard = 'assets/png/flower-card.png';
-
 }
