@@ -62,7 +62,13 @@
     "CheckOut" : "Checkout",
     "PlaceOrder" : "Place Order",
     "Next" : "Next",
-    "SortBy" : "Sort By"
+    "SortBy" : "Sort By",
+    "Description" : "Description",
+    "EGP" : "EGP",
+    "Status" : "Status",
+    "InStock" : "In stock",
+    "outStock" : "Out of stock",
+    "AllPriceIncludeTax" : "All price include tax"
   },
 
   "Error": {

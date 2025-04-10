@@ -64,6 +64,12 @@ abstract class  LocaleKeys {
   static const Home_PlaceOrder = 'Home.PlaceOrder';
   static const Home_Next = 'Home.Next';
   static const Home_SortBy = 'Home.SortBy';
+  static const Home_Description = 'Home.Description';
+  static const Home_EGP = 'Home.EGP';
+  static const Home_Status = 'Home.Status';
+  static const Home_InStock = 'Home.InStock';
+  static const Home_outStock = 'Home.outStock';
+  static const Home_AllPriceIncludeTax = 'Home.AllPriceIncludeTax';
   static const Home = 'Home';
   static const Error_EmailAlreadyExists = 'Error.EmailAlreadyExists';
   static const Error_PasswordCannotBeEmpty = 'Error.PasswordCannotBeEmpty';
