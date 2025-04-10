@@ -1,4 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/extentions/media_query_extensions.dart';
+import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,25 +53,23 @@ class MyApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               title: AppValues.appTitle,
               onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute:  isLogin()?Routes.appSection: Routes.login,
-             // initialRoute:  Routes.login,
-
-
+              initialRoute: isLogin() ? Routes.appSection : Routes.login,
+              // initialRoute:  Routes.login,
             ),
           );
         },
       ),
     );
   }
-  bool  isLogin() {
-    SaveLocal.getString("token").then((value){
-      if(value!=null){
+
+  bool isLogin() {
+    SaveLocal.getString("token").then((value) {
+      if (value != null) {
         return true;
-      }else{
+      } else {
         return false;
       }
     });
     return true;
   }
-
 }
