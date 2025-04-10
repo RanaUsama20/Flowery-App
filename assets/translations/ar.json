@@ -62,7 +62,12 @@
     "CheckOut": "إتمام الشراء",
     "PlaceOrder": "تأكيد الطلب",
     "Next": "التالي",
-    "SortBy": "فرز حسب"
+    "SortBy": "فرز حسب",
+    "No products in this section": "لا توجد منتجات في هذا القسم",
+    "Failed to fetch products": "فشل في جلب المنتجات",
+    "EGP": "ج.م",
+    "Failed to fetch categories": "فشل في جلب الأقسام",
+    "Search": "بحث"
   },
   "Error": {
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",

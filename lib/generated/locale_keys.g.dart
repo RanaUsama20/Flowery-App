@@ -62,8 +62,13 @@ abstract class  LocaleKeys {
   static const Home_Filter = 'Home.Filter';
   static const Home_CheckOut = 'Home.CheckOut';
   static const Home_PlaceOrder = 'Home.PlaceOrder';
-  static const Home_Next = 'Home.Next';
+  static const Home_Next = 'Next';
   static const Home_SortBy = 'Home.SortBy';
+  static const Home_products = 'No products in this section';
+  static const Home_product = 'Failed to fetch products';
+  static const Home_EGP = 'Home.EGP';
+  static const Home_categories = 'Home.Failed to fetch categories';
+  static const Home_Search = 'Home.Search';
   static const Home = 'Home';
   static const Error_EmailAlreadyExists = 'Error.EmailAlreadyExists';
   static const Error_PasswordCannotBeEmpty = 'Error.PasswordCannotBeEmpty';

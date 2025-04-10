@@ -6,13 +6,15 @@ import '../../theme/app_theme.dart';
 
 class ProductCard {
   static Widget createProductCard(
-    String imageProduct,
-    String title,
-    String price,
-    String oldPrice,
-    String discount, {
-    Widget? actionButton,
-  }) {
+      String imageProduct,
+      String title,
+      int price,
+      int oldPrice,
+      int discount, {
+        Widget? actionButton,
+      })
+
+  {
     return IntrinsicWidth(
       child: Card(
         shape: RoundedRectangleBorder(
@@ -27,11 +29,11 @@ class ProductCard {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.asset(
+                child: Image.network(
                   imageProduct,
                   fit: BoxFit.cover,
                   height: 140,
-                  width: 140,
+                  width: double.infinity,
                 ),
               ),
               Text(
@@ -59,11 +61,11 @@ class ProductCard {
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    discount,
+                    "$discount%",
                     style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
-                      fontSize: 11,
-                      color: AppColors.green,
-                    ),
+                    fontSize: 11,
+                    color: AppColors.green,
+                  ),
                   ),
                 ],
               ),

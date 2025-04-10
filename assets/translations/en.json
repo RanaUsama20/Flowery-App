@@ -62,7 +62,12 @@
     "CheckOut" : "Checkout",
     "PlaceOrder" : "Place Order",
     "Next" : "Next",
-    "SortBy" : "Sort By"
+    "SortBy" : "Sort By",
+    "No products in this section": "No products in this section",
+    "Failed to fetch products": "Failed to fetch products",
+    "EGP": "EGP",
+    "Failed to fetch categories": "Failed to fetch categories",
+    "Search": "Search"
   },
 
   "Error": {
