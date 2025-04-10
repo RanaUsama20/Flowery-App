@@ -39,9 +39,9 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
       emit(SuccessState(allCategories: currentCategories, products: products));
       return products;
-    } catch (e, stacktrace) {
+    } catch (e) {
 
-      emit(CategoriesError('Failed to fetch products'));
+      emit(CategoriesError(LocaleKeys.Home_product.tr() + '${e.toString()}'));
       return [];
     }
    }
