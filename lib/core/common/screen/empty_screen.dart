@@ -10,11 +10,11 @@ class EmptyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(context.wp(4)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(SvgAssets.empty),
-        ],
+      child: Center(
+        child: SizedBox(
+          height: context.hp(50),
+            width: 200,
+            child: SvgPicture.asset(SvgAssets.empty)),
       ),
     );
   }
