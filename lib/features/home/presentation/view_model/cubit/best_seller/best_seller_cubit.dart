@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/base_state/base_state.dart';
 import '../../../../../../core/network/common/api_result.dart';
+import '../../../../domain/entity/best_seller/best_seller_entity.dart';
 import '../../../../domain/entity/best_seller/best_seller_response_entity.dart';
 import '../../../../domain/usecase/home_use_case.dart';
 
@@ -17,9 +18,9 @@ class BestSellerCubit extends Cubit<BestSellerState> {
   void doIntent(BestSellerAction action) {
     switch (action) {
       case GetDataAction():
-        {
           _fetchBestSeller();
-        }
+      case ProductSelectedAction():
+        // _mapBestSellerToProduct(action.item);
 
     }
   }
@@ -27,8 +28,6 @@ class BestSellerCubit extends Cubit<BestSellerState> {
   Future<BestSellerResponseEntity?> _fetchBestSeller() async {
     emit(state.copyWith(baseState: BaseLoadingState()));
     final result = await _homeUseCase.call();
-
-
     switch (result)  {
       case SuccessResult<BestSellerResponseEntity>():
         {
@@ -46,6 +45,18 @@ class BestSellerCubit extends Cubit<BestSellerState> {
     }
     return null;
   }
+
+  // void _mapBestSellerToProduct(BestSellerEntity item) {
+  //   final mappedProduct = ProductDetailsModel(
+  //     image: item.imgCover ?? '',
+  //     title: item.title ?? '',
+  //     priceAfterDiscount: item.priceAfterDiscount ?? 0.0,
+  //     originalPrice: item.price ?? 0.0,
+  //     discount: item.discount ?? 0,
+  //   );
+  //
+  //   emit(state.copyWith(selectedProduct: mappedProduct));
+  // }
 
 
 }

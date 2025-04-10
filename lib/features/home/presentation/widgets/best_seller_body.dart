@@ -32,7 +32,18 @@ class _BestSellerBodyState extends State<BestSellerBody> {
     // TODO: implement build
     return BlocProvider(
       create: (context) => cubit,
-      child: BlocBuilder<BestSellerCubit,BestSellerState>(
+      child: BlocConsumer<BestSellerCubit,BestSellerState>(
+          // listenWhen: (previous, current) => current.selectedProduct != null,
+          listener: (context, state) {
+            // if (state.selectedProduct != null) {
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (_) => ProductDetailsScreen(product: state.selectedProduct!),
+            //     ),
+            //   );
+            // }
+          },
           builder: (context,state){
             if (state.baseState is BaseLoadingState) {
               return const Center(child: CircularProgressIndicator());
@@ -62,13 +73,18 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                   ),
                   itemBuilder: (context, index) {
                     final bestSellerItem = bestSellerList![index];
-                    return ProductCard.createProductCard(
-                        bestSellerItem.imgCover!,
-                        bestSellerItem.title!,
-                        bestSellerItem.priceAfterDiscount.toString(),
-                        bestSellerItem.price.toString(),
-                        bestSellerItem.discount.toString(),
-                        actionButton: ActionButton(onPressed: (){})
+                    return InkWell(
+                      onTap: (){
+                        context.read<BestSellerCubit>().doIntent(ProductSelectedAction(bestSellerItem));
+                      },
+                      child: ProductCard.createProductCard(
+                          bestSellerItem.imgCover!,
+                          bestSellerItem.title!,
+                          bestSellerItem.priceAfterDiscount.toString(),
+                          bestSellerItem.price.toString(),
+                          bestSellerItem.discount.toString(),
+                          actionButton: ActionButton(onPressed: (){})
+                      ),
                     );
                   },
                 ),
