@@ -10,4 +10,5 @@ class ApiConstants {
   static const String bestSellerRoute = "best-seller";
 
 
+  static const String homeRoute = "home";
 }

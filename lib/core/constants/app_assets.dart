@@ -52,6 +52,7 @@ class SvgAssets {
   static const notificationSvg = 'assets/svg/notification.svg';
   static const defaultPhoto1 = 'assets/images/th.jpg';
   static const defaultPhoto2 = 'assets/images/th2.jpg';
+  static const flowerSvg = 'assets/svg/Flower.svg';
 }
 
 class PngAssets {

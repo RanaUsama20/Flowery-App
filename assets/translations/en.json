@@ -45,7 +45,8 @@
     "Change": "Change",
     "ChangePassword": "Change Password",
     "Update": "Update",
-    "ResetPassword": "Reset Password"
+    "ResetPassword": "Reset Password",
+    "search":"البحث"
   },
   "Home": {
     "Home": "Home",
