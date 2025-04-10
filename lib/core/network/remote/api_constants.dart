@@ -11,4 +11,5 @@ class ApiConstants {
  static const String getProductsById= "products";
   static const String bestSellerRoute = "best-seller";
   static const String homeRoute = "home";
+  static const String occasions = "occasions";
 }

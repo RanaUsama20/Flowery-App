@@ -8,36 +8,36 @@ import '../../../../core/network/remote/api_manager.dart';
 import '../api/auth_retrofit_client.dart';
 import '../model/request/reset_password_request.dart';
 import 'auth_data_source.dart';
+
 @Injectable(as: AuthDataSource)
-class AuthDataSourceImpl implements AuthDataSource
-{
+class AuthDataSourceImpl implements AuthDataSource {
   final ApiManager apiManager;
-final  AuthRetrofitClient apiService;
+  final AuthRetrofitClient apiService;
   AuthRetrofitClient apiClient;
 
-
-AuthDataSourceImpl(this.apiService,this.apiManager,this.apiClient);
+  AuthDataSourceImpl(this.apiService, this.apiManager, this.apiClient);
 
   @override
-  Future<Result<Map<String,dynamic>>>forgotPassword( ForgotPasswordRequest request) async {
-    return await apiManager.execute<Map<String,dynamic>>(() async {
+  Future<Result<Map<String, dynamic>>> forgotPassword(
+      ForgotPasswordRequest request) async {
+    return await apiManager.execute<Map<String, dynamic>>(() async {
       final response = await apiService.forgotPassword(request);
       return response;
-
     });
   }
 
   @override
-  Future<Result<Map<String,dynamic>>> verifyResetCode(VerifyResetCodeRequest request)async {
-    return await apiManager.execute<Map<String,dynamic>>(() async {
-    final response = await apiService.verifyResetCode(request);
+  Future<Result<Map<String, dynamic>>> verifyResetCode(
+      VerifyResetCodeRequest request) async {
+    return await apiManager.execute<Map<String, dynamic>>(() async {
+      final response = await apiService.verifyResetCode(request);
 
-    return response;
+      return response;
     });
   }
+
   @override
-  Future<Result<Map<String, dynamic>>> resetPassword(
-      ResetPasswordRequest request) async {
+  Future<Result<Map<String, dynamic>>> resetPassword(ResetPasswordRequest request) async {
     return await apiManager.execute<Map<String, dynamic>>(() async {
       final response = await apiService.resetPassword(request);
       return response;
@@ -50,5 +50,4 @@ AuthDataSourceImpl(this.apiService,this.apiManager,this.apiClient);
 
     return response?.toLoginEntity();
   }
-  }
-
+}

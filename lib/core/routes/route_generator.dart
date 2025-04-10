@@ -5,6 +5,7 @@ import 'package:flowery_app/features/auth/presentation/view/reset_password_scree
 import 'package:flowery_app/features/product_details/presentation/pages/product_details.dart';
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
+import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -27,6 +28,7 @@ class RouteGenerator {
             child: const LoginScreen(),
           ),
         );
+
       case Routes.register:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case Routes.forgetPassword:
@@ -41,6 +43,8 @@ class RouteGenerator {
 
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      // case Routes.occasion:
+      //   return MaterialPageRoute(builder: (_) => const OccasionScreen());
       case Routes.bestSeller:
         return MaterialPageRoute(builder: (_) => const BestSellerScreen());
       case Routes.categories:

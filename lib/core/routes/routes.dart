@@ -9,4 +9,5 @@ class Routes {
   static const String bestSeller = '/bestSeller';
   static const String appSection = '/appSection';
   static const String productDetails = '/productDetails';
+  static const String occasion = '/occasion';
 }
