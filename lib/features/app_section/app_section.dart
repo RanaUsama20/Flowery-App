@@ -2,11 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/features/cart/presentation/pages/cart_screen.dart';
-import 'package:flowery_app/features/categories/presentation/pages/categories_screen.dart';
+import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/home_screen.dart';
 import 'package:flowery_app/features/profile/presentation/pages/profile_screen.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AppSection extends StatefulWidget {
