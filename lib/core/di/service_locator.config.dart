@@ -40,12 +40,14 @@ import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_cu
     as _i609;
 import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_cubit.dart'
     as _i475;
+import 'package:flowery_app/features/home/data/api/home_retrofit_client.dart'
+    as _i1039;
 import 'package:flowery_app/features/home/data/data_source/home_data_source.dart'
     as _i787;
 import 'package:flowery_app/features/home/data/data_source/home_data_source_impl.dart'
     as _i449;
-import 'package:flowery_app/features/home/data/repository_imp/auth_repository_impl.dart'
-    as _i888;
+import 'package:flowery_app/features/home/data/repository_imp/home_repository_impl.dart'
+    as _i271;
 import 'package:flowery_app/features/home/domain/repository/home_repository.dart'
     as _i630;
 import 'package:flowery_app/features/home/domain/usecase/home_use_case.dart'
@@ -71,8 +73,6 @@ extension GetItInjectableX on _i174.GetIt {
     final loggerModule = _$LoggerModule();
     final dioModule = _$DioModule();
     gh.factory<_i826.AppCubit>(() => _i826.AppCubit());
-    gh.factory<_i683.HomeUseCase>(() => _i683.HomeUseCase());
-    gh.factory<_i373.HomeCubit>(() => _i373.HomeCubit());
     gh.singleton<_i797.ApiManager>(() => _i797.ApiManager());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
     gh.lazySingleton<_i974.PrettyPrinter>(() => loggerModule.prettyPrinter);
@@ -81,15 +81,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => dioModule.providerInterceptor());
     gh.lazySingleton<_i865.AuthRetrofitClient>(
         () => _i865.AuthRetrofitClient(gh<_i361.Dio>()));
+    gh.lazySingleton<_i1039.HomeRetrofitClient>(
+        () => _i1039.HomeRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
-    gh.factory<_i787.HomeDataSource>(() => _i449.HomeDataSourceImpl());
-    gh.factory<_i630.HomeRepository>(() => _i888.HomeRepositoryImpl());
     gh.factory<_i392.AuthDataSource>(() => _i136.AuthDataSourceImpl(
           gh<_i865.AuthRetrofitClient>(),
           gh<_i797.ApiManager>(),
           gh<_i865.AuthRetrofitClient>(),
         ));
+    gh.factory<_i787.HomeDataSource>(
+        () => _i449.HomeDataSourceImpl(gh<_i1039.HomeRetrofitClient>()));
     gh.factory<_i426.AuthRepository>(() => _i82.AuthRepositoryImpl(
           gh<_i1041.RegisterRemoteDataSource>(),
           gh<_i797.ApiManager>(),
@@ -99,14 +101,21 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i541.LoginUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i609.LoginCubit>(
         () => _i609.LoginCubit(gh<_i541.LoginUseCase>()));
+    gh.factory<_i630.HomeRepository>(() => _i271.HomeRepositoryImpl(
+          gh<_i797.ApiManager>(),
+          gh<_i787.HomeDataSource>(),
+        ));
     gh.factory<_i318.RegisterUseCase>(
         () => _i318.RegisterUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i255.AuthUseCase>(
         () => _i255.AuthUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i475.RegisterCubit>(
         () => _i475.RegisterCubit(gh<_i318.RegisterUseCase>()));
+    gh.factory<_i683.HomeUseCase>(
+        () => _i683.HomeUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i520.ForgotPasswordCubit>(
         () => _i520.ForgotPasswordCubit(gh<_i255.AuthUseCase>()));
+    gh.factory<_i373.HomeCubit>(() => _i373.HomeCubit(gh<_i683.HomeUseCase>()));
     return this;
   }
 }

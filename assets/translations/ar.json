@@ -62,7 +62,8 @@
     "CheckOut": "إتمام الشراء",
     "PlaceOrder": "تأكيد الطلب",
     "Next": "التالي",
-    "SortBy": "فرز حسب"
+    "SortBy": "فرز حسب",
+    "search":"البحث"
   },
   "Error": {
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
