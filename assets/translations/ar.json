@@ -62,7 +62,13 @@
     "CheckOut": "إتمام الشراء",
     "PlaceOrder": "تأكيد الطلب",
     "Next": "التالي",
-    "SortBy": "فرز حسب"
+    "SortBy": "فرز حسب",
+    "Description" : "وصف",
+    "EGP" : "مصري",
+    "Status" : "الحاله",
+    "InStock" : "في المخزن",
+    "outStock" : "ليس في المخزن",
+    "AllPriceIncludeTax" : "كل الاسعار تشمل ضريبه"
   },
   "Error": {
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
