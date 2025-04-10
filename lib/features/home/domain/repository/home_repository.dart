@@ -1,11 +1,9 @@
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/home/domain/entity/occasions_entity.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
-import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 
 import 'package:flowery_app/features/home/domain/entity/best_seller/best_seller_response_entity.dart';
-import '../../../../core/network/common/api_result.dart';
 
 abstract class HomeRepository{
 

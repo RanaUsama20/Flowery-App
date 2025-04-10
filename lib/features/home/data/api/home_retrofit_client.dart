@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flowery_app/core/network/remote/api_constants.dart';
-import 'package:flowery_app/features/home/data/model/response/best_seller_response_model.dart';
+import 'package:flowery_app/features/home/data/model/response/best-seller/best_seller_response_model.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import '../model/response/home_of_category_and_best_seller_and_occasion/home_of_category_and_best_seller_and_occasion.dart';
+import '../model/response/occasions/occasion_tab_response_dto.dart';
+import '../model/response/occasions/prodect_response_dto.dart';
+
 
 part 'home_retrofit_client.g.dart';
 

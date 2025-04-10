@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../product_details/presentation/models/product_details_model.dart';
 import '../../domain/entity/get_all_categories_entity.dart';
 import '../../domain/entity/get_products_by_id_entity.dart';
 import '../view_model/cubit/categories_cubit.dart';
@@ -31,9 +33,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     categories.getAllCategories();
 
     _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
+      if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
         if (_showFilterButton) setState(() => _showFilterButton = false);
-      } else if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
+      } else if (_scrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
         if (!_showFilterButton) setState(() => _showFilterButton = true);
       }
     });
@@ -76,7 +80,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
                   child: Row(
                     children: [
                       Expanded(
@@ -111,7 +116,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 6),
                 SizedBox(
                   height: 60,
@@ -125,7 +129,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           setState(() {
                             selectedIndex = index;
                           });
-                          categories.getProductsById(allCategories[index].id ?? "");
+                          categories
+                              .getProductsById(allCategories[index].id ?? "");
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -135,16 +140,21 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             children: [
                               Text(
                                 allCategories[index].name ?? '',
-                                style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(
-                                  color: isSelected ? AppColors.pink : AppColors.gray,
-                                   fontWeight: FontWeight.w400,
+                                style: AppTheme.lightTheme.textTheme.titleSmall
+                                    ?.copyWith(
+                                  color: isSelected
+                                      ? AppColors.pink
+                                      : AppColors.gray,
+                                  fontWeight: FontWeight.w400,
                                 ),
                               ),
                               const SizedBox(height: 4),
                               Container(
                                 height: 2,
                                 width: 40,
-                                color: isSelected ? AppColors.pink : AppColors.gray,
+                                color: isSelected
+                                    ? AppColors.pink
+                                    : AppColors.gray,
                               ),
                             ],
                           ),
@@ -156,32 +166,49 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 Expanded(
                   child: products.isEmpty
                       ? Center(
-                    child: Text(
-                      LocaleKeys.Home_NoProductsInThiSection.tr(),
-                      style: AppTheme.lightTheme.textTheme.titleSmall,
-                    ),
-                  )
+                          child: Text(
+                            LocaleKeys.Home_NoProductsInThiSection.tr(),
+                            style: AppTheme.lightTheme.textTheme.titleSmall,
+                          ),
+                        )
                       : GridView.builder(
-                    controller: _scrollController,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisExtent: 260,
-                      crossAxisSpacing: 12,
-                      mainAxisSpacing: 12,
-                    ),
-                    itemCount: products.length,
-                    itemBuilder: (context, index) {
-                      return ProductCard.createProductCard(
-                        products[index].imgCover.toString(),
-                        products[index].title.toString(),
-                        products[index].priceAfterDiscount?.toInt() ?? 0,
-                        products[index].price?.toInt() ?? 0,
-                        products[index].discount?.toInt() ?? 0,
-                        actionButton: ActionButton(onPressed: () {}),
-                      );
-                    },
-                  ),
+                          controller: _scrollController,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisExtent: 260,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
+                          itemCount: products.length,
+                          itemBuilder: (context, index) {
+                            final mappedProduct = ProductDetailsModel(
+                              price: products[index].price!.toInt(),
+                              description: products[index].description!,
+                              name: products[index].title!,
+                              images: products[index].images!,
+                              inStock: products[index].quantity != null
+                                  ? true
+                                  : false,
+                            );
+                            return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, Routes.productDetails,
+                                    arguments: mappedProduct);
+                              },
+                              child: ProductCard.createProductCard(
+                                products[index].imgCover.toString(),
+                                products[index].title.toString(),
+                                products[index].priceAfterDiscount?.toInt() ??
+                                    0,
+                                products[index].price?.toInt() ?? 0,
+                                products[index].discount?.toInt() ?? 0,
+                                actionButton: ActionButton(onPressed: () {}),
+                              ),
+                            );
+                          },
+                        ),
                 ),
               ],
             ),
@@ -197,8 +224,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   duration: const Duration(milliseconds: 300),
                   opacity: _showFilterButton ? 1.0 : 0.0,
                   child: ElevatedButton.icon(
-                    style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
-                      fixedSize: MaterialStatePropertyAll(const Size(120,50)),
+                    style:
+                        AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                      fixedSize: MaterialStatePropertyAll(const Size(120, 50)),
                       shape: MaterialStatePropertyAll(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -210,10 +238,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       // Filter action
                     },
                     icon: const Icon(Icons.tune, color: AppColors.white),
-                    label: Text(
-                        LocaleKeys.Home_Filter.tr(),
-                        style: AppTheme.lightTheme.textTheme.labelSmall
-                    ),
+                    label: Text(LocaleKeys.Home_Filter.tr(),
+                        style: AppTheme.lightTheme.textTheme.labelSmall),
                   ),
                 ),
               ),

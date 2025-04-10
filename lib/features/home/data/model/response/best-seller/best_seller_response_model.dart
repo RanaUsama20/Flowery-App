@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import '../../../domain/entity/best_seller/best_seller_response_entity.dart';
+import '../../../../domain/entity/best_seller/best_seller_response_entity.dart';
 import 'best_seller_model.dart';
 
 part 'best_seller_response_model.g.dart';

@@ -7,12 +7,14 @@ import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_state.dart';
-import 'package:flowery_app/features/home/presentation/widget/custom_card.dart';
-import 'package:flowery_app/features/home/presentation/widget/section_location.dart';
-import 'package:flowery_app/features/home/presentation/widget/section_search.dart';
+
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../widgets/custom_card.dart';
+import '../widgets/section_location.dart';
+import '../widgets/section_search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -164,7 +166,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     .copyWith(fontWeight: FontWeight.w600),
                               ),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, Routes.occasion);
+                                  },
                                   child: Text(LocaleKeys.Home_ViewAll.tr()))
                             ],
                           ),

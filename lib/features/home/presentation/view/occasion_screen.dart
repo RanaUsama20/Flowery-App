@@ -12,6 +12,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/routes/routes.dart';
+import '../../../product_details/presentation/models/product_details_model.dart';
+
 class OccasionScreen extends StatefulWidget {
   const OccasionScreen({
     super.key,
@@ -21,7 +24,8 @@ class OccasionScreen extends StatefulWidget {
   State<OccasionScreen> createState() => _OccasionScreenState();
 }
 
-class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStateMixin {
+class _OccasionScreenState extends State<OccasionScreen>
+    with TickerProviderStateMixin {
   // late TabController _tabController;
   @override
   void initState() {
@@ -34,8 +38,11 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading:
-            IconButton(onPressed: () {}, icon: Icon(Icons.arrow_back_ios_new_outlined)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: Icon(Icons.arrow_back_ios_new_outlined)),
         leadingWidth: 25,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +62,8 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.wp(4)),
         child: BlocProvider<OccasionsCubit>(
-          create: (context) => serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
+          create: (context) =>
+              serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
           child: BlocBuilder<OccasionsCubit, OccasionsState>(
             builder: (context, state) {
               return Column(
@@ -64,11 +72,14 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                   state.isOccasionsLoading
                       ? _buildDummyTabBar()
                       : _buildTabBar(
-                          state.occasions.map((e) => Tab(text: e.name)).toList(),
+                          state.occasions
+                              .map((e) => Tab(text: e.name))
+                              .toList(),
                           (index) {
                             context
                                 .read<OccasionsCubit>()
-                                .getProductsByOccasion(state.occasions[index].id);
+                                .getProductsByOccasion(
+                                    state.occasions[index].id);
                           },
                         ),
                   SizedBox(height: context.hp(2)),
@@ -126,9 +137,9 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
           itemCount: 10,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 17,
-            mainAxisSpacing: 17,
-            childAspectRatio: 163 / 229,
+            mainAxisExtent: 260,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
           ),
           itemBuilder: (context, index) => ProductCard.createProductCard(
             imageDummy,
@@ -149,18 +160,33 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
         itemCount: products.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 17,
-          mainAxisSpacing: 17,
-          childAspectRatio: 163 / 229,
+          mainAxisExtent: 260,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
         ),
-        itemBuilder: (context, index) => ProductCard.createProductCard(
-          products[index].imgCover,
-          products[index].title,
-          products[index].price.toInt(),
-          products[index].priceAfterDiscount.toInt(),
-          products[index].discount.toInt(),
-          actionButton: ActionButton(onPressed: () {}),
-        ),
+        itemBuilder: (context, index) {
+          final mappedProduct = ProductDetailsModel(
+            price: products[index].price.toInt(),
+            description: products[index].description,
+            name: products[index].title,
+            images: products[index].images,
+            inStock: products[index].quantity != 0 ? true : false,
+          );
+          return InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, Routes.productDetails,
+                  arguments: mappedProduct);
+            },
+            child: ProductCard.createProductCard(
+              products[index].imgCover,
+              products[index].title,
+              products[index].price.toInt(),
+              products[index].priceAfterDiscount.toInt(),
+              products[index].discount.toInt(),
+              actionButton: ActionButton(onPressed: () {}),
+            ),
+          );
+        },
       ),
     );
   }

@@ -1,7 +1,8 @@
-import 'package:flowery_app/features/home/data/models/response/occasion_tab_response_dto.dart';
 import 'package:flowery_app/features/home/domain/entity/occasions_entity.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'occasion_tab_response_dto.dart';
 
 part 'prodect_response_dto.g.dart';
 
