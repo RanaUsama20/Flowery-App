@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../../../core/base_state/base_state.dart';
 import '../../../../../../core/network/common/api_result.dart';
+import '../../../../../product_details/presentation/models/product_details_model.dart';
 import '../../../../domain/entity/best_seller/best_seller_entity.dart';
 import '../../../../domain/entity/best_seller/best_seller_response_entity.dart';
 import '../../../../domain/usecase/home_use_case.dart';
@@ -20,7 +21,7 @@ class BestSellerCubit extends Cubit<BestSellerState> {
       case GetDataAction():
           _fetchBestSeller();
       case ProductSelectedAction():
-        // _mapBestSellerToProduct(action.item);
+        _mapBestSellerToProduct(action.item);
 
     }
   }
@@ -46,17 +47,17 @@ class BestSellerCubit extends Cubit<BestSellerState> {
     return null;
   }
 
-  // void _mapBestSellerToProduct(BestSellerEntity item) {
-  //   final mappedProduct = ProductDetailsModel(
-  //     image: item.imgCover ?? '',
-  //     title: item.title ?? '',
-  //     priceAfterDiscount: item.priceAfterDiscount ?? 0.0,
-  //     originalPrice: item.price ?? 0.0,
-  //     discount: item.discount ?? 0,
-  //   );
-  //
-  //   emit(state.copyWith(selectedProduct: mappedProduct));
-  // }
+  void _mapBestSellerToProduct(BestSellerEntity item) {
+    final mappedProduct = ProductDetailsModel(
+    price: item.price!,
+      description: item.description!,
+      name: item.title!,
+      images: item.images!,
+      inStock: item.quantity != null ? true : false,
+    );
+
+    emit(state.copyWith(selectedProduct: mappedProduct));
+  }
 
 
 }

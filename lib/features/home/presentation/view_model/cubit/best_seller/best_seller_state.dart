@@ -1,34 +1,34 @@
 
 import 'package:equatable/equatable.dart';
 import '../../../../../../core/base_state/base_state.dart';
+import '../../../../../product_details/presentation/models/product_details_model.dart';
 import '../../../../domain/entity/best_seller/best_seller_entity.dart';
 
 class BestSellerState extends Equatable {
   final BaseState? baseState;
-  // final ProductDetailsModel? selectedProduct;
+  final ProductDetailsModel? selectedProduct;
 
 
   const BestSellerState({
     this.baseState,
-    // this.selectedProduct,
+    this.selectedProduct,
 
   });
 
   BestSellerState copyWith({
     BaseState? baseState,
-    // ProductDetailsModel? selectedProduct,
+    ProductDetailsModel? selectedProduct,
 
   }) {
     return BestSellerState(
       baseState: baseState ?? this.baseState,
-      // selectedProduct: selectedProduct ?? this.selectedProduct,
+     selectedProduct: selectedProduct ?? this.selectedProduct,
 
     );
   }
 
   @override
-  // List<Object?> get props => [baseState,selectedProduct];
-  List<Object?> get props => [baseState];
+  List<Object?> get props => [baseState,selectedProduct];
 
 }
 

@@ -50,6 +50,8 @@ class SvgAssets {
   static const visibilityOffSvg = 'assets/svg/visibility_off.svg';
   static const whatsappSvg = 'assets/svg/whatsapp.svg';
   static const notificationSvg = 'assets/svg/notification.svg';
+  static const defaultPhoto1 = 'assets/images/th.jpg';
+  static const defaultPhoto2 = 'assets/images/th2.jpg';
 }
 
 class PngAssets {

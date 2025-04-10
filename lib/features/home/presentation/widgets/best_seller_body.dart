@@ -1,3 +1,4 @@
+import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/best_seller/best_seller_cubit.dart';
 import 'package:flutter/material.dart';
@@ -33,16 +34,14 @@ class _BestSellerBodyState extends State<BestSellerBody> {
     return BlocProvider(
       create: (context) => cubit,
       child: BlocConsumer<BestSellerCubit,BestSellerState>(
-          // listenWhen: (previous, current) => current.selectedProduct != null,
+          listenWhen: (previous, current) => current.selectedProduct != null,
           listener: (context, state) {
-            // if (state.selectedProduct != null) {
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (_) => ProductDetailsScreen(product: state.selectedProduct!),
-            //     ),
-            //   );
-            // }
+            if (state.selectedProduct != null) {
+              print('besssssssst seller item : ${state.selectedProduct!.price}');
+              Navigator.pushNamed(context, Routes.productDetails,
+                arguments: state.selectedProduct
+              );
+            }
           },
           builder: (context,state){
             if (state.baseState is BaseLoadingState) {

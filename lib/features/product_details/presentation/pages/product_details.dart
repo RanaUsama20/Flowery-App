@@ -6,6 +6,8 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/core/theme/app_theme.dart';
 
+import '../../../../core/constants/app_assets.dart';
+
 class ProductDetails extends StatefulWidget {
   const ProductDetails({super.key, required this.product});
   final ProductDetailsModel product;
@@ -23,8 +25,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     final product = widget.product;
     final images = product.images.isEmpty
-        ? ['assets/images/th.jpg', 'assets/images/th2.jpg']
-        : product.images;
+        ? [SvgAssets.defaultPhoto1, SvgAssets.defaultPhoto2]
+        :product.images;
 
     return SafeArea(
       child: Scaffold(
@@ -105,7 +107,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 "${LocaleKeys.Home_Status.tr()}: ",
                                 style: AppTheme
                                     .lightTheme.textTheme.titleSmall!
-                                    .copyWith(color: AppColors.black),
+                                    .copyWith(color: AppColors.black,fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 product.inStock == true
@@ -133,13 +135,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Text(
                         product.name ,
                         style: AppTheme.lightTheme.textTheme.titleSmall!
-                            .copyWith(color: AppColors.black),
+                            .copyWith(color: AppColors.black,fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: context.hp(1)),
                       Text(
                         LocaleKeys.Home_Description.tr(),
                         style: AppTheme.lightTheme.textTheme.titleSmall!
-                            .copyWith(color: AppColors.black),
+                            .copyWith(color: AppColors.black,fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: context.hp(0.5)),
                       Text(
@@ -150,30 +152,40 @@ class _ProductDetailsState extends State<ProductDetails> {
                         softWrap: true,
                       ),
                       SizedBox(height: context.hp(5)),
-                      Center(
-                        child: Container(
-                          width: context.wp(90),
-                          height: context.hp(5.6),
-                          decoration: BoxDecoration(
-                            color: AppColors.pink,
-                            borderRadius:
-                            BorderRadius.circular(context.sp(40)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              LocaleKeys.Home_AddToCart.tr(),
-                              style: AppTheme.lightTheme.textTheme.labelLarge!
-                                  .copyWith(fontSize: 16, color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: context.hp(5)), // Bottom padding
                     ],
                   ),
                 ),
               ]), // End of SliverChildListDelegate
             ),
+            SliverFillRemaining(
+              hasScrollBody: false,
+              child: Column(
+              children: [
+                Expanded(child: SizedBox()),
+                Center(
+                  child: Container(
+                    width: context.wp(90),
+                    height: context.hp(5.6),
+                    decoration: BoxDecoration(
+                      color: AppColors.pink,
+                      borderRadius:
+                      BorderRadius.circular(context.sp(40)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        LocaleKeys.Home_AddToCart.tr(),
+                        style: AppTheme.lightTheme.textTheme.labelLarge!
+                            .copyWith(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+
+              ],
+            ),),
+            SliverToBoxAdapter(child: SizedBox(height: context.hp(2))), // Bottom padding
+
+
           ],
         ),
       ),

@@ -42,7 +42,10 @@ class RouteGenerator {
       case Routes.bestSeller:
         return MaterialPageRoute(builder: (_) => const BestSellerScreen());
       case Routes.productDetails:
-        return MaterialPageRoute(builder: (_) =>  ProductDetails(product: ProductDetailsModel(name: "", description: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", price: 0.0 ,inStock: false, images: []),));
+        final product = settings.arguments as ProductDetailsModel;
+        return MaterialPageRoute(builder: (_) =>  ProductDetails(
+          product: product,
+        ));
       default:
         return _undefinedRoute();
     }
