@@ -27,7 +27,6 @@ class RouteGenerator {
             child: const LoginScreen(),
           ),
         );
-
       case Routes.register:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case Routes.forgetPassword:
@@ -44,6 +43,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.bestSeller:
         return MaterialPageRoute(builder: (_) => const BestSellerScreen());
+      case Routes.categories:
+        return MaterialPageRoute(builder: (_) => const CategoriesScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
         return MaterialPageRoute(builder: (_) =>  ProductDetails(

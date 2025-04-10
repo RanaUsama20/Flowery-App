@@ -44,7 +44,7 @@ class SectionSearch extends StatelessWidget {
                     Icons.search,
                     color: AppColors.white[AppColors.colorCode70],
                   ),
-                  hintText: LocaleKeys.Home_search.tr()),
+                  hintText: LocaleKeys.Home_Search.tr()),
             ))
       ],
     );

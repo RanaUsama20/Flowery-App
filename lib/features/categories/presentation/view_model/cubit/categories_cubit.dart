@@ -16,16 +16,15 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
   Future<List<CategoriesEntity>> getAllCategories() async {
     try {
-
       final allCategories = await _categoriesUseCase.getAllCategories();
+      await getProductsById(allCategories[0].id);
       emit(SuccessState(allCategories: allCategories));
       return allCategories;
     } catch (e) {
-      emit(CategoriesError( LocaleKeys.Home_categories.tr() + '${e.toString()}'));
+      emit(CategoriesError( LocaleKeys.Home_FailedToFetchCategories.tr() + '${e.toString()}'));
       return [];
     }
   }
-
 
 
   Future<List<ProductsEntity>?> getProductsById(String categoryId) async {
@@ -41,7 +40,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       return products;
     } catch (e) {
 
-      emit(CategoriesError(LocaleKeys.Home_product.tr() + '${e.toString()}'));
+      emit(CategoriesError(LocaleKeys.Home_FailedToFetchProducts.tr() + '${e.toString()}'));
       return [];
     }
    }

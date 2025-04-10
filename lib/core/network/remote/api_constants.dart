@@ -9,7 +9,6 @@ class ApiConstants {
   static const String profileDataRoute = "auth/profile-data";
   static const String getAllCategories = "categories";
  static const String getProductsById= "products";
-
-
+  static const String bestSellerRoute = "best-seller";
   static const String homeRoute = "home";
 }

@@ -4,7 +4,6 @@ import 'package:flowery_app/features/home/data/model/response/best_seller_respon
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-
 import '../model/response/home_of_category_and_best_seller_and_occasion/home_of_category_and_best_seller_and_occasion.dart';
 
 part 'home_retrofit_client.g.dart';

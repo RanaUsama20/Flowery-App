@@ -102,8 +102,8 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
       return _result.data!;
     } on DioError catch (e) {
       errorLogger?.logError(e, StackTrace.current, _options);
-    rethrow;
-   }
+      rethrow;
+    }
   }
 
   @override
@@ -125,15 +125,15 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
       )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
- final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
 
-      try {
-        // Directly return the data field from the response
-        return _result.data!;
-      } on DioError catch (e) {
-        errorLogger?.logError(e, StackTrace.current, _options);
-    rethrow;
-   }
+    try {
+      // Directly return the data field from the response
+      return _result.data!;
+    } on DioError catch (e) {
+      errorLogger?.logError(e, StackTrace.current, _options);
+      rethrow;
+    }
   }
 
 
@@ -163,7 +163,7 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
       return _result.data!;
     } on DioError catch (e) {
       errorLogger?.logError(e, StackTrace.current, _options);
-    rethrow;
+      rethrow;
     }
   }
 

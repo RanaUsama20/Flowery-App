@@ -79,9 +79,9 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                       child: ProductCard.createProductCard(
                           bestSellerItem.imgCover!,
                           bestSellerItem.title!,
-                          bestSellerItem.priceAfterDiscount.toString(),
-                          bestSellerItem.price.toString(),
-                          bestSellerItem.discount.toString(),
+                          bestSellerItem.priceAfterDiscount!,
+                          bestSellerItem.price!,
+                          bestSellerItem.discount!,
                           actionButton: ActionButton(onPressed: (){})
                       ),
                     );

@@ -63,7 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 .copyWith(fontWeight: FontWeight.w600),
                           ),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushNamed(context, Routes.categories);
+                              },
                               child: Text(LocaleKeys.Home_ViewAll.tr()))
                         ],
                       ),

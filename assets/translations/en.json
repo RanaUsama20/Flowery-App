@@ -69,7 +69,11 @@
     "Status" : "Status",
     "InStock" : "In stock",
     "outStock" : "Out of stock",
-    "AllPriceIncludeTax" : "All price include tax"
+    "AllPriceIncludeTax" : "All price include tax",
+    "NoProductsInThiSection": "No products in this section",
+    "FailedToFetchProducts": "Failed to fetch products",
+    "FailedToFetchCategories": "Failed to fetch categories",
+    "Search": "Search"
   },
 
   "Error": {

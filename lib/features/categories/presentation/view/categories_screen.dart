@@ -157,7 +157,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: products.isEmpty
                       ? Center(
                     child: Text(
-                      LocaleKeys.Home_products.tr(),
+                      LocaleKeys.Home_NoProductsInThiSection.tr(),
                       style: AppTheme.lightTheme.textTheme.titleSmall,
                     ),
                   )

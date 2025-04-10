@@ -9,9 +9,9 @@ class ProductCard {
   static Widget createProductCard(
     String imageProduct,
     String title,
-    String price,
-    String oldPrice,
-    String discount, {
+    int price,
+    int oldPrice,
+    int discount, {
     Widget? actionButton,
   }) {
     return IntrinsicWidth(

@@ -69,7 +69,11 @@
     "Status" : "الحاله",
     "InStock" : "في المخزن",
     "outStock" : "ليس في المخزن",
-    "AllPriceIncludeTax" : "كل الاسعار تشمل ضريبه"
+    "AllPriceIncludeTax" : "كل الاسعار تشمل ضريبه",
+    "NoProductsInThiSection": "لا توجد منتجات في هذا القسم",
+    "FailedToFetchProducts": "فشل في جلب المنتجات",
+    "FailedToFetchCategories": "فشل في جلب الأقسام",
+    "Search": "بحث"
   },
   "Error": {
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",

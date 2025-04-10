@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/network/remote/api_constants.dart';
 import '../model/categories.dart';
-import '../model/products_model.dart';
+import '../model/product_model.dart';
 part 'getl_categories_retrofit_client.g.dart';
 
 @lazySingleton
