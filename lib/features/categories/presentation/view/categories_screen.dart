@@ -137,7 +137,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                 allCategories[index].name ?? '',
                                 style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(
                                   color: isSelected ? AppColors.pink : AppColors.gray,
-                                  fontWeight: FontWeight.w400,
+                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
                               const SizedBox(height: 4),
