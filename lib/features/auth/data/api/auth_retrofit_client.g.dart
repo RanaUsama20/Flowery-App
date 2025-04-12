@@ -21,8 +21,8 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
 
   @override
   Future<RegisterResponse> register(
-      RegisterRequestModel registerRequest,
-      ) async {
+    RegisterRequestModel registerRequest,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -31,11 +31,11 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
     final _options = _setStreamType<RegisterResponse>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'auth/signup',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/signup',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
@@ -58,11 +58,11 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
     final _options = _setStreamType<LoginDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        '/auth/signin',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            '/auth/signin',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>?>(_options);
@@ -78,8 +78,8 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
 
   @override
   Future<Map<String, dynamic>> forgotPassword(
-      ForgotPasswordRequest request,
-      ) async {
+    ForgotPasswordRequest request,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -88,28 +88,31 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
     final _options = _setStreamType<Map<String, dynamic>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'auth/forgotPassword',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/forgotPassword',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-
+    late Map<String, dynamic> _value;
     try {
-      // Directly return the data field from the response
-      return _result.data!;
-    } on DioError catch (e) {
-      errorLogger?.logError(e, StackTrace.current, _options);
+      _value = _result.data!.map(
+        (k, dynamic v) =>
+            MapEntry(k, dynamic.fromJson(v as Map<String, dynamic>)),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
+    return _value;
   }
 
   @override
   Future<Map<String, dynamic>> verifyResetCode(
-      VerifyResetCodeRequest request,
-      ) async {
+    VerifyResetCodeRequest request,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -118,29 +121,31 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
     final _options = _setStreamType<Map<String, dynamic>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'auth/verifyResetCode',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/verifyResetCode',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-
+    late Map<String, dynamic> _value;
     try {
-      // Directly return the data field from the response
-      return _result.data!;
-    } on DioError catch (e) {
-      errorLogger?.logError(e, StackTrace.current, _options);
+      _value = _result.data!.map(
+        (k, dynamic v) =>
+            MapEntry(k, dynamic.fromJson(v as Map<String, dynamic>)),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
+    return _value;
   }
-
 
   @override
   Future<Map<String, dynamic>> resetPassword(
-      ResetPasswordRequest request,
-      ) async {
+    ResetPasswordRequest request,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -149,22 +154,25 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
     final _options = _setStreamType<Map<String, dynamic>>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
-        _dio.options,
-        'auth/resetPassword',
-        queryParameters: queryParameters,
-        data: _data,
-      )
+            _dio.options,
+            'auth/resetPassword',
+            queryParameters: queryParameters,
+            data: _data,
+          )
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-
+    late Map<String, dynamic> _value;
     try {
-      // Directly return the data field from the response
-      return _result.data!;
-    } on DioError catch (e) {
-      errorLogger?.logError(e, StackTrace.current, _options);
+      _value = _result.data!.map(
+        (k, dynamic v) =>
+            MapEntry(k, dynamic.fromJson(v as Map<String, dynamic>)),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
