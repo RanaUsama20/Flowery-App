@@ -78,6 +78,8 @@ import 'package:flowery_app/features/home/presentation/view_model/cubit/home_cub
     as _i373;
 import 'package:flowery_app/features/home/presentation/view_model/occasions/occasions_cubit.dart'
     as _i331;
+import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart'
+    as _i106;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -109,6 +111,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i557.CategoriesRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i1039.HomeRetrofitClient>(
         () => _i1039.HomeRetrofitClient(gh<_i361.Dio>()));
+    gh.lazySingleton<_i106.ProfileRetrofitClient>(
+        () => _i106.ProfileRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
     gh.factory<_i129.GetAllCategoriesDataSource>(() =>
