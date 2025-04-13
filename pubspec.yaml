@@ -41,7 +41,7 @@ dependencies:
   injectable: ^2.5.0
   build: ^2.4.2
   injectable_generator: ^2.7.0
-  fluttertoast: ^8.2.12
+  
   logger: ^2.5.0
   dio: ^5.8.0+1
   retrofit: ^4.4.2
@@ -55,6 +55,7 @@ dependencies:
   cached_network_image:
   skeletonizer: ^1.4.3
   shimmer: ^3.0.0
+  toastification: ^3.0.2
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +85,6 @@ flutter:
     - assets/translations/
     - assets/png/
     - assets/svg/
-    - assets/images/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

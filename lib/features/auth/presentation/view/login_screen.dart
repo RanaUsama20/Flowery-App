@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_cubit.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_state.dart';
+import 'package:flowery_app/features/auth/presentation/view_model/login/login_cubit.dart';
+import 'package:flowery_app/features/auth/presentation/view_model/login/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -18,8 +18,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController(text: "amira321@gmail.com");
-  final TextEditingController passwordController = TextEditingController(text: "Amira@123");
+  final TextEditingController emailController =
+      TextEditingController(text: "amira321@gmail.com");
+  final TextEditingController passwordController =
+      TextEditingController(text: "Amira@123");
   bool rememberMe = false;
   bool isPassword = true;
   bool isPasswordVisible = true;
@@ -29,13 +31,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message??'');
+          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message ?? '');
           Navigator.of(context).pushNamedAndRemoveUntil(
-            Routes.appSection, (route) => false,
+            Routes.appSection,
+            (route) => false,
             arguments: true,
           );
-        }
-        else if (state is LoginLoadingState) {
+        } else if (state is LoginLoadingState) {
           AppDialogs.showLoadingDialog(context);
         } else if (state is LoginErrorState) {
           AppDialogs.showFailureDialog(context, message: state.error.message);
@@ -63,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: LocaleKeys.Authentication_Email.tr(),
                     hintText: LocaleKeys.Authentication_EnterYourEmail.tr(),
                   ),
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
+                  onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
                 ),
                 SizedBox(
                   height: 16,
@@ -79,9 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     suffixIcon: isPassword
                         ? IconButton(
                             icon: Icon(
-                              isPasswordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
+                              isPasswordVisible ? Icons.visibility_off : Icons.visibility,
                             ),
                             onPressed: () {
                               setState(() {
@@ -93,8 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     labelText: LocaleKeys.Authentication_Password.tr(),
                     hintText: LocaleKeys.Authentication_EnterYourPassword.tr(),
                   ),
-                  onTapOutside: (_) =>
-                      FocusManager.instance.primaryFocus?.unfocus(),
+                  onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
                 ),
                 SizedBox(
                   height: 16,
@@ -123,10 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  style:
-                      AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
-                    minimumSize:
-                        MaterialStatePropertyAll(Size(double.infinity, 50)),
+                  style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                    minimumSize: MaterialStatePropertyAll(Size(double.infinity, 50)),
                     shape: MaterialStatePropertyAll(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
@@ -147,20 +143,22 @@ class _LoginScreenState extends State<LoginScreen> {
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     minimumSize: Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                    shape:
+                        RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   ),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      Routes.appSection, (route) => false,
+                      Routes.appSection,
+                      (route) => false,
                       arguments: true,
                     );
                   },
                   child: Text(
                     LocaleKeys.Authentication_ContinueAsGuest.tr(),
-                    style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.gray),
+                    style: AppTheme.lightTheme.textTheme.titleSmall
+                        ?.copyWith(color: AppColors.gray),
                   ),
                 ),
-
                 SizedBox(height: 10),
                 InkWell(
                   onTap: () {

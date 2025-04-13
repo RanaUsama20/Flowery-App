@@ -1,26 +1,22 @@
 import 'package:flowery_app/features/auth/domain/entity/forgot_password_request_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'reset_password_request.g.dart';
+part 'forgot_password_request_dto.g.dart';
 
 @JsonSerializable()
-class ResetPasswordRequestDto {
+class ForgotPasswordRequestDto {
   final String? email;
-  final String? newPassword;
 
-  ResetPasswordRequestDto({
-    this.email,
-    this.newPassword,
-  });
+  ForgotPasswordRequestDto({this.email});
 
-  Map<String, dynamic> toJson() => _$ResetPasswordRequestDtoToJson(this);
+  Map<String, dynamic> toJson() => _$ForgotPasswordRequestDtoToJson(this);
 
-  // toEntity
+  // to entity
   ForgotPasswordRequestEntity toEntity() {
     return ForgotPasswordRequestEntity(
       email: email ?? "",
       resetCode: "",
-      newPassword: newPassword ?? "",
+      newPassword: "",
     );
   }
 }

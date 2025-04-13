@@ -52,6 +52,7 @@ class SvgAssets {
   static const defaultPhoto1 = 'assets/images/th.jpg';
   static const defaultPhoto2 = 'assets/images/th2.jpg';
   static const flowerSvg = 'assets/svg/Flower.svg';
+  static const flower = 'assets/svg/flower-icon.svg';
   static const empty = 'assets/svg/empty-screen.svg';
 }
 

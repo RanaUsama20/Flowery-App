@@ -1,22 +1,14 @@
+import 'package:flowery_app/features/auth/domain/entity/forgot_password_response_entity.dart';
 import '../../domain/entity/login_entity.dart';
-
 import 'package:flowery_app/core/network/common/api_result.dart';
-import '../model/request/forgot_password_request.dart';
-import '../model/request/reset_password_request.dart';
-import '../model/request/verify_request_model.dart';
-
 
 abstract class AuthDataSource {
+  Future<Result<ForgotPasswordResponseEntity>> forgotPassword({required String email});
 
- Future<Result<Map<String, dynamic>>> forgotPassword(
-     ForgotPasswordRequest request);
+  Future<Result<ForgotPasswordResponseEntity>> verifyResetCode({required String code});
 
- Future<Result<Map<String, dynamic>>> verifyResetCode(
-     VerifyResetCodeRequest request);
+  Future<Result<ForgotPasswordResponseEntity>> resetPassword(
+      {required String email, required String newPassword});
 
- Future<Result<Map<String, dynamic>>> resetPassword(
-     ResetPasswordRequest request);
-
- Future<LoginEntity?> login({required String email, required String password});
-
+  Future<LoginEntity?> login({required String email, required String password});
 }

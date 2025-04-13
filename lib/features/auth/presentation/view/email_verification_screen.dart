@@ -1,13 +1,22 @@
+import 'dart:developer';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/dialogs/app_dialogs.dart';
+import 'package:flowery_app/core/dialogs/app_toasts.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/theme/app_theme.dart';
+import 'package:flowery_app/core/utils/validator.dart';
+import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
+import 'package:flowery_app/features/auth/presentation/widgets/custom_app_bar.dart';
+import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:toastification/toastification.dart';
 
-import '../../../../core/di/service_locator.dart';
 import '../../../../core/extentions/media_query_extensions.dart';
-import '../view_model/cubit/forgot_password_cubit.dart';
-import '../view_model/cubit/forgot_password_state.dart';
+import '../view_model/forgot_password/forgot_password_cubit.dart';
+import '../view_model/forgot_password/forgot_password_state.dart';
 
 class EmailVerificationScreen extends StatefulWidget {
   const EmailVerificationScreen({super.key});
@@ -16,166 +25,145 @@ class EmailVerificationScreen extends StatefulWidget {
   State<EmailVerificationScreen> createState() => _EmailVerificationScreenState();
 }
 
-final TextEditingController codeController = TextEditingController();
-late ForgotPasswordCubit forgotPasswordCubit;
-
 class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController codeController = TextEditingController();
-  late ForgotPasswordCubit forgotPasswordCubit;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(title: LocaleKeys.Authentication_Password.tr()),
+      body: BlocConsumer<ForgotPasswordCubit, ForgetPasswordState>(
+        listener: (context, state) {
+          if (state.isVerifyResetCodeLoading) {
+            AppDialogs.showLoadingDialog(context);
+          }
+          if (state.isVerifyResetCodeSuccess) {
+            context.pop();
+            context.pushNamed(Routes.resetPassword,
+                arguments: context.read<ForgotPasswordCubit>());
+          }
+          if (state.isVerifyResetCodeError) {
+            context.pop();
+            AppToast.showToast(
+              context: context,
+              title: LocaleKeys.Authentication.tr(),
+              description: LocaleKeys.Error_Unexpected_server_error.tr(),
+              type: ToastificationType.error,
+            );
+          }
+          if (state.isForgotPasswordSuccess) {
+            context.pop();
+            context.pop();
+            AppToast.showToast(
+              context: context,
+              title: LocaleKeys.Authentication_Done.tr(),
+              description: LocaleKeys.Authentication_DoneSedCode.tr(),
+              type: ToastificationType.success,
+            );
+          }
+          if (state.isForgotPasswordLoading) {
+            AppDialogs.showLoadingDialog(context);
+          }
+          if (state.isForgotPasswordError) {
+            context.pop();
+            AppToast.showToast(
+              context: context,
+              title: LocaleKeys.Authentication.tr(),
+              description: LocaleKeys.Error_Unexpected_server_error.tr(),
+              type: ToastificationType.error,
+            );
+          }
+        },
+        builder: (context, state) => SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Text(LocaleKeys.Authentication_EmailVerification.tr(),
+                    style: AppTheme.lightTheme.textTheme.titleLarge),
+                SizedBox(height: context.hp(1.5)),
+                Text(
+                  LocaleKeys.Authentication_SubEmailVerification.tr(),
+                  style: AppTheme.lightTheme.textTheme.titleSmall
+                      ?.copyWith(color: AppColors.gray),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: context.hp(3.5)),
+                TextFormField(
+                  controller: _codeController,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    hintText: LocaleKeys.Authentication_EnterCode.tr(),
+                    hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
+                    border: AppTheme.lightTheme.inputDecorationTheme.border,
+                    focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
+                    errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
+                    focusedErrorBorder:
+                        AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                  ),
+                  validator: (value) => Validator.validateCode(value),
+                ),
+                SizedBox(height: context.hp(5)),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      context
+                          .read<ForgotPasswordCubit>()
+                          .verifyResetCode(_codeController.text);
+                    }
+                  },
+                  style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                    minimumSize: WidgetStatePropertyAll(Size(double.infinity, 48)),
+                  ),
+                  child: Text(LocaleKeys.Authentication_Confirm.tr()),
+                ),
+                SizedBox(height: context.hp(3)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      LocaleKeys.Authentication_DonotReceiveCode.tr(),
+                      style: AppTheme.lightTheme.textTheme.labelLarge!
+                          .copyWith(fontWeight: FontWeight.w400, color: AppColors.black),
+                    ),
+                    InkWell(
+                      onTap: () =>
+                          context.read<ForgotPasswordCubit>().forgotPassword(state.email),
+                      child: Text(
+                        LocaleKeys.Authentication_Resend.tr(),
+                        style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.pink, // Set the underline color
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.pink,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  late GlobalKey<FormState> _formKey;
+  late TextEditingController _codeController;
 
   @override
   void initState() {
     super.initState();
-    forgotPasswordCubit = serviceLocator.get<ForgotPasswordCubit>();
+    _formKey = GlobalKey<FormState>();
+    _codeController = TextEditingController();
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
-        bloc: forgotPasswordCubit,
-        listener: (context, state) {
-          if (state is ForgotPasswordLoadingSendState ||
-              state is ForgotPasswordLoadingReSendState) {
-            // Show loading indicator or toast
-            showDialog(
-              context: context,
-              builder: (_) => const Center(child: CircularProgressIndicator()),
-            );
-          } else if (state is ForgotPasswordSuccessState) {
-            Navigator.of(context).pop();
-
-            Navigator.of(context).pushNamed(Routes.resetPassword);
-          } else if (state is ForgotPasswordFailureState) {
-            Navigator.of(context).pop(); // Close the loading dialog
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.errorMessage}')),
-            );
-          } else if (state is ForgotPasswordSuccessResendState) {
-            Navigator.of(context).pop();
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('${state.message}')),
-            );
-          } else if (state is ForgotPasswordFailureState) {
-            Navigator.of(context).pop(); // Close the loading dialog
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${state.errorMessage}')),
-            );
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(left: 25, right: 25),
-          child: SafeArea(
-              child: Form(
-                  key: _formKey,
-                  child: Column(children: [
-                    Row(
-                      children: [
-                        InkWell(
-                          onTap: () => Navigator.of(context).pop(),
-                          child: Icon(Icons.arrow_back_ios_new_rounded,
-                              size: context.sp(25)),
-                        ),
-                        Text(" Password",
-                            style: AppTheme.lightTheme.textTheme.titleLarge),
-                      ],
-                    ),
-                    SizedBox(height: context.hp(4)),
-                    Text("Email verification",
-                        style: AppTheme.lightTheme.textTheme.titleLarge),
-                    SizedBox(height: context.hp(1.5)),
-                    Text(
-                      "Please enter your code that was sent to",
-                      style: AppTheme.lightTheme.textTheme.titleSmall
-                          ?.copyWith(color: AppColors.gray),
-                    ),
-                    Text(
-                      "your email address",
-                      style: AppTheme.lightTheme.textTheme.titleSmall
-                          ?.copyWith(color: AppColors.gray),
-                    ),
-                    SizedBox(height: context.hp(3.5)),
-                    SizedBox(height: context.hp(3)),
-                    TextFormField(
-                      controller: codeController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "Enter Your code",
-                        hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
-                        border: AppTheme.lightTheme.inputDecorationTheme.border,
-                        focusedBorder:
-                            AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
-                        errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
-                        focusedErrorBorder:
-                            AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        contentPadding:
-                            EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Code cannot be empty';
-                        }
-                        if (value.length < 6) {
-                          return 'Code should be at least 6 digits';
-                        }
-                        return null;
-                      },
-                    ),
-                    SizedBox(height: context.hp(5)),
-                    InkWell(
-                      onTap: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          forgotPasswordCubit.sendResetCode(code: codeController.text);
-                        }
-                      },
-                      child: Container(
-                        width: context.wp(90),
-                        height: context.hp(5.6),
-                        decoration: BoxDecoration(
-                          color: AppColors.pink,
-                          borderRadius: BorderRadius.circular(context.sp(40)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Submit',
-                            style: AppTheme.lightTheme.textTheme.labelLarge!
-                                .copyWith(fontSize: 16, color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: context.hp(3),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Didn't receive code? ",
-                          style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(
-                              fontWeight: FontWeight.w400, color: AppColors.black),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            forgotPasswordCubit.resendCode();
-                          },
-                          child: Text(
-                            "Resend",
-                            style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(
-                                decoration: TextDecoration.underline,
-                                decorationColor:
-                                    AppColors.pink, // Set the underline color
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.pink),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ]))),
-        ),
-      ),
-    );
+  void dispose() {
+    _codeController.dispose();
+    super.dispose();
   }
 }

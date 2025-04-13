@@ -1,6 +1,10 @@
 import 'package:flowery_app/core/network/common/api_result.dart';
-import 'package:flowery_app/features/auth/data/model/request/forgot_password_request.dart';
-import 'package:flowery_app/features/auth/data/model/request/verify_request_model.dart';
+import 'package:flowery_app/features/auth/data/model/request/forgot_password_request_dto.dart';
+import 'package:flowery_app/features/auth/data/model/request/verify_reset_code_request_dto.dart';
+import 'package:flowery_app/features/auth/data/model/response/forgot_password_response_dto.dart';
+import 'package:flowery_app/features/auth/data/model/response/reset_password_response_dto.dart';
+import 'package:flowery_app/features/auth/data/model/response/verify_reset_code_response_dto.dart';
+import 'package:flowery_app/features/auth/domain/entity/forgot_password_response_entity.dart';
 import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
 import 'package:injectable/injectable.dart';
 
@@ -13,40 +17,63 @@ import 'auth_data_source.dart';
 class AuthDataSourceImpl implements AuthDataSource {
   final ApiManager apiManager;
   final AuthRetrofitClient apiService;
-  AuthRetrofitClient apiClient;
 
-  AuthDataSourceImpl(this.apiService, this.apiManager, this.apiClient);
+  AuthDataSourceImpl(this.apiService, this.apiManager);
 
   @override
-  Future<Result<Map<String, dynamic>>> forgotPassword(
-      ForgotPasswordRequest request) async {
-    return await apiManager.execute<Map<String, dynamic>>(() async {
-      final response = await apiService.forgotPassword(request);
+  Future<Result<ForgotPasswordResponseEntity>> forgotPassword(
+      {required String email}) async {
+    final result = await apiManager.execute<ForgotPasswordResponseDto>(() async {
+      final response =
+          await apiService.forgotPassword(ForgotPasswordRequestDto(email: email));
       return response;
     });
+
+    switch (result) {
+      case SuccessResult<ForgotPasswordResponseDto>():
+        return SuccessResult<ForgotPasswordResponseEntity>(result.data.toEntity());
+      case FailureResult<ForgotPasswordResponseDto>():
+        return FailureResult<ForgotPasswordResponseEntity>(result.exception);
+    }
   }
 
   @override
-  Future<Result<Map<String, dynamic>>> verifyResetCode(
-      VerifyResetCodeRequest request) async {
-    return await apiManager.execute<Map<String, dynamic>>(() async {
-      final response = await apiService.verifyResetCode(request);
-
+  Future<Result<ForgotPasswordResponseEntity>> verifyResetCode(
+      {required String code}) async {
+    final result = await apiManager.execute<VerifyResetCodeResponseDto>(() async {
+      final response =
+          await apiService.verifyResetCode(VerifyResetCodeDtoRequest(resetCode: code));
       return response;
     });
+
+    switch (result) {
+      case SuccessResult<VerifyResetCodeResponseDto>():
+        return SuccessResult<ForgotPasswordResponseEntity>(result.data.toEntity());
+      case FailureResult<VerifyResetCodeResponseDto>():
+        return FailureResult<ForgotPasswordResponseEntity>(result.exception);
+    }
   }
 
   @override
-  Future<Result<Map<String, dynamic>>> resetPassword(ResetPasswordRequest request) async {
-    return await apiManager.execute<Map<String, dynamic>>(() async {
-      final response = await apiService.resetPassword(request);
+  Future<Result<ForgotPasswordResponseEntity>> resetPassword(
+      {required String email, required String newPassword}) async {
+    final result = await apiManager.execute<ResetPasswordResponseDto>(() async {
+      final response = await apiService
+          .resetPassword(ResetPasswordRequestDto(email: email, newPassword: newPassword));
       return response;
     });
+
+    switch (result) {
+      case SuccessResult<ResetPasswordResponseDto>():
+        return SuccessResult<ForgotPasswordResponseEntity>(result.data.toEntity());
+      case FailureResult<ResetPasswordResponseDto>():
+        return FailureResult<ForgotPasswordResponseEntity>(result.exception);
+    }
   }
 
   @override
   Future<LoginEntity?> login({required String email, required String password}) async {
-    var response = await apiClient.login(email, password);
+    var response = await apiService.login(email, password);
 
     return response?.toLoginEntity();
   }

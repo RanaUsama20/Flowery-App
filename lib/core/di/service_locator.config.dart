@@ -28,18 +28,22 @@ import 'package:flowery_app/features/auth/data/repository_imp/auth_repository_im
     as _i82;
 import 'package:flowery_app/features/auth/domain/repository/auth_repository.dart'
     as _i426;
-import 'package:flowery_app/features/auth/domain/usecase/auth_use_case.dart'
-    as _i255;
+import 'package:flowery_app/features/auth/domain/usecase/forgot_password_use_case.dart'
+    as _i371;
 import 'package:flowery_app/features/auth/domain/usecase/login_use_case.dart'
     as _i541;
 import 'package:flowery_app/features/auth/domain/usecase/register_use_case.dart'
     as _i318;
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/forgot_password_cubit.dart'
-    as _i520;
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_cubit.dart'
-    as _i609;
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_cubit.dart'
-    as _i475;
+import 'package:flowery_app/features/auth/domain/usecase/reset_password_use_case.dart'
+    as _i967;
+import 'package:flowery_app/features/auth/domain/usecase/verify_reset_code_use_case.dart'
+    as _i603;
+import 'package:flowery_app/features/auth/presentation/view_model/forgot_password/forgot_password_cubit.dart'
+    as _i680;
+import 'package:flowery_app/features/auth/presentation/view_model/login/login_cubit.dart'
+    as _i45;
+import 'package:flowery_app/features/auth/presentation/view_model/register/register_cubit.dart'
+    as _i555;
 import 'package:flowery_app/features/categories/data/api/getl_categories_retrofit_client.dart'
     as _i557;
 import 'package:flowery_app/features/categories/data/data_source/getCategories_data_source.dart'
@@ -80,6 +84,14 @@ import 'package:flowery_app/features/home/presentation/view_model/occasions/occa
     as _i331;
 import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart'
     as _i106;
+import 'package:flowery_app/features/profile/data/data_source/remote/home_remote_data_source.dart'
+    as _i386;
+import 'package:flowery_app/features/profile/data/data_source/remote/home_remote_data_source_impl.dart'
+    as _i965;
+import 'package:flowery_app/features/profile/data/repository_impl/profile_repository_impl.dart'
+    as _i110;
+import 'package:flowery_app/features/profile/domain/repository/profile_repository.dart'
+    as _i1025;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -129,8 +141,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i392.AuthDataSource>(() => _i136.AuthDataSourceImpl(
           gh<_i865.AuthRetrofitClient>(),
           gh<_i797.ApiManager>(),
-          gh<_i865.AuthRetrofitClient>(),
         ));
+    gh.factory<_i386.ProfileRemoteDataSource>(
+        () => _i965.HomeRemoteDataSourceImpl(
+              gh<_i1039.HomeRetrofitClient>(),
+              gh<_i797.ApiManager>(),
+            ));
     gh.factory<_i129.GetProductsByIdDataSource>(() =>
         _i48.GetProductsByIdDataSourceImpl(
             gh<_i557.CategoriesRetrofitClient>()));
@@ -148,14 +164,22 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i997.ProductOccasionUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i541.LoginUseCase>(
         () => _i541.LoginUseCase(gh<_i426.AuthRepository>()));
-    gh.factory<_i609.LoginCubit>(
-        () => _i609.LoginCubit(gh<_i541.LoginUseCase>()));
+    gh.factory<_i45.LoginCubit>(
+        () => _i45.LoginCubit(gh<_i541.LoginUseCase>()));
     gh.factory<_i675.BestSellerUseCase>(
         () => _i675.BestSellerUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i683.HomeUseCase>(
         () => _i683.HomeUseCase(gh<_i630.HomeRepository>()));
+    gh.factory<_i1025.ProfileRepository>(
+        () => _i110.HomeRepositoryImpl(gh<_i386.ProfileRemoteDataSource>()));
+    gh.factory<_i371.ForgotPasswordUseCase>(
+        () => _i371.ForgotPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i318.RegisterUseCase>(
         () => _i318.RegisterUseCase(gh<_i426.AuthRepository>()));
+    gh.factory<_i967.ResetPasswordUseCase>(
+        () => _i967.ResetPasswordUseCase(gh<_i426.AuthRepository>()));
+    gh.factory<_i603.VerifyResetCodeUseCase>(
+        () => _i603.VerifyResetCodeUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i427.GetProductsByIdRepository>(() =>
         _i578.GetProductsByIdRepositoryImpl(
             gh<_i129.GetProductsByIdDataSource>()));
@@ -163,19 +187,20 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i7.OccasionsUseCase>(),
           gh<_i997.ProductOccasionUseCase>(),
         ));
-    gh.factory<_i255.AuthUseCase>(
-        () => _i255.AuthUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i255.BestSellerCubit>(
         () => _i255.BestSellerCubit(gh<_i675.BestSellerUseCase>()));
     gh.factory<_i373.HomeCubit>(() => _i373.HomeCubit(gh<_i683.HomeUseCase>()));
-    gh.factory<_i475.RegisterCubit>(
-        () => _i475.RegisterCubit(gh<_i318.RegisterUseCase>()));
+    gh.factory<_i555.RegisterCubit>(
+        () => _i555.RegisterCubit(gh<_i318.RegisterUseCase>()));
     gh.factory<_i494.GetCategoriesUseCase>(() => _i494.GetCategoriesUseCase(
           gh<_i427.GetCategoriesRepository>(),
           gh<_i427.GetProductsByIdRepository>(),
         ));
-    gh.factory<_i520.ForgotPasswordCubit>(
-        () => _i520.ForgotPasswordCubit(gh<_i255.AuthUseCase>()));
+    gh.factory<_i680.ForgotPasswordCubit>(() => _i680.ForgotPasswordCubit(
+          gh<_i371.ForgotPasswordUseCase>(),
+          gh<_i603.VerifyResetCodeUseCase>(),
+          gh<_i967.ResetPasswordUseCase>(),
+        ));
     gh.factory<_i57.CategoriesCubit>(
         () => _i57.CategoriesCubit(gh<_i494.GetCategoriesUseCase>()));
     return this;

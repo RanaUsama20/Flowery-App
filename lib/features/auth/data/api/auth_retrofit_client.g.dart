@@ -59,7 +59,7 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            '/auth/signin',
+            'auth/signin',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -77,15 +77,15 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
   }
 
   @override
-  Future<Map<String, dynamic>> forgotPassword(
-    ForgotPasswordRequest request,
+  Future<ForgotPasswordResponseDto> forgotPassword(
+    ForgotPasswordRequestDto request,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<Map<String, dynamic>>(
+    final _options = _setStreamType<ForgotPasswordResponseDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -96,12 +96,9 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Map<String, dynamic> _value;
+    late ForgotPasswordResponseDto _value;
     try {
-      _value = _result.data!.map(
-        (k, dynamic v) =>
-            MapEntry(k, dynamic.fromJson(v as Map<String, dynamic>)),
-      );
+      _value = ForgotPasswordResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -110,15 +107,15 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
   }
 
   @override
-  Future<Map<String, dynamic>> verifyResetCode(
-    VerifyResetCodeRequest request,
+  Future<VerifyResetCodeResponseDto> verifyResetCode(
+    VerifyResetCodeDtoRequest request,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<Map<String, dynamic>>(
+    final _options = _setStreamType<VerifyResetCodeResponseDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -129,12 +126,9 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Map<String, dynamic> _value;
+    late VerifyResetCodeResponseDto _value;
     try {
-      _value = _result.data!.map(
-        (k, dynamic v) =>
-            MapEntry(k, dynamic.fromJson(v as Map<String, dynamic>)),
-      );
+      _value = VerifyResetCodeResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -143,15 +137,15 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
   }
 
   @override
-  Future<Map<String, dynamic>> resetPassword(
-    ResetPasswordRequest request,
+  Future<ResetPasswordResponseDto> resetPassword(
+    ResetPasswordRequestDto request,
   ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(request.toJson());
-    final _options = _setStreamType<Map<String, dynamic>>(
+    final _options = _setStreamType<ResetPasswordResponseDto>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -162,12 +156,9 @@ class _AuthRetrofitClient implements AuthRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late Map<String, dynamic> _value;
+    late ResetPasswordResponseDto _value;
     try {
-      _value = _result.data!.map(
-        (k, dynamic v) =>
-            MapEntry(k, dynamic.fromJson(v as Map<String, dynamic>)),
-      );
+      _value = ResetPasswordResponseDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

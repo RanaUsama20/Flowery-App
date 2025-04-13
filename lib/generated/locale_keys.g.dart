@@ -19,6 +19,8 @@ abstract class  LocaleKeys {
   static const Authentication_RememberMe = 'Authentication.RememberMe';
   static const Authentication_ContinueAsGuest = 'Authentication.ContinueAsGuest';
   static const Authentication_ForgetPassword = 'Authentication.ForgetPassword';
+  static const Authentication_TitleForgetPassword = 'Authentication.TitleForgetPassword';
+  static const Authentication_SubtitleForgetPassword = 'Authentication.SubtitleForgetPassword';
   static const Authentication_DonotHaveAnAccount = 'Authentication.DonotHaveAnAccount';
   static const Authentication_AlreadyHaveAnAccount = 'Authentication.AlreadyHaveAnAccount';
   static const Authentication_FirstName = 'Authentication.FirstName';
@@ -38,8 +40,13 @@ abstract class  LocaleKeys {
   static const Authentication_Confirm = 'Authentication.Confirm';
   static const Authentication_Resend = 'Authentication.Resend';
   static const Authentication_DidnotReceiveCode = 'Authentication.DidnotReceiveCode';
+  static const Authentication_DonotReceiveCode = 'Authentication.DonotReceiveCode';
   static const Authentication_EmailVerification = 'Authentication.EmailVerification';
+  static const Authentication_SubEmailVerification = 'Authentication.SubEmailVerification';
+  static const Authentication_EnterCode = 'Authentication.EnterCode';
   static const Authentication_Continue = 'Authentication.Continue';
+  static const Authentication_Done = 'Authentication.Done';
+  static const Authentication_DoneSedCode = 'Authentication.DoneSedCode';
   static const Authentication_PasswordRequirements = 'Authentication.PasswordRequirements';
   static const Authentication = 'Authentication';
   static const Profile_Profile = 'Profile.Profile';
@@ -76,8 +83,11 @@ abstract class  LocaleKeys {
   static const Home_FailedToFetchCategories = 'Home.FailedToFetchCategories';
   static const Home_Search = 'Home.Search';
   static const Home = 'Home';
+  static const Error_error = 'Error.error';
   static const Error_EmailAlreadyExists = 'Error.EmailAlreadyExists';
   static const Error_PasswordCannotBeEmpty = 'Error.PasswordCannotBeEmpty';
+  static const Error_CodeCannotBeEmpty = 'Error.CodeCannotBeEmpty';
+  static const Error_CodeShouldBeAtLeast6Digits = 'Error.CodeShouldBeAtLeast6Digits';
   static const Error_NameCannotBeEmpty = 'Error.NameCannotBeEmpty';
   static const Error_PhoneNumberCannotBeEmpty = 'Error.PhoneNumberCannotBeEmpty';
   static const Error_InvalidPhoneNumber = 'Error.InvalidPhoneNumber';

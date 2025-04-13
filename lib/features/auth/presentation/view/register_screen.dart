@@ -6,8 +6,8 @@ import 'package:flowery_app/core/dialogs/app_dialogs.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/validator.dart';
 import 'package:flowery_app/features/auth/data/model/request/register_request_model.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_cubit.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_state.dart';
+import 'package:flowery_app/features/auth/presentation/view_model/register/register_cubit.dart';
+import 'package:flowery_app/features/auth/presentation/view_model/register/register_state.dart';
 import 'package:flowery_app/features/auth/presentation/widgets/section_select_gender.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/gestures.dart';
@@ -60,8 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: theme.titleSmall,
                       decoration: InputDecoration(
                           label: Text(LocaleKeys.Authentication_FirstName.tr()),
-                          hintText:
-                              LocaleKeys.Authentication_EnterFirstName.tr()),
+                          hintText: LocaleKeys.Authentication_EnterFirstName.tr()),
                       validator: (value) {
                         return Validator.validateName(value);
                       },
@@ -74,8 +73,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: theme.titleSmall,
                       decoration: InputDecoration(
                           label: Text(LocaleKeys.Authentication_LastName.tr()),
-                          hintText:
-                              LocaleKeys.Authentication_EnterLastName.tr()),
+                          hintText: LocaleKeys.Authentication_EnterLastName.tr()),
                       validator: (value) {
                         return Validator.validateName(value);
                       },
@@ -105,8 +103,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: theme.titleSmall,
                       decoration: InputDecoration(
                           label: Text(LocaleKeys.Authentication_Password.tr()),
-                          hintText:
-                              LocaleKeys.Authentication_EnterYourPassword.tr()),
+                          hintText: LocaleKeys.Authentication_EnterYourPassword.tr()),
                       validator: (value) {
                         return Validator.validatePassword(value);
                       },
@@ -119,8 +116,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: theme.titleSmall,
                       decoration: InputDecoration(
                           label: Text(LocaleKeys.Authentication_Confirm.tr()),
-                          hintText:
-                              LocaleKeys.Authentication_ConfirmPassword.tr()),
+                          hintText: LocaleKeys.Authentication_ConfirmPassword.tr()),
                       validator: (value) {
                         return Validator.validateConfirmPassword(
                             value, passwordController.text);
@@ -135,8 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   style: theme.titleSmall,
                   decoration: InputDecoration(
                       label: Text(LocaleKeys.Authentication_PhoneNumber.tr()),
-                      hintText:
-                          LocaleKeys.Authentication_EnterPhoneNumber.tr()),
+                      hintText: LocaleKeys.Authentication_EnterPhoneNumber.tr()),
                   validator: (value) {
                     // return Validator.validatePhoneNumber(value);
                   },
@@ -148,8 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(height: 24),
                 RichText(
                   text: TextSpan(
-                    text: LocaleKeys
-                        .Authentication_CreatingAnAccountYouAgreeToOur.tr(),
+                    text: LocaleKeys.Authentication_CreatingAnAccountYouAgreeToOur.tr(),
                     children: [
                       TextSpan(
                           text: LocaleKeys.Authentication_TermsConditions.tr(),
@@ -172,10 +166,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         } else if (state.registerState is BaseSuccessState) {
                           final ans = state.registerState as BaseSuccessState;
                           Navigator.of(context).pop();
-                          AppDialogs.showSuccessDialog(context,
-                              message: ans.data);
+                          AppDialogs.showSuccessDialog(context, message: ans.data);
                           Navigator.of(context).pushNamed(Routes.login);
-
                         } else if (state.registerState is BaseErrorState) {
                           Navigator.of(context).pop();
                           final ans = state.registerState as BaseErrorState;
