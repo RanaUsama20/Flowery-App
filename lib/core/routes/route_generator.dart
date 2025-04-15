@@ -16,6 +16,7 @@ import '../../features/cart/presentation/pages/cart_screen.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
 import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
+import '../../features/profile/presentation/view/change_password_screen.dart';
 import '../di/service_locator.dart';
 
 class RouteGenerator {
@@ -49,6 +50,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const BestSellerScreen());
       case Routes.categories:
         return MaterialPageRoute(builder: (_) => const CategoriesScreen());
+      case Routes.changePassword:
+        return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
         return MaterialPageRoute(builder: (_) =>  ProductDetails(

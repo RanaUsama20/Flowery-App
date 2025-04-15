@@ -4,6 +4,7 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/features/cart/presentation/pages/cart_screen.dart';
 import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/home_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/change_password_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _AppSectionState extends State<AppSection> {
     HomeScreen(),
     CategoriesScreen(),
     CartScreen(),
-    ProfileScreen(),
+    ChangePasswordScreen(),
   ];
   int _currentIndex = 0;
   @override

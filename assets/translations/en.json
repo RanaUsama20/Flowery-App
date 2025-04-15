@@ -44,9 +44,10 @@
     "EditProfile": "Edit profile",
     "Change": "Change",
     "ChangePassword": "Change Password",
+    "newPassword": "New Password",
+    "currentPassword": "Current Password",
     "Update": "Update",
-    "ResetPassword": "Reset Password",
-    "search":"البحث"
+    "ResetPassword": "Reset Password"
   },
   "Home": {
     "Home": "Home",
