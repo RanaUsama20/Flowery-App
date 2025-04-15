@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart';
 import 'package:flowery_app/features/profile/data/model/request/change_password/change_password_request_model.dart';
@@ -18,10 +17,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   @override
   Future<Result<ChangePasswordResponseDto?>> changePassword(ChangePasswordRequestDto? passwordData) async {
     final token = await SaveLocal.getString("token");
-    print('token is $token');
     final fullToken = "Bearer $token";
-    print('fullToken is $fullToken');
-
     final response = await _apiManager.execute<ChangePasswordResponseDto?>(
           () async {
         return await _profileRetrofitClient.changePassword(passwordData, fullToken);

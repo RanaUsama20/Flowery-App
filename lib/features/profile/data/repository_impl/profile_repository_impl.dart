@@ -5,7 +5,6 @@ import 'package:flowery_app/features/profile/domain/repository/profile_repositor
 import 'package:injectable/injectable.dart';
 
 import '../../domain/entity/change_password/change_password__request_entity.dart';
-import '../model/request/change_password/change_password_request_model.dart';
 import '../model/response/change_password/change_password_response_model.dart';
 
 @Injectable(as: ProfileRepository)
