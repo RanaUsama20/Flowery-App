@@ -14,4 +14,6 @@ class Routes {
 
 
   static const String cart = 'cart';
+  static const String editProfile = '/editProfile';
+
 }

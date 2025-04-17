@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
 import 'package:flowery_app/features/auth/data/model/request/register_request_model.dart';
 import '../../data/model/request/forgot_password_request.dart';
 import '../../data/model/request/reset_password_request.dart';
@@ -12,4 +15,8 @@ abstract class AuthRepository{
   Future<Result<Map<String, dynamic>>> resetPassword(ResetPasswordRequest request);
   Future<Result<String>> register(RegisterRequestModel registerRequest);
   Future<LoginEntity?> login({required String email, required String password});
-  }
+  Future<Result<String>> editProfile(EditProfileRequest request);
+  Future<Result<String>> uploadPhoto(File request);
+
+
+}

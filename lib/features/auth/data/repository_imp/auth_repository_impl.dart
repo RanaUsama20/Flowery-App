@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/constants/app_values.dart';
 import '../../../../core/network/common/api_result.dart';
@@ -60,6 +63,16 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<Result<Map<String, dynamic>>> resetPassword(
       ResetPasswordRequest request) async {
     final result = await authDataSource.resetPassword(request);
+    return result;
+  }
+
+  @override
+  Future<Result<String>> editProfile(EditProfileRequest request) async{
+    final result = await authDataSource.editProfile(request);
+    return result;
+  }
+  Future<Result<String>> uploadPhoto(File request) async{
+    final result = await authDataSource.uploadPhoto(request);
     return result;
   }
 }

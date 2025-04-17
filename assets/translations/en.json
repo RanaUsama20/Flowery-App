@@ -37,7 +37,11 @@
     "DidnotReceiveCode": "Didn't receive code?",
     "EmailVerification": "Email verification",
     "Continue": "Continue",
-    "PasswordRequirements": "Password must not be empty and must contain at least 6 characters, an uppercase letter, and a number"
+    "PasswordRequirements": "Password must not be empty and must contain at least 6 characters, an uppercase letter, and a number",
+    "takeAPhoto": "Take a Photo",
+    "ChooseFromGallery" : "Choose from gallery",
+    "3": "3"
+
   },
   "Profile": {
     "Profile": "Profile",
@@ -81,6 +85,7 @@
     "TotalPrice": "Total Price",
     "Items": "Items ",
     "EmptyCart": "Cart is empty"
+
   },
 
   "Error": {
