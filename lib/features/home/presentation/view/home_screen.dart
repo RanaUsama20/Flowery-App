@@ -89,6 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                         height: 30,
                                         child: CustomCacheNetworkImage(
                                           imageUrl: ans.data?.category[index].image ?? '',
+                                          width: double.infinity,
+                                          height: double.infinity,
                                         ),
                                       ),
                                     ),

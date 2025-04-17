@@ -26,11 +26,9 @@ class Validator {
       return LocaleKeys.Error_PasswordCannotBeEmpty.tr();
     } else if (val.isEmpty) {
       return LocaleKeys.Error_PasswordCannotBeEmpty.tr();
-    }
-    else if (!passwordRegex.hasMatch(val)) {
+    } else if (!passwordRegex.hasMatch(val)) {
       return LocaleKeys.Error_PasswordEnterAValidPassword.tr();
-    }
-    else {
+    } else {
       return null;
     }
   }
@@ -45,7 +43,6 @@ class Validator {
     }
   }
 
-
   static String? validateName(String? val) {
     if (val == null || val.isEmpty) {
       return LocaleKeys.Error_NameCannotBeEmpty.tr();
@@ -54,16 +51,23 @@ class Validator {
     }
   }
 
-
-
-
   static String? validatePhoneNumber(String? val) {
     if (val == null) {
       return LocaleKeys.Error_PhoneNumberCannotBeEmpty.tr();
     } else if (int.tryParse(val.trim()) == null) {
-      return  LocaleKeys.Error_InvalidPhoneNumber.tr();
+      return LocaleKeys.Error_InvalidPhoneNumber.tr();
     } else if (val.trim().length != 10) {
       return LocaleKeys.Error_InvalidPhoneNumber.tr();
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateCode(String? val) {
+    if (val == null || val.isEmpty) {
+      return LocaleKeys.Error_CodeCannotBeEmpty.tr();
+    } else if (val.length < 6) {
+      return LocaleKeys.Error_CodeShouldBeAtLeast6Digits.tr();
     } else {
       return null;
     }

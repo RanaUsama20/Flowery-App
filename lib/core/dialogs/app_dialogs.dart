@@ -1,27 +1,21 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/dialogs/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../generated/locale_keys.g.dart';
 
 class AppDialogs {
   // Show a loading dialog
-  static void showLoadingDialog(
-    BuildContext context, {
-    String? message,
-  }) {
+  static void showLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 16),
-              Text(message ?? LocaleKeys.Loading),
-            ],
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: LoadingWidget(),
           ),
         );
       },
@@ -86,9 +80,10 @@ class AppDialogs {
               ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: Text(buttonText ?? LocaleKeys.Ok,style: TextStyle(
-                color: AppColors.black
-              ),),
+              child: Text(
+                buttonText ?? LocaleKeys.Ok,
+                style: TextStyle(color: AppColors.black),
+              ),
             ),
           ],
         );

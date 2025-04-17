@@ -186,6 +186,19 @@ class AppTheme {
       labelPadding: const EdgeInsets.only(right: 24),
       tabAlignment: TabAlignment.start,
     ),
+    bottomSheetTheme: const BottomSheetThemeData(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      backgroundColor: AppColors.white,
+      dragHandleSize: Size(80, 4),
+      dragHandleColor: AppColors.black,
+      showDragHandle: true,
+      elevation: 0,
+    ),
   );
 }
 

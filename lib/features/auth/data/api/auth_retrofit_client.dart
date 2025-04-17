@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flowery_app/features/auth/data/model/response/forgot_password_response_dto.dart';
+import 'package:flowery_app/features/auth/data/model/response/reset_password_response_dto.dart';
+import 'package:flowery_app/features/auth/data/model/response/verify_reset_code_response_dto.dart';
 import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
 import 'package:flowery_app/features/auth/data/model/response/edit_profile_response.dart';
 import 'package:injectable/injectable.dart';
@@ -17,24 +20,22 @@ part 'auth_retrofit_client.g.dart';
 abstract class AuthRetrofitClient {
   @factoryMethod
   factory AuthRetrofitClient(Dio dio) = _AuthRetrofitClient;
+
   @POST(ApiConstants.signupRoute)
-  Future<RegisterResponse> register(
-      @Body() RegisterRequestModel registerRequest);
-  @POST('/auth/signin')
-  Future<LoginDto?> login(@Field("email") String email, @Field("password") String password);
+  Future<RegisterResponse> register(@Body() RegisterRequestModel registerRequest);
 
-  @POST("auth/forgotPassword")
-  Future<Map<String, dynamic>> forgotPassword(
-    @Body() ForgotPasswordRequest request,
-  );
+  @POST(ApiConstants.loginRoute)
+  Future<LoginDto?> login(
+      @Field("email") String email, @Field("password") String password);
 
-  @POST("auth/verifyResetCode")
-  Future<Map<String, dynamic>> verifyResetCode(
-      @Body() VerifyResetCodeRequest request);
-  @PUT("auth/resetPassword")
-  Future<Map<String, dynamic>> resetPassword(
-      @Body() ResetPasswordRequest request);
+  @POST(ApiConstants.forgetPasswordRoute)
+  Future<ForgotPasswordResponseDto> forgotPassword(
+      @Body() ForgotPasswordRequestDto request);
 
+  @POST(ApiConstants.verifyOtpCodeRoute)
+  Future<VerifyResetCodeResponseDto> verifyResetCode(
+      @Body() VerifyResetCodeDtoRequest request);
 
-
+  @PUT(ApiConstants.resetPasswordRoute)
+  Future<ResetPasswordResponseDto> resetPassword(@Body() ResetPasswordRequestDto request);
 }

@@ -3,9 +3,11 @@ import 'package:flowery_app/features/profile/data/model/response/change_password
 
 import '../../../../../core/network/common/api_result.dart';
 
+import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
+
 abstract class ProfileRemoteDataSource {
   // ex:
   //  Future<Result<ModelEntity>> functionName();
-  Future<Result<ChangePasswordResponseDto?>> changePassword(ChangePasswordRequestDto? passwordData);
-
+  Future<Result<ProfileDataEntity>> getProfileData();
 }

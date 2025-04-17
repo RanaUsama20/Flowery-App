@@ -38,6 +38,8 @@ class ProductCard {
                 child: CustomCacheNetworkImage(
                   imageUrl: imageProduct,
                   height: 140,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
                 ),
               ),
               const SizedBox(height: 8),

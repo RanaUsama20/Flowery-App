@@ -1,10 +1,18 @@
+import 'dart:developer';
+
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart';
 import 'package:flowery_app/features/profile/data/model/request/change_password/change_password_request_model.dart';
 import 'package:flowery_app/features/profile/data/model/response/change_password/change_password_response_model.dart';
+import 'package:flowery_app/core/utils/save_local.dart';
+import 'package:flowery_app/features/profile/data/model/response/profile_data/profile_data_dto.dart';
+import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../../core/network/remote/api_manager.dart';
 import '../../../../../core/utils/save_local.dart';
+
+import '../../api/profile_retrofit_client.dart';
 import 'profile_remote_data_source.dart';
 
 @Injectable(as: ProfileRemoteDataSource)
@@ -31,7 +39,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
 
 
-  
+
   //! ex:
   // @override
   // Future<Result<ModelEntity>> functionName() async {
@@ -46,3 +54,18 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   //   }
   // }
 
+  @override
+  Future<Result<ProfileDataEntity>> getProfileData() async {
+    final result = await _apiManager.execute<ProfileDataDto>(() async {
+      final token = await SaveLocal.getString("token");
+      log("token: $token");
+      return await _profileRetrofitClient.getProfile("Bearer $token");
+    });
+    switch (result) {
+      case SuccessResult<ProfileDataDto>():
+        return SuccessResult<ProfileDataEntity>(result.data.toProfileDataEntity());
+      case FailureResult<ProfileDataDto>():
+        return FailureResult<ProfileDataEntity>(result.exception);
+    }
+  }
+}

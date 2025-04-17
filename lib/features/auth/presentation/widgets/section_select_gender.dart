@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_cubit.dart';
+import 'package:flowery_app/features/auth/presentation/view_model/register/register_cubit.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
@@ -26,8 +26,8 @@ class _SectionOfGenderWidgetState extends State<SectionOfGenderWidget> {
       children: [
         Text(
           LocaleKeys.Authentication_Gender.tr(),
-          style: theme.titleMedium!
-              .copyWith(color: AppColors.white[AppColors.colorCode90]),
+          style:
+              theme.titleMedium!.copyWith(color: AppColors.white[AppColors.colorCode90]),
         ),
         SizedBox(width: 5),
         Expanded(
@@ -67,12 +67,12 @@ class _CustomListTile extends StatelessWidget {
   final int groupValue;
   final Function onSelect;
   final String title;
-  const _CustomListTile(
-      {required this.groupValue,
-      required this.onSelect,
-      required this.title,
-      required this.value,
-      });
+  const _CustomListTile({
+    required this.groupValue,
+    required this.onSelect,
+    required this.title,
+    required this.value,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +83,7 @@ class _CustomListTile extends StatelessWidget {
         child: Text(title, style: theme.labelMedium),
       ),
       leading: Radio(
-          value: value,
-          groupValue: groupValue,
-          onChanged: (value) => onSelect(value)),
+          value: value, groupValue: groupValue, onChanged: (value) => onSelect(value)),
     );
   }
 }

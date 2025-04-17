@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/di/service_locator.dart';
+import 'package:flowery_app/features/cart/presentation/pages/cart_screen.dart';
 import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/home_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import '../cart/presentation/view/cart_screen.dart';
 
 class AppSection extends StatefulWidget {
   const AppSection({super.key});
@@ -17,11 +20,14 @@ class AppSection extends StatefulWidget {
 }
 
 class _AppSectionState extends State<AppSection> {
-  final List<Widget> _pages = const [
-    HomeScreen(),
-    CategoriesScreen(),
-    CartScreen(),
-    ProfileScreen(),
+  final List<Widget> _pages = [
+    const HomeScreen(),
+    const CategoriesScreen(),
+    const CartScreen(),
+    BlocProvider<ProfileMainCubit>(
+      create: (context) => serviceLocator<ProfileMainCubit>()..getProfileData(),
+      child: const ProfileScreen(),
+    ),
   ];
   int _currentIndex = 0;
   @override

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
+import 'package:flowery_app/features/auth/domain/entity/forgot_password_response_entity.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../core/constants/app_values.dart';
 import '../../../../core/network/common/api_result.dart';
@@ -45,25 +46,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<Map<String, dynamic>>> forgotPassword(
-      ForgotPasswordRequest request) async {
-    final result = await authDataSource.forgotPassword(request);
-
-    return result;
+  Future<Result<ForgotPasswordResponseEntity>> forgotPassword({required String email}) {
+    return authDataSource.forgotPassword(email: email);
   }
 
   @override
-  Future<Result<Map<String, dynamic>>> verifyResetCode(
-      VerifyResetCodeRequest request) async {
-    final result = await authDataSource.verifyResetCode(request);
-    return result;
+  Future<Result<ForgotPasswordResponseEntity>> resetPassword(
+      {required String email, required String newPassword}) {
+    return authDataSource.resetPassword(email: email, newPassword: newPassword);
   }
 
   @override
-  Future<Result<Map<String, dynamic>>> resetPassword(
-      ResetPasswordRequest request) async {
-    final result = await authDataSource.resetPassword(request);
-    return result;
+  Future<Result<ForgotPasswordResponseEntity>> verifyResetCode({required String code}) {
+    return authDataSource.verifyResetCode(code: code);
   }
 
   @override

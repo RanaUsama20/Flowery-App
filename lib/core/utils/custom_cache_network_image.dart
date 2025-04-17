@@ -4,29 +4,49 @@ import 'package:flutter/material.dart';
 
 class CustomCacheNetworkImage extends StatelessWidget {
   final String imageUrl;
+  final double? width;
   final double? height;
-  const CustomCacheNetworkImage({required this.imageUrl, this.height, super.key});
+  final BoxFit fit;
+  final bool isCircular;
+  final BorderRadius? borderRadius;
+
+  const CustomCacheNetworkImage({
+    super.key,
+    required this.imageUrl,
+    this.width,
+    this.height,
+    this.fit = BoxFit.cover,
+    this.isCircular = false,
+    this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      fit: BoxFit.cover,
+    Widget image = CachedNetworkImage(
       imageUrl: imageUrl,
-      width: double.infinity,
+      fit: fit,
+      width: width,
+      height: height,
+      placeholder: (context, url) => _buildShimmer(),
+      errorWidget: (context, url, error) => _buildShimmer(),
+      fadeOutDuration: const Duration(milliseconds: 500),
+    );
+
+    if (isCircular) {
+      return ClipOval(child: image);
+    } else if (borderRadius != null) {
+      return ClipRRect(borderRadius: borderRadius ?? BorderRadius.zero, child: image);
+    } else {
+      return image;
+    }
+  }
+
+  Widget _buildShimmer() {
+    return LoadingShimmer(
       height: height ?? double.infinity,
-      fadeOutDuration: Duration(milliseconds: 500),
-      errorWidget: (context, url, error) {
-        return LoadingShimmer(
-          height: double.infinity,
-          width: double.infinity,
-        );
-      },
-      placeholder: (context, url) {
-        return LoadingShimmer(
-          height: double.infinity,
-          width: double.infinity,
-        );
-      },
+      width: width ?? double.infinity,
+      isCircular: isCircular,
+      borderRadius: borderRadius,
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flowery_app/core/base_state/base_state.dart';
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/auth/data/model/request/register_request_model.dart';
 import 'package:flowery_app/features/auth/domain/usecase/register_use_case.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_state.dart';
+import 'package:flowery_app/features/auth/presentation/view_model/register/register_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
@@ -18,14 +18,12 @@ class RegisterCubit extends Cubit<RegisterState> {
     switch (ans) {
       case SuccessResult<String>():
         {
-          emit(state.copyWith(
-              registerState: BaseSuccessState<String>(data: ans.data)));
+          emit(state.copyWith(registerState: BaseSuccessState<String>(data: ans.data)));
         }
       case FailureResult<String>():
         {
           emit(state.copyWith(
-              registerState:
-                  BaseErrorState(errorMessage: ans.exception.toString())));
+              registerState: BaseErrorState(errorMessage: ans.exception.toString())));
         }
     }
   }

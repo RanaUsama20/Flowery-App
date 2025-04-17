@@ -52,7 +52,11 @@ class SvgAssets {
   static const defaultPhoto1 = 'assets/images/th.jpg';
   static const defaultPhoto2 = 'assets/images/th2.jpg';
   static const flowerSvg = 'assets/svg/Flower.svg';
+  static const flower = 'assets/svg/flower-icon.svg';
   static const empty = 'assets/svg/empty-screen.svg';
+  static const pen = 'assets/svg/pen-icon.svg';
+  static const order = 'assets/svg/order-icon.svg';
+  static const translate = 'assets/svg/translate-icon.svg';
 }
 
 class PngAssets {

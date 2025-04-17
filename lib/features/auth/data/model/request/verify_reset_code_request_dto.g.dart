@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'verify_request_model.dart';
+part of 'verify_reset_code_request_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-VerifyResetCodeRequest _$VerifyResetCodeRequestFromJson(
+VerifyResetCodeDtoRequest _$VerifyResetCodeDtoRequestFromJson(
         Map<String, dynamic> json) =>
-    VerifyResetCodeRequest(
-      resetCode: json['resetCode'] as String,
+    VerifyResetCodeDtoRequest(
+      resetCode: json['resetCode'] as String?,
     );
 
-Map<String, dynamic> _$VerifyResetCodeRequestToJson(
-        VerifyResetCodeRequest instance) =>
+Map<String, dynamic> _$VerifyResetCodeDtoRequestToJson(
+        VerifyResetCodeDtoRequest instance) =>
     <String, dynamic>{
       'resetCode': instance.resetCode,
     };
