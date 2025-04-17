@@ -12,9 +12,7 @@ import '../../features/app_section/app_section.dart';
 import '../../features/auth/presentation/view/login_screen.dart';
 import '../../features/auth/presentation/view_model/cubit/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
-import '../../features/cart/presentation/pages/cart_screen.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
-import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../di/service_locator.dart';
 
@@ -32,7 +30,7 @@ class RouteGenerator {
       case Routes.register:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case Routes.forgetPassword:
-        return MaterialPageRoute(builder: (_) =>  ForgetPasswordScreen());
+        return MaterialPageRoute(builder: (_) => ForgetPasswordScreen());
       case Routes.emailVerification:
         return MaterialPageRoute(
             builder: (_) => const EmailVerificationScreen());
@@ -51,9 +49,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CategoriesScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
-        return MaterialPageRoute(builder: (_) =>  ProductDetails(
-          product: product,
-        ));
+        return MaterialPageRoute(
+            builder: (_) => ProductDetails(
+                  product: product,
+                ));
       default:
         return _undefinedRoute();
     }

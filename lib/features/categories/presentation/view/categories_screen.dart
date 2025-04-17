@@ -1,5 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/dialogs/app_dialogs.dart';
+import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -26,10 +29,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   int selectedIndex = 0;
   bool _showFilterButton = true;
+  late AppCubit _appCubit;
 
   @override
   void initState() {
     super.initState();
+    _appCubit = serviceLocator.get<AppCubit>();
     categories.getAllCategories();
 
     _scrollController.addListener(() {
@@ -204,7 +209,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                     0,
                                 products[index].price?.toInt() ?? 0,
                                 products[index].discount?.toInt() ?? 0,
-                                actionButton: ActionButton(onPressed: () {}),
+                                actionButton: ActionButton(onPressed: () {
+                                  if (_appCubit.getStateUser ==
+                                      StateUser.guest) {
+                                    AppDialogs.showLoginDialog(context,
+                                        message: LocaleKeys
+                                                .Error_YouHaveToLoginToUseThisFeature
+                                            .tr());
+                                  }
+                                  else{
+                                    return;
+                                  }
+                                }),
                               ),
                             );
                           },

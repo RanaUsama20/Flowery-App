@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/common/screen/empty_screen.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
+import 'package:flowery_app/core/dialogs/app_dialogs.dart';
+import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
@@ -27,9 +30,11 @@ class OccasionScreen extends StatefulWidget {
 
 class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStateMixin {
   // late TabController _tabController;
+  late AppCubit _appCubit;
   @override
   void initState() {
     super.initState();
+    _appCubit=serviceLocator.get<AppCubit>();
     // _tabController = TabController(length: 10, vsync: this);
   }
 
@@ -181,7 +186,14 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
               products[index].price.toInt(),
               products[index].priceAfterDiscount.toInt(),
               products[index].discount.toInt(),
-              actionButton: ActionButton(onPressed: () {}),
+              actionButton: ActionButton(onPressed: () {
+                if(_appCubit.getStateUser==StateUser.guest){
+                     AppDialogs.showLoginDialog(context, message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr());
+                }
+                else{
+                  return ;
+                }
+              }),
             ),
           );
         },

@@ -76,6 +76,7 @@ abstract class  LocaleKeys {
   static const Home_FailedToFetchCategories = 'Home.FailedToFetchCategories';
   static const Home_Search = 'Home.Search';
   static const Home = 'Home';
+  static const Error_YouHaveToLoginToUseThisFeature = 'Error.YouHaveToLoginToUseThisFeature';
   static const Error_EmailAlreadyExists = 'Error.EmailAlreadyExists';
   static const Error_PasswordCannotBeEmpty = 'Error.PasswordCannotBeEmpty';
   static const Error_NameCannotBeEmpty = 'Error.NameCannotBeEmpty';
@@ -112,5 +113,6 @@ abstract class  LocaleKeys {
   static const Ok = 'Ok';
   static const Loading = 'Loading';
   static const Retry = 'Retry';
+  static const cancel = 'cancel';
 
 }

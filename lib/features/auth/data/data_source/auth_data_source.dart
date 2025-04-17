@@ -18,5 +18,6 @@ abstract class AuthDataSource {
      ResetPasswordRequest request);
 
  Future<LoginEntity?> login({required String email, required String password});
+ Future<String>logout();
 
 }

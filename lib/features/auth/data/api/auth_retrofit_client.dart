@@ -18,6 +18,11 @@ abstract class AuthRetrofitClient {
   @POST(ApiConstants.signupRoute)
   Future<RegisterResponse> register(
       @Body() RegisterRequestModel registerRequest);
+   
+   @GET(ApiConstants.logOut)
+  Future<String> logout(@Header('Authorization') String? token);
+  
+
   @POST('/auth/signin')
   Future<LoginDto?> login(@Field("email") String email, @Field("password") String password);
 

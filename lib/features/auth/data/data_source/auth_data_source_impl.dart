@@ -1,4 +1,5 @@
 import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/core/utils/save_local.dart';
 import 'package:flowery_app/features/auth/data/model/request/forgot_password_request.dart';
 import 'package:flowery_app/features/auth/data/model/request/verify_request_model.dart';
 import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
@@ -37,7 +38,8 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<Result<Map<String, dynamic>>> resetPassword(ResetPasswordRequest request) async {
+  Future<Result<Map<String, dynamic>>> resetPassword(
+      ResetPasswordRequest request) async {
     return await apiManager.execute<Map<String, dynamic>>(() async {
       final response = await apiService.resetPassword(request);
       return response;
@@ -45,9 +47,17 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<LoginEntity?> login({required String email, required String password}) async {
+  Future<LoginEntity?> login(
+      {required String email, required String password}) async {
     var response = await apiClient.login(email, password);
 
     return response?.toLoginEntity();
+  }
+
+  @override
+  Future<String> logout() async {
+    final token = await SaveLocal.getString("token");
+    final response = await apiService.logout(token);
+    return response;
   }
 }

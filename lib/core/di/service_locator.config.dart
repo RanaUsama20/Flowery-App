@@ -96,7 +96,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final loggerModule = _$LoggerModule();
     final dioModule = _$DioModule();
-    gh.factory<_i826.AppCubit>(() => _i826.AppCubit());
+    gh.singleton<_i826.AppCubit>(() => _i826.AppCubit());
     gh.singleton<_i797.ApiManager>(() => _i797.ApiManager());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
     gh.lazySingleton<_i974.PrettyPrinter>(() => loggerModule.prettyPrinter);

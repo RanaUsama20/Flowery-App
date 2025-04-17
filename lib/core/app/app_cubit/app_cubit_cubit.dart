@@ -7,7 +7,7 @@ import 'package:flowery_app/core/utils/app_shared_preference.dart';
 import 'package:injectable/injectable.dart';
 part 'app_cubit_state.dart';
 
-@injectable
+@singleton
 class AppCubit extends Cubit<AppCubitState> {
   AppCubit() : super(const AppCubitState());
 

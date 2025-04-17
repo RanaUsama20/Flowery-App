@@ -12,4 +12,5 @@ abstract class AuthRepository{
   Future<Result<Map<String, dynamic>>> resetPassword(ResetPasswordRequest request);
   Future<Result<String>> register(RegisterRequestModel registerRequest);
   Future<LoginEntity?> login({required String email, required String password});
+  Future<Result<String>> logout();
   }
