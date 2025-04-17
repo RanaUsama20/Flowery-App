@@ -1,14 +1,10 @@
-
-
 class LoginEntity {
   String? message;
   String? token;
   UserEntity? user;
 
   LoginEntity({this.message, this.user, this.token});
-
 }
-
 
 class UserEntity {
   final String id;
@@ -23,18 +19,18 @@ class UserEntity {
   final List<AddressEntity> addresses;
   final String createdAt;
 
-  UserEntity({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.gender,
-    required this.phone,
-    required this.photo,
-    required this.role,
-    required this.wishlist,
-    required this.addresses,
-    required this.createdAt,
+  const UserEntity({
+    this.id = '',
+    this.firstName = '',
+    this.lastName = '',
+    this.email = '',
+    this.gender = '',
+    this.phone = '',
+    this.photo = '',
+    this.role = '',
+    this.wishlist = const [],
+    this.addresses = const [],
+    this.createdAt = '',
   });
 }
 

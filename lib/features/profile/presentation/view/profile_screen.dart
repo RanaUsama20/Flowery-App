@@ -4,11 +4,14 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/constants/app_fonts_family.dart';
 import 'package:flowery_app/core/constants/app_values.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
+import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 import 'package:flowery_app/features/profile/presentation/widget/custom_witch.dart';
 import 'package:flowery_app/features/profile/presentation/widget/language_bottom_sheet.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -26,31 +29,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         _customAppBar(),
         const SizedBox(height: 16),
-        CustomCacheNetworkImage(
-          imageUrl: imageUrl,
-          height: 90,
-          width: 90,
-          isCircular: true,
-        ),
-        const SizedBox(height: 8),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "Mohamed Essam Mohamed",
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
-            SvgPicture.asset(SvgAssets.pen),
-          ],
-        ),
-        const SizedBox(height: 4),
-        Text(
-          "Mohamed_Essam@gmail.com",
-          style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                color: AppColors.white[AppColors.colorCode90],
+        BlocBuilder<ProfileMainCubit, ProfileMainState>(
+          builder: (context, state) {
+            if (state.isProfileMainLoading) {
+              return Skeletonizer(
+                child: _topSectionDetails(
+                  email: "Mohamed@gmail.com",
+                  name: "Mohamed",
+                  imageUrl: imageUrl,
+                ),
+              );
+            }
+            if (state.isProfileMainSuccess) {
+              return _topSectionDetails(
+                email: state.profileData.user.email,
+                name:
+                    "${state.profileData.user.firstName} ${state.profileData.user.lastName}",
+                imageUrl: state.profileData.user.photo,
+              );
+            }
+            return Skeletonizer(
+              child: _topSectionDetails(
+                email: "MohamedEssam@gmail.come",
+                name: "Mohamed Essam Eid",
+                imageUrl: imageUrl,
               ),
-          textAlign: TextAlign.center,
+            );
+          },
         ),
         const SizedBox(height: 32),
         _itemSection(
@@ -119,6 +124,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Text(
           "v 6.3.0 - (446)",
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: AppColors.white[AppColors.colorCode90],
+              ),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    );
+  }
+
+  Widget _topSectionDetails({
+    required String imageUrl,
+    required String name,
+    required String email,
+  }) {
+    return Column(
+      children: [
+        CustomCacheNetworkImage(
+          imageUrl: imageUrl,
+          height: 90,
+          width: 90,
+          isCircular: true,
+        ),
+        const SizedBox(height: 8),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              name,
+              style: Theme.of(context).textTheme.titleMedium,
+              textAlign: TextAlign.center,
+            ),
+            SvgPicture.asset(SvgAssets.pen),
+          ],
+        ),
+        const SizedBox(height: 4),
+        Text(
+          email,
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
                 color: AppColors.white[AppColors.colorCode90],
               ),
           textAlign: TextAlign.center,

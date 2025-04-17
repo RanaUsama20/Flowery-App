@@ -2,16 +2,24 @@ part of 'profile_main_cubit.dart';
 
 class ProfileMainState extends Equatable {
   final Status profileMainStatus;
+  final ProfileDataEntity profileData;
+  final String errorMessage;
 
   const ProfileMainState({
     this.profileMainStatus = Status.initial,
+    this.profileData = const ProfileDataEntity(),
+    this.errorMessage = '',
   });
 
   ProfileMainState copyWith({
     Status? profileMainStatus,
+    ProfileDataEntity? profileData,
+    String? errorMessage,
   }) {
     return ProfileMainState(
       profileMainStatus: profileMainStatus ?? this.profileMainStatus,
+      profileData: profileData ?? this.profileData,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
