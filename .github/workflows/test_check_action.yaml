@@ -11,17 +11,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-
-      - name : Set-up Flutter
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version : 3.27.4
+          flutter-version: 3.27.4
+
+      - name: Validate PR title format
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const core = require('@actions/core');
+            const { context } = require('@actions/github');
+
+            const prTitle = context.payload.pull_request.title;
+
+            const titleRegex = /^(feat|fix|hotfix|release|build|test)\((ECOM-\d+|JIRA-\d+|[A-Z]+-\d+)\):\s.+$/;
+
+            if (!titleRegex.test(prTitle)) {
+              core.setFailed(`❌ Invalid PR title: "${prTitle}"
+
+            Expected format:
+              type(SCOPE-ID): task name
+            Example:
+              feat(ECOM-123): Add user login flow
+            Allowed types: feat, fix, hotfix, release, build, test`);
+              } else {
+              console.log("✅ PR title is valid.");
+              }
+            
+         
 
       - run: flutter --version
       - run: flutter pub get
 
-
       - name: Run test
         run: flutter test
-

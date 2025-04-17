@@ -26,7 +26,7 @@ class _ProductDetailsState extends State<ProductDetails> {
     final product = widget.product;
     final images = product.images.isEmpty
         ? [SvgAssets.defaultPhoto1, SvgAssets.defaultPhoto2]
-        :product.images;
+        : product.images;
 
     return SafeArea(
       child: Scaffold(
@@ -36,8 +36,8 @@ class _ProductDetailsState extends State<ProductDetails> {
           slivers: [
             SliverAppBar(
               expandedHeight: context.hp(50),
-              floating: false,  
-              pinned: false,    
+              floating: false,
+              pinned: false,
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
                   alignment: Alignment.bottomCenter,
@@ -49,15 +49,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                         setState(() => _currentIndex = index);
                       },
                       itemBuilder: (context, index) {
-                        return product.images.isEmpty? Image.asset(
-                          images[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        ): Image.network(
-                          images[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        );
+                        return product.images.isEmpty
+                            ? Image.asset(
+                                images[index],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              )
+                            : Image.network(
+                                images[index],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              );
                       },
                     ),
                     Positioned(
@@ -105,9 +107,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               Text(
                                 "${LocaleKeys.Home_Status.tr()}: ",
-                                style: AppTheme
-                                    .lightTheme.textTheme.titleSmall!
-                                    .copyWith(color: AppColors.black,fontWeight: FontWeight.bold),
+                                style: AppTheme.lightTheme.textTheme.titleSmall!
+                                    .copyWith(
+                                        color: AppColors.black,
+                                        fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 product.inStock == true
@@ -127,26 +130,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       SizedBox(height: context.hp(0.5)),
                       Text(
-                          LocaleKeys.Home_AllPriceIncludeTax.tr(),
+                        LocaleKeys.Home_AllPriceIncludeTax.tr(),
                         style: AppTheme.lightTheme.textTheme.bodySmall!
                             .copyWith(color: AppColors.gray),
                       ),
                       SizedBox(height: context.hp(0.5)),
                       Text(
-                        product.name ,
+                        product.name,
                         style: AppTheme.lightTheme.textTheme.titleSmall!
-                            .copyWith(color: AppColors.black,fontWeight: FontWeight.bold),
+                            .copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: context.hp(1)),
                       Text(
                         LocaleKeys.Home_Description.tr(),
                         style: AppTheme.lightTheme.textTheme.titleSmall!
-                            .copyWith(color: AppColors.black,fontWeight: FontWeight.bold),
+                            .copyWith(
+                                color: AppColors.black,
+                                fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: context.hp(0.5)),
                       Text(
-                        product.description ,
-
+                        product.description,
                         style: AppTheme.lightTheme.textTheme.labelMedium!
                             .copyWith(color: AppColors.black),
                         softWrap: true,
@@ -160,32 +166,39 @@ class _ProductDetailsState extends State<ProductDetails> {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Column(
-              children: [
-                Expanded(child: SizedBox()),
-                Center(
-                  child: Container(
-                    width: context.wp(90),
-                    height: context.hp(5.6),
-                    decoration: BoxDecoration(
-                      color: AppColors.pink,
-                      borderRadius:
-                      BorderRadius.circular(context.sp(40)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        LocaleKeys.Home_AddToCart.tr(),
-                        style: AppTheme.lightTheme.textTheme.labelLarge!
-                            .copyWith(fontSize: 16, color: Colors.white),
+                children: [
+                  Expanded(child: SizedBox()),
+                  Center(
+                    child: Container(
+                      width: context.wp(90),
+                      height: context.hp(5.6),
+                      decoration: BoxDecoration(
+                        color: AppColors.pink,
+                        borderRadius: BorderRadius.circular(context.sp(40)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          LocaleKeys.Home_AddToCart.tr(),
+                          style: AppTheme.lightTheme.textTheme.labelLarge!
+                              .copyWith(fontSize: 16, color: Colors.white),
+                        ),
                       ),
                     ),
                   ),
-                ),
-
-              ],
-            ),),
-            SliverToBoxAdapter(child: SizedBox(height: context.hp(2))), // Bottom padding
-
-
+                  ElevatedButton(
+                    onPressed: () {},
+                    style:
+                        AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                      minimumSize:
+                          WidgetStatePropertyAll(Size(double.infinity, 48)),
+                    ),
+                    child: Text(LocaleKeys.Home_AddToCart.tr()),
+                  )
+                ],
+              ),
+            ),
+            SliverToBoxAdapter(
+                child: SizedBox(height: context.hp(2))), // Bottom padding
           ],
         ),
       ),

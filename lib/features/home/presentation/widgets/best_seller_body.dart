@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/best_seller/best_seller_cubit.dart';
@@ -41,8 +42,6 @@ class _BestSellerBodyState extends State<BestSellerBody> {
           listenWhen: (previous, current) => current.selectedProduct != null,
           listener: (context, state) {
             if (state.selectedProduct != null) {
-              print(
-                  'besssssssst seller item : ${state.selectedProduct!.price}');
               Navigator.pushNamed(context, Routes.productDetails,
                   arguments: state.selectedProduct);
             }

@@ -4,6 +4,7 @@ import 'package:flowery_app/features/cart/presentation/widget/cart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../home/presentation/widgets/section_location.dart';
@@ -50,7 +51,9 @@ class _CartScreenState extends State<CartScreen> {
                       children: [
                         Row(children: [
                           IconButton(
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              Navigator.pushReplacementNamed(context, Routes.appSection);
+                            },
                             icon: Icon(Icons.arrow_back_ios_new_outlined),
                           ),
                           SizedBox(width: 10),

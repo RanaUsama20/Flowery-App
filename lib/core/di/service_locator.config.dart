@@ -40,6 +40,20 @@ import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_cu
     as _i609;
 import 'package:flowery_app/features/auth/presentation/view_model/cubit/register_cubit.dart'
     as _i475;
+import 'package:flowery_app/features/cart/data/api/cart_retrofit_client.dart'
+    as _i881;
+import 'package:flowery_app/features/cart/data/data_source/cart_data_source.dart'
+    as _i301;
+import 'package:flowery_app/features/cart/data/data_source/cart_data_source_impl.dart'
+    as _i895;
+import 'package:flowery_app/features/cart/data/repository_impl/cart_repository_impl.dart'
+    as _i221;
+import 'package:flowery_app/features/cart/domain/repository/cart_repository.dart'
+    as _i166;
+import 'package:flowery_app/features/cart/domain/usecase/cart_usecase.dart'
+    as _i485;
+import 'package:flowery_app/features/cart/presentation/view_model/cart_cubit.dart'
+    as _i645;
 import 'package:flowery_app/features/categories/data/api/getl_categories_retrofit_client.dart'
     as _i557;
 import 'package:flowery_app/features/categories/data/data_source/getCategories_data_source.dart'
@@ -125,6 +139,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1039.HomeRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i106.ProfileRetrofitClient>(
         () => _i106.ProfileRetrofitClient(gh<_i361.Dio>()));
+    gh.lazySingleton<_i881.CartRetrofitClient>(
+        () => _i881.CartRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
     gh.factory<_i129.GetAllCategoriesDataSource>(() =>
@@ -153,6 +169,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i129.GetProductsByIdDataSource>(() =>
         _i48.GetProductsByIdDataSourceImpl(
             gh<_i557.CategoriesRetrofitClient>()));
+    gh.factory<_i301.CartRemoteDataSource>(() => _i895.CartRemoteDataSourceImpl(
+          gh<_i881.CartRetrofitClient>(),
+          gh<_i797.ApiManager>(),
+        ));
     gh.factory<_i427.GetCategoriesRepository>(() =>
         _i578.GetCategoriesRepositoryImpl(
             gh<_i129.GetAllCategoriesDataSource>()));
@@ -171,10 +191,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i541.LoginUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i609.LoginCubit>(
         () => _i609.LoginCubit(gh<_i541.LoginUseCase>()));
+    gh.factory<_i166.CartRepository>(
+        () => _i221.CartRepositoryImpl(gh<_i301.CartRemoteDataSource>()));
     gh.factory<_i675.BestSellerUseCase>(
         () => _i675.BestSellerUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i683.HomeUseCase>(
         () => _i683.HomeUseCase(gh<_i630.HomeRepository>()));
+    gh.factory<_i485.CartUseCase>(
+        () => _i485.CartUseCase(gh<_i166.CartRepository>()));
+    gh.factory<_i645.CartCubit>(() => _i645.CartCubit(gh<_i485.CartUseCase>()));
     gh.factory<_i318.RegisterUseCase>(
         () => _i318.RegisterUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i427.GetProductsByIdRepository>(() =>
