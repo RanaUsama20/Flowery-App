@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,21 +7,24 @@ import '../../theme/app_theme.dart';
 
 class ProductCard {
   static Widget createProductCard(
-    String imageProduct,
-    String title,
-    int price,
-    int oldPrice,
-    int discount, {
-    Widget? actionButton,
-  }) {
+      String imageProduct,
+      String title,
+      int price,
+      int oldPrice,
+      int discount, {
+        required String productId,
+        int quantity = 1,
+        required void Function() onAddToCart,
+      }) {
     return IntrinsicWidth(
       child: Card(
         color: AppColors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: BorderSide(
-              color: AppColors.white[AppColors.colorCode70]!, // Pink border
-              width: 0.5),
+            color: AppColors.white[AppColors.colorCode70]!,
+            width: 0.5,
+          ),
         ),
         elevation: 1,
         child: Padding(
@@ -32,7 +34,7 @@ class ProductCard {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(6),
                 child: CustomCacheNetworkImage(
                   imageUrl: imageProduct,
                   height: 140,
@@ -50,9 +52,8 @@ class ProductCard {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    '$price EGP',
-                    style: AppTheme.lightTheme.textTheme.labelMedium
-                        ?.copyWith(fontWeight: FontWeight.w500),
+                    '$price ${LocaleKeys.Home_EGP.tr()}',
+                    style: AppTheme.lightTheme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(width: 8),
                   Text(
@@ -72,10 +73,8 @@ class ProductCard {
                   ),
                 ],
               ),
-              if (actionButton != null) ...[
-                const SizedBox(height: 6),
-                actionButton,
-              ],
+              const SizedBox(height: 6),
+              ActionButton(onPressed: onAddToCart),
             ],
           ),
         ),
@@ -83,6 +82,7 @@ class ProductCard {
     );
   }
 }
+
 
 class ActionButton extends StatelessWidget {
   final VoidCallback onPressed;

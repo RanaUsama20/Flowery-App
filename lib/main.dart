@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     // TODO: implement build
     return BlocProvider<AppCubit>(
       create: (context) => serviceLocator<AppCubit>(),
@@ -43,16 +44,26 @@ class MyApp extends StatelessWidget {
             data: MediaQuery.of(context).copyWith(
               textScaler: TextScaler.linear(1.0),
             ),
-            child: MaterialApp(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              theme: AppTheme.lightTheme,
-              title: AppValues.appTitle,
-              onGenerateRoute: RouteGenerator.getRoute,
-              initialRoute: isLogin() ? Routes.appSection : Routes.login,
-              // initialRoute:  Routes.login,
+            child: FutureBuilder<bool>(
+              future: isLogin(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                final isLoggedIn = snapshot.data ?? false;
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  localizationsDelegates: context.localizationDelegates,
+                  supportedLocales: context.supportedLocales,
+                  locale: context.locale,
+                  theme: AppTheme.lightTheme,
+                  title: AppValues.appTitle,
+                  onGenerateRoute: RouteGenerator.getRoute,
+                  initialRoute: isLoggedIn?Routes.appSection : Routes.login,
+                  //initialRoute:  Routes.login,
+                );
+              }
             ),
           );
         },
@@ -60,14 +71,11 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  bool isLogin() {
-    SaveLocal.getString("token").then((value) {
-      if (value != null) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-    return true;
+  Future<bool> isLogin() async {
+
+    final token = await SharedPreferencesUtils.getString(AppValues.token);
+    print( "token $token");
+    return token != null && token.isNotEmpty;
   }
+
 }

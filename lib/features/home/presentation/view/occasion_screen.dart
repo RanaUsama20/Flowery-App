@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/common/screen/empty_screen.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
@@ -14,6 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/routes/routes.dart';
+import '../../../../core/theme/app_theme.dart';
+import '../../../cart/presentation/view_model/cart_cubit.dart';
 import '../../../product_details/presentation/models/product_details_model.dart';
 
 class OccasionScreen extends StatefulWidget {
@@ -25,7 +25,8 @@ class OccasionScreen extends StatefulWidget {
   State<OccasionScreen> createState() => _OccasionScreenState();
 }
 
-class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStateMixin {
+class _OccasionScreenState extends State<OccasionScreen>
+    with TickerProviderStateMixin {
   // late TabController _tabController;
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
   }
 
   int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +64,8 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.wp(4)),
         child: BlocProvider<OccasionsCubit>(
-          create: (context) => serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
+          create: (context) =>
+              serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
           child: BlocBuilder<OccasionsCubit, OccasionsState>(
             builder: (context, state) {
               return Column(
@@ -71,11 +74,14 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                   state.isOccasionsLoading
                       ? _buildDummyTabBar()
                       : _buildTabBar(
-                          state.occasions.map((e) => Tab(text: e.name)).toList(),
+                          state.occasions
+                              .map((e) => Tab(text: e.name))
+                              .toList(),
                           (index) {
                             context
                                 .read<OccasionsCubit>()
-                                .getProductsByOccasion(state.occasions[index].id);
+                                .getProductsByOccasion(
+                                    state.occasions[index].id);
                           },
                         ),
                   SizedBox(height: context.hp(2)),
@@ -145,7 +151,8 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
             32,
             35,
             30,
-            actionButton: ActionButton(onPressed: () {}),
+            onAddToCart: () {},
+            productId: '',
           ),
         ),
       ),
@@ -175,13 +182,48 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
               Navigator.pushNamed(context, Routes.productDetails,
                   arguments: mappedProduct);
             },
-            child: ProductCard.createProductCard(
-              products[index].imgCover,
-              products[index].title,
-              products[index].price.toInt(),
-              products[index].priceAfterDiscount.toInt(),
-              products[index].discount.toInt(),
-              actionButton: ActionButton(onPressed: () {}),
+            child: BlocProvider(
+              create: (context) => serviceLocator<CartCubit>(),
+              child: BlocConsumer<CartCubit, CartState>(
+                builder: (context, state) {
+                  final cartCubit = context.read<CartCubit>();
+                  return ProductCard.createProductCard(
+                    products[index].imgCover,
+                    products[index].title,
+                    products[index].price.toInt(),
+                    products[index].priceAfterDiscount.toInt(),
+                    products[index].discount.toInt(),
+                    onAddToCart: () {
+                      cartCubit.addProductToCart(
+                          products[index].id.toString(), 1);
+                    },
+                    productId: products[index].id.toString(),
+                  );
+                },
+                listener: (BuildContext context, CartState state) {
+                  if (state is CartSuccessState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: AppColors.green,
+                        content: Text(
+                          state.productCart.message.toString(),
+                          style: AppTheme.lightTheme.textTheme.labelSmall,
+                        ),
+                      ),
+                    );
+                  } else if (state is CartErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: AppColors.red,
+                        content: Text(
+                          LocaleKeys.Error_SoldOut.tr(),
+                          style: AppTheme.lightTheme.textTheme.labelSmall,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           );
         },

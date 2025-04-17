@@ -1,6 +1,8 @@
 import 'package:injectable/injectable.dart';
+import '../../../../core/constants/app_values.dart';
 import '../../../../core/network/common/api_result.dart';
 import '../../../../core/network/remote/api_manager.dart';
+import '../../../../core/utils/app_shared_preference.dart';
 import '../../../../core/utils/save_local.dart';
 import '../../domain/entity/login_entity.dart';
 import '../../domain/repository/auth_repository.dart';
@@ -35,7 +37,7 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<LoginEntity?> login(
       {required String email, required String password}) async {
     var response = await authDataSource.login(email: email, password: password);
-    SaveLocal.saveString("token", response!.token!);
+    SharedPreferencesUtils.saveData ( key: AppValues.token, value: response?.token);
     return response;
   }
 

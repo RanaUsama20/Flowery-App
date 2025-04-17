@@ -47,7 +47,6 @@ class AuthDataSourceImpl implements AuthDataSource {
   @override
   Future<LoginEntity?> login({required String email, required String password}) async {
     var response = await apiClient.login(email, password);
-
     return response?.toLoginEntity();
   }
 }

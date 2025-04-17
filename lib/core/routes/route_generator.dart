@@ -12,9 +12,8 @@ import '../../features/app_section/app_section.dart';
 import '../../features/auth/presentation/view/login_screen.dart';
 import '../../features/auth/presentation/view_model/cubit/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
-import '../../features/cart/presentation/pages/cart_screen.dart';
+import '../../features/cart/presentation/view_model/cart_cubit.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
-import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../di/service_locator.dart';
 
@@ -23,23 +22,28 @@ class RouteGenerator {
     switch (settings.name) {
       case Routes.login:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => serviceLocator<LoginCubit>(),
-            child: const LoginScreen(),
-          ),
+          builder: (context) =>
+              BlocProvider(
+                create: (context) => serviceLocator<LoginCubit>(),
+                child: const LoginScreen(),
+              ),
         );
 
       case Routes.register:
         return MaterialPageRoute(builder: (_) => const RegisterScreen());
       case Routes.forgetPassword:
-        return MaterialPageRoute(builder: (_) =>  ForgetPasswordScreen());
+        return MaterialPageRoute(builder: (_) => ForgetPasswordScreen());
       case Routes.emailVerification:
         return MaterialPageRoute(
             builder: (_) => const EmailVerificationScreen());
       case Routes.resetPassword:
         return MaterialPageRoute(builder: (_) => const ResetPasswordScreen());
       case Routes.appSection:
-        return MaterialPageRoute(builder: (_) => const AppSection());
+        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (context) => serviceLocator<CartCubit>())
+            ],
+            child: const AppSection()));
 
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
@@ -51,9 +55,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CategoriesScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
-        return MaterialPageRoute(builder: (_) =>  ProductDetails(
-          product: product,
-        ));
+        return MaterialPageRoute(builder: (_) =>
+            ProductDetails(
+              product: product,
+            ));
       default:
         return _undefinedRoute();
     }
@@ -61,10 +66,11 @@ class RouteGenerator {
 
   static Route<dynamic> _undefinedRoute() {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(title: Text('No Route Found')),
-        body: const Center(child: Text('No Route Found')),
-      ),
+      builder: (_) =>
+          Scaffold(
+            appBar: AppBar(title: Text('No Route Found')),
+            body: const Center(child: Text('No Route Found')),
+          ),
     );
   }
 }

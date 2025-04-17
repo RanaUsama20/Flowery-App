@@ -11,4 +11,5 @@ abstract class AppValues{
   static const String usernameRegex = r'^[a-zA-Z0-9,.-]+$';
   // shared preferences keys
   static const String stateUser = "StateUser";
+  static const String token = "token";
 }
