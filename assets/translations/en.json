@@ -51,6 +51,7 @@
     "newPassword": "New Password",
     "currentPassword": "Current Password",
     "Update": "Update",
+    "ResetPassword": "Reset Password",
     "ResetPassword": "Reset Password"
   },
   "Home": {
@@ -89,6 +90,7 @@
   },
 
   "Error": {
+    "YouHaveToLoginToUseThisFeature": "You have to login to use this feature",
     "EmailAlreadyExists": "This email already exists.",
     "PasswordCannotBeEmpty": "Password can't be empty.",
     "NameCannotBeEmpty": "Name can't be empty.",
@@ -139,5 +141,6 @@
 
   "Ok": "Ok",
   "Loading": "Loading...",
-  "Retry": "Retry"
+  "Retry": "Retry",
+  "cancel": "Cancel"
 }

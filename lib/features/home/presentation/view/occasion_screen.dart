@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/common/screen/empty_screen.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
+import 'package:flowery_app/core/dialogs/app_dialogs.dart';
+import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
@@ -25,17 +28,17 @@ class OccasionScreen extends StatefulWidget {
   State<OccasionScreen> createState() => _OccasionScreenState();
 }
 
-class _OccasionScreenState extends State<OccasionScreen>
-    with TickerProviderStateMixin {
+class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStateMixin {
   // late TabController _tabController;
+  late AppCubit _appCubit;
   @override
   void initState() {
     super.initState();
+    _appCubit=serviceLocator.get<AppCubit>();
     // _tabController = TabController(length: 10, vsync: this);
   }
 
   int index = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,8 +67,7 @@ class _OccasionScreenState extends State<OccasionScreen>
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: context.wp(4)),
         child: BlocProvider<OccasionsCubit>(
-          create: (context) =>
-              serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
+          create: (context) => serviceLocator.get<OccasionsCubit>()..getTabOccasions(),
           child: BlocBuilder<OccasionsCubit, OccasionsState>(
             builder: (context, state) {
               return Column(
@@ -74,14 +76,11 @@ class _OccasionScreenState extends State<OccasionScreen>
                   state.isOccasionsLoading
                       ? _buildDummyTabBar()
                       : _buildTabBar(
-                          state.occasions
-                              .map((e) => Tab(text: e.name))
-                              .toList(),
+                          state.occasions.map((e) => Tab(text: e.name)).toList(),
                           (index) {
                             context
                                 .read<OccasionsCubit>()
-                                .getProductsByOccasion(
-                                    state.occasions[index].id);
+                                .getProductsByOccasion(state.occasions[index].id);
                           },
                         ),
                   SizedBox(height: context.hp(2)),
@@ -182,6 +181,20 @@ class _OccasionScreenState extends State<OccasionScreen>
               Navigator.pushNamed(context, Routes.productDetails,
                   arguments: mappedProduct);
             },
+            child: ProductCard.createProductCard(
+              products[index].imgCover,
+              products[index].title,
+              products[index].price.toInt(),
+              products[index].priceAfterDiscount.toInt(),
+              products[index].discount.toInt(),
+              actionButton: ActionButton(onPressed: () {
+                if(_appCubit.getStateUser==StateUser.guest){
+                     AppDialogs.showLoginDialog(context, message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr());
+                }
+                else{
+                  return ;
+                }
+              }),
             child: BlocProvider(
               create: (context) => serviceLocator<CartCubit>(),
               child: BlocConsumer<CartCubit, CartState>(

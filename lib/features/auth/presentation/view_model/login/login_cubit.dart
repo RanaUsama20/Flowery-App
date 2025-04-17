@@ -1,3 +1,5 @@
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
+import 'package:flowery_app/core/utils/save_local.dart';
 import 'package:flowery_app/features/auth/domain/usecase/login_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -11,30 +13,27 @@ class LoginCubit extends Cubit<LoginStates> {
 
   LoginCubit(this.loginUseCase) : super(LoginInitial());
 
-
-
   void login({required String email, required String password}) async {
     emit(LoginLoadingState());
 
     if (email.isEmpty || password.isEmpty) {
-      emit(LoginErrorState(ValidationFailure("Please enter both email and password")));
+      emit(LoginErrorState(
+          ValidationFailure("Please enter both email and password")));
       return;
     }
     try {
-      final loginEntity = await loginUseCase.call(email: email, password: password);
+      final loginEntity =
+          await loginUseCase.call(email: email, password: password);
 
       if (loginEntity == null) {
         emit(LoginErrorState(ServerFailure("Incorrect email or password")));
       } else {
+        final token = await SaveLocal.getString("token");
+        AppCubit().changeStateUser(token: token);
         emit(LoginSuccessState(loginEntity: loginEntity));
       }
     } catch (e) {
       emit(LoginErrorState(ServerFailure("Login failed: ${e.toString()}")));
     }
   }
-
-
 }
-
-
-

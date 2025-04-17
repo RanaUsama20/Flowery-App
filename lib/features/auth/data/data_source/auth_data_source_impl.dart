@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/core/utils/save_local.dart';
+import 'package:flowery_app/features/auth/data/model/request/forgot_password_request.dart';
+import 'package:flowery_app/features/auth/data/model/request/verify_request_model.dart';
 import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
 import 'package:injectable/injectable.dart';
 
@@ -87,6 +90,13 @@ class AuthDataSourceImpl implements AuthDataSource {
     var response = await apiService.login(email, password);
 
     return response?.toLoginEntity();
+  }
+
+  @override
+  Future<String> logout() async {
+    final token = await SaveLocal.getString("token");
+    final response = await apiService.logout(token);
+    return response;
   }
   @override
   Future<Result<String>> editProfile(EditProfileRequest request) async {

@@ -90,6 +90,7 @@
     "EmptyCart": "السلة فارغة"
   },
   "Error": {
+    "YouHaveToLoginToUseThisFeature": "يجب عليك تسجيل الدخول لاستخدام هذه الميزة",
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
     "PasswordCannotBeEmpty": "لا يمكن أن تكون كلمة المرور فارغة.",
     "NameCannotBeEmpty": "لا يمكن ان يكون الاسم فارغ",
@@ -141,5 +142,6 @@
 
   "Ok": "موافق",
   "Loading": "جارٍ التحميل...",
-  "Retry": "إعادة المحاولة"
+  "Retry": "إعادة المحاولة",
+  "cancel": "الغاء"
 }

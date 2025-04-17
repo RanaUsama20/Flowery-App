@@ -13,6 +13,8 @@ abstract class AuthRepository {
       {required String email, required String newPassword});
   Future<Result<String>> register(RegisterRequestModel registerRequest);
   Future<LoginEntity?> login({required String email, required String password});
+  Future<Result<String>> logout();
+  }
   Future<Result<String>> editProfile(EditProfileRequest request);
   Future<Result<String>> uploadPhoto(File request);
 

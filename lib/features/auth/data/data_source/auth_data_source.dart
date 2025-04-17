@@ -15,6 +15,7 @@ abstract class AuthDataSource {
       {required String email, required String newPassword});
 
  Future<LoginEntity?> login({required String email, required String password});
+ Future<String>logout();
  Future<Result<String>>editProfile(EditProfileRequest request);
  Future<Result<String>>uploadPhoto(File request);
 

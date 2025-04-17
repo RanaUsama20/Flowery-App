@@ -1,21 +1,28 @@
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/dialogs/loading_widget.dart';
+import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../generated/locale_keys.g.dart';
 
 class AppDialogs {
   // Show a loading dialog
-  static void showLoadingDialog(BuildContext context) {
+  static void showLoadingDialog(
+    BuildContext context, {
+    String? message,
+  }) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return WillPopScope(
-          onWillPop: () async => false,
-          child: AlertDialog(
-            backgroundColor: Colors.transparent,
-            content: LoadingWidget(),
+        return AlertDialog(
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const CircularProgressIndicator(),
+              const SizedBox(height: 16),
+              Text(message ?? LocaleKeys.Loading),
+            ],
           ),
         );
       },
@@ -80,6 +87,36 @@ class AppDialogs {
               ),
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
+              child: Text(
+                buttonText ?? LocaleKeys.Ok,
+                style: TextStyle(color: AppColors.black),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static void showLoginDialog(
+    BuildContext context, {
+    required String message,
+  }) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Text(message),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text(LocaleKeys.cancel.tr())),
+            TextButton(
+              onPressed: () =>
+                  Navigator.of(context).pushReplacementNamed(Routes.login),
+              child: Text(LocaleKeys.Ok.tr()),
               child: Text(
                 buttonText ?? LocaleKeys.Ok,
                 style: TextStyle(color: AppColors.black),

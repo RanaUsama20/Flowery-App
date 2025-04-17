@@ -34,6 +34,14 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
+  Future<Result<String>>logout()async{
+    final ans=await _apiManager.execute<String>((){
+      return authDataSource.logout();
+    });
+    return ans;
+  }
+
+  @override
   Future<LoginEntity?> login(
       {required String email, required String password}) async {
     var response = await authDataSource.login(email: email, password: password);

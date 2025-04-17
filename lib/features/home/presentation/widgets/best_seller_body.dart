@@ -1,7 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
+import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/best_seller/best_seller_cubit.dart';
+import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,11 +28,13 @@ class BestSellerBody extends StatefulWidget {
 }
 
 class _BestSellerBodyState extends State<BestSellerBody> {
-  late BestSellerCubit cubit;
 
+  late BestSellerCubit cubit;
+  late AppCubit _appCubit;
   @override
   void initState() {
     super.initState();
+    _appCubit = serviceLocator<AppCubit>();
     cubit = serviceLocator<BestSellerCubit>();
     cubit.doIntent(GetDataAction());
   }
@@ -62,14 +68,13 @@ class _BestSellerBodyState extends State<BestSellerBody> {
               });
             }
             if (state.baseState is BaseSuccessState) {
-              final bestSellerResponse = (state.baseState as BaseSuccessState)
-                  .data as SuccessResult<BestSellerResponseEntity>;
+              final bestSellerResponse = (state.baseState as BaseSuccessState).data as SuccessResult<BestSellerResponseEntity>;
               final bestSellerList = bestSellerResponse.data.bestSeller;
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: GridView.builder(
                   itemCount: bestSellerList?.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisExtent: 260,
                     crossAxisSpacing: 12,
@@ -78,11 +83,24 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                   itemBuilder: (context, index) {
                     final bestSellerItem = bestSellerList![index];
                     return InkWell(
-                      onTap: () {
-                        context
-                            .read<BestSellerCubit>()
-                            .doIntent(ProductSelectedAction(bestSellerItem));
+                      onTap: (){
+                        context.read<BestSellerCubit>().doIntent(ProductSelectedAction(bestSellerItem));
                       },
+                      child: ProductCard.createProductCard(
+                          bestSellerItem.imgCover!,
+                          bestSellerItem.title!,
+                          bestSellerItem.priceAfterDiscount!,
+                          bestSellerItem.price!,
+                          bestSellerItem.discount!,
+                          actionButton: ActionButton(onPressed: () {
+                        if (_appCubit.getStateUser() == StateUser.guest) {
+                          AppDialogs.showLoginDialog(context,
+                              message: LocaleKeys
+                                  .Error_YouHaveToLoginToUseThisFeature.tr());
+                        } else {
+                          return ;
+                        }
+                      })),
                       child: BlocProvider(
                         create: (context) => serviceLocator<CartCubit>(),
                         child: BlocConsumer<CartCubit, CartState>(
