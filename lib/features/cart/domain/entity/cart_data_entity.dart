@@ -5,6 +5,7 @@ class CartModelEntity {
   num? numOfCartItems;
   CartEntity? cart;
 
+
   CartModelEntity({this.message, this.numOfCartItems, this.cart, this.error});
 }
 

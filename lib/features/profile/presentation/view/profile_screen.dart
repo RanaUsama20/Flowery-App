@@ -49,12 +49,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return _topSectionDetails(
                 email: state.profileData.user.email,
                 editProfileData: EditProfileRequest(
-                  firstName: state.profileData.user.firstName,
-                  lastName: state.profileData.user.lastName,
-                  email: state.profileData.user.email,
-                  phone: state.profileData.user.phone,
-                  url: state.profileData.user.photo
-                ),
+                    firstName: state.profileData.user.firstName,
+                    lastName: state.profileData.user.lastName,
+                    email: state.profileData.user.email,
+                    phone: state.profileData.user.phone,
+                    url: state.profileData.user.photo),
                 name:
                     "${state.profileData.user.firstName} ${state.profileData.user.lastName}",
                 imageUrl: state.profileData.user.photo,
@@ -70,99 +69,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
           },
         ),
         const SizedBox(height: 32),
-       Expanded(child: SingleChildScrollView(
-         child: Column(
-           children: [
-             _itemSection(
-               leading: _iconSvg(SvgAssets.order),
-               trailing: _arrowIos(),
-               title: LocaleKeys.profile_MyOrder.tr(),
-               onTap: () {},
-             ),
-             _itemSection(
-               leading: _iconSvg(SvgAssets.location2Svg),
-               trailing: _arrowIos(),
-               title: LocaleKeys.profile_SavedAddress.tr(),
-               onTap: () {},
-             ),
-             SizedBox(height: 16),
-             const Divider(),
-             SizedBox(height: 16),
-             _itemSection(
-               leading: CustomSwitch(
-                 value: isOn,
-                 onChanged: (value) {
-                   setState(() {
-                     isOn = value;
-                   });
-                 },
-               ),
-               trailing: _arrowIos(),
-               title: LocaleKeys.profile_Notification.tr(),
-               onTap: () {},
-             ),
-             SizedBox(height: 16),
-             const Divider(),
-             SizedBox(height: 16),
-             _itemSection(
-               leading: _iconSvg(SvgAssets.translate),
-               trailing: Text(
-                 context.locale.languageCode == AppValues.english
-                     ? LocaleKeys.profile_English.tr()
-                     : LocaleKeys.profile_Arabic.tr(),
-                 style: Theme.of(context).textTheme.bodyMedium,
-               ),
-               title: LocaleKeys.profile_Language.tr(),
-               onTap: () {
-                 _showBottomSheetLang();
-               },
-             ),
-             _itemSection(
-               trailing: _arrowIos(),
-               title: LocaleKeys.profile_AboutUs.tr(),
-               onTap: () {},
-             ),
-             _itemSection(
-               trailing: _arrowIos(),
-               title: LocaleKeys.profile_TermsConditions.tr(),
-               onTap: () {},
-             ),
-             SizedBox(height: 16),
-             const Divider(),
-             SizedBox(height: 16),
-             BlocListener<ProfileMainCubit,ProfileMainState>(
-               listener: (context,state){
-                 if (state.isLogoutLoading){
-                   AppDialogs.showLoadingDialog(context);
-                 }
-                 else if (state.isLogoutSuccess){
-                   Navigator.pushNamed(context, Routes.appSection);
-                 }
-                 else if (state.isLogoutFailure){
-                   AppDialogs.showFailureDialog(context, message: state.logOutMessageResponse);
-                 }
-
-
-               },
-               child: _itemSection(
-                 trailing: Icon(Icons.login_outlined),
-                 title: LocaleKeys.profile_Logout.tr(),
-                 onTap: () {
-                  context.read<ProfileMainCubit>().logout();
-                 },
-               ),
-             ),
-             const SizedBox(),
-             Text(
-               "v 6.3.0 - (446)",
-               style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                 color: AppColors.white[AppColors.colorCode90],
-               ),
-               textAlign: TextAlign.center,
-             ),
-           ],
-         ),
-       ))
+        Expanded(
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _itemSection(
+                leading: _iconSvg(SvgAssets.order),
+                trailing: _arrowIos(),
+                title: LocaleKeys.profile_MyOrder.tr(),
+                onTap: () {},
+              ),
+              _itemSection(
+                leading: _iconSvg(SvgAssets.location2Svg),
+                trailing: _arrowIos(),
+                title: LocaleKeys.profile_SavedAddress.tr(),
+                onTap: () {},
+              ),
+              SizedBox(height: 16),
+              const Divider(),
+              SizedBox(height: 16),
+              _itemSection(
+                leading: CustomSwitch(
+                  value: isOn,
+                  onChanged: (value) {
+                    setState(() {
+                      isOn = value;
+                    });
+                  },
+                ),
+                trailing: _arrowIos(),
+                title: LocaleKeys.profile_Notification.tr(),
+                onTap: () {},
+              ),
+              SizedBox(height: 16),
+              const Divider(),
+              SizedBox(height: 16),
+              _itemSection(
+                leading: _iconSvg(SvgAssets.translate),
+                trailing: Text(
+                  context.locale.languageCode == AppValues.english
+                      ? LocaleKeys.profile_English.tr()
+                      : LocaleKeys.profile_Arabic.tr(),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                title: LocaleKeys.profile_Language.tr(),
+                onTap: () {
+                  _showBottomSheetLang();
+                },
+              ),
+              _itemSection(
+                trailing: _arrowIos(),
+                title: LocaleKeys.profile_AboutUs.tr(),
+                onTap: () {},
+              ),
+              _itemSection(
+                trailing: _arrowIos(),
+                title: LocaleKeys.profile_TermsConditions.tr(),
+                onTap: () {},
+              ),
+              SizedBox(height: 16),
+              const Divider(),
+              SizedBox(height: 16),
+              BlocListener<ProfileMainCubit, ProfileMainState>(
+                listener: (context, state) {
+                  if (state.isLogoutLoading) {
+                    AppDialogs.showLoadingDialog(context);
+                  } else if (state.isLogoutSuccess) {
+                    Navigator.pushNamed(context, Routes.appSection);
+                  } else if (state.isLogoutFailure) {
+                    AppDialogs.showFailureDialog(context,
+                        message: state.logOutMessageResponse);
+                  }
+                },
+                child: _itemSection(
+                  trailing: Icon(Icons.login_outlined),
+                  title: LocaleKeys.profile_Logout.tr(),
+                  onTap: () {
+                    context.read<ProfileMainCubit>().logout();
+                  },
+                ),
+              ),
+              const SizedBox(),
+              Text(
+                "v 6.3.0 - (446)",
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: AppColors.white[AppColors.colorCode90],
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ))
       ],
     );
   }
@@ -171,8 +168,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     required String imageUrl,
     required String name,
     required String email,
-     EditProfileRequest? editProfileData,
-
+    EditProfileRequest? editProfileData,
   }) {
     return Column(
       children: [
@@ -192,9 +188,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               textAlign: TextAlign.center,
             ),
             InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, Routes.editProfile, arguments: editProfileData );
-              },
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.editProfile,
+                          arguments: editProfileData)
+                      .then((result) {
+                    if (result == 'refresh') {
+                      context.read<ProfileMainCubit>().getProfileData();
+                    }
+                  });
+                },
                 child: SvgPicture.asset(SvgAssets.pen)),
           ],
         ),

@@ -50,7 +50,8 @@ class BestSellerCubit extends Cubit<BestSellerState> {
 
   void _mapBestSellerToProduct(BestSellerEntity item) {
     final mappedProduct = ProductDetailsModel(
-    price: item.price!,
+      id: item.id.toString(),
+      price: item.price!,
       description: item.description!,
       name: item.title!,
       images: item.images!,

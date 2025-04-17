@@ -73,7 +73,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         } else if (state.status == EditProfileStatus.success) {
           Navigator.of(context).pop();
           AppDialogs.showSuccessDialog(context, message: "success");
-          Navigator.pushNamed(context, Routes.mainProfile);
         } else if (state.status == EditProfileStatus.failure) {
           Navigator.of(context).pop();
           AppDialogs.showFailureDialog(context,
@@ -93,9 +92,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         Row(
                           children: [
-                            Icon(
-                              Icons.arrow_back_ios_new_rounded,
-                              size: context.sp(20),
+                            InkWell(
+                              onTap: (){
+                                Navigator.pop(context, 'refresh');
+                              },
+                              child: Icon(
+                                Icons.arrow_back_ios_new_rounded,
+                                size: context.sp(20),
+                              ),
                             ),
                             Text(
                               " ${LocaleKeys.Profile_EditProfile.tr()}",
@@ -122,10 +126,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Text(
-                          "3",
-                          style: AppTheme.lightTheme.textTheme.bodyMedium!
-                              .copyWith(color: AppColors.white),
-                        )),
+                              "3",
+                              style: AppTheme.lightTheme.textTheme.bodyMedium!
+                                  .copyWith(color: AppColors.white),
+                            )),
                       ),
                     ),
                   ]),
@@ -142,19 +146,19 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     children: [
                       Expanded(
                           child: CustomTextFormField(
-                        controller: firstNameC,
-                        hint: "",
-                        label: LocaleKeys.Authentication_FirstName.tr(),
-                      )),
+                            controller: firstNameC,
+                            hint: "",
+                            label: LocaleKeys.Authentication_FirstName.tr(),
+                          )),
                       SizedBox(
                         width: 20,
                       ),
                       Expanded(
                           child: CustomTextFormField(
-                        controller: lastNameC,
-                        hint: "",
-                        label: LocaleKeys.Authentication_LastName.tr(),
-                      )),
+                            controller: lastNameC,
+                            hint: "",
+                            label: LocaleKeys.Authentication_LastName.tr(),
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -306,3 +310,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 }
+
+
+
+
+
+

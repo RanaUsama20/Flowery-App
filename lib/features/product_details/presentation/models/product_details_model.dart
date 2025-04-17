@@ -4,6 +4,7 @@ class ProductDetailsModel {
   final int price;
   final bool inStock;
   final List<String> images;
+  final String id;
 
   ProductDetailsModel({
     required this.name,
@@ -11,5 +12,6 @@ class ProductDetailsModel {
     required this.price,
     required this.inStock,
     required this.images,
+    required this.id
   });
 }
