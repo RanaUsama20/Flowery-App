@@ -75,7 +75,13 @@
     "NoProductsInThiSection": "لا توجد منتجات في هذا القسم",
     "FailedToFetchProducts": "فشل في جلب المنتجات",
     "FailedToFetchCategories": "فشل في جلب الأقسام",
-    "Search": "بحث"
+    "Search": "بحث",
+    "Checkout": "الدفع",
+    "PriceAfterDiscount": "السعر بعد الخصم",
+    "Discount": "الخصم",
+    "TotalPrice": "السعر الإجمالي",
+    "Items": "عناصر ",
+    "EmptyCart": "السلة فارغة"
   },
   "Error": {
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
@@ -107,7 +113,8 @@
     "Forbidden": "عذرًا، الوصول إلى هذا مقيد. أخبرنا إذا كنت تعتقد أن هذا خطأ!",
     "NoInternetConnection": "لا يوجد اتصال بالإنترنت",
     "Service_unavailable": "خدمتنا متوقفة مؤقتًا للصيانة. يرجى التحقق مرة أخرى بعد قليل!",
-    "DataParsingException": "حدثت مشكلة أثناء معالجة البيانات. يرجى المحاولة مجددًا أو التواصل مع الدعم إذا استمرت المشكلة."
+    "DataParsingException": "حدثت مشكلة أثناء معالجة البيانات. يرجى المحاولة مجددًا أو التواصل مع الدعم إذا استمرت المشكلة.",
+    "SoldOut": "غير متوفر"
   },
   "Messages": {
     "OtpSentToYourEmail": "تم إرسال رمز OTP إلى بريدك الإلكتروني"

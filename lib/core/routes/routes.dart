@@ -13,4 +13,5 @@ class Routes {
   static const String changePassword = '/changePassword';
 
 
+  static const String cart = 'cart';
 }

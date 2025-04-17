@@ -77,6 +77,12 @@ abstract class  LocaleKeys {
   static const Home_FailedToFetchProducts = 'Home.FailedToFetchProducts';
   static const Home_FailedToFetchCategories = 'Home.FailedToFetchCategories';
   static const Home_Search = 'Home.Search';
+  static const Home_Checkout = 'Home.Checkout';
+  static const Home_PriceAfterDiscount = 'Home.PriceAfterDiscount';
+  static const Home_Discount = 'Home.Discount';
+  static const Home_TotalPrice = 'Home.TotalPrice';
+  static const Home_Items = 'Home.Items';
+  static const Home_EmptyCart = 'Home.EmptyCart';
   static const Home = 'Home';
   static const Error_EmailAlreadyExists = 'Error.EmailAlreadyExists';
   static const Error_PasswordCannotBeEmpty = 'Error.PasswordCannotBeEmpty';
@@ -108,6 +114,7 @@ abstract class  LocaleKeys {
   static const Error_NoInternetConnection = 'Error.NoInternetConnection';
   static const Error_Service_unavailable = 'Error.Service_unavailable';
   static const Error_DataParsingException = 'Error.DataParsingException';
+  static const Error_SoldOut = 'Error.SoldOut';
   static const Error = 'Error';
   static const Messages_OtpSentToYourEmail = 'Messages.OtpSentToYourEmail';
   static const Messages = 'Messages';

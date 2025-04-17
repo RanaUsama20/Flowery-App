@@ -12,5 +12,8 @@ class ApiConstants {
   static const String homeRoute = "home";
   static const String occasions = "occasions";
   static const String changePasswordRoute = "auth/change-password";
-
+  static const String cart  = "cart/";
+  static const String deleteCart  = "cart/";
+  static const String addToCart  = "cart";
+  static const String addProductToCart  = "cart";
 }

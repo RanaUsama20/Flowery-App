@@ -74,7 +74,13 @@
     "NoProductsInThiSection": "No products in this section",
     "FailedToFetchProducts": "Failed to fetch products",
     "FailedToFetchCategories": "Failed to fetch categories",
-    "Search": "Search"
+    "Search": "Search",
+    "Checkout": "Checkout",
+    "PriceAfterDiscount": "Price After Discount",
+    "Discount": "Discount",
+    "TotalPrice": "Total Price",
+    "Items": "Items ",
+    "EmptyCart": "Cart is empty"
   },
 
   "Error": {
@@ -107,7 +113,8 @@
     "Forbidden": "Sorry, access to this is restricted. Let us know if you think this is a mistake!",
     "NoInternetConnection": "No internet connection",
     "Service_unavailable": "Our service is temporarily down for maintenance. Please check back in a little while!",
-    "DataParsingException": "There was an issue processing the data. Please try again or contact support if the issue persists."
+    "DataParsingException": "There was an issue processing the data. Please try again or contact support if the issue persists.",
+    "SoldOut": "Sold out"
   },
   "Messages": {
     "OtpSentToYourEmail": "OTP sent to your email"

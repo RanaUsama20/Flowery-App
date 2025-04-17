@@ -27,4 +27,9 @@ class SharedPreferencesUtils {
   static Object? getData({required String key}) {
     return sharedPreferences.get(key);
   }
+
+  static Future<String?> getString(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(key);
+  }
 }

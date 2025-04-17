@@ -8,6 +8,7 @@ import '../../../../core/di/service_locator.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../cart/presentation/view_model/cart_cubit.dart';
 import '../../../product_details/presentation/models/product_details_model.dart';
 import '../../domain/entity/get_all_categories_entity.dart';
 import '../../domain/entity/get_products_by_id_entity.dart';
@@ -130,7 +131,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             selectedIndex = index;
                           });
                           categories
-                              .getProductsById(allCategories[index].id ?? "");
+                              .getProductsById(allCategories[index].id );
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
@@ -139,7 +140,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                allCategories[index].name ?? '',
+                                allCategories[index].name ,
                                 style: AppTheme.lightTheme.textTheme.titleSmall
                                     ?.copyWith(
                                   color: isSelected
@@ -197,15 +198,47 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                     context, Routes.productDetails,
                                     arguments: mappedProduct);
                               },
-                              child: ProductCard.createProductCard(
-                                products[index].imgCover.toString(),
-                                products[index].title.toString(),
-                                products[index].priceAfterDiscount?.toInt() ??
-                                    0,
-                                products[index].price?.toInt() ?? 0,
-                                products[index].discount?.toInt() ?? 0,
-                                actionButton: ActionButton(onPressed: () {}),
+                              child:BlocProvider(
+                                create: (context) => serviceLocator<CartCubit>(),
+                                child: BlocConsumer<CartCubit,CartState>(
+                                  builder: (context, state) {
+                                    final cartCubit = context.read<CartCubit>();
+                                    return  ProductCard.createProductCard(
+                                      products[index].imgCover.toString(),
+                                      products[index].title.toString(),
+                                      products[index].priceAfterDiscount?.toInt() ?? 0,
+                                      products[index].price?.toInt() ?? 0,
+                                      products[index].discount?.toInt() ?? 0,
+                                      onAddToCart: () {
+                                        cartCubit.addProductToCart(products[index].id.toString(),1);
+                                      }, productId:products[index].id.toString(),
+                                    );
+                                  }, listener: (BuildContext context, CartState state) {
+                                    if(state is CartSuccessState){
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                         SnackBar(
+                                          backgroundColor: AppColors.green ,
+                                          content: Text(state.productCart.message.toString(),
+                                            style: AppTheme.lightTheme.textTheme.labelSmall ,
+                                          ),
+                                        ),
+                                      );
+                                    } else if(state is CartErrorState){
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                         SnackBar(
+                                          backgroundColor: AppColors.red ,
+                                          content: Text(LocaleKeys.Error_SoldOut.tr(),
+                                            style: AppTheme.lightTheme.textTheme.labelSmall ,
+                                          ),
+                                        ),
+                                      );
+                                    }
+
+
+                                },
+                                ),
                               ),
+
                             );
                           },
                         ),
