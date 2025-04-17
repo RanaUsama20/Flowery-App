@@ -10,4 +10,6 @@ class Routes {
   static const String appSection = '/appSection';
   static const String productDetails = '/productDetails';
   static const String occasion = '/occasion';
+  static const String editProfile = '/editProfile';
+
 }

@@ -55,6 +55,8 @@ dependencies:
   cached_network_image:
   skeletonizer: ^1.4.3
   shimmer: ^3.0.0
+  image_picker: ^1.1.2
+  permission_handler: ^12.0.0+1
 
 dev_dependencies:
   flutter_test:

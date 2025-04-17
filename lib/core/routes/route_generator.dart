@@ -1,4 +1,5 @@
 import 'package:flowery_app/core/routes/routes.dart';
+import 'package:flowery_app/features/auth/presentation/view/edit_profile_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/email_verification_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/register_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
@@ -12,9 +13,7 @@ import '../../features/app_section/app_section.dart';
 import '../../features/auth/presentation/view/login_screen.dart';
 import '../../features/auth/presentation/view_model/cubit/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
-import '../../features/cart/presentation/pages/cart_screen.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
-import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../di/service_locator.dart';
 
@@ -54,6 +53,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) =>  ProductDetails(
           product: product,
         ));
+      case Routes.editProfile:
+        return MaterialPageRoute(builder: (_) => const EditProfileScreen());
       default:
         return _undefinedRoute();
     }

@@ -41,6 +41,8 @@ abstract class  LocaleKeys {
   static const Authentication_EmailVerification = 'Authentication.EmailVerification';
   static const Authentication_Continue = 'Authentication.Continue';
   static const Authentication_PasswordRequirements = 'Authentication.PasswordRequirements';
+  static const Authentication_takeAPhoto = 'Authentication.takeAPhoto';
+  static const Authentication_ChooseFromGallery = 'Authentication.ChooseFromGallery';
   static const Authentication = 'Authentication';
   static const Profile_Profile = 'Profile.Profile';
   static const Profile_EditProfile = 'Profile.EditProfile';

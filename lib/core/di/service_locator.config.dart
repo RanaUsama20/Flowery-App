@@ -16,6 +16,8 @@ import 'package:flowery_app/core/network/remote/api_manager.dart' as _i797;
 import 'package:flowery_app/core/network/remote/dio_module.dart' as _i338;
 import 'package:flowery_app/features/auth/data/api/auth_retrofit_client.dart'
     as _i865;
+import 'package:flowery_app/features/auth/data/api/upload_photo_api_service.dart'
+    as _i127;
 import 'package:flowery_app/features/auth/data/data_source/auth_data_source.dart'
     as _i392;
 import 'package:flowery_app/features/auth/data/data_source/auth_data_source_impl.dart'
@@ -34,6 +36,8 @@ import 'package:flowery_app/features/auth/domain/usecase/login_use_case.dart'
     as _i541;
 import 'package:flowery_app/features/auth/domain/usecase/register_use_case.dart'
     as _i318;
+import 'package:flowery_app/features/auth/presentation/view_model/cubit/edit_profile_cubit.dart'
+    as _i170;
 import 'package:flowery_app/features/auth/presentation/view_model/cubit/forgot_password_cubit.dart'
     as _i520;
 import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_cubit.dart'
@@ -80,6 +84,14 @@ import 'package:flowery_app/features/home/presentation/view_model/occasions/occa
     as _i331;
 import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart'
     as _i106;
+import 'package:flowery_app/features/profile/data/data_source/remote/home_remote_data_source.dart'
+    as _i386;
+import 'package:flowery_app/features/profile/data/data_source/remote/home_remote_data_source_impl.dart'
+    as _i965;
+import 'package:flowery_app/features/profile/data/repository_impl/profile_repository_impl.dart'
+    as _i110;
+import 'package:flowery_app/features/profile/domain/repository/profile_repository.dart'
+    as _i1025;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -115,6 +127,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i106.ProfileRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
+    gh.lazySingleton<_i127.UploadPhotoApiService>(
+        () => _i127.UploadPhotoApiService(gh<_i361.Dio>()));
     gh.factory<_i129.GetAllCategoriesDataSource>(() =>
         _i48.GetAllCategoriesDataSourceImpl(
             gh<_i557.CategoriesRetrofitClient>()));
@@ -126,14 +140,20 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i797.ApiManager>(),
           gh<_i3.HomeRemoteDataSource>(),
         ));
+    gh.factory<_i386.ProfileRemoteDataSource>(
+        () => _i965.HomeRemoteDataSourceImpl(
+              gh<_i1039.HomeRetrofitClient>(),
+              gh<_i797.ApiManager>(),
+            ));
+    gh.factory<_i129.GetProductsByIdDataSource>(() =>
+        _i48.GetProductsByIdDataSourceImpl(
+            gh<_i557.CategoriesRetrofitClient>()));
     gh.factory<_i392.AuthDataSource>(() => _i136.AuthDataSourceImpl(
           gh<_i865.AuthRetrofitClient>(),
           gh<_i797.ApiManager>(),
           gh<_i865.AuthRetrofitClient>(),
+          gh<_i127.UploadPhotoApiService>(),
         ));
-    gh.factory<_i129.GetProductsByIdDataSource>(() =>
-        _i48.GetProductsByIdDataSourceImpl(
-            gh<_i557.CategoriesRetrofitClient>()));
     gh.factory<_i427.GetCategoriesRepository>(() =>
         _i578.GetCategoriesRepositoryImpl(
             gh<_i129.GetAllCategoriesDataSource>()));
@@ -154,6 +174,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i675.BestSellerUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i683.HomeUseCase>(
         () => _i683.HomeUseCase(gh<_i630.HomeRepository>()));
+    gh.factory<_i1025.ProfileRepository>(
+        () => _i110.HomeRepositoryImpl(gh<_i386.ProfileRemoteDataSource>()));
     gh.factory<_i318.RegisterUseCase>(
         () => _i318.RegisterUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i427.GetProductsByIdRepository>(() =>
@@ -174,6 +196,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i427.GetCategoriesRepository>(),
           gh<_i427.GetProductsByIdRepository>(),
         ));
+    gh.factory<_i170.EditProfileCubit>(
+        () => _i170.EditProfileCubit(gh<_i255.AuthUseCase>()));
     gh.factory<_i520.ForgotPasswordCubit>(
         () => _i520.ForgotPasswordCubit(gh<_i255.AuthUseCase>()));
     gh.factory<_i57.CategoriesCubit>(

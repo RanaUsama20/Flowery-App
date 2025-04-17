@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
+
 import '../../domain/entity/login_entity.dart';
 
 import 'package:flowery_app/core/network/common/api_result.dart';
@@ -18,5 +22,9 @@ abstract class AuthDataSource {
      ResetPasswordRequest request);
 
  Future<LoginEntity?> login({required String email, required String password});
+ Future<Result<String>>editProfile(EditProfileRequest request);
+ Future<Result<String>>uploadPhoto(File request);
+
+
 
 }

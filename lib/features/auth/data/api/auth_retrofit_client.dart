@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
+import 'package:flowery_app/features/auth/data/model/response/edit_profile_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/network/remote/api_constants.dart';
@@ -32,4 +34,11 @@ abstract class AuthRetrofitClient {
   @PUT("auth/resetPassword")
   Future<Map<String, dynamic>> resetPassword(
       @Body() ResetPasswordRequest request);
+  @PUT("auth/editProfile")
+  Future<EditProfileResponse> editProfile(
+      @Header("Authorization") String token,
+      @Body() EditProfileRequest request);
+
+
+
 }
