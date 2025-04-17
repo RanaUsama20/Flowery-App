@@ -5,7 +5,6 @@ class ApiConstants {
   static const String forgetPasswordRoute = "auth/forgotPassword";
   static const String verifyOtpCodeRoute = "auth/verifyResetCode";
   static const String resetPasswordRoute = "auth/resetPassword";
-  static const String changePasswordRoute = "auth/changePassword";
   static const String profileDataRoute = "auth/profile-data";
   static const String getAllCategories = "categories";
  static const String getProductsById= "products";

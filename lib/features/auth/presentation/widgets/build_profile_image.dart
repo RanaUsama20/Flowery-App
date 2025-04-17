@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../view_model/cubit/edit_profile_cubit.dart';
 
-Widget buildProfileImage(EditProfileCubit cubit,BuildContext context) {
+Widget buildProfileImage(EditProfileCubit cubit,BuildContext context, String url) {
   return Stack(
     alignment: Alignment.bottomRight,
     children: [
@@ -14,7 +14,7 @@ Widget buildProfileImage(EditProfileCubit cubit,BuildContext context) {
         CircleAvatar(
           radius: context.sp(55),
           backgroundColor: AppColors.gray,
-          backgroundImage: AssetImage(SvgAssets.photoCameraSvg),
+          backgroundImage: NetworkImage(url),
         )
       else
         CircleAvatar(

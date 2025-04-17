@@ -1,6 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_cubit.dart';
-import 'package:flowery_app/features/auth/presentation/view_model/cubit/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_colors.dart';
@@ -9,6 +7,8 @@ import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/validator.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../view_model/login/login_cubit.dart';
+import '../view_model/login/login_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

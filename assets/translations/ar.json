@@ -125,6 +125,20 @@
   "Messages": {
     "OtpSentToYourEmail": "تم إرسال رمز OTP إلى بريدك الإلكتروني"
   },
+
+  "profile": {
+    "MyOrder": "طلباتي",
+    "SavedAddress": "العناوين المحفوظة",
+    "Notification": "الإشعارات",
+    "Language": "اللغة",
+    "English": "الإنجليزية",
+    "Arabic": "العربية",
+    "Logout": "تسجيل الخروج",
+    "AboutUs": "من نحن",
+    "TermsConditions": "الشروط والأحكام",
+    "changeLanguage": "تغيير اللغة"
+  },
+
   "Ok": "موافق",
   "Loading": "جارٍ التحميل...",
   "Retry": "إعادة المحاولة"

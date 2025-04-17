@@ -1,24 +1,27 @@
 import 'dart:io';
 
 import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
-import 'package:flowery_app/features/auth/domain/usecase/auth_use_case.dart';
+import 'package:flowery_app/features/auth/domain/usecase/edit_profile_use_case.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../core/network/common/api_result.dart';
+import '../../../domain/usecase/upload_photo_use_case.dart';
 import 'edit_profile_state.dart';
 @injectable
 class EditProfileCubit extends Cubit<EditProfileState> {
-  EditProfileCubit(this.useCase) : super(const EditProfileState());
-  AuthUseCase useCase;
+  EditProfileCubit(this.editProfileUseCase,this.uploadPhotoUseCase) : super(const EditProfileState());
+    EditProfileUseCase editProfileUseCase;
+  UploadPhotoUseCase uploadPhotoUseCase;
+
   File? image;
   final ImagePicker _picker = ImagePicker();
   Future<bool> updateImageApi() async {
     if (image == null) return false;
 
-    final result = await useCase.uploadPhoto(image!); // safe now, already checked
+    final result = await uploadPhotoUseCase.uploadPhoto(image!); // safe now, already checked
 
     switch (result) {
       case SuccessResult<String>():
@@ -135,7 +138,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       return;
     }
 
-    final result = await useCase.editProfile(request);
+    final result = await editProfileUseCase.editProfile(request);
 
     switch (result) {
       case SuccessResult<String>():

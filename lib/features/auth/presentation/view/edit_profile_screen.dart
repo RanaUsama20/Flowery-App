@@ -13,32 +13,45 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/dialogs/app_dialogs.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../widgets/build_profile_image.dart';
 
 class EditProfileScreen extends StatefulWidget {
-  const EditProfileScreen({super.key});
+  EditProfileRequest userData;
+
+  EditProfileScreen({required this.userData});
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
 }
+
 enum Gender { male, female }
+
+
+
 class _EditProfileScreenState extends State<EditProfileScreen> {
   Gender? selectedGender;
   late EditProfileCubit cubit;
   bool check = false;
   EditProfileRequest request = EditProfileRequest();
 
-  final TextEditingController firstNameC = TextEditingController();
-  final TextEditingController lastNameC = TextEditingController();
-  final TextEditingController emailC = TextEditingController();
-  final TextEditingController phoneC = TextEditingController();
-  final TextEditingController genderC = TextEditingController();
+  late TextEditingController firstNameC ;
+  late TextEditingController lastNameC ;
+  late TextEditingController emailC ;
+  late TextEditingController phoneC ;
+
+
 
   @override
   void initState() {
     super.initState();
     cubit = serviceLocator.get<EditProfileCubit>();
+    firstNameC = TextEditingController(text: widget.userData.firstName);
+    lastNameC = TextEditingController(text: widget.userData.lastName);
+    emailC = TextEditingController(text: widget.userData.email);
+    phoneC = TextEditingController(text: widget.userData.phone);
+
   }
 
   @override
@@ -47,7 +60,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     lastNameC.dispose();
     emailC.dispose();
     phoneC.dispose();
-    genderC.dispose();
     super.dispose();
   }
 
@@ -58,119 +70,166 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       listener: (context, state) {
         if (state.status == EditProfileStatus.loading) {
           AppDialogs.showLoadingDialog(context);
-        }
-        else if (state.status == EditProfileStatus.success) {
+        } else if (state.status == EditProfileStatus.success) {
           Navigator.of(context).pop();
           AppDialogs.showSuccessDialog(context, message: "success");
-        }
-        else if (state.status == EditProfileStatus.failure) {
+          Navigator.pushNamed(context, Routes.mainProfile);
+        } else if (state.status == EditProfileStatus.failure) {
           Navigator.of(context).pop();
-          AppDialogs.showFailureDialog(
-              context, message: state.errorMessage.toString());
+          AppDialogs.showFailureDialog(context,
+              message: state.errorMessage.toString());
         }
       },
       child: Scaffold(
-
         body: SingleChildScrollView(
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  Stack(
-                      children: [ Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.arrow_back_ios_new_rounded,
-                                size: context.sp(20),),
-                              Text(" ${LocaleKeys.Profile_EditProfile.tr()}",
-                                style: AppTheme.lightTheme.textTheme
-                                    .titleLarge,)
-
-                            ],
-                          ),
-
-                          SvgPicture.asset(
-                            SvgAssets.notificationSvg,
-                            width: context.wp(4),
-                            height: context.hp(3.5),
-                          ),
-
-                        ],
-                      ),
-                        Positioned(
-                          right: 0,
-                          top: 0,
-                          bottom: 12,
-
-                          child: Container(
-                            width: context.wp(4),
-                            height: context.hp(2.5),
-                            decoration: BoxDecoration(
-
-                                color: AppColors.red,
-                                borderRadius: BorderRadius.circular(10)
-
+                  Stack(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              size: context.sp(20),
                             ),
-                            child: Center(child: Text("3",
-                              style: AppTheme.lightTheme.textTheme.bodyMedium!
-                                  .copyWith(color: AppColors.white),)),
-                          ),
+                            Text(
+                              " ${LocaleKeys.Profile_EditProfile.tr()}",
+                              style: AppTheme.lightTheme.textTheme.titleLarge,
+                            )
+                          ],
                         ),
-                      ]
+                        SvgPicture.asset(
+                          SvgAssets.notificationSvg,
+                          width: context.wp(4),
+                          height: context.hp(3.5),
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      bottom: 12,
+                      child: Container(
+                        width: context.wp(4),
+                        height: context.hp(2.5),
+                        decoration: BoxDecoration(
+                            color: AppColors.red,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                          "3",
+                          style: AppTheme.lightTheme.textTheme.bodyMedium!
+                              .copyWith(color: AppColors.white),
+                        )),
+                      ),
+                    ),
+                  ]),
+                  BlocBuilder<EditProfileCubit, EditProfileState>(
+                    bloc: cubit,
+                    builder: (context, state) {
+                      return buildProfileImage(cubit, context,widget.userData.url!);
+                    },
                   ),
-     BlocBuilder<EditProfileCubit, EditProfileState>(
-       bloc: cubit,
-    builder: (context, state) {
-      return buildProfileImage(cubit, context);
-    },),
-                  SizedBox(height: context.hp(7),),
+                  SizedBox(
+                    height: context.hp(7),
+                  ),
                   Row(
                     children: [
-                      Expanded(child: CustomTextFormField(
+                      Expanded(
+                          child: CustomTextFormField(
                         controller: firstNameC,
                         hint: "",
-                        label: LocaleKeys.Authentication_FirstName.tr(),)),
-                      SizedBox(width: 20,),
-                      Expanded(child: CustomTextFormField(
-                        controller: lastNameC, hint: "", label: LocaleKeys.Authentication_LastName.tr(),)),
-
+                        label: LocaleKeys.Authentication_FirstName.tr(),
+                      )),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                          child: CustomTextFormField(
+                        controller: lastNameC,
+                        hint: "",
+                        label: LocaleKeys.Authentication_LastName.tr(),
+                      )),
                     ],
                   ),
-                  SizedBox(height: context.hp(3.5),),
-                  CustomTextFormField(
-                    controller: emailC, hint: "", label: LocaleKeys.Authentication_Email.tr(),),
-                  SizedBox(height: context.hp(3.5),),
-                  CustomTextFormField(
-                    controller: phoneC, hint: "", label: LocaleKeys.Authentication_PhoneNumber.tr(),),
-                  SizedBox(height: context.hp(3.5),),
-                  CustomTextFormField(hint: "", label: LocaleKeys.Authentication_Password.tr(), widget: Row(
-                    children: [
-                      Icon(Icons.star, size: context.sp(16),),
-                      Icon(Icons.star, size: context.sp(16),),
-                      Icon(Icons.star, size: context.sp(16),),
-                      Icon(Icons.star, size: context.sp(16),),
-                      Icon(Icons.star, size: context.sp(16),),
-                      Icon(Icons.star, size: context.sp(16),),
-
-
-                    ],
+                  SizedBox(
+                    height: context.hp(3.5),
                   ),
-                  
-                  suffixWidget:InkWell(
-                      onTap: (){},
-                      child: Text(LocaleKeys.Profile_Change.tr(),style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(fontSize: 12,))) ,),
+                  CustomTextFormField(
+                    controller: emailC,
+                    hint: "",
+                    label: LocaleKeys.Authentication_Email.tr(),
+                  ),
+                  SizedBox(
+                    height: context.hp(3.5),
+                  ),
+                  CustomTextFormField(
+                    controller: phoneC,
+                    hint: "",
+                    label: LocaleKeys.Authentication_PhoneNumber.tr(),
+                  ),
+                  SizedBox(
+                    height: context.hp(3.5),
+                  ),
+                  CustomTextFormField(
+                    hint: "",
+                    label: LocaleKeys.Authentication_Password.tr(),
+                    widget: Row(
+                      children: [
+                        Icon(
+                          Icons.star,
+                          size: context.sp(16),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: context.sp(16),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: context.sp(16),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: context.sp(16),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: context.sp(16),
+                        ),
+                        Icon(
+                          Icons.star,
+                          size: context.sp(16),
+                        ),
+                      ],
+                    ),
+                    suffixWidget: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.changePassword);
 
-                  SizedBox(height: context.hp(4),),
+                        },
+                        child: Text(LocaleKeys.Profile_Change.tr(),
+                            style: AppTheme.lightTheme.textTheme.labelLarge!
+                                .copyWith(
+                              fontSize: 12,
+                            ))),
+                  ),
+
+                  SizedBox(
+                    height: context.hp(4),
+                  ),
                   Row(
-mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-
-                      Text(LocaleKeys.Authentication_Gender.tr(),
+                      Text(
+                        LocaleKeys.Authentication_Gender.tr(),
                         style: AppTheme.lightTheme.textTheme.titleMedium!
-                            .copyWith(color: AppColors.gray),),
+                            .copyWith(color: AppColors.gray),
+                      ),
                       Radio<Gender>(
                         value: Gender.male,
                         groupValue: selectedGender,
@@ -183,10 +242,10 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           });
                         },
                       ),
-
-                      Text(LocaleKeys.Authentication_Male.tr(),
-                        style: AppTheme.lightTheme.textTheme.labelMedium,),
-
+                      Text(
+                        LocaleKeys.Authentication_Male.tr(),
+                        style: AppTheme.lightTheme.textTheme.labelMedium,
+                      ),
                       Row(
                         children: [
                           Radio<Gender>(
@@ -201,9 +260,8 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               });
                             },
                           ),
-                          Text(LocaleKeys.Authentication_Female.tr(), style: AppTheme.lightTheme.textTheme
-                              .labelMedium),
-
+                          Text(LocaleKeys.Authentication_Female.tr(),
+                              style: AppTheme.lightTheme.textTheme.labelMedium),
                         ],
                       ),
                     ],
@@ -239,16 +297,12 @@ mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       ),
                     ),
                   ),
-
                 ],
               ),
-
             ),
-
           ),
         ),
       ),
     );
   }
-
 }

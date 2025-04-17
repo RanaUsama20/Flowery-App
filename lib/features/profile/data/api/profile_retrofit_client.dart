@@ -22,7 +22,6 @@ abstract class ProfileRetrofitClient {
 
   @GET(ApiConstants.profileData)
   Future<ProfileDataDto> getProfile(@Header('Authorization') String? token);
-}
 
   @PATCH(ApiConstants.changePasswordRoute)
   Future<ChangePasswordResponseDto?> changePassword(
@@ -33,4 +32,7 @@ abstract class ProfileRetrofitClient {
   Future<EditProfileResponse> editProfile(
       @Header("Authorization") String token,
       @Body() EditProfileRequest request);
+}
+
+
 

@@ -35,6 +35,20 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
     return response;
   }
+  @override
+  Future<Result<ProfileDataEntity>> getProfileData() async {
+    final result = await _apiManager.execute<ProfileDataDto>(() async {
+      final token = await SaveLocal.getString("token");
+      log("token: $token");
+      return await _profileRetrofitClient.getProfile("Bearer $token");
+    });
+    switch (result) {
+      case SuccessResult<ProfileDataDto>():
+        return SuccessResult<ProfileDataEntity>(result.data.toProfileDataEntity());
+      case FailureResult<ProfileDataDto>():
+        return FailureResult<ProfileDataEntity>(result.exception);
+    }
+  }
   }
 
 
@@ -54,18 +68,5 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   //   }
   // }
 
-  @override
-  Future<Result<ProfileDataEntity>> getProfileData() async {
-    final result = await _apiManager.execute<ProfileDataDto>(() async {
-      final token = await SaveLocal.getString("token");
-      log("token: $token");
-      return await _profileRetrofitClient.getProfile("Bearer $token");
-    });
-    switch (result) {
-      case SuccessResult<ProfileDataDto>():
-        return SuccessResult<ProfileDataEntity>(result.data.toProfileDataEntity());
-      case FailureResult<ProfileDataDto>():
-        return FailureResult<ProfileDataEntity>(result.exception);
-    }
-  }
-}
+
+

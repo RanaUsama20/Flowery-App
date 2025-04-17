@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flowery_app/features/auth/domain/entity/forgot_password_response_entity.dart';
 import '../../domain/entity/login_entity.dart';
 import 'package:flowery_app/core/network/common/api_result.dart';
+
+import '../model/request/edit_profile_request.dart';
 
 abstract class AuthDataSource {
   Future<Result<ForgotPasswordResponseEntity>> forgotPassword({required String email});
@@ -16,5 +20,4 @@ abstract class AuthDataSource {
 
 
 
-  Future<LoginEntity?> login({required String email, required String password});
 }

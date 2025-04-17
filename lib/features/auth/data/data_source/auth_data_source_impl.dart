@@ -1,14 +1,22 @@
+import 'dart:io';
+
 import 'package:flowery_app/core/network/common/api_result.dart';
-import 'package:flowery_app/features/auth/data/model/request/forgot_password_request.dart';
-import 'package:flowery_app/features/auth/data/model/request/verify_request_model.dart';
 import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/network/remote/api_manager.dart';
 import '../../../../core/utils/save_local.dart';
 import '../../../profile/data/api/profile_retrofit_client.dart';
+import '../../domain/entity/forgot_password_response_entity.dart';
 import '../api/auth_retrofit_client.dart';
+import '../api/upload_photo_api_service.dart';
+import '../model/request/edit_profile_request.dart';
+import '../model/request/forgot_password_request_dto.dart';
 import '../model/request/reset_password_request.dart';
+import '../model/request/verify_reset_code_request_dto.dart';
+import '../model/response/forgot_password_response_dto.dart';
+import '../model/response/reset_password_response_dto.dart';
+import '../model/response/verify_reset_code_response_dto.dart';
 import 'auth_data_source.dart';
 
 @Injectable(as: AuthDataSource)
@@ -76,7 +84,6 @@ class AuthDataSourceImpl implements AuthDataSource {
 
   @override
   Future<LoginEntity?> login({required String email, required String password}) async {
-    var response = await apiClient.login(email, password);
     var response = await apiService.login(email, password);
 
     return response?.toLoginEntity();

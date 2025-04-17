@@ -9,11 +9,13 @@ import 'package:flowery_app/core/network/common/api_result.dart' as _i4;
 import 'package:flowery_app/features/profile/data/data_source/remote/profile_remote_data_source.dart'
     as _i2;
 import 'package:flowery_app/features/profile/data/model/request/change_password/change_password_request_model.dart'
-    as _i6;
+    as _i8;
 import 'package:flowery_app/features/profile/data/model/response/change_password/change_password_response_model.dart'
+    as _i7;
+import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart'
     as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i7;
+import 'package:mockito/src/dummies.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -39,18 +41,31 @@ class MockProfileRemoteDataSource extends _i1.Mock
   }
 
   @override
-  _i3.Future<_i4.Result<_i5.ChangePasswordResponseDto?>> changePassword(
-    _i6.ChangePasswordRequestDto? passwordData,
+  _i3.Future<_i4.Result<_i5.ProfileDataEntity>> getProfileData() =>
+      (super.noSuchMethod(
+            Invocation.method(#getProfileData, []),
+            returnValue: _i3.Future<_i4.Result<_i5.ProfileDataEntity>>.value(
+              _i6.dummyValue<_i4.Result<_i5.ProfileDataEntity>>(
+                this,
+                Invocation.method(#getProfileData, []),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<_i5.ProfileDataEntity>>);
+
+  @override
+  _i3.Future<_i4.Result<_i7.ChangePasswordResponseDto?>> changePassword(
+    _i8.ChangePasswordRequestDto? passwordData,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#changePassword, [passwordData]),
             returnValue:
-                _i3.Future<_i4.Result<_i5.ChangePasswordResponseDto?>>.value(
-                  _i7.dummyValue<_i4.Result<_i5.ChangePasswordResponseDto?>>(
+                _i3.Future<_i4.Result<_i7.ChangePasswordResponseDto?>>.value(
+                  _i6.dummyValue<_i4.Result<_i7.ChangePasswordResponseDto?>>(
                     this,
                     Invocation.method(#changePassword, [passwordData]),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Result<_i5.ChangePasswordResponseDto?>>);
+          as _i3.Future<_i4.Result<_i7.ChangePasswordResponseDto?>>);
 }

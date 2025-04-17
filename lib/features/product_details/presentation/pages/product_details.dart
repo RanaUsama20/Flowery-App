@@ -168,23 +168,6 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Column(
                 children: [
                   Expanded(child: SizedBox()),
-                  Center(
-                    child: Container(
-                      width: context.wp(90),
-                      height: context.hp(5.6),
-                      decoration: BoxDecoration(
-                        color: AppColors.pink,
-                        borderRadius: BorderRadius.circular(context.sp(40)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          LocaleKeys.Home_AddToCart.tr(),
-                          style: AppTheme.lightTheme.textTheme.labelLarge!
-                              .copyWith(fontSize: 16, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ),
                   ElevatedButton(
                     onPressed: () {},
                     style:

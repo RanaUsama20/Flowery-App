@@ -2,16 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flowery_app/features/auth/data/model/response/forgot_password_response_dto.dart';
 import 'package:flowery_app/features/auth/data/model/response/reset_password_response_dto.dart';
 import 'package:flowery_app/features/auth/data/model/response/verify_reset_code_response_dto.dart';
-import 'package:flowery_app/features/auth/data/model/request/edit_profile_request.dart';
-import 'package:flowery_app/features/auth/data/model/response/edit_profile_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/network/remote/api_constants.dart';
 import '../model/login/login_dto.dart';
-import '../model/request/forgot_password_request.dart';
+import '../model/request/forgot_password_request_dto.dart';
 import '../model/request/register_request_model.dart';
 import '../model/request/reset_password_request.dart';
-import '../model/request/verify_request_model.dart';
+import '../model/request/verify_reset_code_request_dto.dart';
 import '../model/response/register_response.dart';
 part 'auth_retrofit_client.g.dart';
 

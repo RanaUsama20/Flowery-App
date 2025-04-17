@@ -124,6 +124,19 @@
   "Messages": {
     "OtpSentToYourEmail": "OTP sent to your email"
   },
+  "profile": {
+    "MyOrder": "My order",
+    "SavedAddress": "Saved address",
+    "Notification": "Notification",
+    "Language": "Language",
+    "English": "English",
+    "Arabic": "Arabic",
+    "Logout": "Logout",
+    "AboutUs": "About us",
+    "TermsConditions": "Terms & conditions",
+    "changeLanguage": "Change language"
+  },
+
   "Ok": "Ok",
   "Loading": "Loading...",
   "Retry": "Retry"
