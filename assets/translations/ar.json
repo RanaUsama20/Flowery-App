@@ -13,6 +13,8 @@
     "PasswordNotMatched": "كلمة المرور غير متطابقة",
     "NewPassword": "كلمة المرور الجديدة",
     "currentPassword": "كلمة المرور الحالية",
+    "TitleForgetPassword": "نسيت كلمة المرور",
+    "SubtitleForgetPassword": "ادخل بريدك الالكتروني الخاص بك لاستعادة كلمة المرور",
     "RememberMe": "تذكرني",
     "ContinueAsGuest": "اكمل كزائر",
     "ForgetPassword": "نسيت كلمة المرور",
@@ -35,6 +37,11 @@
     "Confirm": "تأكيد",
     "Resend": "إعادة إرسال",
     "DidnotReceiveCode": "لم تتلقَ الرمز؟",
+    "DonotReceiveCode": "لم تتلق الرمز؟",
+    "SubEmailVerification": "يرجى إدخال الرمز المرسل إلى عنوان بريدك الإلكتروني",
+    "EnterCode": "أدخل الرمز الخاص بك",
+    "Done": "تم",
+    "DoneSedCode": "تم ارسال الرمز الى بريدك الالكتروني",
     "EmailVerification": "التحقق من البريد الإلكتروني",
     "Continue": "متابعة",
     "PasswordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف على الأقل، حرف كبير، ورقم",
@@ -53,7 +60,7 @@
     "newPassword": "كلمة المرور الجديدة",
     "currentPassword": "كلمة المرور الحالية",
     "ResetPassword": "تعديل كلمة المرور"
-   , "Update" : "تحديث"
+  , "Update" : "تحديث"
   },
   "Home": {
     "Home": "الرئيسية",
@@ -89,10 +96,11 @@
     "Items": "عناصر ",
     "EmptyCart": "السلة فارغة"
   },
-  "Error": {
-    "YouHaveToLoginToUseThisFeature": "يجب عليك تسجيل الدخول لاستخدام هذه الميزة",
+  "Error": {"error": "خطأ",
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
     "PasswordCannotBeEmpty": "لا يمكن أن تكون كلمة المرور فارغة.",
+    "CodeCannotBeEmpty": "لا يمكن ان يكون الرمز فارغ",
+    "CodeShouldBeAtLeast6Digits": "لا يمكن ان يكون الرمز اقل من 6 ارقام",
     "NameCannotBeEmpty": "لا يمكن ان يكون الاسم فارغ",
     "PhoneNumberCannotBeEmpty": "لا يمكن ان يكون رقم الهاتف فارغ",
     "InvalidPhoneNumber": ".صيغة رقم غير صالحة. يرجى التأكد من أنها تبدأ بـ 010 أو 011 أو 012 أو 015 ويحتوي على 11 رقمًا",
@@ -121,7 +129,8 @@
     "NoInternetConnection": "لا يوجد اتصال بالإنترنت",
     "Service_unavailable": "خدمتنا متوقفة مؤقتًا للصيانة. يرجى التحقق مرة أخرى بعد قليل!",
     "DataParsingException": "حدثت مشكلة أثناء معالجة البيانات. يرجى المحاولة مجددًا أو التواصل مع الدعم إذا استمرت المشكلة.",
-    "SoldOut": "غير متوفر"
+    "SoldOut": "غير متوفر",
+    "YouHaveToLoginToUseThisFeature": "يجب عليك تسجيل الدخول لاستخدام هذه الميزة"
   },
   "Messages": {
     "OtpSentToYourEmail": "تم إرسال رمز OTP إلى بريدك الإلكتروني"
@@ -144,4 +153,5 @@
   "Loading": "جارٍ التحميل...",
   "Retry": "إعادة المحاولة",
   "cancel": "الغاء"
+
 }

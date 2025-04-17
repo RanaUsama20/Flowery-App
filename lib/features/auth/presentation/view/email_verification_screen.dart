@@ -7,7 +7,6 @@ import 'package:flowery_app/core/dialogs/app_toasts.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/theme/app_theme.dart';
 import 'package:flowery_app/core/utils/validator.dart';
-import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
 import 'package:flowery_app/features/auth/presentation/widgets/custom_app_bar.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';

@@ -48,3 +48,8 @@ jobs:
 
       - name: Run test
         run: flutter test
+
+      - name: Validate branch name
+        run: |
+                BRANCH_NAME="${{ steps.branch.outputs.name }}"
+                echo "Checking branch: $BRANCH_NAME"

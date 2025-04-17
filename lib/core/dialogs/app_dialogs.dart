@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/dialogs/loading_widget.dart';
 import 'package:flowery_app/core/routes/routes.dart';
@@ -110,17 +111,14 @@ class AppDialogs {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.pushReplacementNamed(context, Routes.appSection);
                 },
                 child: Text(LocaleKeys.cancel.tr())),
             TextButton(
               onPressed: () =>
                   Navigator.of(context).pushReplacementNamed(Routes.login),
               child: Text(LocaleKeys.Ok.tr()),
-              child: Text(
-                buttonText ?? LocaleKeys.Ok,
-                style: TextStyle(color: AppColors.black),
-              ),
+
             ),
           ],
         );

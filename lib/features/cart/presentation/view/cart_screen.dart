@@ -3,7 +3,10 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/features/cart/presentation/widget/cart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/app/app_cubit/app_cubit_cubit.dart';
 import '../../../../core/di/service_locator.dart';
+import '../../../../core/dialogs/app_dialogs.dart';
+import '../../../../core/enum/state_user.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../generated/locale_keys.g.dart';
@@ -19,11 +22,26 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   final CartCubit cartCubit = serviceLocator<CartCubit>();
+  late AppCubit _appCubit;
 
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => context.read<CartCubit>().getProductToCart());
+    _appCubit = serviceLocator<AppCubit>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_appCubit.getStateUser ==
+          StateUser.guest) {
+        AppDialogs.showLoginDialog(
+            context,
+            message: LocaleKeys
+                .Error_YouHaveToLoginToUseThisFeature
+                .tr());
+      } else {
+        Future.microtask(() => context.read<CartCubit>().getProductToCart());
+
+      }
+    });
+
   }
 
   @override

@@ -181,20 +181,6 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
               Navigator.pushNamed(context, Routes.productDetails,
                   arguments: mappedProduct);
             },
-            child: ProductCard.createProductCard(
-              products[index].imgCover,
-              products[index].title,
-              products[index].price.toInt(),
-              products[index].priceAfterDiscount.toInt(),
-              products[index].discount.toInt(),
-              actionButton: ActionButton(onPressed: () {
-                if(_appCubit.getStateUser==StateUser.guest){
-                     AppDialogs.showLoginDialog(context, message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr());
-                }
-                else{
-                  return ;
-                }
-              }),
             child: BlocProvider(
               create: (context) => serviceLocator<CartCubit>(),
               child: BlocConsumer<CartCubit, CartState>(
@@ -207,8 +193,14 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                     products[index].priceAfterDiscount.toInt(),
                     products[index].discount.toInt(),
                     onAddToCart: () {
-                      cartCubit.addProductToCart(
-                          products[index].id.toString(), 1);
+                      if(_appCubit.getStateUser==StateUser.guest){
+                        AppDialogs.showLoginDialog(context, message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr());
+                      }
+                      else{
+                        cartCubit.addProductToCart(
+                            products[index].id.toString(), 1);
+                      }
+
                     },
                     productId: products[index].id.toString(),
                   );

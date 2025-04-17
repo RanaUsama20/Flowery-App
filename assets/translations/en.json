@@ -16,6 +16,8 @@
     "RememberMe": "Remember me",
     "ContinueAsGuest": "Continue as guest",
     "ForgetPassword": "Forget password?",
+    "TitleForgetPassword": "Forget password",
+    "SubtitleForgetPassword": "Please enter your email associated to your account",
     "DonotHaveAnAccount": "Don't have an account?",
     "AlreadyHaveAnAccount": "Already have an account?",
     "FirstName": "First name",
@@ -36,6 +38,10 @@
     "Resend": "Resend",
     "DidnotReceiveCode": "Didn't receive code?",
     "EmailVerification": "Email verification",
+    "SubEmailVerification": "Please enter your code that was sent to your email address",
+    "EnterCode": "Enter Your code",
+    "Done": "Done",
+    "DoneSedCode": "Done, sent code to your email",
     "Continue": "Continue",
     "PasswordRequirements": "Password must not be empty and must contain at least 6 characters, an uppercase letter, and a number",
     "takeAPhoto": "Take a Photo",
@@ -51,7 +57,6 @@
     "newPassword": "New Password",
     "currentPassword": "Current Password",
     "Update": "Update",
-    "ResetPassword": "Reset Password",
     "ResetPassword": "Reset Password"
   },
   "Home": {
@@ -90,9 +95,11 @@
   },
 
   "Error": {
-    "YouHaveToLoginToUseThisFeature": "You have to login to use this feature",
+    "error": "Error",
     "EmailAlreadyExists": "This email already exists.",
     "PasswordCannotBeEmpty": "Password can't be empty.",
+    "CodeCannotBeEmpty": "Code cannot be empty.",
+    "CodeShouldBeAtLeast6Digits": "Code should be at least 6 digits",
     "NameCannotBeEmpty": "Name can't be empty.",
     "InvalidName": "Please enter a valid name without special characters.",
     "PhoneNumberCannotBeEmpty": "Phone number can't be empty.",
@@ -121,8 +128,11 @@
     "NoInternetConnection": "No internet connection",
     "Service_unavailable": "Our service is temporarily down for maintenance. Please check back in a little while!",
     "DataParsingException": "There was an issue processing the data. Please try again or contact support if the issue persists.",
-    "SoldOut": "Sold out"
+    "SoldOut": "Sold out",
+    "YouHaveToLoginToUseThisFeature": "You have to login to use this feature"
+
   },
+
   "Messages": {
     "OtpSentToYourEmail": "OTP sent to your email"
   },

@@ -2,30 +2,39 @@ part of 'profile_main_cubit.dart';
 
 class ProfileMainState extends Equatable {
   final Status profileMainStatus;
+  final Status logoutStatus;
   final ProfileDataEntity profileData;
   final String errorMessage;
+  final String logOutMessageResponse;
 
   const ProfileMainState({
     this.profileMainStatus = Status.initial,
+    this.logoutStatus = Status.initial,
     this.profileData = const ProfileDataEntity(),
     this.errorMessage = '',
+    this.logOutMessageResponse = ''
   });
 
   ProfileMainState copyWith({
     Status? profileMainStatus,
+    Status? logoutStatus,
     ProfileDataEntity? profileData,
     String? errorMessage,
+    String? logOutMessageResponse,
   }) {
     return ProfileMainState(
       profileMainStatus: profileMainStatus ?? this.profileMainStatus,
+      logoutStatus: logoutStatus ?? this.logoutStatus,
       profileData: profileData ?? this.profileData,
       errorMessage: errorMessage ?? this.errorMessage,
+      logOutMessageResponse: logOutMessageResponse ?? this.logOutMessageResponse,
+
     );
   }
 
   @override
   List<Object> get props => [
-        profileMainStatus,
+        profileMainStatus,logoutStatus,logOutMessageResponse,errorMessage,profileData
       ];
 }
 
@@ -33,4 +42,7 @@ extension ProfileMainCubitX on ProfileMainState {
   bool get isProfileMainLoading => profileMainStatus == Status.loading;
   bool get isProfileMainSuccess => profileMainStatus == Status.success;
   bool get isProfileMainFailure => profileMainStatus == Status.failure;
+  bool get isLogoutLoading => logoutStatus == Status.loading;
+  bool get isLogoutSuccess => logoutStatus == Status.success;
+  bool get isLogoutFailure => logoutStatus == Status.failure;
 }

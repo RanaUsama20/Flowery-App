@@ -15,4 +15,9 @@ class SaveLocal {
     return prefs.getString(key);
   }
 
+  static Future<bool> removeData({required String key}) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.remove(key);
+  }
+
 }

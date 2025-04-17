@@ -86,21 +86,6 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                       onTap: (){
                         context.read<BestSellerCubit>().doIntent(ProductSelectedAction(bestSellerItem));
                       },
-                      child: ProductCard.createProductCard(
-                          bestSellerItem.imgCover!,
-                          bestSellerItem.title!,
-                          bestSellerItem.priceAfterDiscount!,
-                          bestSellerItem.price!,
-                          bestSellerItem.discount!,
-                          actionButton: ActionButton(onPressed: () {
-                        if (_appCubit.getStateUser() == StateUser.guest) {
-                          AppDialogs.showLoginDialog(context,
-                              message: LocaleKeys
-                                  .Error_YouHaveToLoginToUseThisFeature.tr());
-                        } else {
-                          return ;
-                        }
-                      })),
                       child: BlocProvider(
                         create: (context) => serviceLocator<CartCubit>(),
                         child: BlocConsumer<CartCubit, CartState>(
@@ -113,8 +98,15 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                               bestSellerItem.price!,
                               bestSellerItem.discount!,
                               onAddToCart: () {
-                                cartCubit.addProductToCart(
-                                    bestSellerItem.id.toString(), 1);
+                                if (_appCubit.getStateUser() == StateUser.guest) {
+                                  AppDialogs.showLoginDialog(context,
+                                      message: LocaleKeys
+                                          .Error_YouHaveToLoginToUseThisFeature.tr());
+                                } else {
+                                  cartCubit.addProductToCart(
+                                      bestSellerItem.id.toString(), 1);
+                                }
+
                               },
                               productId: bestSellerItem.id.toString(),
                             );

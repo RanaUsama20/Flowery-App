@@ -3,6 +3,8 @@ import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/constants/app_fonts_family.dart';
 import 'package:flowery_app/core/constants/app_values.dart';
+import 'package:flowery_app/core/dialogs/app_dialogs.dart';
+import 'package:flowery_app/core/enum/status.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
@@ -128,10 +130,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
              SizedBox(height: 16),
              const Divider(),
              SizedBox(height: 16),
-             _itemSection(
-               trailing: Icon(Icons.login_outlined),
-               title: LocaleKeys.profile_Logout.tr(),
-               onTap: () {},
+             BlocListener<ProfileMainCubit,ProfileMainState>(
+               listener: (context,state){
+                 if (state.isLogoutLoading){
+                   AppDialogs.showLoadingDialog(context);
+                 }
+                 else if (state.isLogoutSuccess){
+                   Navigator.pushNamed(context, Routes.appSection);
+                 }
+                 else if (state.isLogoutFailure){
+                   AppDialogs.showFailureDialog(context, message: state.logOutMessageResponse);
+                 }
+
+
+               },
+               child: _itemSection(
+                 trailing: Icon(Icons.login_outlined),
+                 title: LocaleKeys.profile_Logout.tr(),
+                 onTap: () {
+                  context.read<ProfileMainCubit>().logout();
+                 },
+               ),
              ),
              const SizedBox(),
              Text(
