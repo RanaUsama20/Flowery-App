@@ -7,7 +7,6 @@ import 'package:flowery_app/features/home/presentation/view/home_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 class AppSection extends StatefulWidget {

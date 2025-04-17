@@ -20,7 +20,8 @@ abstract class HomeRetrofitClient {
   @GET(ApiConstants.bestSellerRoute)
   Future<BestSellerResponseDto> getBestSeller();
   @GET(ApiConstants.homeRoute)
-  Future<HomeOfCategoryAndBestSellerAndOccasion>getHomedata(@Header('Authorization') String? token);
+  Future<HomeOfCategoryAndBestSellerAndOccasion>getHomedata(
+      @Header('Authorization') String? token);
   @GET(ApiConstants.occasions)
   Future<OccasionsTabResponseDto> getTabOccasions();
 

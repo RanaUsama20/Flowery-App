@@ -32,6 +32,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<HomeEntity> getHomedata() async {
     final token = await SaveLocal.getString("token");
+    print('token from home $token');
     final result = await _homeRetrofitClient.getHomedata(token);
     return result.toHomeEntity();
   }

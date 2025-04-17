@@ -1,0 +1,48 @@
+import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart';
+import 'package:flowery_app/features/profile/data/model/request/change_password/change_password_request_model.dart';
+import 'package:flowery_app/features/profile/data/model/response/change_password/change_password_response_model.dart';
+import 'package:injectable/injectable.dart';
+import '../../../../../core/network/remote/api_manager.dart';
+import '../../../../../core/utils/save_local.dart';
+import 'profile_remote_data_source.dart';
+
+@Injectable(as: ProfileRemoteDataSource)
+class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
+  final ProfileRetrofitClient _profileRetrofitClient;
+  final ApiManager _apiManager;
+
+  ProfileRemoteDataSourceImpl(this._profileRetrofitClient, this._apiManager);
+
+  @override
+  Future<Result<ChangePasswordResponseDto?>> changePassword(ChangePasswordRequestDto? passwordData) async {
+    final token = await SaveLocal.getString("token");
+    final fullToken = "Bearer $token";
+    final response = await _apiManager.execute<ChangePasswordResponseDto?>(
+          () async {
+        return await _profileRetrofitClient.changePassword(passwordData, fullToken);
+      },
+    );
+
+
+    return response;
+  }
+  }
+
+
+
+  
+  //! ex:
+  // @override
+  // Future<Result<ModelEntity>> functionName() async {
+  //   final result = await _apiManager.execute<ModelDto>(() async {
+  //     return await _homeRetrofitClient.functionName();
+  //   });
+  //   switch (result) {
+  //     case SuccessResult<ModelDto>():
+  //       return SuccessResult<ModelEntity>(result.data.toEntity());
+  //     case FailureResult<ModelDto>():
+  //       return FailureResult<ProductEntity>(result.exception);
+  //   }
+  // }
+

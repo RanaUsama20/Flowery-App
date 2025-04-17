@@ -74,6 +74,7 @@ class ApiManager {
     final statusCode = response.statusCode ?? 500;
     final errorMessage = _extractErrorMessage(response.data);
 
+
     switch (statusCode) {
       case 400:
         return FailureResult<T>(

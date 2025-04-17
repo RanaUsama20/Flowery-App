@@ -80,6 +80,18 @@ import 'package:flowery_app/features/home/presentation/view_model/occasions/occa
     as _i331;
 import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart'
     as _i106;
+import 'package:flowery_app/features/profile/data/data_source/remote/profile_remote_data_source.dart'
+    as _i342;
+import 'package:flowery_app/features/profile/data/data_source/remote/profile_remote_data_source_impl.dart'
+    as _i1023;
+import 'package:flowery_app/features/profile/data/repository_impl/profile_repository_impl.dart'
+    as _i110;
+import 'package:flowery_app/features/profile/domain/repository/profile_repository.dart'
+    as _i1025;
+import 'package:flowery_app/features/profile/domain/usecase/change_password_usecase.dart'
+    as _i583;
+import 'package:flowery_app/features/profile/presentation/view_model/change_password/change_password_cubit.dart'
+    as _i517;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -126,6 +138,13 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i797.ApiManager>(),
           gh<_i3.HomeRemoteDataSource>(),
         ));
+    gh.factory<_i342.ProfileRemoteDataSource>(
+        () => _i1023.ProfileRemoteDataSourceImpl(
+              gh<_i106.ProfileRetrofitClient>(),
+              gh<_i797.ApiManager>(),
+            ));
+    gh.factory<_i1025.ProfileRepository>(
+        () => _i110.ProfileRepositoryImpl(gh<_i342.ProfileRemoteDataSource>()));
     gh.factory<_i392.AuthDataSource>(() => _i136.AuthDataSourceImpl(
           gh<_i865.AuthRetrofitClient>(),
           gh<_i797.ApiManager>(),
@@ -142,6 +161,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i797.ApiManager>(),
           gh<_i392.AuthDataSource>(),
         ));
+    gh.factory<_i583.ChangePasswordUseCase>(
+        () => _i583.ChangePasswordUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i7.OccasionsUseCase>(
         () => _i7.OccasionsUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i997.ProductOccasionUseCase>(
@@ -159,6 +180,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i427.GetProductsByIdRepository>(() =>
         _i578.GetProductsByIdRepositoryImpl(
             gh<_i129.GetProductsByIdDataSource>()));
+    gh.factory<_i517.ChangePasswordCubit>(
+        () => _i517.ChangePasswordCubit(gh<_i583.ChangePasswordUseCase>()));
     gh.factory<_i331.OccasionsCubit>(() => _i331.OccasionsCubit(
           gh<_i7.OccasionsUseCase>(),
           gh<_i997.ProductOccasionUseCase>(),

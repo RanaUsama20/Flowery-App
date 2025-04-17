@@ -44,6 +44,8 @@
     "EditProfile": "تعديل الملف الشخصي",
     "Change": "تغيير",
     "ChangePassword": "تغيير كلمة المرور",
+    "newPassword": "كلمة المرور الجديدة",
+    "currentPassword": "كلمة المرور الحالية",
     "ResetPassword": "تعديل كلمة المرور"
    , "Update" : "تحديث"
   },

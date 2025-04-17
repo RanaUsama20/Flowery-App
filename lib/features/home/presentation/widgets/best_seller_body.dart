@@ -37,7 +37,6 @@ class _BestSellerBodyState extends State<BestSellerBody> {
           listenWhen: (previous, current) => current.selectedProduct != null,
           listener: (context, state) {
             if (state.selectedProduct != null) {
-              print('besssssssst seller item : ${state.selectedProduct!.price}');
               Navigator.pushNamed(context, Routes.productDetails,
                 arguments: state.selectedProduct
               );
