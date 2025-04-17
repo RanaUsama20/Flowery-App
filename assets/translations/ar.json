@@ -42,8 +42,8 @@
         "SubEmailVerification": "يرجى إدخال الرمز المرسل إلى عنوان بريدك الإلكتروني",
         "EnterCode": "أدخل الرمز الخاص بك",
         "Continue": "متابعة",
-        "Done" : "تم",
-        "DoneSedCode" : "تم ارسال الرمز الى بريدك الالكتروني",
+        "Done": "تم",
+        "DoneSedCode": "تم ارسال الرمز الى بريدك الالكتروني",
         "PasswordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف على الأقل، حرف كبير، ورقم"
     },
     "Profile": {
@@ -119,6 +119,18 @@
     },
     "Messages": {
         "OtpSentToYourEmail": "تم إرسال رمز OTP إلى بريدك الإلكتروني"
+    },
+    "profile": {
+        "MyOrder": "طلباتي",
+        "SavedAddress": "العناوين المحفوظة",
+        "Notification": "الإشعارات",
+        "Language": "اللغة",
+        "English": "الإنجليزية",
+        "Arabic": "العربية",
+        "Logout": "تسجيل الخروج",
+        "AboutUs": "من نحن",
+        "TermsConditions": "الشروط والأحكام",
+        "changeLanguage": "تغيير اللغة"
     },
     "Ok": "موافق",
     "Loading": "جارٍ التحميل...",

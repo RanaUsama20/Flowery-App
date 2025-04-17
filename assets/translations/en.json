@@ -42,8 +42,8 @@
         "SubEmailVerification": "Please enter your code that was sent to your email address",
         "EnterCode": "Enter Your code",
         "Continue": "Continue",
-        "Done" : "Done",
-        "DoneSedCode" : "Done, sent code to your email",
+        "Done": "Done",
+        "DoneSedCode": "Done, sent code to your email",
         "PasswordRequirements": "Password must not be empty and must contain at least 6 characters, an uppercase letter, and a number"
     },
     "Profile": {
@@ -119,6 +119,18 @@
     },
     "Messages": {
         "OtpSentToYourEmail": "OTP sent to your email"
+    },
+    "profile": {
+        "MyOrder": "My order",
+        "SavedAddress": "Saved address",
+        "Notification": "Notification",
+        "Language": "Language",
+        "English": "English",
+        "Arabic": "Arabic",
+        "Logout": "Logout",
+        "AboutUs": "About us",
+        "TermsConditions": "Terms & conditions",
+        "changeLanguage": "Change language"
     },
     "Ok": "Ok",
     "Loading": "Loading...",

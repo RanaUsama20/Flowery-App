@@ -119,6 +119,17 @@ abstract class  LocaleKeys {
   static const Error = 'Error';
   static const Messages_OtpSentToYourEmail = 'Messages.OtpSentToYourEmail';
   static const Messages = 'Messages';
+  static const profile_MyOrder = 'profile.MyOrder';
+  static const profile_SavedAddress = 'profile.SavedAddress';
+  static const profile_Notification = 'profile.Notification';
+  static const profile_Language = 'profile.Language';
+  static const profile_English = 'profile.English';
+  static const profile_Arabic = 'profile.Arabic';
+  static const profile_Logout = 'profile.Logout';
+  static const profile_AboutUs = 'profile.AboutUs';
+  static const profile_TermsConditions = 'profile.TermsConditions';
+  static const profile_changeLanguage = 'profile.changeLanguage';
+  static const profile = 'profile';
   static const Ok = 'Ok';
   static const Loading = 'Loading';
   static const Retry = 'Retry';

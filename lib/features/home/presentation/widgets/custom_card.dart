@@ -45,7 +45,12 @@ class BigCard extends CustomCard {
         children: [
           SizedBox(
             height: 150,
-            child: CustomCacheNetworkImage(imageUrl: image!),
+            child: CustomCacheNetworkImage(
+              imageUrl: image!,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
           const SizedBox(height: 5),
           Text(title!, style: theme.bodyLarge, overflow: TextOverflow.ellipsis),
@@ -71,7 +76,12 @@ class SmallCard extends CustomCard {
         children: [
           SizedBox(
             height: 150,
-            child: CustomCacheNetworkImage(imageUrl: image),
+            child: CustomCacheNetworkImage(
+              imageUrl: image,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
           ),
           const SizedBox(height: 5),
           Text(title, style: theme.labelMedium)

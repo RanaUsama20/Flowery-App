@@ -7,10 +7,13 @@ class LoadingShimmer extends StatelessWidget {
     this.height,
     this.width,
     this.borderRadius,
+    this.isCircular = false,
   });
+
   final double? height;
   final double? width;
   final BorderRadiusGeometry? borderRadius;
+  final bool isCircular;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,8 @@ class LoadingShimmer extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.3),
-          borderRadius: borderRadius,
+          shape: isCircular ? BoxShape.circle : BoxShape.rectangle,
+          borderRadius: isCircular ? null : borderRadius,
         ),
       ),
     );
