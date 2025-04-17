@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return BlocProvider<AppCubit>(
       create: (context) => serviceLocator<AppCubit>(),
       child: LayoutBuilder(
@@ -59,8 +58,8 @@ class MyApp extends StatelessWidget {
                   theme: AppTheme.lightTheme,
                   title: AppValues.appTitle,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  // initialRoute: isLoggedIn?Routes.appSection : Routes.login,
-                  initialRoute:  Routes.login,
+                  initialRoute: isLoggedIn?Routes.appSection : Routes.login,
+                  //initialRoute:  Routes.login,
                 );
               }
             ),

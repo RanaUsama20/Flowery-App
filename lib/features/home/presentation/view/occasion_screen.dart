@@ -171,6 +171,7 @@ class _OccasionScreenState extends State<OccasionScreen>
         ),
         itemBuilder: (context, index) {
           final mappedProduct = ProductDetailsModel(
+            id: products[index].id.toString(),
             price: products[index].price.toInt(),
             description: products[index].description,
             name: products[index].title,

@@ -191,6 +191,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               inStock: products[index].quantity != null
                                   ? true
                                   : false,
+                              id: products[index].id.toString(),
                             );
                             return InkWell(
                               onTap: () {

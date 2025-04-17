@@ -23,14 +23,14 @@ class AppDialogs {
   }
 
   // Show a success dialog
-  static void showSuccessDialog(
-    BuildContext context, {
-    required String message,
-    String? buttonText,
-    String? nextActionTitle,
-    VoidCallback? nextAction,
-  }) {
-    showDialog(
+  static Future<void> showSuccessDialog(
+      BuildContext context, {
+        required String message,
+        String? buttonText,
+        String? nextActionTitle,
+        VoidCallback? nextAction,
+      }) {
+    return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
@@ -56,6 +56,7 @@ class AppDialogs {
       },
     );
   }
+
 
   // Show a failure dialog
   static void showFailureDialog(

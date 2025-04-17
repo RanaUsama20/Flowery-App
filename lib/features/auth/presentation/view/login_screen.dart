@@ -18,20 +18,38 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+
+  late TextEditingController emailController;
+  late TextEditingController passwordController ;
+
   bool rememberMe = false;
   bool isPassword = true;
   bool isPasswordVisible = true;
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+    debugPrint('LoginScreen: initState');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message??'');
+          Navigator.of(context).pop();
+          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message ?? '');
           Navigator.of(context).pushNamedAndRemoveUntil(
-            Routes.appSection, (route) => false,
+            Routes.appSection,
+                (route) => false,
             arguments: true,
           );
         }
