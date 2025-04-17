@@ -20,6 +20,9 @@ jobs:
 
       - run: flutter --version
       - run: flutter pub get
+
+      - name: Run static code analysis (linting)
+        run: flutter analyze
       - name: Run test
         run: flutter test
 
