@@ -34,10 +34,6 @@ abstract class AuthRetrofitClient {
   @PUT("auth/resetPassword")
   Future<Map<String, dynamic>> resetPassword(
       @Body() ResetPasswordRequest request);
-  @PUT("auth/editProfile")
-  Future<EditProfileResponse> editProfile(
-      @Header("Authorization") String token,
-      @Body() EditProfileRequest request);
 
 
 

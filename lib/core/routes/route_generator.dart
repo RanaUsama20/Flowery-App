@@ -9,13 +9,14 @@ import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
+import '../../features/auth/presentation/view/edit_profile_screen.dart';
 import '../../features/auth/presentation/view/login_screen.dart';
 import '../../features/auth/presentation/view_model/cubit/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
-import '../../features/cart/presentation/pages/cart_screen.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
 import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
+import '../../features/profile/presentation/view/change_password_screen.dart';
 import '../di/service_locator.dart';
 
 class RouteGenerator {
@@ -58,10 +59,10 @@ class RouteGenerator {
         ));
       case Routes.editProfile:
         return MaterialPageRoute(builder: (_) => const EditProfileScreen());
-        return MaterialPageRoute(builder: (_) =>
-            ProductDetails(
-              product: product,
-            ));
+        // return MaterialPageRoute(builder: (_) =>
+        //     ProductDetails(
+        //       product: product,
+        //     ));
       default:
         return _undefinedRoute();
     }

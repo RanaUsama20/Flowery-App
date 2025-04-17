@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
+import '../../../auth/data/model/request/edit_profile_request.dart';
+import '../../../auth/data/model/response/edit_profile_response.dart';
 import '../model/request/change_password/change_password_request_model.dart';
 import '../model/response/change_password/change_password_response_model.dart';
 
@@ -19,5 +21,11 @@ abstract class ProfileRetrofitClient {
   Future<ChangePasswordResponseDto?> changePassword(
       @Body() ChangePasswordRequestDto? changePasswordRequest,
       @Header('Authorization') String? token);
+
+  @PUT("auth/editProfile")
+  Future<EditProfileResponse> editProfile(
+      @Header("Authorization") String token,
+      @Body() EditProfileRequest request);
+
 
 }

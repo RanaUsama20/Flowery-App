@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../core/network/remote/api_manager.dart';
 import '../../../../core/utils/save_local.dart';
+import '../../../profile/data/api/profile_retrofit_client.dart';
 import '../api/auth_retrofit_client.dart';
 import '../model/request/reset_password_request.dart';
 import 'auth_data_source.dart';
@@ -18,11 +19,13 @@ import 'auth_data_source.dart';
 class AuthDataSourceImpl implements AuthDataSource {
   final ApiManager apiManager;
   final AuthRetrofitClient apiService;
+  final ProfileRetrofitClient apiServiceProfile;
+
   final UploadPhotoApiService authApiService;
 
   AuthRetrofitClient apiClient;
 
-  AuthDataSourceImpl(this.apiService, this.apiManager, this.apiClient,this.authApiService);
+  AuthDataSourceImpl(this.apiService, this.apiManager, this.apiClient,this.authApiService,this.apiServiceProfile);
 
   @override
   Future<Result<Map<String, dynamic>>> forgotPassword(
@@ -64,7 +67,7 @@ class AuthDataSourceImpl implements AuthDataSource {
         throw Exception("Token is not available");
       }
 
-      final response = await apiService.editProfile(" Bearer ${token}",request);
+      final response = await apiServiceProfile.editProfile(" Bearer ${token}",request);
       print(SaveLocal.getString("token").toString());
       return response.message!;
     });

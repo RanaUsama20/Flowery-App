@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
                   theme: AppTheme.lightTheme,
                   title: AppValues.appTitle,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  initialRoute: isLoggedIn?Routes.appSection : Routes.login,
+                  initialRoute: isLoggedIn?Routes.editProfile : Routes.login,
                   //initialRoute:  Routes.login,
                 );
               }
