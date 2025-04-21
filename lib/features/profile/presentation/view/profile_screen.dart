@@ -89,7 +89,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const Divider(),
               SizedBox(height: 16),
               _itemSection(
-                leading: CustomSwitch(
+                leading:
+                CustomSwitch(
+                    width: 42,
+                    height: 20,
                   value: isOn,
                   onChanged: (value) {
                     setState(() {

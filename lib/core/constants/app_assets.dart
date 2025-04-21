@@ -57,6 +57,10 @@ class SvgAssets {
   static const pen = 'assets/svg/pen-icon.svg';
   static const order = 'assets/svg/order-icon.svg';
   static const translate = 'assets/svg/translate-icon.svg';
+  static const blackScheduleSvg = 'assets/svg/black_schedule.svg';
+  static const editSvg = 'assets/svg/edit.svg';
+
+
 }
 
 class PngAssets {

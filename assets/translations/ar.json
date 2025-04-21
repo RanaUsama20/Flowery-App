@@ -149,6 +149,29 @@
     "changeLanguage": "تغيير اللغة"
   },
 
+  "checkout": {
+    "Checkout": "الدفع",
+    "Delivery_time": "وقت التوصيل",
+    "Schedule": "الجدول الزمني",
+    "Delivery_time_sub1": " فوري،",
+    "Delivery_time_sub2": " الوصول بحلول 03 سبتمبر 2024، الساعة 11:00 صباحًا",
+    "Delivery_address": "عنوان التوصيل",
+    "Add_new": "إضافة جديد",
+    "Payment_method": "طريقة الدفع",
+    "Cash_on_delivery": "الدفع عند الاستلام",
+    "Credit_card": "بطاقة ائتمان",
+    "It_is_a_gift": "إنها هدية",
+    "Name": "الاسم",
+    "Enter_the_name": "أدخل الاسم",
+    "Phone_number": "رقم الهاتف",
+    "Enter_the_phone": "أدخل رقم الهاتف",
+    "Sub_Total": "المجموع الفرعي",
+    "Delivery_Fee": "رسوم التوصيل",
+    "Total": "الإجمالي",
+    "Place_order": "تأكيد الطلب"
+  },
+
+
   "Ok": "موافق",
   "Loading": "جارٍ التحميل...",
   "Retry": "إعادة المحاولة",

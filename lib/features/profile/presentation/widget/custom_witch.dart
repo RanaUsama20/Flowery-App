@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 class CustomSwitch extends StatefulWidget {
   final bool value;
   final ValueChanged<bool> onChanged;
+  final double width;
+  final double height;
 
   const CustomSwitch({
     super.key,
     required this.value,
     required this.onChanged,
+    required this.height,
+    required this.width
   });
 
   @override
@@ -22,12 +26,12 @@ class _CustomSwitchState extends State<CustomSwitch> with SingleTickerProviderSt
       onTap: () => widget.onChanged(!widget.value),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        width: 42,
-        height: 20,
+        width: widget.width,
+        height: widget.height,
         padding: const EdgeInsets.all(1.5),
         decoration: BoxDecoration(
           color: widget.value ? AppColors.pink : AppColors.black[AppColors.colorCode30],
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(100),
         ),
         child: AnimatedAlign(
           duration: const Duration(milliseconds: 200),

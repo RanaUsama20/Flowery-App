@@ -148,6 +148,27 @@
     "TermsConditions": "Terms & conditions",
     "changeLanguage": "Change language"
   },
+  "checkout": {
+    "Checkout": "Checkout",
+    "Delivery_time": "Delivery time",
+    "Schedule": "Schedule",
+    "Delivery_time_sub1": " Instant,",
+    "Delivery_time_sub2": " Arrive by 03 Sep 2024, 11:00 AM",
+    "Delivery_address": "Delivery address",
+    "Add_new": "Add new",
+    "Payment_method": "Payment method",
+    "Cash_on_delivery": "Cash on delivery",
+    "Credit_card": "Credit card",
+    "It_is_a_gift": "It is a gift",
+    "Name": "Name",
+    "Enter_the_name": "Enter the name",
+    "Phone_number": "Phone number",
+    "Enter_the_phone": "Enter the phone number",
+    "Sub_Total": "Sub Total",
+    "Delivery_Fee": "Delivery Fee",
+    "Total": "Total",
+    "Place_order": "Place order"
+  },
 
   "Ok": "Ok",
   "Loading": "Loading...",

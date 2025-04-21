@@ -235,7 +235,9 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Routes.checkout);
+                            },
                             child: Text(LocaleKeys.Home_CheckOut.tr(),
                                 style: AppTheme.lightTheme.textTheme.titleSmall
                                     ?.copyWith(color: AppColors.white)),

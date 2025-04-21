@@ -12,9 +12,9 @@ class Routes {
   static const String occasion = '/occasion';
   static const String changePassword = '/changePassword';
   static const String mainProfile = '/mainProfile';
-
-
   static const String cart = 'cart';
   static const String editProfile = '/editProfile';
+  static const String checkout = 'checkout';
+
 
 }
