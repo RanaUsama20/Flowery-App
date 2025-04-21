@@ -8,6 +8,7 @@ import 'package:flowery_app/features/product_details/presentation/models/product
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/saved_adreess.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -86,10 +87,12 @@ class RouteGenerator {
           userData: arg as EditProfileRequest,
 
         ));
-        // return MaterialPageRoute(builder: (_) =>
-        //     ProductDetails(
-        //       product: product,
-        //     ));
+      case Routes.savedAddress:
+        return MaterialPageRoute(builder: (_) => SavedAddress(
+
+          addresses: arg as List<dynamic>,
+        ));
+
       default:
         return _undefinedRoute();
     }

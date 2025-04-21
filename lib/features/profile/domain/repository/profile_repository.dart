@@ -11,4 +11,6 @@ abstract class ProfileRepository {
   Future<Result<ChangePasswordResponseEntity?>> changePassword(ChangePasswordRequestEntity? passwordData);
 
   Future<Result<ProfileDataEntity>> getProfileData();
+  Future<Result<void>> deleteAddress(String id);
+
 }

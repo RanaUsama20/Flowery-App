@@ -12,6 +12,7 @@ class Routes {
   static const String occasion = '/occasion';
   static const String changePassword = '/changePassword';
   static const String mainProfile = '/mainProfile';
+  static const String savedAddress = '/savedAddress';
 
 
   static const String cart = 'cart';

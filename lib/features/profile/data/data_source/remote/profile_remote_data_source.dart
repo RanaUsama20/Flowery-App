@@ -11,5 +11,7 @@ abstract class ProfileRemoteDataSource {
   //  Future<Result<ModelEntity>> functionName();
   Future<Result<ProfileDataEntity>> getProfileData();
   Future<Result<ChangePasswordResponseDto?>> changePassword(ChangePasswordRequestDto? passwordData);
+  Future<Result<void>> deleteAddress(String id);
+
 
 }

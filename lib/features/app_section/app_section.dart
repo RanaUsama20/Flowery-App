@@ -25,16 +25,17 @@ class _AppSectionState extends State<AppSection> {
     const HomeScreen(),
     const CategoriesScreen(),
     const CartScreen(),
-    BlocProvider<ProfileMainCubit>(
-      create: (context) => serviceLocator<ProfileMainCubit>()..getProfileData(),
-      child: const ProfileScreen(),
-    ),
+   const ProfileScreen(),
+
   ];
   int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: _pages[_currentIndex]),
+      body: SafeArea(child: IndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (selectedIndex) {

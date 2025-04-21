@@ -9,15 +9,17 @@ import 'package:injectable/injectable.dart';
 import '../../../../../core/app/app_cubit/app_cubit_cubit.dart';
 import '../../../../../core/network/common/api_result.dart';
 import '../../../domain/entity/profile_data_entity/profile_data_entity.dart';
+import '../../../domain/usecase/delete_adress_use_case.dart';
 
 part 'profile_main_state.dart';
 
 @injectable
 class ProfileMainCubit extends Cubit<ProfileMainState> {
+  DeleteAddressUseCase _deleteAddressUseCase;
   GetProfileDataUseCase _getProfileDataUseCase;
   LogoutUseCase _logoutUseCase;
   AppCubit appCubit;
-  ProfileMainCubit(this._getProfileDataUseCase,this._logoutUseCase,this.appCubit) : super(const ProfileMainState());
+  ProfileMainCubit(this._getProfileDataUseCase,this._logoutUseCase,this._deleteAddressUseCase,this.appCubit,) : super(const ProfileMainState());
   Future<void> getProfileData() async {
     emit(state.copyWith(profileMainStatus: Status.loading));
     final result = await _getProfileDataUseCase.call();
@@ -52,6 +54,25 @@ class ProfileMainCubit extends Cubit<ProfileMainState> {
             logOutMessageResponse: result.exception.toString()
 
         ));
+
+
+  }
+}
+
+Future<void> deleteAddress(String id) async {
+  emit(state.copyWith(deleteAddressStatus: Status.loading));
+  final result = await _deleteAddressUseCase.call(id);
+  switch (result) {
+    case SuccessResult<void>():
+      emit(state.copyWith(
+        deleteAddressStatus: Status.success,
+      ));
+    case FailureResult<void>():
+      emit(state.copyWith(
+          deleteAddressStatus: Status.failure,
+          deleteAddressMessageRes: result.exception.toString()
+
+      ));
 
 
   }

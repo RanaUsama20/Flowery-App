@@ -83,7 +83,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: _iconSvg(SvgAssets.location2Svg),
                 trailing: _arrowIos(),
                 title: LocaleKeys.profile_SavedAddress.tr(),
-                onTap: () {},
+                onTap: () {
+                  final state = context.read<ProfileMainCubit>().state;
+
+                  if (state.isProfileMainSuccess) {
+                    print("------------------------------");
+                    print(state.profileData.user.addresses,);
+                    Navigator.pushNamed(
+                      context,
+                      Routes.savedAddress,
+                      arguments: state.profileData.user.addresses,
+
+                    ).then((result) {
+                      if (result == 'refresh') {
+                        context.read<ProfileMainCubit>().getProfileData();
+                      }
+                    });
+                  }
+                },
               ),
               SizedBox(height: 16),
               const Divider(),
