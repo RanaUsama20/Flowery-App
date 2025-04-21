@@ -152,5 +152,27 @@
   "Ok": "Ok",
   "Loading": "Loading...",
   "Retry": "Retry",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "search": {
+        "enterSearch": "Search for anything...",
+        "titleIntro": "Start your search journey!",
+        "desIntro": "Type what you're looking for above, and we’ll search every corner to find the best results for you in a flash.",
+        "all": "All",
+        "food": "Food",
+        "stores": "Stores",
+        "category": "Categories",
+        "lastSearch": "Your last searches",
+        "deleteAll": "Clear All",
+        "titleDeleteDialog": "Do you want to delete the entire search history?",
+        "desTitleDeleteDialog": "The search history will be permanently deleted without recovery. Make sure you want to proceed before continuing.",
+        "doneDeleteDialog": "Confirm Deletion",
+        "cancelDialog": "Cancel",
+        "titleEmptySearch": "No results found!",
+        "desEmptySearch": "It seems your search didn’t return any results. Please check for typos or try different keywords for better results.",
+        "sortBy": "Sort by",
+        "freeDelivery": "Free Delivery",
+        "fastDelivery": "Fast Delivery",
+        "colosestToYou": "Closest to You",
+        "dependingOnYourTheTypOfFood": "Based on food type"
+    }
 }

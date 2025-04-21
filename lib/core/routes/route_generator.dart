@@ -8,6 +8,7 @@ import 'package:flowery_app/features/product_details/presentation/models/product
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
+import 'package:flowery_app/features/search/view/main_search_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -59,11 +60,10 @@ class RouteGenerator {
           ),
         );
       case Routes.appSection:
-        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => serviceLocator<CartCubit>())
-            ],
-            child: const AppSection()));
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(create: (context) => serviceLocator<CartCubit>())
+                ], child: const AppSection()));
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.occasion:
@@ -78,18 +78,21 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
-        return MaterialPageRoute(builder: (_) =>  ProductDetails(
-          product: product,
-        ));
+        return MaterialPageRoute(
+            builder: (_) => ProductDetails(
+                  product: product,
+                ));
       case Routes.editProfile:
-        return MaterialPageRoute(builder: (_) =>  EditProfileScreen(
-          userData: arg as EditProfileRequest,
-
-        ));
-        // return MaterialPageRoute(builder: (_) =>
-        //     ProductDetails(
-        //       product: product,
-        //     ));
+        return MaterialPageRoute(
+            builder: (_) => EditProfileScreen(
+                  userData: arg as EditProfileRequest,
+                ));
+      case Routes.search:
+        return MaterialPageRoute(builder: (_) => const SearchScreen());
+      // return MaterialPageRoute(builder: (_) =>
+      //     ProductDetails(
+      //       product: product,
+      //     ));
       default:
         return _undefinedRoute();
     }

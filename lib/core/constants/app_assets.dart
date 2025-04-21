@@ -62,4 +62,6 @@ class SvgAssets {
 class PngAssets {
   static const helloUser = 'assets/png/hello-user.png';
   static const flowerCard = 'assets/png/flower-card.png';
+  static const emptySearch = 'assets/png/empty-search.png';
+  static const startSearch = 'assets/png/start-search.png';
 }
