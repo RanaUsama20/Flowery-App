@@ -11,6 +11,7 @@ import '../../../domain/entity/prodect_entity.dart';
 import '../../model/response/occasions/occasion_tab_response_dto.dart';
 import '../../model/response/occasions/prodect_response_dto.dart';
 import 'home_remote_data_source.dart';
+
 @Injectable(as: HomeRemoteDataSource)
 class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   final HomeRetrofitClient _homeRetrofitClient;
@@ -21,7 +22,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<Result<BestSellerResponseDto>> getBestSeller() async {
     final response = await _apiManager.execute<BestSellerResponseDto>(
-          () async {
+      () async {
         return await _homeRetrofitClient.getBestSeller();
       },
     );
@@ -40,7 +41,7 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<Result<OccasionsEntity>> getTabOccasions() async {
     Result<OccasionsTabResponseDto> result =
-    await _apiManager.execute<OccasionsTabResponseDto>(() async {
+        await _apiManager.execute<OccasionsTabResponseDto>(() async {
       return await _homeRetrofitClient.getTabOccasions();
     });
 
@@ -65,5 +66,4 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         return FailureResult<ProductEntity>(result.exception);
     }
   }
-
 }

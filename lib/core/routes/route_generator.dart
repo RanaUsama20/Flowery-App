@@ -8,7 +8,8 @@ import 'package:flowery_app/features/product_details/presentation/models/product
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
-import 'package:flowery_app/features/search/view/main_search_screen.dart';
+import 'package:flowery_app/features/search/presentation/view/main_search_screen.dart';
+import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -88,7 +89,12 @@ class RouteGenerator {
                   userData: arg as EditProfileRequest,
                 ));
       case Routes.search:
-        return MaterialPageRoute(builder: (_) => const SearchScreen());
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<SearchBloc>(
+            create: (context) => serviceLocator<SearchBloc>(),
+            child: const SearchScreen(),
+          ),
+        );
       // return MaterialPageRoute(builder: (_) =>
       //     ProductDetails(
       //       product: product,

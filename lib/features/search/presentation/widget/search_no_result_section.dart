@@ -3,7 +3,7 @@ import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/constants/app_colors.dart';
+import '../../../../core/constants/app_colors.dart';
 
 class SearchNoResultSection extends StatelessWidget {
   const SearchNoResultSection({super.key});

@@ -8,22 +8,16 @@ import '../../generated/locale_keys.g.dart';
 
 class AppDialogs {
   // Show a loading dialog
-  static void showLoadingDialog(
-    BuildContext context, {
-    String? message,
-  }) {
+  static void showLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) {
-        return AlertDialog(
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const CircularProgressIndicator(),
-              const SizedBox(height: 16),
-              Text(message ?? LocaleKeys.Loading),
-            ],
+        return WillPopScope(
+          onWillPop: () async => false,
+          child: AlertDialog(
+            backgroundColor: Colors.transparent,
+            content: LoadingWidget(),
           ),
         );
       },
@@ -115,10 +109,8 @@ class AppDialogs {
                 },
                 child: Text(LocaleKeys.cancel.tr())),
             TextButton(
-              onPressed: () =>
-                  Navigator.of(context).pushReplacementNamed(Routes.login),
+              onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.login),
               child: Text(LocaleKeys.Ok.tr()),
-
             ),
           ],
         );
