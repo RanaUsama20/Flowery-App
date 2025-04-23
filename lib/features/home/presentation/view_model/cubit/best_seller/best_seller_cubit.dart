@@ -8,7 +8,6 @@ import '../../../../../product_details/presentation/models/product_details_model
 import '../../../../domain/entity/best_seller/best_seller_entity.dart';
 import '../../../../domain/entity/best_seller/best_seller_response_entity.dart';
 import '../../../../domain/usecase/best_seller_use_case.dart';
-import '../../../../domain/usecase/home_use_case.dart';
 
 
 @injectable

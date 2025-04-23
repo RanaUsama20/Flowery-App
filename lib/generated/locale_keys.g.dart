@@ -162,6 +162,12 @@ abstract class  LocaleKeys {
   static const checkout_Delivery_Fee = 'checkout.Delivery_Fee';
   static const checkout_Total = 'checkout.Total';
   static const checkout_Place_order = 'checkout.Place_order';
+  static const checkout_title_cash_payment_success = 'checkout.title_cash_payment_success';
+  static const checkout_description_cash_payment_success = 'checkout.description_cash_payment_success';
+  static const checkout_title_credit_payment_success = 'checkout.title_credit_payment_success';
+  static const checkout_description_credit_payment_success = 'checkout.description_credit_payment_success';
+  static const checkout_title_cash_payment_fail = 'checkout.title_cash_payment_fail';
+  static const checkout_description_cash_payment_fail = 'checkout.description_cash_payment_fail';
   static const checkout = 'checkout';
   static const Ok = 'Ok';
   static const Loading = 'Loading';

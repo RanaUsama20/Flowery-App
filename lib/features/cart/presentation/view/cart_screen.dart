@@ -236,7 +236,8 @@ class _CartScreenState extends State<CartScreen> {
                               ),
                             ),
                             onPressed: () {
-                              Navigator.of(context).pushNamed(Routes.checkout);
+                              Navigator.of(context).pushNamed(Routes.checkout,
+                                  arguments:state.productCart.cart?.totalPriceAfterDiscount );
                             },
                             child: Text(LocaleKeys.Home_CheckOut.tr(),
                                 style: AppTheme.lightTheme.textTheme.titleSmall

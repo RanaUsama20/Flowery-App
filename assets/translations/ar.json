@@ -168,8 +168,16 @@
     "Sub_Total": "المجموع الفرعي",
     "Delivery_Fee": "رسوم التوصيل",
     "Total": "الإجمالي",
-    "Place_order": "تأكيد الطلب"
-  },
+    "Place_order": "تأكيد الطلب",
+    "title_cash_payment_success": "لقد استلمنا طلبك.",
+    "description_cash_payment_success": "ابقَ مستعدًا — فريقنا يقوم بتجهيز الطلب بعناية وسنرسل لك رابط التتبع قريبًا!",
+    "title_credit_payment_success": "جاري التحويل...",
+    "description_credit_payment_success": "لحظة من فضلك! سننقلك الآن إلى صفحة الدفع الآمنة.",
+    "title_cash_payment_fail": "عذرًا! لم نتمكن من إتمام طلبك في الوقت الحالي.",
+    "description_cash_payment_fail": "يرجى المحاولة مرة أخرى بعد قليل أو التواصل مع الدعم إذا استمرت المشكلة."
+
+
+},
 
 
   "Ok": "موافق",

@@ -30,7 +30,10 @@ UserDto _$UserDtoFromJson(Map<String, dynamic> json) => UserDto(
       photo: json['photo'] as String?,
       role: json['role'] as String?,
       wishlist: json['wishlist'] as List<dynamic>?,
-      addresses: json['addresses'] as List<dynamic>?,
+      addresses: (json['addresses'] as List<dynamic>?)
+              ?.map((e) => AddressDto.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
     );
 
 Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
@@ -44,4 +47,25 @@ Map<String, dynamic> _$UserDtoToJson(UserDto instance) => <String, dynamic>{
       'role': instance.role,
       'wishlist': instance.wishlist,
       'addresses': instance.addresses,
+    };
+
+AddressDto _$AddressDtoFromJson(Map<String, dynamic> json) => AddressDto(
+      street: json['street'] as String?,
+      phone: json['phone'] as String?,
+      city: json['city'] as String?,
+      lat: json['lat'] as String?,
+      long: json['long'] as String?,
+      username: json['username'] as String?,
+      id: json['_id'] as String?,
+    );
+
+Map<String, dynamic> _$AddressDtoToJson(AddressDto instance) =>
+    <String, dynamic>{
+      'street': instance.street,
+      'phone': instance.phone,
+      'city': instance.city,
+      'lat': instance.lat,
+      'long': instance.long,
+      'username': instance.username,
+      '_id': instance.id,
     };

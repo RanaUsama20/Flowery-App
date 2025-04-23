@@ -2,26 +2,53 @@ import 'package:equatable/equatable.dart';
 import 'package:flowery_app/core/base_state/base_state.dart';
 
  class CheckoutStates extends Equatable {
-  final BaseState? baseState;
+  final BaseState? profileState;
+  final BaseState? paymentState;
+  final String? selectedPaymentMethod;
 
 
   const CheckoutStates({
-   this.baseState,
+   this.profileState,
+   this.paymentState,
+   this.selectedPaymentMethod
 
   });
 
   CheckoutStates copyWith({
-   BaseState? baseState,
+   BaseState? profileState,
+   BaseState? paymentState,
+   String? selectedPaymentMethod,
+
 
   }) {
    return CheckoutStates(
-    baseState: baseState ?? this.baseState,
+    profileState: profileState ?? this.profileState,
+    paymentState: paymentState ?? this.paymentState,
+
+    selectedPaymentMethod: selectedPaymentMethod ?? this.selectedPaymentMethod,
 
    );
   }
 
   @override
-  List<Object?> get props => [baseState];
+  List<Object?> get props => [profileState,paymentState,selectedPaymentMethod];
 }
+
+
+sealed class CheckoutAction {}
+
+
+final class GetAddressAction extends CheckoutAction {
+
+ GetAddressAction();
+}
+
+final class SetPaymentMethodAction extends CheckoutAction {
+ final String method;
+
+ SetPaymentMethodAction(this.method);
+}
+
+
 
 

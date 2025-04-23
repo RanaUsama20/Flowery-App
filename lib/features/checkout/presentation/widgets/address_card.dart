@@ -3,11 +3,11 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import 'custom_radio_button.dart';
-import 'delivery_address_widget.dart';
 
 class AddressCard extends StatelessWidget {
-  final Address address;
+  final AddressEntity address;
   final String? selectedAddressId;
   final ValueChanged<String> onSelect;
 
@@ -34,10 +34,10 @@ class AddressCard extends StatelessWidget {
                 children: [
                   CustomRadioButton(
                     selected: selectedAddressId == address.id,
-                    onTap: () => onSelect(address.id),
+                    onTap: () => onSelect(address.id!),
                   ),
                   Text(
-                    address.type,
+                    address.city!,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
 
@@ -59,7 +59,7 @@ class AddressCard extends StatelessWidget {
                   padding:
                   const EdgeInsets.only(left: 24, right: 32, bottom: 16),
                   child: Text(
-                    address.address,
+                    '${address.street} ${address.city}',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ),

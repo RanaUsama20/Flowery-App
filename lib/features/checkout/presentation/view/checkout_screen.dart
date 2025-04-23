@@ -6,7 +6,9 @@ import '../../../../generated/locale_keys.g.dart';
 import '../widgets/checkout_body.dart';
 
 class CheckoutScreen extends StatelessWidget {
-  const CheckoutScreen({super.key});
+  final num price;
+
+   const CheckoutScreen({super.key,required this.price});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class CheckoutScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back_ios_new_outlined)),
 
       ),
-      body: CheckoutBody() ,
+      body: CheckoutBody(price: price) ,
     );
 
   }

@@ -10,9 +10,7 @@ import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/p
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/network/remote/api_manager.dart';
-import '../../../../../core/utils/save_local.dart';
 
-import '../../api/profile_retrofit_client.dart';
 import 'profile_remote_data_source.dart';
 
 @Injectable(as: ProfileRemoteDataSource)
@@ -31,7 +29,6 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         return await _profileRetrofitClient.changePassword(passwordData, fullToken);
       },
     );
-
 
     return response;
   }

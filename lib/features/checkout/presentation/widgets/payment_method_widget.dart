@@ -1,22 +1,22 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/features/checkout/presentation/widgets/payment_card.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../core/constants/app_colors.dart';
 import '../../../../generated/locale_keys.g.dart';
 
-class PaymentMethodWidget extends StatefulWidget{
-  const PaymentMethodWidget({super.key});
+class PaymentMethodWidget extends StatelessWidget {
+  final String selectedMethod;
+  final Function(String) onMethodSelected;
 
-  @override
-  State<PaymentMethodWidget> createState() => _PaymentMethodWidgetState();
-}
-
-class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
-  String _selectedMethod = "";
+  const PaymentMethodWidget({
+    super.key,
+    required this.selectedMethod,
+    required this.onMethodSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       color: AppColors.white,
       child: Padding(
@@ -28,22 +28,20 @@ class _PaymentMethodWidgetState extends State<PaymentMethodWidget> {
               LocaleKeys.checkout_Payment_method.tr(),
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            PaymentCard(title: LocaleKeys.checkout_Cash_on_delivery.tr(),
-              selected: _selectedMethod == LocaleKeys.checkout_Cash_on_delivery,
-              onTap: (){
-                setState(() {
-                  _selectedMethod = LocaleKeys.checkout_Cash_on_delivery;
-                });
-              }),
-            PaymentCard(title: LocaleKeys.checkout_Credit_card.tr(),
-               selected: _selectedMethod == LocaleKeys.checkout_Credit_card,
+            PaymentCard(
+              title: LocaleKeys.checkout_Cash_on_delivery.tr(),
+              selected: selectedMethod == LocaleKeys.checkout_Cash_on_delivery.tr(),
               onTap: () {
-                setState(() {
-                  _selectedMethod = LocaleKeys.checkout_Credit_card;
-                });
-              }
-              ,),
-
+                onMethodSelected(LocaleKeys.checkout_Cash_on_delivery.tr());
+              },
+            ),
+            PaymentCard(
+              title: LocaleKeys.checkout_Credit_card.tr(),
+              selected: selectedMethod == LocaleKeys.checkout_Credit_card.tr(),
+              onTap: () {
+                onMethodSelected(LocaleKeys.checkout_Credit_card.tr());
+              },
+            ),
           ],
         ),
       ),

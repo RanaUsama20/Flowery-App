@@ -18,4 +18,8 @@ class ApiConstants {
   static const String deleteCart  = "cart/";
   static const String addToCart  = "cart";
   static const String addProductToCart  = "cart";
+  static const String cashPaymentRoute = "orders";
+  static const String creditCardPaymentRoute = "orders/checkout?url=http://localhost:3000";
+
+
 }
