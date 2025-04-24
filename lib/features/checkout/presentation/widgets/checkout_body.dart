@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../core/base_state/base_state.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/network/common/api_result.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../generated/locale_keys.g.dart';
+import '../../../cart/domain/entity/cart_data_entity.dart';
 import '../../domain/entity/response/cash_payment/cash_payment_response_entity.dart';
 import '../../domain/entity/response/credit_card_payment/checkout_session_entity.dart';
 import '../view_model/cubit/checkout_cubit.dart';
@@ -28,7 +28,7 @@ class CheckoutBody extends StatefulWidget {
   State<CheckoutBody> createState() => _CheckoutBodyState();
 }
 
-class _CheckoutBodyState extends State<CheckoutBody> {
+class _CheckoutBodyState extends State<CheckoutBody> with WidgetsBindingObserver {
   late CheckoutCubit _checkoutCubit;
   String? _selectedAddressId;
 
@@ -43,7 +43,17 @@ class _CheckoutBodyState extends State<CheckoutBody> {
     super.initState();
     _checkoutCubit = serviceLocator<CheckoutCubit>();
     _checkoutCubit.doIntent(GetAddressAction());
+    WidgetsBinding.instance.addObserver(this);
   }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _checkoutCubit.close();
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -64,41 +74,47 @@ class _CheckoutBodyState extends State<CheckoutBody> {
           if (paymentState is BaseHideLoadingState) {
             Navigator.of(context).pop();
           }
-          if (paymentState is BaseSuccessState ) {
+          if (paymentState is BaseSuccessState) {
             final result = paymentState.data;
 
             if (result is SuccessResult<CashPaymentResponseEntity?>) {
-            AppToast.showToast(
-              context: context,
-              title: LocaleKeys.checkout_title_cash_payment_success.tr(),
-              description: LocaleKeys.checkout_description_cash_payment_success.tr(),
-              type: ToastificationType.success,
-            );
-            Navigator.of(context).pushNamed(Routes.appSection);
-
+              AppToast.showToast(
+                context: context,
+                title: LocaleKeys.checkout_title_cash_payment_success.tr(),
+                description: LocaleKeys.checkout_description_cash_payment_success.tr(),
+                type: ToastificationType.success,
+              );
+              Navigator.of(context).pushNamed(Routes.appSection);
             }
             if (result is SuccessResult<CheckoutSessionEntity?>) {
               AppToast.showToast(
                 context: context,
                 title: LocaleKeys.checkout_title_credit_payment_success.tr(),
-              description: LocaleKeys.checkout_description_credit_payment_success.tr(),
+                description: LocaleKeys.checkout_description_credit_payment_success.tr(),
                 type: ToastificationType.success,
               );
-              openStripeCheckout(result.data!.session.url,context);
-
+              openStripeCheckout(result.data!.session.url, context);
+            }
+            if(result is SuccessResult<CartModelEntity?>){
+              AppToast.showToast(
+                context: context,
+                title: 'LocaleKeys.checkout_title_credit_payment_success.tr()',
+                description: 'LocaleKeys.checkout_description_credit_payment_success.tr()',
+                type: ToastificationType.success,
+              );
 
             }
           }
           if (paymentState is BaseErrorState) {
-              AppToast.showToast(
+            AppToast.showToast(
               context: context,
               title: LocaleKeys.checkout_title_cash_payment_fail.tr(),
               description: LocaleKeys.checkout_description_cash_payment_fail.tr(),
               type: ToastificationType.error,
             );
-
           }
-        },        builder: (context, state) {
+        },
+        builder: (context, state) {
           final selectedMethod = state.selectedPaymentMethod ?? "";
 
           return SingleChildScrollView(
@@ -133,6 +149,7 @@ class _CheckoutBodyState extends State<CheckoutBody> {
     );
   }
 }
+
 Future<void> openStripeCheckout(String url, BuildContext context) async {
   final Uri uri = Uri.parse(url);
 
@@ -140,7 +157,11 @@ Future<void> openStripeCheckout(String url, BuildContext context) async {
     await launchUrl(
       uri,
       mode: LaunchMode.externalApplication,
-    );
+    ).then((_) {
+      final cubit = BlocProvider.of<CheckoutCubit>(context);
+      cubit.getCartProducts();
+      Navigator.of(context).pop();
+    });
   } else {
     AppToast.showToast(
       context: context,
@@ -148,6 +169,5 @@ Future<void> openStripeCheckout(String url, BuildContext context) async {
       description: LocaleKeys.checkout_description_cash_payment_fail.tr(),
       type: ToastificationType.error,
     );
-
   }
 }

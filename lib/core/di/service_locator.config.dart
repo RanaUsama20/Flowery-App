@@ -171,12 +171,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i881.CartRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i557.CategoriesRetrofitClient>(
         () => _i557.CategoriesRetrofitClient(gh<_i361.Dio>()));
+    gh.lazySingleton<_i560.CheckoutRetrofitClient>(
+        () => _i560.CheckoutRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i1039.HomeRetrofitClient>(
         () => _i1039.HomeRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i106.ProfileRetrofitClient>(
         () => _i106.ProfileRetrofitClient(gh<_i361.Dio>()));
-    gh.lazySingleton<_i560.CheckoutRetrofitClient>(
-        () => _i560.CheckoutRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
     gh.lazySingleton<_i127.UploadPhotoApiService>(
@@ -255,29 +255,30 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i406.CreditCardPaymentUseCase(gh<_i533.CheckoutRepository>()));
     gh.factory<_i371.ForgotPasswordUseCase>(
         () => _i371.ForgotPasswordUseCase(gh<_i426.AuthRepository>()));
+    gh.factory<_i226.LogoutUseCase>(
+        () => _i226.LogoutUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i318.RegisterUseCase>(
         () => _i318.RegisterUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i967.ResetPasswordUseCase>(
         () => _i967.ResetPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i603.VerifyResetCodeUseCase>(
         () => _i603.VerifyResetCodeUseCase(gh<_i426.AuthRepository>()));
-    gh.factory<_i226.LogoutUseCase>(
-        () => _i226.LogoutUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i859.ProfileMainCubit>(() => _i859.ProfileMainCubit(
           gh<_i110.GetProfileDataUseCase>(),
           gh<_i226.LogoutUseCase>(),
           gh<_i826.AppCubit>(),
+        ));
+    gh.factory<_i643.CheckoutCubit>(() => _i643.CheckoutCubit(
+          gh<_i192.CashPaymentUseCase>(),
+          gh<_i406.CreditCardPaymentUseCase>(),
+          gh<_i485.CartUseCase>(),
+          gh<_i110.GetProfileDataUseCase>(),
         ));
     gh.factory<_i427.GetProductsByIdRepository>(() =>
         _i578.GetProductsByIdRepositoryImpl(
             gh<_i129.GetProductsByIdDataSource>()));
     gh.factory<_i517.ChangePasswordCubit>(
         () => _i517.ChangePasswordCubit(gh<_i583.ChangePasswordUseCase>()));
-    gh.factory<_i643.CheckoutCubit>(() => _i643.CheckoutCubit(
-          gh<_i192.CashPaymentUseCase>(),
-          gh<_i406.CreditCardPaymentUseCase>(),
-          gh<_i110.GetProfileDataUseCase>(),
-        ));
     gh.factory<_i331.OccasionsCubit>(() => _i331.OccasionsCubit(
           gh<_i7.OccasionsUseCase>(),
           gh<_i997.ProductOccasionUseCase>(),

@@ -18,6 +18,7 @@ import '../../features/auth/presentation/view_model/login/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
 import '../../features/cart/presentation/view_model/cart_cubit.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
+import '../../features/categories/presentation/view/sucess_page.dart';
 import '../../features/checkout/presentation/view/checkout_screen.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../../features/profile/presentation/view/change_password_screen.dart';
@@ -66,6 +67,8 @@ class RouteGenerator {
             child: const AppSection()));
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case Routes.successPage:
+        return MaterialPageRoute(builder: (_) => const SuccessPage());
       case Routes.occasion:
         return MaterialPageRoute(builder: (_) => const OccasionScreen());
       case Routes.bestSeller:

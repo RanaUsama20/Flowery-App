@@ -4,9 +4,10 @@ import 'package:injectable/injectable.dart';
 import '../../../../../core/base_state/base_state.dart';
 import '../../../../../core/network/common/api_result.dart';
 import '../../../../../generated/locale_keys.g.dart';
+import '../../../../cart/domain/entity/cart_data_entity.dart';
+import '../../../../cart/domain/usecase/cart_usecase.dart';
 import '../../../../profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import '../../../../profile/domain/usecase/get_profile_data_usecase.dart';
-import '../../../domain/entity/request/shipping_request_entity.dart';
 import '../../../domain/entity/response/cash_payment/cash_payment_response_entity.dart';
 import '../../../domain/entity/response/credit_card_payment/checkout_session_entity.dart';
 import '../../../domain/usecase/cash_payment_use_case.dart';
@@ -17,10 +18,11 @@ import 'checkout_state.dart';
 class CheckoutCubit extends Cubit<CheckoutStates> {
   final CashPaymentUseCase _cashPaymentUseCase;
   final CreditCardPaymentUseCase _creditCardPaymentUseCase;
+  final CartUseCase _cartUseCase;
 
   final GetProfileDataUseCase _getProfileDataUseCase;
 
-  CheckoutCubit(this._cashPaymentUseCase, this._creditCardPaymentUseCase,
+  CheckoutCubit(this._cashPaymentUseCase, this._creditCardPaymentUseCase,this._cartUseCase,
       this._getProfileDataUseCase)
       : super(CheckoutStates());
   void doIntent(CheckoutAction action) {
@@ -64,6 +66,37 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
     return null;
   }
 
+  Future<void> getCartProducts() async {
+    final result = await _cartUseCase.getProductToCart();
+    switch (result) {
+      case SuccessResult<CartModelEntity>():
+        {
+          if(result.numOfCartItems == 0){
+            emit(state.copyWith(creditCardState: BaseSuccessState()));
+          }
+          else{
+            emit(
+              state.copyWith(
+                creditCardState: BaseErrorState(
+                  errorMessage: 'payment not done'
+                ),
+              ),
+            );
+          }
+        }
+      case FailureResult<CartModelEntity>():
+        {
+          emit(
+            state.copyWith(
+              creditCardState: BaseErrorState(
+                errorMessage: result.error.toString(),
+                exception: Exception(result.error),
+              ),
+            ),
+          );
+        }
+    }
+  }
   Future<void> placeOrder(
     // required String selectedAddressId,
     // required num totalPrice,
