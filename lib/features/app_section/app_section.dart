@@ -42,6 +42,7 @@ class _AppSectionState extends State<AppSection> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (selectedIndex) {
           setState(() {
