@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/dialogs/app_dialogs.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
-import 'package:flowery_app/features/search/data/local_database/last_search_model.dart';
+import 'package:flowery_app/features/search/data/model/last_search_model.dart';
 import 'package:flowery_app/features/search/data/local_database/search_last_shared_pref.dart';
 import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';

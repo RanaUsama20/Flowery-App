@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:flowery_app/features/search/data/local_database/last_search_model.dart';
+import 'package:flowery_app/features/search/data/model/last_search_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class SearchLastSharedPref {
+class SearchLastSharedPref {
   static const _key = 'search_history';
   static const int maxResults = 20;
 

@@ -31,7 +31,7 @@ class ProductItemEntity {
   final double rateAvg;
   final num rateCount;
 
-  ProductItemEntity({
+  const ProductItemEntity({
     required this.id,
     required this.title,
     required this.slug,
