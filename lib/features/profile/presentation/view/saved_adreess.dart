@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
-import '../../../../core/routes/routes.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../data/model/address_model.dart';
 
 class SavedAddress extends StatefulWidget {
   const SavedAddress({super.key});
