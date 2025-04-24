@@ -91,18 +91,27 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          decoration: InputDecoration(
-                            labelText: LocaleKeys.Home_Search.tr(),
-                            hintText: LocaleKeys.Home_Search.tr(),
-                            prefixIcon: const Icon(Icons.search),
-                            border: UnderlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.of(context).pushNamed(Routes.search);
+                          },
+                          child: TextFormField(
+                            enabled: false,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ) ,
+                              labelText: LocaleKeys.Home_Search.tr(),
+                              hintText: LocaleKeys.Home_Search.tr(),
+                              prefixIcon: const Icon(Icons.search),
+                              border: UnderlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
+                            onTapOutside: (_) =>
+                                FocusManager.instance.primaryFocus?.unfocus(),
                           ),
-                          onTapOutside: (_) =>
-                              FocusManager.instance.primaryFocus?.unfocus(),
                         ),
                       ),
                       const SizedBox(width: 8),

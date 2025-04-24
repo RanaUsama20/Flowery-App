@@ -43,8 +43,9 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         title: AppValues.appTitle,
         onGenerateRoute: RouteGenerator.getRoute,
-        // initialRoute: isLoggedIn ? Routes.appSection : Routes.login,
-        initialRoute: Routes.search,
+      // initialRoute: isLoggedIn ? Routes.appSection : Routes.login,
+       initialRoute: Routes.appSection,
+
       ),
 
       // LayoutBuilder(

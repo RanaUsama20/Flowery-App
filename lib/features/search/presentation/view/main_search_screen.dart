@@ -32,7 +32,9 @@ class _SearchScreenState extends State<SearchScreen> {
             Icons.arrow_back_ios_new_outlined,
             size: 30,
           ),
-          onPressed: () => null,
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
         ),
         leadingWidth: 35,
       ),
