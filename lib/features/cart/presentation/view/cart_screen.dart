@@ -82,8 +82,8 @@ class _CartScreenState extends State<CartScreen> {
                               "(${state.productCart.numOfCartItems.toString() + LocaleKeys.Home_Items.tr()})",
                               style: AppTheme.lightTheme.textTheme.titleLarge
                                   ?.copyWith(
-                                      color: AppColors.gray,
-                                      fontWeight: FontWeight.w400)),
+                                  color: AppColors.gray,
+                                  fontWeight: FontWeight.w400)),
                           Spacer(),
                           IconButton(
                             onPressed: () {
@@ -178,13 +178,13 @@ class _CartScreenState extends State<CartScreen> {
                               "${LocaleKeys.Home_TotalPrice.tr()}  : ",
                               style: AppTheme.lightTheme.textTheme.titleLarge
                                   ?.copyWith(
-                                      fontSize: 16, color: AppColors.gray),
+                                  fontSize: 16, color: AppColors.gray),
                             ),
                             Spacer(),
                             Text("${state.productCart.cart?.totalPrice}",
                                 style: AppTheme.lightTheme.textTheme.titleLarge
                                     ?.copyWith(
-                                        fontSize: 16, color: AppColors.gray)),
+                                    fontSize: 16, color: AppColors.gray)),
                           ],
                         ),
                         SizedBox(
@@ -196,13 +196,13 @@ class _CartScreenState extends State<CartScreen> {
                               "${LocaleKeys.Home_Discount.tr()} : ",
                               style: AppTheme.lightTheme.textTheme.titleLarge
                                   ?.copyWith(
-                                      fontSize: 16, color: AppColors.gray),
+                                  fontSize: 16, color: AppColors.gray),
                             ),
                             Spacer(),
                             Text("${state.productCart.cart?.discount} %",
                                 style: AppTheme.lightTheme.textTheme.titleLarge
                                     ?.copyWith(
-                                        fontSize: 16, color: AppColors.gray)),
+                                    fontSize: 16, color: AppColors.gray)),
                           ],
                         ),
                         Divider(
@@ -259,3 +259,5 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 }
+
+

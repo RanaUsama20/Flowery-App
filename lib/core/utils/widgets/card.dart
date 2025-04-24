@@ -7,15 +7,15 @@ import '../../theme/app_theme.dart';
 
 class ProductCard {
   static Widget createProductCard(
-      String imageProduct,
-      String title,
-      int price,
-      int oldPrice,
-      int discount, {
-        required String productId,
-        int quantity = 1,
-        required void Function() onAddToCart,
-      }) {
+    String imageProduct,
+    String title,
+    int price,
+    int oldPrice,
+    int discount, {
+    required String productId,
+    int quantity = 1,
+    required void Function() onAddToCart,
+  }) {
     return IntrinsicWidth(
       child: Card(
         color: AppColors.white,
@@ -28,55 +28,64 @@ class ProductCard {
         ),
         elevation: 1,
         child: Padding(
-          padding: const EdgeInsets.all(7.0),
+          padding: const EdgeInsets.all(3),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: CustomCacheNetworkImage(
-                  imageUrl: imageProduct,
-                  height: 140,
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
+              CustomCacheNetworkImage(
+                imageUrl: imageProduct,
+                height: 140,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12), topRight: Radius.circular(12)),
               ),
               const SizedBox(height: 8),
-              Text(
-                title,
-                style: AppTheme.lightTheme.textTheme.bodyLarge,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 4),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    '$price ${LocaleKeys.Home_EGP.tr()}',
-                    style: AppTheme.lightTheme.textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    '$oldPrice',
-                    style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
-                      fontSize: 12,
-                      decoration: TextDecoration.lineThrough,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTheme.lightTheme.textTheme.bodyLarge,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  const SizedBox(width: 6),
-                  Text(
-                    '$discount%',
-                    style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
-                      fontSize: 11,
-                      color: AppColors.green,
+                    const SizedBox(height: 4),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '$price ${LocaleKeys.Home_EGP.tr()}',
+                          style: AppTheme.lightTheme.textTheme.labelMedium
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '$oldPrice',
+                          style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
+                            fontSize: 12,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          '$discount%',
+                          style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
+                            fontSize: 11,
+                            color: AppColors.green,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 8),
+                    ActionButton(onPressed: onAddToCart),
+                  ],
+                ),
               ),
-              const SizedBox(height: 6),
-              ActionButton(onPressed: onAddToCart),
             ],
           ),
         ),
@@ -84,7 +93,6 @@ class ProductCard {
     );
   }
 }
-
 
 class ActionButton extends StatelessWidget {
   final VoidCallback onPressed;

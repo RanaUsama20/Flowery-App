@@ -1,4 +1,3 @@
-
 part of 'categories_cubit.dart';
 
 abstract class CategoriesState {}
@@ -24,4 +23,14 @@ class CategoriesError extends CategoriesState {
 }
 
 
+class ProductsErrorState extends CategoriesState {
+  final String error;
 
+  ProductsErrorState(this.error);
+}
+
+class FilterLoadingState extends CategoriesState {}
+
+class FilterSuccessState extends CategoriesState {}
+
+class FilterSelectedSortState extends CategoriesState {}

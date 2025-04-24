@@ -46,6 +46,22 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         return FailureResult<ProfileDataEntity>(result.exception);
     }
   }
+
+  @override
+  Future<Result<String>> deleteAddress(String id) async{
+    final result = await _apiManager.execute<String>(() async {
+      final token = await SaveLocal.getString("token");
+      return await _profileRetrofitClient.deleteAddress(id,"Bearer $token");
+    });
+    switch (result) {
+      case SuccessResult<String>():
+        return SuccessResult<String>(result.data.toString());
+      case FailureResult<String>():
+        return FailureResult<String>(result.exception);
+
+    }
+  }
+
   }
 
 

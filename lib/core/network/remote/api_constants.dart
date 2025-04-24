@@ -22,4 +22,5 @@ class ApiConstants {
   static const String creditCardPaymentRoute = "orders/checkout?url=http://localhost:3000";
 
 
+  static const String deleteAddresses ="addresses";
 }

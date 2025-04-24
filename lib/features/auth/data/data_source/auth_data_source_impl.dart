@@ -6,7 +6,6 @@ import 'package:flowery_app/features/auth/domain/entity/login_entity.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/network/remote/api_manager.dart';
-import '../../../../core/utils/save_local.dart';
 import '../../../profile/data/api/profile_retrofit_client.dart';
 import '../../domain/entity/forgot_password_response_entity.dart';
 import '../api/auth_retrofit_client.dart';

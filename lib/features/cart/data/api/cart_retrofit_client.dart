@@ -6,37 +6,34 @@ import '../model/cart_model.dart';
 
 part 'cart_retrofit_client.g.dart';
 
-
-
 @lazySingleton
-@RestApi(baseUrl: ApiConstants.baseUrl,)
+@RestApi(
+  baseUrl: ApiConstants.baseUrl,
+)
 abstract class CartRetrofitClient {
   @factoryMethod
   factory CartRetrofitClient(Dio dio) = _CartRetrofitClient;
   @GET(ApiConstants.cart)
   Future<CartModel> getProductToCart(
-
     @Header("Authorization") String token,
   );
 
-
   @POST(ApiConstants.addToCart)
   Future<CartModel> addProductToCart(
-      @Header("Authorization") String token,
-      @Body() Map<String, dynamic> body,
-      );
+    @Header("Authorization") String token,
+    @Body() Map<String, dynamic> body,
+  );
 
   @PUT("${ApiConstants.cart}{id}")
   Future<CartModel> updateProductQuantity(
-      @Header("Authorization") String token,
-      @Path("id") String productId,
-      @Body() Map<String, dynamic> body,);
-
+    @Header("Authorization") String token,
+    @Path("id") String productId,
+    @Body() Map<String, dynamic> body,
+  );
 
   @DELETE("${ApiConstants.deleteCart}{id}")
   Future<CartModel> deleteProductToCart(
-      @Header("Authorization") String token,
-      @Path("id") String cartItemId,
-      );
-
+    @Header("Authorization") String token,
+    @Path("id") String cartItemId,
+  );
 }

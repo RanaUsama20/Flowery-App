@@ -41,4 +41,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
   Future<Result<ProfileDataEntity>> getProfileData() async {
     return await _profileRemoteDataSource.getProfileData();
   }
+  Future<Result<String>> deleteAddress(String id) async {
+    return await _profileRemoteDataSource.deleteAddress(id);
+  }
 }

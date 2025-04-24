@@ -32,6 +32,9 @@ abstract class ProfileRetrofitClient {
   Future<EditProfileResponse> editProfile(
       @Header("Authorization") String token,
       @Body() EditProfileRequest request);
+
+  @DELETE('${ApiConstants.deleteAddresses}/{id}')
+  Future<String> deleteAddress(@Path('id') String addressId, @Header("Authorization") String token,);
 }
 
 

@@ -12,6 +12,11 @@ class Routes {
   static const String occasion = '/occasion';
   static const String changePassword = '/changePassword';
   static const String mainProfile = '/mainProfile';
+  static const String savedAddress = '/savedAddress';
+  static const String aboutApp = '/aboutApp';
+  static const String termsAndCondition = '/termsAndCondition';
+
+
   static const String cart = 'cart';
   static const String editProfile = '/editProfile';
   static const String checkout = '/checkout';
@@ -19,4 +24,5 @@ class Routes {
 
 
 
+  static const String search = '/search';
 }

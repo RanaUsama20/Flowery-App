@@ -82,22 +82,6 @@ import 'package:flowery_app/features/categories/domain/usecase/getCategories_use
     as _i494;
 import 'package:flowery_app/features/categories/presentation/view_model/cubit/categories_cubit.dart'
     as _i57;
-import 'package:flowery_app/features/checkout/data/api/checkout_retrofit_client.dart'
-    as _i560;
-import 'package:flowery_app/features/checkout/data/data_source/remote/checkout_remote_data_source.dart'
-    as _i711;
-import 'package:flowery_app/features/checkout/data/data_source/remote/checkout_remote_data_source_impl.dart'
-    as _i16;
-import 'package:flowery_app/features/checkout/data/repository_imp/checkout_repository_impl.dart'
-    as _i876;
-import 'package:flowery_app/features/checkout/domain/repository/checkout_repository.dart'
-    as _i533;
-import 'package:flowery_app/features/checkout/domain/usecase/cash_payment_use_case.dart'
-    as _i192;
-import 'package:flowery_app/features/checkout/domain/usecase/credit_card_payment_use_case.dart'
-    as _i406;
-import 'package:flowery_app/features/checkout/presentation/view_model/cubit/checkout_cubit.dart'
-    as _i643;
 import 'package:flowery_app/features/home/data/api/home_retrofit_client.dart'
     as _i1039;
 import 'package:flowery_app/features/home/data/data_source/remote/home_remote_data_source.dart'
@@ -134,12 +118,28 @@ import 'package:flowery_app/features/profile/domain/repository/profile_repositor
     as _i1025;
 import 'package:flowery_app/features/profile/domain/usecase/change_password_usecase.dart'
     as _i583;
+import 'package:flowery_app/features/profile/domain/usecase/delete_adress_use_case.dart'
+    as _i927;
 import 'package:flowery_app/features/profile/domain/usecase/get_profile_data_usecase.dart'
     as _i110;
 import 'package:flowery_app/features/profile/presentation/view_model/change_password/change_password_cubit.dart'
     as _i517;
 import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart'
     as _i859;
+import 'package:flowery_app/features/search/data/api/search_retrofit_client.dart'
+    as _i748;
+import 'package:flowery_app/features/search/data/data_source/search_query_data_source_imp.dart'
+    as _i66;
+import 'package:flowery_app/features/search/data/repository/search_query_repository_imp.dart'
+    as _i882;
+import 'package:flowery_app/features/search/domain/data_source/search_query_data_source.dart'
+    as _i461;
+import 'package:flowery_app/features/search/domain/repository/search_query_repository.dart'
+    as _i1019;
+import 'package:flowery_app/features/search/domain/usecase/search_query_use_case.dart'
+    as _i993;
+import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart'
+    as _i667;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -171,24 +171,23 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i881.CartRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i557.CategoriesRetrofitClient>(
         () => _i557.CategoriesRetrofitClient(gh<_i361.Dio>()));
-    gh.lazySingleton<_i560.CheckoutRetrofitClient>(
-        () => _i560.CheckoutRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i1039.HomeRetrofitClient>(
         () => _i1039.HomeRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i106.ProfileRetrofitClient>(
         () => _i106.ProfileRetrofitClient(gh<_i361.Dio>()));
+    gh.lazySingleton<_i748.SearchRetrofitClient>(
+        () => _i748.SearchRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
     gh.lazySingleton<_i127.UploadPhotoApiService>(
         () => _i127.UploadPhotoApiService(gh<_i361.Dio>()));
-    gh.factory<_i711.CheckoutRemoteDataSource>(
-        () => _i16.CheckoutRemoteDataSourceImpl(
-              gh<_i560.CheckoutRetrofitClient>(),
-              gh<_i797.ApiManager>(),
-            ));
     gh.factory<_i129.GetAllCategoriesDataSource>(() =>
         _i48.GetAllCategoriesDataSourceImpl(
             gh<_i557.CategoriesRetrofitClient>()));
+    gh.factory<_i461.SearchQueryDataSource>(() => _i66.SearchQueryDataSourceImp(
+          gh<_i748.SearchRetrofitClient>(),
+          gh<_i797.ApiManager>(),
+        ));
     gh.factory<_i3.HomeRemoteDataSource>(() => _i550.HomeRemoteDataSourceImpl(
           gh<_i1039.HomeRetrofitClient>(),
           gh<_i797.ApiManager>(),
@@ -218,8 +217,6 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i881.CartRetrofitClient>(),
           gh<_i797.ApiManager>(),
         ));
-    gh.factory<_i533.CheckoutRepository>(() =>
-        _i876.CheckoutRepositoryImpl(gh<_i711.CheckoutRemoteDataSource>()));
     gh.factory<_i427.GetCategoriesRepository>(() =>
         _i578.GetCategoriesRepositoryImpl(
             gh<_i129.GetAllCategoriesDataSource>()));
@@ -238,21 +235,25 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i541.LoginUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i45.LoginCubit>(
         () => _i45.LoginCubit(gh<_i541.LoginUseCase>()));
+    gh.factory<_i1019.SearchQueryRepository>(() =>
+        _i882.SearchQueryRepositoryImp(gh<_i461.SearchQueryDataSource>()));
     gh.factory<_i166.CartRepository>(
         () => _i221.CartRepositoryImpl(gh<_i301.CartRemoteDataSource>()));
+    gh.factory<_i993.SearchQueryUseCase>(
+        () => _i993.SearchQueryUseCase(gh<_i1019.SearchQueryRepository>()));
+    gh.factory<_i927.DeleteAddressUseCase>(
+        () => _i927.DeleteAddressUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i110.GetProfileDataUseCase>(
         () => _i110.GetProfileDataUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i675.BestSellerUseCase>(
         () => _i675.BestSellerUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i683.HomeUseCase>(
         () => _i683.HomeUseCase(gh<_i630.HomeRepository>()));
+    gh.factory<_i667.SearchBloc>(
+        () => _i667.SearchBloc(gh<_i993.SearchQueryUseCase>()));
     gh.factory<_i485.CartUseCase>(
         () => _i485.CartUseCase(gh<_i166.CartRepository>()));
     gh.factory<_i645.CartCubit>(() => _i645.CartCubit(gh<_i485.CartUseCase>()));
-    gh.factory<_i192.CashPaymentUseCase>(
-        () => _i192.CashPaymentUseCase(gh<_i533.CheckoutRepository>()));
-    gh.factory<_i406.CreditCardPaymentUseCase>(
-        () => _i406.CreditCardPaymentUseCase(gh<_i533.CheckoutRepository>()));
     gh.factory<_i371.ForgotPasswordUseCase>(
         () => _i371.ForgotPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i226.LogoutUseCase>(
@@ -263,22 +264,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i967.ResetPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i603.VerifyResetCodeUseCase>(
         () => _i603.VerifyResetCodeUseCase(gh<_i426.AuthRepository>()));
-    gh.factory<_i859.ProfileMainCubit>(() => _i859.ProfileMainCubit(
-          gh<_i110.GetProfileDataUseCase>(),
-          gh<_i226.LogoutUseCase>(),
-          gh<_i826.AppCubit>(),
-        ));
-    gh.factory<_i643.CheckoutCubit>(() => _i643.CheckoutCubit(
-          gh<_i192.CashPaymentUseCase>(),
-          gh<_i406.CreditCardPaymentUseCase>(),
-          gh<_i485.CartUseCase>(),
-          gh<_i110.GetProfileDataUseCase>(),
-        ));
     gh.factory<_i427.GetProductsByIdRepository>(() =>
         _i578.GetProductsByIdRepositoryImpl(
             gh<_i129.GetProductsByIdDataSource>()));
     gh.factory<_i517.ChangePasswordCubit>(
         () => _i517.ChangePasswordCubit(gh<_i583.ChangePasswordUseCase>()));
+    gh.factory<_i859.ProfileMainCubit>(() => _i859.ProfileMainCubit(
+          gh<_i110.GetProfileDataUseCase>(),
+          gh<_i226.LogoutUseCase>(),
+          gh<_i927.DeleteAddressUseCase>(),
+          gh<_i826.AppCubit>(),
+        ));
     gh.factory<_i331.OccasionsCubit>(() => _i331.OccasionsCubit(
           gh<_i7.OccasionsUseCase>(),
           gh<_i997.ProductOccasionUseCase>(),

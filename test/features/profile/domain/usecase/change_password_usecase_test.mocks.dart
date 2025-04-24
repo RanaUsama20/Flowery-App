@@ -67,4 +67,17 @@ class MockProfileRepository extends _i1.Mock implements _i2.ProfileRepository {
             ),
           )
           as _i3.Future<_i4.Result<_i8.ProfileDataEntity>>);
+
+  @override
+  _i3.Future<_i4.Result<String>> deleteAddress(String? id) =>
+      (super.noSuchMethod(
+            Invocation.method(#deleteAddress, [id]),
+            returnValue: _i3.Future<_i4.Result<String>>.value(
+              _i7.dummyValue<_i4.Result<String>>(
+                this,
+                Invocation.method(#deleteAddress, [id]),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<String>>);
 }

@@ -3,6 +3,8 @@ import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/constants/app_fonts_family.dart';
 import 'package:flowery_app/core/constants/app_values.dart';
+import 'package:flowery_app/core/extentions/media_query_extensions.dart';
+import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -37,15 +39,19 @@ class SectionSearch extends StatelessWidget {
         )),
         Expanded(
           flex: 2,
-          child: TextFormField(
-            decoration: InputDecoration(
-              enabledBorder: outLineBorder(),
-              focusedBorder: outLineBorder(),
-              prefixIcon: Icon(
-                Icons.search,
-                color: AppColors.white[AppColors.colorCode70],
+          child: InkWell(
+            onTap: () => context.pushNamed(Routes.search),
+            child: TextFormField(
+              enabled: false,
+              decoration: InputDecoration(
+                enabledBorder: outLineBorder(),
+                focusedBorder: outLineBorder(),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: AppColors.white[AppColors.colorCode70],
+                ),
+                hintText: LocaleKeys.Home_Search.tr(),
               ),
-              hintText: LocaleKeys.Home_Search.tr(),
             ),
           ),
         )
