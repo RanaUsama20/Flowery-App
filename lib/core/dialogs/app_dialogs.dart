@@ -4,6 +4,7 @@ import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../generated/locale_keys.g.dart';
+import 'loading_widget.dart';
 
 class AppDialogs {
   // Show a loading dialog
