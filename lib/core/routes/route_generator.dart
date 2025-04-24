@@ -7,7 +7,12 @@ import 'package:flowery_app/features/home/presentation/view/best_seller_screen.d
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/features/product_details/presentation/pages/product_details.dart';
+import 'package:flowery_app/features/profile/presentation/view/Terms_and_condition_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/apout_app_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
+import 'package:flowery_app/features/search/presentation/view/main_search_screen.dart';
+import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';
+import 'package:flowery_app/features/profile/presentation/view/saved_adreess.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,11 +64,10 @@ class RouteGenerator {
           ),
         );
       case Routes.appSection:
-        return MaterialPageRoute(builder: (_) => MultiBlocProvider(
-            providers: [
-              BlocProvider(create: (context) => serviceLocator<CartCubit>())
-            ],
-            child: const AppSection()));
+        return MaterialPageRoute(
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(create: (context) => serviceLocator<CartCubit>())
+                ], child: const AppSection()));
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.occasion:
@@ -86,10 +90,29 @@ class RouteGenerator {
           userData: arg as EditProfileRequest,
 
         ));
-        // return MaterialPageRoute(builder: (_) =>
-        //     ProductDetails(
-        //       product: product,
-        //     ));
+      case Routes.savedAddress:
+        return MaterialPageRoute(builder: (_) => SavedAddress(
+
+        ));
+      case Routes.aboutApp:
+        return MaterialPageRoute(builder: (_) =>  AboutAppScreen());
+      case Routes.termsAndCondition:
+        return MaterialPageRoute(builder: (_) => const TermsAndConditionScreen());
+        return MaterialPageRoute(
+            builder: (_) => EditProfileScreen(
+                  userData: arg as EditProfileRequest,
+                ));
+      case Routes.search:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider<SearchBloc>(
+            create: (context) => serviceLocator<SearchBloc>(),
+            child: const SearchScreen(),
+          ),
+        );
+      // return MaterialPageRoute(builder: (_) =>
+      //     ProductDetails(
+      //       product: product,
+      //     ));
       default:
         return _undefinedRoute();
     }
