@@ -5,7 +5,6 @@ import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
-import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_state.dart';
 
@@ -27,11 +26,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late HomeCubit _homeCubit;
+
   @override
   void initState() {
     super.initState();
     _homeCubit = serviceLocator.get<HomeCubit>();
     _homeCubit.getHomeData();
+  }
+
+  Future<void> _onRefresh() async {
+    // Trigger the data reload (same as in initState)
+    await _homeCubit.getHomeData();
   }
 
   @override
@@ -50,116 +55,121 @@ class _HomeScreenState extends State<HomeScreen> {
               return Center(child: Text(ans.errorMessage));
             } else if (state.homeData is BaseSuccessState) {
               final ans = state.homeData as BaseSuccessState<HomeEntity>;
-              return Column(
-                children: [
-                  SectionSearch(),
-                  const SizedBox(height: 20),
-                  SectionLocation(),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        _sectionTitle(
-                          LocaleKeys.Home_Categories.tr(),
-                          () {
-                            Navigator.pushNamed(context, Routes.categories);
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 100,
-                          child: ListView.separated(
-                            itemCount: ans.data!.category.length,
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(width: 16);
+              return RefreshIndicator(
+                color: AppColors.pink,
+                onRefresh: _onRefresh,  // Added refresh callback
+                child: SingleChildScrollView(  // Wrapping inside scrollable widget
+                  child: Column(
+                    children: [
+                      SectionSearch(),
+                      const SizedBox(height: 20),
+                      SectionLocation(),
+                      const SizedBox(height: 10),
+                      // List of sections, categories, best sellers, etc.
+                      Column(
+                        children: [
+                          _sectionTitle(
+                            LocaleKeys.Home_Categories.tr(),
+                                () {
+                              Navigator.pushNamed(context, Routes.categories);
                             },
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return Column(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.all(15),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.lightPink,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Center(
-                                      child: SizedBox(
-                                        width: 30,
-                                        height: 30,
-                                        child: CustomCacheNetworkImage(
-                                          imageUrl: ans.data?.category[index].image ?? '',
-                                          width: double.infinity,
-                                          height: double.infinity,
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 100,
+                            child: ListView.separated(
+                              itemCount: ans.data!.category.length,
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 16);
+                              },
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(15),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.lightPink,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Center(
+                                        child: SizedBox(
+                                          width: 30,
+                                          height: 30,
+                                          child: CustomCacheNetworkImage(
+                                            imageUrl: ans.data?.category[index].image ?? '',
+                                            width: double.infinity,
+                                            height: double.infinity,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    ans.data!.category[index].name!,
-                                    style: theme.labelMedium,
-                                  )
-                                ],
-                              );
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      ans.data!.category[index].name!,
+                                      style: theme.labelMedium,
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          _sectionTitle(
+                            LocaleKeys.Home_BestSeller.tr(),
+                                () {
+                              Navigator.pushNamed(context, Routes.bestSeller);
                             },
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        _sectionTitle(
-                          LocaleKeys.Home_BestSeller.tr(),
-                          () {
-                            Navigator.pushNamed(context, Routes.bestSeller);
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 200,
-                          child: ListView.separated(
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(width: 16);
-                            },
-                            itemCount: ans.data!.bestSeller.length,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return CardOfItem.cardType(
-                                image: ans.data!.bestSeller[index].imgCover!,
-                                price: ans.data!.bestSeller[index].price,
-                                title: ans.data!.bestSeller[index].title,
-                                type: TypeOfCard.Big,
-                              );
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 200,
+                            child: ListView.separated(
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 16);
+                              },
+                              itemCount: ans.data!.bestSeller.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return CardOfItem.cardType(
+                                  image: ans.data!.bestSeller[index].imgCover!,
+                                  price: ans.data!.bestSeller[index].price,
+                                  title: ans.data!.bestSeller[index].title,
+                                  type: TypeOfCard.Big,
+                                );
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          _sectionTitle(
+                            LocaleKeys.Home_Occasion.tr(),
+                                () {
+                              Navigator.pushNamed(context, Routes.occasion);
                             },
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        _sectionTitle(
-                          LocaleKeys.Home_Occasion.tr(),
-                          () {
-                            Navigator.pushNamed(context, Routes.occasion);
-                          },
-                        ),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: 200,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return CardOfItem.cardType(
-                                image: ans.data!.occasion[index].image!,
-                                title: ans.data!.occasion[index].name,
-                                type: TypeOfCard.Small,
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(width: 16);
-                            },
-                            itemCount: ans.data!.occasion.length,
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: 200,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return CardOfItem.cardType(
+                                  image: ans.data!.occasion[index].image!,
+                                  title: ans.data!.occasion[index].name,
+                                  type: TypeOfCard.Small,
+                                );
+                              },
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(width: 16);
+                              },
+                              itemCount: ans.data!.occasion.length,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               );
             }
             return SizedBox();
@@ -201,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _sectionTitle(
                   LocaleKeys.Home_Categories.tr(),
-                  () {
+                      () {
                     Navigator.pushNamed(context, Routes.categories);
                   },
                 ),
@@ -241,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 _sectionTitle(
                   LocaleKeys.Home_BestSeller.tr(),
-                  () {
+                      () {
                     Navigator.pushNamed(context, Routes.bestSeller);
                   },
                 ),
@@ -279,7 +289,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 _sectionTitle(
                   LocaleKeys.Home_Occasion.tr(),
-                  () {
+                      () {
                     Navigator.pushNamed(context, Routes.occasion);
                   },
                 ),

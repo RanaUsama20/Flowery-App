@@ -34,7 +34,7 @@ abstract class ProfileRetrofitClient {
       @Body() EditProfileRequest request);
 
   @DELETE('addresses/{id}')
-  Future<void> deleteAddress(@Path('id') String addressId, @Header("Authorization") String token,);
+  Future<String> deleteAddress(@Path('id') String addressId, @Header("Authorization") String token,);
 }
 
 

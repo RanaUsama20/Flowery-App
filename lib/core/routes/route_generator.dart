@@ -7,6 +7,8 @@ import 'package:flowery_app/features/product_details/presentation/pages/product_
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/Terms_and_condition_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/apout_app_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/saved_adreess.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,6 @@ import '../../features/auth/presentation/view_model/login/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
 import '../../features/cart/presentation/view_model/cart_cubit.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
-import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../../features/profile/presentation/view/change_password_screen.dart';
 import '../di/service_locator.dart';
@@ -90,9 +91,11 @@ class RouteGenerator {
       case Routes.savedAddress:
         return MaterialPageRoute(builder: (_) => SavedAddress(
 
-          addresses: arg as List<dynamic>,
         ));
-
+      case Routes.aboutApp:
+        return MaterialPageRoute(builder: (_) =>  AboutAppScreen());
+      case Routes.termsAndCondition:
+        return MaterialPageRoute(builder: (_) => const TermsAndConditionScreen());
       default:
         return _undefinedRoute();
     }

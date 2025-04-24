@@ -10,9 +10,7 @@ import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/p
 import 'package:injectable/injectable.dart';
 
 import '../../../../../core/network/remote/api_manager.dart';
-import '../../../../../core/utils/save_local.dart';
 
-import '../../api/profile_retrofit_client.dart';
 import 'profile_remote_data_source.dart';
 
 @Injectable(as: ProfileRemoteDataSource)
@@ -51,19 +49,16 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }
 
   @override
-  Future<Result<void>> deleteAddress(String id) async{
-    final result = await _apiManager.execute<void>(() async {
+  Future<Result<String>> deleteAddress(String id) async{
+    final result = await _apiManager.execute<String>(() async {
       final token = await SaveLocal.getString("token");
-      log("token: $token");
-      print(id);
-      print("[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[");
       return await _profileRetrofitClient.deleteAddress(id,"Bearer $token");
     });
     switch (result) {
-      case SuccessResult<void>():
-        return SuccessResult<void>("Success");
-      case FailureResult<void>():
-        return FailureResult<void>(result.exception);
+      case SuccessResult<String>():
+        return SuccessResult<String>(result.data.toString());
+      case FailureResult<String>():
+        return FailureResult<String>(result.exception);
 
     }
   }

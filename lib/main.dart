@@ -10,7 +10,7 @@ import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_shared_preference.dart';
 import 'core/utils/bloc_observer.dart';
-import 'core/utils/save_local.dart';
+import 'features/cart/presentation/view_model/cart_cubit.dart';
 import 'features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 
 void main() async {
@@ -68,6 +68,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AppCubit>(
           create: (_) => serviceLocator<AppCubit>(),
         ),
+        BlocProvider(
+        create: (context) => serviceLocator<CartCubit>(),
+        ),
+
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

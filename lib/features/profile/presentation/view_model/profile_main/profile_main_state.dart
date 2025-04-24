@@ -27,7 +27,6 @@ class ProfileMainState extends Equatable {
     ProfileDataEntity? profileData,
     String? errorMessage,
     String? logOutMessageResponse,
-    String? deleteAddressMessageRes,
 
   }) {
     return ProfileMainState(
@@ -55,7 +54,7 @@ extension ProfileMainCubitX on ProfileMainState {
   bool get isLogoutLoading => logoutStatus == Status.loading;
   bool get isLogoutSuccess => logoutStatus == Status.success;
   bool get isLogoutFailure => logoutStatus == Status.failure;
-  bool get isDeleteAddressLoading => logoutStatus == Status.loading;
-  bool get sDeleteAddressSuccess => logoutStatus == Status.success;
-  bool get sDeleteAddressFailure => logoutStatus == Status.failure;
+  bool get isDeleteAddressLoading => deleteAddressStatus == Status.loading;
+  bool get isDeleteAddressSuccess => deleteAddressStatus == Status.success;
+  bool get isDeleteAddressFailure => deleteAddressStatus == Status.failure;
 }

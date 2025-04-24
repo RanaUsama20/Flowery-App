@@ -70,15 +70,15 @@ class MockProfileRemoteDataSource extends _i1.Mock
           as _i3.Future<_i4.Result<_i7.ChangePasswordResponseDto?>>);
 
   @override
-  _i3.Future<_i4.Result<void>> deleteAddress(String? id) =>
+  _i3.Future<_i4.Result<String>> deleteAddress(String? id) =>
       (super.noSuchMethod(
             Invocation.method(#deleteAddress, [id]),
-            returnValue: _i3.Future<_i4.Result<void>>.value(
-              _i6.dummyValue<_i4.Result<void>>(
+            returnValue: _i3.Future<_i4.Result<String>>.value(
+              _i6.dummyValue<_i4.Result<String>>(
                 this,
                 Invocation.method(#deleteAddress, [id]),
               ),
             ),
           )
-          as _i3.Future<_i4.Result<void>>);
+          as _i3.Future<_i4.Result<String>>);
 }

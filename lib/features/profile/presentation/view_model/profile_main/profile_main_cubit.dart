@@ -60,20 +60,21 @@ class ProfileMainCubit extends Cubit<ProfileMainState> {
 }
 
 Future<void> deleteAddress(String id) async {
+  print("EMITTING deleteAddressStatus ------------------------------------------------= ${Status.loading}");
   emit(state.copyWith(deleteAddressStatus: Status.loading));
+
   final result = await _deleteAddressUseCase.call(id);
+
   switch (result) {
-    case SuccessResult<void>():
-      emit(state.copyWith(
-        deleteAddressStatus: Status.success,
-      ));
-    case FailureResult<void>():
-      emit(state.copyWith(
-          deleteAddressStatus: Status.failure,
-          deleteAddressMessageRes: result.exception.toString()
-
-      ));
-
-
+    case SuccessResult<String>():
+      print("EMITTING deleteAddressStatus = ${Status.success}");
+      emit(state.copyWith(deleteAddressStatus: Status.success));
+      break;
+    case FailureResult<String>():
+      print("EMITTING deleteAddressStatus = ${Status.failure}");
+      emit(state.copyWith(deleteAddressStatus: Status.failure));
+      break;
   }
-}}
+  emit(state.copyWith(deleteAddressStatus: Status.initial));
+}
+}

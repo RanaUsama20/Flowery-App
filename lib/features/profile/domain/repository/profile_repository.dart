@@ -1,7 +1,6 @@
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 
-import '../../../../core/network/common/api_result.dart';
 import '../entity/change_password/change_password__request_entity.dart';
 import '../entity/change_password/change_password__response_entity.dart';
 
@@ -11,6 +10,6 @@ abstract class ProfileRepository {
   Future<Result<ChangePasswordResponseEntity?>> changePassword(ChangePasswordRequestEntity? passwordData);
 
   Future<Result<ProfileDataEntity>> getProfileData();
-  Future<Result<void>> deleteAddress(String id);
+  Future<Result<String>> deleteAddress(String id);
 
 }
