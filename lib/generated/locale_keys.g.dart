@@ -224,6 +224,7 @@ abstract class  LocaleKeys {
   static const Ok = 'Ok';
   static const Loading = 'Loading';
   static const Retry = 'Retry';
+  static const address = 'address';
   static const cancel = 'cancel';
   static const search_enterSearch = 'search.enterSearch';
   static const search_titleIntro = 'search.titleIntro';

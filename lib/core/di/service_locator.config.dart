@@ -14,6 +14,22 @@ import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart' as _i826;
 import 'package:flowery_app/core/logger/logger_module.dart' as _i495;
 import 'package:flowery_app/core/network/remote/api_manager.dart' as _i797;
 import 'package:flowery_app/core/network/remote/dio_module.dart' as _i338;
+import 'package:flowery_app/features/address/data/api/address_retrofit_client.dart'
+    as _i960;
+import 'package:flowery_app/features/address/data/data_source/address_remote_data_source.dart'
+    as _i438;
+import 'package:flowery_app/features/address/data/data_source/address_remote_data_source_impl.dart'
+    as _i299;
+import 'package:flowery_app/features/address/data/repository_imp/address_repository_impl.dart'
+    as _i501;
+import 'package:flowery_app/features/address/domain/respository/address_repository.dart'
+    as _i85;
+import 'package:flowery_app/features/address/domain/usecase/edit_address_use_case.dart'
+    as _i865;
+import 'package:flowery_app/features/address/domain/usecase/save_address_use_case.dart'
+    as _i969;
+import 'package:flowery_app/features/address/presentation/view_model/cubit/address_cubit.dart'
+    as _i18;
 import 'package:flowery_app/features/auth/data/api/auth_retrofit_client.dart'
     as _i865;
 import 'package:flowery_app/features/auth/data/api/upload_photo_api_service.dart'
@@ -195,10 +211,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i106.ProfileRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i748.SearchRetrofitClient>(
         () => _i748.SearchRetrofitClient(gh<_i361.Dio>()));
+    gh.factory<_i960.AddressRetrofitClient>(
+        () => _i960.AddressRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
     gh.lazySingleton<_i127.UploadPhotoApiService>(
         () => _i127.UploadPhotoApiService(gh<_i361.Dio>()));
+    gh.factory<_i438.AddressRemoteDataSource>(() =>
+        _i299.AddressRemoteDataSourceImpl(gh<_i960.AddressRetrofitClient>()));
     gh.factory<_i711.CheckoutRemoteDataSource>(
         () => _i16.CheckoutRemoteDataSourceImpl(
               gh<_i560.CheckoutRetrofitClient>(),
@@ -214,6 +234,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i3.HomeRemoteDataSource>(() => _i550.HomeRemoteDataSourceImpl(
           gh<_i1039.HomeRetrofitClient>(),
           gh<_i797.ApiManager>(),
+        ));
+    gh.factory<_i85.AddressRepository>(() => _i501.HomeRepositoryImpl(
+          gh<_i797.ApiManager>(),
+          gh<_i438.AddressRemoteDataSource>(),
         ));
     gh.factory<_i630.HomeRepository>(() => _i271.HomeRepositoryImpl(
           gh<_i797.ApiManager>(),
@@ -250,6 +274,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i797.ApiManager>(),
           gh<_i392.AuthDataSource>(),
         ));
+    gh.factory<_i865.EditAddressUseCase>(
+        () => _i865.EditAddressUseCase(gh<_i85.AddressRepository>()));
+    gh.factory<_i969.SaveAddressUseCase>(
+        () => _i969.SaveAddressUseCase(gh<_i85.AddressRepository>()));
     gh.factory<_i583.ChangePasswordUseCase>(
         () => _i583.ChangePasswordUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i7.OccasionsUseCase>(
@@ -278,6 +306,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i667.SearchBloc(gh<_i993.SearchQueryUseCase>()));
     gh.factory<_i485.CartUseCase>(
         () => _i485.CartUseCase(gh<_i166.CartRepository>()));
+    gh.factory<_i18.AddressCubit>(() => _i18.AddressCubit(
+          gh<_i969.SaveAddressUseCase>(),
+          gh<_i865.EditAddressUseCase>(),
+        ));
     gh.factory<_i645.CartCubit>(() => _i645.CartCubit(gh<_i485.CartUseCase>()));
     gh.factory<_i192.CashPaymentUseCase>(
         () => _i192.CashPaymentUseCase(gh<_i533.CheckoutRepository>()));
