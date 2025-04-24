@@ -46,7 +46,7 @@ class _SavedAddressState extends State<SavedAddress> {
 
              SnackBar(
                 backgroundColor:AppColors.pink,
-                content: Text( LocaleKeys.Profile_Deleting_address)),
+                content: Text( LocaleKeys.Profile_Deleting_address.tr())),
           );
           
         } else if (state.isDeleteAddressSuccess) {
@@ -54,7 +54,7 @@ class _SavedAddressState extends State<SavedAddress> {
              SnackBar(
                  backgroundColor:AppColors.pink,
                  content: Text(
-                     LocaleKeys.Profile_Address_deleted_successfully)),
+                     LocaleKeys.Profile_Address_deleted_successfully.tr())),
           );
         } else if (state.isDeleteAddressFailure) {
           ScaffoldMessenger.of(context).showSnackBar(

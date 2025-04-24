@@ -52,7 +52,7 @@
   "Profile": {
     "Deleting_address": "Deleting address...",
     "Failed_to_delete_address" : "Failed to delete address",
-    "Address_deleted_successfully": "'Address deleted successfully'",
+    "Address_deleted_successfully": "Address deleted successfully",
     "Saved_address":"  Saved address",
     "Unknown_City": "Unknown City",
     "Add_new_address" : "Add new address",
