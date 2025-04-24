@@ -118,6 +118,8 @@ import 'package:flowery_app/features/profile/domain/repository/profile_repositor
     as _i1025;
 import 'package:flowery_app/features/profile/domain/usecase/change_password_usecase.dart'
     as _i583;
+import 'package:flowery_app/features/profile/domain/usecase/delete_adress_use_case.dart'
+    as _i927;
 import 'package:flowery_app/features/profile/domain/usecase/get_profile_data_usecase.dart'
     as _i110;
 import 'package:flowery_app/features/profile/presentation/view_model/change_password/change_password_cubit.dart'
@@ -239,6 +241,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i221.CartRepositoryImpl(gh<_i301.CartRemoteDataSource>()));
     gh.factory<_i993.SearchQueryUseCase>(
         () => _i993.SearchQueryUseCase(gh<_i1019.SearchQueryRepository>()));
+    gh.factory<_i927.DeleteAddressUseCase>(
+        () => _i927.DeleteAddressUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i110.GetProfileDataUseCase>(
         () => _i110.GetProfileDataUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i675.BestSellerUseCase>(
@@ -260,16 +264,17 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i967.ResetPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i603.VerifyResetCodeUseCase>(
         () => _i603.VerifyResetCodeUseCase(gh<_i426.AuthRepository>()));
-    gh.factory<_i859.ProfileMainCubit>(() => _i859.ProfileMainCubit(
-          gh<_i110.GetProfileDataUseCase>(),
-          gh<_i226.LogoutUseCase>(),
-          gh<_i826.AppCubit>(),
-        ));
     gh.factory<_i427.GetProductsByIdRepository>(() =>
         _i578.GetProductsByIdRepositoryImpl(
             gh<_i129.GetProductsByIdDataSource>()));
     gh.factory<_i517.ChangePasswordCubit>(
         () => _i517.ChangePasswordCubit(gh<_i583.ChangePasswordUseCase>()));
+    gh.factory<_i859.ProfileMainCubit>(() => _i859.ProfileMainCubit(
+          gh<_i110.GetProfileDataUseCase>(),
+          gh<_i226.LogoutUseCase>(),
+          gh<_i927.DeleteAddressUseCase>(),
+          gh<_i826.AppCubit>(),
+        ));
     gh.factory<_i331.OccasionsCubit>(() => _i331.OccasionsCubit(
           gh<_i7.OccasionsUseCase>(),
           gh<_i997.ProductOccasionUseCase>(),
