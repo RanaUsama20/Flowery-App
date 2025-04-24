@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/features/categories/domain/entity/get_all_categories_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+
 import '../../../../../generated/locale_keys.g.dart';
 import '../../../domain/entity/get_products_by_id_entity.dart';
 import '../../../domain/usecase/getCategories_use_case.dart';
@@ -23,6 +24,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         _allProducts = List<ProductsEntity>.from(products ?? []);
         emit(SuccessState(allCategories: allCategories, products: _allProducts));
       } else {
+        _allProducts = [];
         emit(SuccessState(allCategories: allCategories, products: []));
       }
 
@@ -37,9 +39,7 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     try {
       final result = await _categoriesUseCase.getProductsById(categoryId);
 
-      if (result != null && result.isNotEmpty) {
-        _allProducts = List<ProductsEntity>.from(result);
-      }
+      _allProducts = List<ProductsEntity>.from(result ?? []);
 
       final currentCategories = state is SuccessState
           ? List<CategoriesEntity>.from((state as SuccessState).allCategories ?? [])
@@ -53,16 +53,16 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     }
   }
 
-
   void filterProducts({String? sortType, num? minPrice, num? maxPrice}) {
+    minPrice = minPrice ??
+        (_allProducts.isNotEmpty
+            ? _allProducts.map((product) => product.price!).reduce((a, b) => a < b ? a : b)
+            : 0);
 
-    minPrice = minPrice ?? (_allProducts.isNotEmpty
-        ? _allProducts.map((product) => product.price!).reduce((a, b) => a < b ? a : b)
-        : 0);
-
-    maxPrice = maxPrice ?? (_allProducts.isNotEmpty
-        ? _allProducts.map((product) => product.price!).reduce((a, b) => a > b ? a : b)
-        : 0);
+    maxPrice = maxPrice ??
+        (_allProducts.isNotEmpty
+            ? _allProducts.map((product) => product.price!).reduce((a, b) => a > b ? a : b)
+            : 0);
 
 
     List<ProductsEntity> filtered = _allProducts.where((product) {
@@ -92,9 +92,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         ? List<CategoriesEntity>.from((state as SuccessState).allCategories ?? [])
         : <CategoriesEntity>[];
 
-
     emit(SuccessState(allCategories: currentCategories, products: filtered));
-    }
-
-
+  }
 }
