@@ -6,6 +6,7 @@ import 'package:flowery_app/features/profile/presentation/view_model/profile_mai
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../../generated/locale_keys.g.dart';
 
 class SavedAddress extends StatefulWidget {
@@ -142,9 +143,11 @@ class _SavedAddressState extends State<SavedAddress> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: context.hp(37), top: context.hp(6)),
+                    padding: EdgeInsets.only(bottom: context.hp(4), top: context.hp(6)),
                     child: InkWell(
                       onTap: () {
+
+                        Navigator.of(context).pushNamed(Routes.address);
                       },
                       child: Container(
                         width: context.wp(90),

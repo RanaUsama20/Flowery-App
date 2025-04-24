@@ -35,7 +35,7 @@ class _AddressScreenState extends State<AddressScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(LocaleKeys.address.tr()),
+          title: Text(  LocaleKeys.address.tr()),
         ),
         body: BlocBuilder<AddressCubit, AddressState>(
           bloc: _addressCubit,
@@ -104,12 +104,13 @@ class _AddressScreenState extends State<AddressScreen> {
                     children: [
                       Expanded(
                           child: DropdownButtonFormField<Governorate?>(
+                            isExpanded: true,
                               decoration: InputDecoration(
                                   label: Text('City'), hintText: 'Cairo'),
                               items: _addressCubit.listOfCity.map((e) {
                                 return DropdownMenuItem<Governorate?>(
                                   value: e,
-                                  child: FittedBox(child: Text(e.nameEn)),
+                                  child: Text(e.nameEn),
                                 );
                               }).toList(),
                               onChanged: (value) {
@@ -118,21 +119,17 @@ class _AddressScreenState extends State<AddressScreen> {
                       SizedBox(width: 20),
                       Expanded(
                           child: DropdownButtonFormField<Area>(
+                              isExpanded: true,
                               decoration: InputDecoration(
                                   label: Text('Area'), hintText: 'October'),
                               items: _addressCubit.listOfArea.map((e) {
                                 return DropdownMenuItem<Area>(
                                     value: e,
-                                    child: FittedBox(
-                                        fit: BoxFit.scaleDown,
-                                        child: SizedBox(
-                                          width: 120,
-                                          child: Text(
-                                            e.nameEn,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        )));
+                                    child: Text(
+                                      e.nameEn,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ));
                               }).toList(),
                               onChanged: (value) {
                                 areaName = value!.nameEn;

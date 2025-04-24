@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/base_state/base_state.dart';
 import '../../../../core/dialogs/app_dialogs.dart';
 import '../../../../core/network/common/api_result.dart';
+import '../../../../core/routes/routes.dart';
 import '../../../profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import '../view_model/cubit/checkout_state.dart';
 
@@ -82,7 +83,8 @@ class _DeliveryAddressWidgetState extends State<DeliveryAddressWidget> {
                   }),
                   OutlinedButton.icon(
                     onPressed: () {
-                      // Handle add new
+                      Navigator.of(context).pushNamed(Routes.address);
+
                     },
                     icon: Icon(Icons.add, color: Colors.pink),
                     label: Text(
