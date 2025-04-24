@@ -16,7 +16,7 @@ class Routes {
   static const String aboutApp = '/aboutApp';
   static const String termsAndCondition = '/termsAndCondition';
 
-
+  static const String address='/address';
   static const String cart = 'cart';
   static const String editProfile = '/editProfile';
   static const String checkout = '/checkout';

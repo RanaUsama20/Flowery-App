@@ -46,11 +46,8 @@
     "Continue": "متابعة",
     "PasswordRequirements": "يجب ألا تكون كلمة المرور فارغة ويجب أن تحتوي على 6 أحرف على الأقل، حرف كبير، ورقم",
     "takeAPhoto": " التقط صوره",
-    "ChooseFromGallery" : "اختار من الصور",
+    "ChooseFromGallery": "اختار من الصور",
     "3": "3"
-
-
-
   },
   "Profile": {
     "Deleting_address": "جاري حذف العنوان...",
@@ -69,8 +66,8 @@
     "ChangePassword": "تغيير كلمة المرور",
     "newPassword": "كلمة المرور الجديدة",
     "currentPassword": "كلمة المرور الحالية",
-    "ResetPassword": "تعديل كلمة المرور"
-  , "Update" : "تحديث"
+    "ResetPassword": "تعديل كلمة المرور",
+    "Update": "تحديث"
   },
   "Home": {
     "Home": "الرئيسية",
@@ -88,13 +85,13 @@
     "PlaceOrder": "تأكيد الطلب",
     "Next": "التالي",
     "SortBy": "فرز حسب",
-    "search":"البحث",
-    "Description" : "وصف",
-    "EGP" : "مصري",
-    "Status" : "الحاله",
-    "InStock" : "في المخزن",
-    "outStock" : "ليس في المخزن",
-    "AllPriceIncludeTax" : "كل الاسعار تشمل ضريبه",
+    "search": "البحث",
+    "Description": "وصف",
+    "EGP": "مصري",
+    "Status": "الحاله",
+    "InStock": "في المخزن",
+    "outStock": "ليس في المخزن",
+    "AllPriceIncludeTax": "كل الاسعار تشمل ضريبه",
     "NoProductsInThiSection": "لا توجد منتجات في هذا القسم",
     "FailedToFetchProducts": "فشل في جلب المنتجات",
     "FailedToFetchCategories": "فشل في جلب الأقسام",
@@ -110,7 +107,8 @@
     "New": "الأحدث",
     "Old": "الأقدم"
   },
-  "Error": {"error": "خطأ",
+  "Error": {
+    "error": "خطأ",
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
     "PasswordCannotBeEmpty": "لا يمكن أن تكون كلمة المرور فارغة.",
     "CodeCannotBeEmpty": "لا يمكن ان يكون الرمز فارغ",
@@ -243,6 +241,7 @@
   "Ok": "موافق",
   "Loading": "جارٍ التحميل...",
   "Retry": "إعادة المحاولة",
+  "address": "العنوان",
   "cancel": "الغاء",
   "search": {
         "enterSearch": "ابحث عن اى شئ...",

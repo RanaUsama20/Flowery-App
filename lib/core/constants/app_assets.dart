@@ -10,7 +10,8 @@ class SvgAssets {
   static const checkSvg = 'assets/svg/check.svg';
   static const checkCircleSvg = 'assets/svg/check_circle.svg';
   static const checklistSvg = 'assets/svg/Checklist.svg';
-  static const defaultMarkerComponentSvg = 'assets/svg/Default marker component.svg';
+  static const defaultMarkerComponentSvg =
+      'assets/svg/Default marker component.svg';
   static const deleteSvg = 'assets/svg/delete.svg';
   static const deliveryBoySvg = 'assets/svg/Delivery Boy.svg';
   static const diamondSvg = 'assets/svg/Diamond.svg';
@@ -57,6 +58,8 @@ class SvgAssets {
   static const pen = 'assets/svg/pen-icon.svg';
   static const order = 'assets/svg/order-icon.svg';
   static const translate = 'assets/svg/translate-icon.svg';
+  static const googleMap = 'assets/svg/google_map.svg';
+  static const marker = 'assets/svg/marker.svg';
   static const blackScheduleSvg = 'assets/svg/black_schedule.svg';
   static const editSvg = 'assets/svg/edit.svg';
 
@@ -68,4 +71,6 @@ class PngAssets {
   static const flowerCard = 'assets/png/flower-card.png';
   static const emptySearch = 'assets/png/empty-search.png';
   static const startSearch = 'assets/png/start-search.png';
+  static const googleMap = 'assets/png/Rectangle.png';
+  static const marker = 'assets/png/marker.png';
 }

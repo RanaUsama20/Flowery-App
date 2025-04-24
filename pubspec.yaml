@@ -60,6 +60,10 @@ dependencies:
   image_picker: ^1.1.2
   permission_handler: ^12.0.0+1
   toastification: ^3.0.2
+  google_maps_flutter: ^2.12.1
+  location: ^6.0.2
+  geocoding: ^3.0.0
+  # geocoder2: ^1.4.0
   url_launcher: ^6.3.1
   webview_flutter: ^4.11.0
   rxdart: ^0.28.0
@@ -96,7 +100,7 @@ flutter:
     - assets/translations/
     - assets/png/
     - assets/svg/
-
+    - assets/city/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

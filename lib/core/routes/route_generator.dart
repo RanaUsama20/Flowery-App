@@ -99,6 +99,12 @@ class RouteGenerator {
           userData: arg as EditProfileRequest,
 
         ));
+        case Routes.address:
+         return MaterialPageRoute(builder: (_)=>AddressScreen());
+        // return MaterialPageRoute(builder: (_) =>
+        //     ProductDetails(
+        //       product: product,
+        //     ));
       case Routes.savedAddress:
         return MaterialPageRoute(builder: (_) => SavedAddress(
 
