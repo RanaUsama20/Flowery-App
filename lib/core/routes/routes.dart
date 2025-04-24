@@ -13,7 +13,7 @@ class Routes {
   static const String changePassword = '/changePassword';
   static const String mainProfile = '/mainProfile';
 
-
+  static const String address='/address';
   static const String cart = 'cart';
   static const String editProfile = '/editProfile';
 

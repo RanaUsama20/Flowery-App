@@ -1,5 +1,5 @@
 name: flowery_app
-description: "A new Flutter project."
+description: 'A new Flutter project.'
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -60,6 +60,10 @@ dependencies:
   image_picker: ^1.1.2
   permission_handler: ^12.0.0+1
   toastification: ^3.0.2
+  google_maps_flutter: ^2.12.1
+  location: ^6.0.2
+  geocoding: ^3.0.0
+  # geocoder2: ^1.4.0
 
 dev_dependencies:
   flutter_test:
@@ -78,7 +82,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -89,7 +92,7 @@ flutter:
     - assets/translations/
     - assets/png/
     - assets/svg/
-    - assets/images/
+    - assets/city/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

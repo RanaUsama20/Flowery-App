@@ -10,7 +10,6 @@ import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_shared_preference.dart';
 import 'core/utils/bloc_observer.dart';
-import 'core/utils/save_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,18 +39,10 @@ class MyApp extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: TextScaler.linear(1.0),
-            ),
-            child: FutureBuilder<bool>(
-              future: isLogin(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final isLoggedIn = snapshot.data ?? false;
-                return MaterialApp(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.linear(1.0),
+              ),
+              child: MaterialApp(
                   debugShowCheckedModeBanner: false,
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,
@@ -59,22 +50,38 @@ class MyApp extends StatelessWidget {
                   theme: AppTheme.lightTheme,
                   title: AppValues.appTitle,
                   onGenerateRoute: RouteGenerator.getRoute,
-                  initialRoute: isLoggedIn?Routes.appSection : Routes.login,
+                  initialRoute: Routes.address
                   // initialRoute:  Routes.login,
-                );
-              }
-            ),
-          );
+                  )
+              // FutureBuilder<bool>(
+              //     future: isLogin(),
+              //     builder: (context, snapshot) {
+              //       if (snapshot.connectionState == ConnectionState.waiting) {
+              //         return const Center(child: CircularProgressIndicator());
+              //       }
+
+              //       final isLoggedIn = snapshot.data ?? false;
+              //       return MaterialApp(
+              //         debugShowCheckedModeBanner: false,
+              //         localizationsDelegates: context.localizationDelegates,
+              //         supportedLocales: context.supportedLocales,
+              //         locale: context.locale,
+              //         theme: AppTheme.lightTheme,
+              //         title: AppValues.appTitle,
+              //         onGenerateRoute: RouteGenerator.getRoute,
+              //         initialRoute: isLoggedIn ? Routes.address : Routes.login,
+              //         // initialRoute:  Routes.login,
+              //       );
+              //     }),
+              );
         },
       ),
     );
   }
 
   Future<bool> isLogin() async {
-
     final token = await SharedPreferencesUtils.getString(AppValues.token);
-    print( "token $token");
+    print("token $token");
     return token != null && token.isNotEmpty;
   }
-
 }

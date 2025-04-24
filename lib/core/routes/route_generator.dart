@@ -1,4 +1,5 @@
 import 'package:flowery_app/core/routes/routes.dart';
+import 'package:flowery_app/features/address/presentation/view/address_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/email_verification_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/register_screen.dart';
 import 'package:flowery_app/features/auth/presentation/view/reset_password_screen.dart';
@@ -18,7 +19,6 @@ import '../../features/auth/presentation/view_model/login/login_cubit.dart';
 import '../../features/auth/presentation/view/forget_password_screen.dart';
 import '../../features/cart/presentation/view_model/cart_cubit.dart';
 import '../../features/categories/presentation/view/categories_screen.dart';
-import '../../features/categories/presentation/view_model/cubit/categories_cubit.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../../features/profile/presentation/view/change_password_screen.dart';
 import '../di/service_locator.dart';
@@ -86,6 +86,8 @@ class RouteGenerator {
           userData: arg as EditProfileRequest,
 
         ));
+        case Routes.address:
+         return MaterialPageRoute(builder: (_)=>AddressScreen());
         // return MaterialPageRoute(builder: (_) =>
         //     ProductDetails(
         //       product: product,

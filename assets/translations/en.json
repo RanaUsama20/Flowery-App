@@ -45,9 +45,8 @@
     "Continue": "Continue",
     "PasswordRequirements": "Password must not be empty and must contain at least 6 characters, an uppercase letter, and a number",
     "takeAPhoto": "Take a Photo",
-    "ChooseFromGallery" : "Choose from gallery",
+    "ChooseFromGallery": "Choose from gallery",
     "3": "3"
-
   },
   "Profile": {
     "Profile": "Profile",
@@ -70,17 +69,17 @@
     "DiscoverSomethingNow": "Discover something now",
     "AddToCart": "Add to cart",
     "BestSellerSubTitle": "Bloom with our exquisite best sellers",
-    "Filter" : "Filter",
-    "CheckOut" : "Checkout",
-    "PlaceOrder" : "Place Order",
-    "Next" : "Next",
-    "SortBy" : "Sort By",
-    "Description" : "Description",
-    "EGP" : "EGP",
-    "Status" : "Status",
-    "InStock" : "In stock",
-    "outStock" : "Out of stock",
-    "AllPriceIncludeTax" : "All price include tax",
+    "Filter": "Filter",
+    "CheckOut": "Checkout",
+    "PlaceOrder": "Place Order",
+    "Next": "Next",
+    "SortBy": "Sort By",
+    "Description": "Description",
+    "EGP": "EGP",
+    "Status": "Status",
+    "InStock": "In stock",
+    "outStock": "Out of stock",
+    "AllPriceIncludeTax": "All price include tax",
     "NoProductsInThiSection": "No products in this section",
     "FailedToFetchProducts": "Failed to fetch products",
     "FailedToFetchCategories": "Failed to fetch categories",
@@ -91,7 +90,6 @@
     "TotalPrice": "Total Price",
     "Items": "Items ",
     "EmptyCart": "Cart is empty"
-
   },
 
   "Error": {
@@ -130,7 +128,6 @@
     "DataParsingException": "There was an issue processing the data. Please try again or contact support if the issue persists.",
     "SoldOut": "Sold out",
     "YouHaveToLoginToUseThisFeature": "You have to login to use this feature"
-
   },
 
   "Messages": {
@@ -152,5 +149,6 @@
   "Ok": "Ok",
   "Loading": "Loading...",
   "Retry": "Retry",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "address": "Address"
 }

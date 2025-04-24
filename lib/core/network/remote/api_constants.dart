@@ -18,4 +18,5 @@ class ApiConstants {
   static const String deleteCart  = "cart/";
   static const String addToCart  = "cart";
   static const String addProductToCart  = "cart";
+  static const String address='addresses';
 }
