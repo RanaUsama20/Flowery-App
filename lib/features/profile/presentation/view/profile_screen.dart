@@ -4,7 +4,6 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/constants/app_fonts_family.dart';
 import 'package:flowery_app/core/constants/app_values.dart';
 import 'package:flowery_app/core/dialogs/app_dialogs.dart';
-import 'package:flowery_app/core/enum/status.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
@@ -83,7 +82,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: _iconSvg(SvgAssets.location2Svg),
                 trailing: _arrowIos(),
                 title: LocaleKeys.profile_SavedAddress.tr(),
-                onTap: () {},
+                onTap: () {
+                  final state = context.read<ProfileMainCubit>().state;
+
+                  if (state.isProfileMainSuccess) {
+                    print("------------------------------");
+                    print(state.profileData.user.addresses,);
+                    Navigator.pushNamed(
+                      context,
+                      Routes.savedAddress,
+                      arguments: state.profileData.user.addresses,
+
+                    ).then((result) {
+                      if (result == 'refresh') {
+                        context.read<ProfileMainCubit>().getProfileData();
+                      }
+                    });
+                  }
+                },
               ),
               SizedBox(height: 16),
               const Divider(),
@@ -120,12 +136,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _itemSection(
                 trailing: _arrowIos(),
                 title: LocaleKeys.profile_AboutUs.tr(),
-                onTap: () {},
+                onTap: () {
+
+                  Navigator.of(context).pushNamed(Routes.aboutApp);
+                },
               ),
               _itemSection(
                 trailing: _arrowIos(),
                 title: LocaleKeys.profile_TermsConditions.tr(),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(Routes.termsAndCondition);
+
+                },
               ),
               SizedBox(height: 16),
               const Divider(),

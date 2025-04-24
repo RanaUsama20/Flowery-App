@@ -50,6 +50,16 @@
 
   },
   "Profile": {
+    "Deleting_address": "Deleting address...",
+    "Failed_to_delete_address" : "Failed to delete address",
+    "Address_deleted_successfully": "Address deleted successfully",
+    "Saved_address":"  Saved address",
+    "Unknown_City": "Unknown City",
+    "Add_new_address" : "Add new address",
+    "Delete_Address": "Delete Address",
+    "already_want_delete": "Are you sure you want to delete this address?",
+    "delete":"delete",
+    "cancel": "cancel",
     "Profile": "Profile",
     "EditProfile": "Edit profile",
     "Change": "Change",
@@ -148,6 +158,50 @@
     "TermsConditions": "Terms & conditions",
     "changeLanguage": "Change language"
   },
+  "about_app": {
+    "about_app_title": "About Flowery App",
+    "about_app": "Flowery is more than just a flower delivery app—it's a celebration of beauty, emotion, and connection. Operated by Flowery Inc., we are dedicated to transforming everyday moments into unforgettable experiences with our exquisite floral arrangements. Whether it's a birthday, wedding, apology, or just because, Flowery makes it easy to send fresh, handcrafted bouquets to loved ones, delivered with care and precision to your doorstep.",
+    "our_story_title": "Our Story",
+    "our_story": "Founded in 2020 in San Francisco, Flowery began with a simple vision: to make the world a brighter place, one flower at a time. Our founders, passionate about nature and design, saw an opportunity to combine technology with the timeless art of floristry. From a small startup, we’ve grown into a trusted name, serving thousands of customers across the United States. Our team of florists, designers, and tech experts work together to ensure every order reflects our commitment to quality and creativity. Today, Flowery is proud to partner with local growers and artisans, supporting sustainable practices and bringing the freshest blooms to your door.",
+    "what_we_offer_title": "What We Offer",
+    "what_we_offer": "Explore a diverse catalog of flowers, from classic roses to exotic orchids, curated for every occasion. Personalize your bouquets with add-ons like elegant vases, heartfelt greeting cards, or premium chocolates. Enjoy flexible delivery options, including same-day delivery in select cities and scheduled deliveries for future dates. Track your order in real-time with updates from our florists to your delivery driver. Access exclusive seasonal collections and limited-edition arrangements designed by our expert florists. Earn rewards with every purchase through our loyalty program, redeemable for discounts on future orders.",
+    "our_commitment_title": "Our Commitment",
+    "our_commitment": "We source our flowers from trusted growers who prioritize sustainability and ethical practices, ensuring every bloom is fresh and vibrant. Our team is dedicated to crafting arrangements that not only look stunning but also convey the emotions you wish to express. Customer satisfaction is at the heart of everything we do. Our support team is available to assist with any questions or concerns, ensuring a seamless experience from order to delivery. We are committed to environmental responsibility, using eco-friendly packaging and supporting initiatives to reduce our carbon footprint.",
+    "get_in_touch_title": "Get in Touch",
+    "get_in_touch": "We love hearing from our customers! Whether you have questions, feedback, or need help with an order, our team is here for you. Email: support@floweryapp.com Phone: (888) 555-1234 Address: Flowery Inc., 123 Bloom Street, San Francisco, CA 94105 Follow us on social media for inspiration, promotions, and updates!",
+    "closing_title": "Thank You",
+    "closing": "At Flowery, we believe flowers have the power to connect people and create lasting memories. Thank you for choosing us to be part of your special moments!"
+  },
+
+  "terms_and_conditions":
+  {"terms_and_conditions":"terms and conditions",
+    "terms_and_conditions_title": "Terms and Conditions for Flowery App",
+    "introduction_title": "Introduction",
+    "introduction_content": "Welcome to Flowery, a mobile application operated by Flowery Inc us By downloading, accessing, or using the Flowery App, you agree to be bound by these Terms and Conditions (\"Terms\"). If you do not agree with these Terms, please do not use the App.",
+    "use_of_app_title": "1. Use of the App",
+    "use_of_app_content": "You must be at least 18 years old or have the consent of a legal guardian to use the Flowery App. You agree to use the App only for lawful purposes and in accordance with these Terms. You are responsible for maintaining the confidentiality of your account information, including your username and password.",
+    "purchases_and_payments_title": "2. Purchases and Payments",
+    "purchases_and_payments_content": "All flower orders placed through the Flowery App are subject to availability and acceptance by us. Prices displayed in the App are in USD and include applicable taxes unless otherwise stated. Delivery fees may apply. Payments are processed through secure third-party payment processors. You agree to provide accurate payment information and authorize us to charge the listed price for your orders. All sales are final, except as provided in our Refund Policy (see Section 4).",
+    "delivery_title": "3. Delivery",
+    "delivery_content": "Delivery times and availability depend on your location and the delivery options selected at checkout. We are not responsible for delays caused by incorrect delivery information provided by you or circumstances beyond our control (e.g., weather, traffic). You must ensure someone is available to receive the delivery at the specified address. We are not liable for damage or loss if flowers are left unattended.",
+    "refunds_and_cancellations_title": "4. Refunds and Cancellations",
+    "refunds_and_cancellations_content": "Orders may be canceled or refunded only if the request is made within 2 hours of placing the order and before preparation has begun. Refunds for defective or incorrect orders may be issued at our discretion. Please contact customer support within 24 hours of delivery with details and photos of the issue. Refunds, if approved, will be processed to the original payment method within 5-7 business days.",
+    "intellectual_property_title": "5. Intellectual Property",
+    "intellectual_property_content": "All content in the Flowery App, including text, images, logos, and designs, is owned by or licensed to Flowery Inc. and is protected by copyright and trademark laws. You may not reproduce, distribute, or modify any content from the App without our prior written consent.",
+    "user_content_title": "6. User Content",
+    "user_content_content": "You may submit reviews, comments, or photos through the App (\"User Content\"). By submitting User Content, you grant us a non-exclusive, royalty-free, worldwide license to use, display, and reproduce it in connection with the App. You are responsible for ensuring your User Content does not violate any laws or infringe on third-party rights.",
+    "limitation_of_liability_title": "7. Limitation of Liability",
+    "limitation_of_liability_content": "Flowery Inc. will not be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues, arising out of or in connection with the use or inability to use the App. Our total liability for any claims, damages, or losses will be limited to the amount you paid for the purchase of flowers or services in the past 30 days, whichever is less.",
+    "governing_law_title": "8. Governing Law",
+    "governing_law_content": "These Terms shall be governed by and construed in accordance with the laws of the state of California, USA, without regard to its conflict of law principles. Any disputes arising under these Terms will be subject to the exclusive jurisdiction of the courts located in San Francisco, California.",
+    "contact_us_title": "Contact Us",
+    "contact_us_content": "If you have any questions or concerns regarding these Terms and Conditions, please contact us at support@floweryapp.com or call (888) 555-1234. We are happy to assist you.",
+    "closing_title": "Thank You",
+    "closing_content": "Thank you for using the Flowery App. We appreciate your trust and strive to provide you with an exceptional experience each time you place an order with us."
+  },
+
+
+
 
   "Ok": "Ok",
   "Loading": "Loading...",

@@ -10,8 +10,11 @@ import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_shared_preference.dart';
 import 'core/utils/bloc_observer.dart';
+import 'features/cart/presentation/view_model/cart_cubit.dart';
+import 'features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 
 void main() async {
+  //debugPrintRebuildDirtyWidgets = true;
   WidgetsFlutterBinding.ensureInitialized();
   await Future.wait([
     configureDependencies(),
@@ -28,13 +31,48 @@ void main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool? _isLoggedIn;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkLogin();
+  }
+
+  Future<void> _checkLogin() async {
+    final token = await SharedPreferencesUtils.getString(AppValues.token);
+    setState(() {
+      _isLoggedIn = token != null && token.isNotEmpty;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider<AppCubit>(
-      create: (context) => serviceLocator<AppCubit>(),
+    if (_isLoggedIn == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ProfileMainCubit>(
+          create: (_) => serviceLocator<ProfileMainCubit>()..getProfileData(),
+        ),
+        BlocProvider<AppCubit>(
+          create: (_) => serviceLocator<AppCubit>(),
+        ),
+        BlocProvider(
+        create: (context) => serviceLocator<CartCubit>(),
+        ),
+
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,
@@ -43,36 +81,10 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         title: AppValues.appTitle,
         onGenerateRoute: RouteGenerator.getRoute,
-      // initialRoute: isLoggedIn ? Routes.appSection : Routes.login,
-       initialRoute: Routes.appSection,
-
+        initialRoute: _isLoggedIn! ? Routes.appSection : Routes.login,
       ),
-
-      // LayoutBuilder(
-      //   builder: (context, constraints) {
-      //     return MediaQuery(
-      //       data: MediaQuery.of(context).copyWith(
-      //         textScaler: TextScaler.linear(1.0),
-      //       ),
-      //       child: FutureBuilder<bool>(
-      //           future: isLogin(),
-      //           builder: (context, snapshot) {
-      //             if (snapshot.connectionState == ConnectionState.waiting) {
-      //               return const Center(child: CircularProgressIndicator());
-      //             }
-
-      //             final isLoggedIn = snapshot.data ?? false;
-      //             return ;
-      //           }),
-      //     );
-      //   },
-      // ),
     );
   }
 
-  Future<bool> isLogin() async {
-    final token = await SharedPreferencesUtils.getString(AppValues.token);
-    print("token $token");
-    return token != null && token.isNotEmpty;
-  }
+
 }

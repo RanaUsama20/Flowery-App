@@ -7,9 +7,12 @@ import 'package:flowery_app/features/product_details/presentation/pages/product_
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/Terms_and_condition_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/apout_app_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:flowery_app/features/search/presentation/view/main_search_screen.dart';
 import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';
+import 'package:flowery_app/features/profile/presentation/view/saved_adreess.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/app_section/app_section.dart';
@@ -79,11 +82,22 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
-        return MaterialPageRoute(
-            builder: (_) => ProductDetails(
-                  product: product,
-                ));
+        return MaterialPageRoute(builder: (_) =>  ProductDetails(
+          product: product,
+        ));
       case Routes.editProfile:
+        return MaterialPageRoute(builder: (_) =>  EditProfileScreen(
+          userData: arg as EditProfileRequest,
+
+        ));
+      case Routes.savedAddress:
+        return MaterialPageRoute(builder: (_) => SavedAddress(
+
+        ));
+      case Routes.aboutApp:
+        return MaterialPageRoute(builder: (_) =>  AboutAppScreen());
+      case Routes.termsAndCondition:
+        return MaterialPageRoute(builder: (_) => const TermsAndConditionScreen());
         return MaterialPageRoute(
             builder: (_) => EditProfileScreen(
                   userData: arg as EditProfileRequest,
