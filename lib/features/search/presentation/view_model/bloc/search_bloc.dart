@@ -4,7 +4,7 @@ import 'package:flowery_app/core/enum/search_type.dart';
 import 'package:flowery_app/core/enum/status.dart';
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
-import 'package:flowery_app/features/search/data/local_database/last_search_model.dart';
+import 'package:flowery_app/features/search/data/model/last_search_model.dart';
 import 'package:flowery_app/features/search/data/local_database/search_last_shared_pref.dart';
 import 'package:flowery_app/features/search/domain/usecase/search_query_use_case.dart';
 import 'package:flutter/foundation.dart';
