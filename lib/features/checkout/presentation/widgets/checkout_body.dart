@@ -4,13 +4,11 @@ import 'package:flowery_app/features/checkout/presentation/widgets/payment_metho
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:toastification/toastification.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/base_state/base_state.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/network/common/api_result.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../../cart/domain/entity/cart_data_entity.dart';
 import '../../../categories/presentation/view/stripe_payment.dart';
 import '../../domain/entity/response/cash_payment/cash_payment_response_entity.dart';
 import '../../domain/entity/response/credit_card_payment/checkout_session_entity.dart';
@@ -88,12 +86,7 @@ class _CheckoutBodyState extends State<CheckoutBody> with WidgetsBindingObserver
               Navigator.of(context).pushNamed(Routes.appSection);
             }
             if (result is SuccessResult<CheckoutSessionEntity?>) {
-              AppToast.showToast(
-                context: context,
-                title: LocaleKeys.checkout_title_credit_payment_success.tr(),
-                description: LocaleKeys.checkout_description_credit_payment_success.tr(),
-                type: ToastificationType.success,
-              );
+
               openStripeCheckout(result.data!.session.url, context);
             }
             // if(result is SuccessResult<CartModelEntity?>){

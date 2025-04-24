@@ -184,8 +184,8 @@
     "Place_order": "Place order",
     "title_cash_payment_success": "We’ve received your order.",
     "description_cash_payment_success": "Sit tight—our team is packing it with care and will send you a tracking link soon! ",
-    "title_credit_payment_success": "Redirecting...",
-    "description_credit_payment_success": "Hang tight! We’re taking you to the secure payment page.",
+    "title_credit_payment_success": "Payment is successful",
+    "description_credit_payment_success": "We’ve received your order. Sit tight—our team is packing it with care and will send you a tracking link soon!",
     "title_cash_payment_fail": " Oops! We couldn’t place your order right now. ",
     "description_cash_payment_fail": "Please try again in a moment or contact support if the problem persists. "
   },
