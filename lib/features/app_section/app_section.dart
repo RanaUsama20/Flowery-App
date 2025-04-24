@@ -1,15 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
-import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/home_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
-import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../cart/presentation/view/cart_screen.dart';
 
@@ -21,25 +18,49 @@ class AppSection extends StatefulWidget {
 }
 
 class _AppSectionState extends State<AppSection> {
+  int _currentIndex = 0;
   final List<Widget> _pages = [
     const HomeScreen(),
     const CategoriesScreen(),
-    const CartScreen(),
-    BlocProvider<ProfileMainCubit>(
-      create: (context) => serviceLocator<ProfileMainCubit>()..getProfileData(),
-      child: const ProfileScreen(),
-    ),
+    const ProfileScreen(),
   ];
-  int _currentIndex = 0;
+
+  Key _cartKey = UniqueKey(); // Unique key to force rebuild
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: _pages[_currentIndex]),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // The main content area (indexed stack to manage the different tabs)
+            Expanded(
+              child: IndexedStack(
+                index: _currentIndex,
+                children: [
+                  _pages[0],  // Home screen
+                  _pages[1],  // Categories screen
+                  CartScreen(key: _cartKey), // Cart screen (use dynamic key here)
+                  _pages[3],  // Profile screen
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      // Bottom navigation bar remains fixed at the bottom
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         onTap: (selectedIndex) {
-          _currentIndex = selectedIndex;
-          setState(() {});
+          setState(() {
+            _currentIndex = selectedIndex;
+
+            // Regenerate cart key on cart tab tap to force rebuild
+            if (_currentIndex == 2) {
+              _cartKey = UniqueKey();
+            }
+          });
         },
         items: [
           BottomNavigationBarItem(
@@ -67,6 +88,7 @@ class _AppSectionState extends State<AppSection> {
     );
   }
 
+  // Icon for inactive state
   Widget _iconBar(String image) {
     return SvgPicture.asset(
       image,
@@ -75,6 +97,7 @@ class _AppSectionState extends State<AppSection> {
     );
   }
 
+  // Icon for active state
   Widget _activeIconBar(String image) {
     return SvgPicture.asset(
       image,
