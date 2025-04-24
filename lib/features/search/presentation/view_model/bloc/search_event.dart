@@ -19,7 +19,3 @@ class SearchQueryChanged extends SearchEvent {
 class FetchLatestSearches extends SearchEvent {
   const FetchLatestSearches();
 }
-
-class PerformSearch extends SearchEvent {
-  const PerformSearch();
-}

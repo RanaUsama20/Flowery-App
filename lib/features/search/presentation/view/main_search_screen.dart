@@ -5,8 +5,6 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/dialogs/app_dialogs.dart';
 import 'package:flowery_app/core/dialogs/loading_widget.dart';
 import 'package:flowery_app/core/enum/search_type.dart';
-import 'package:flowery_app/core/enum/status.dart';
-import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';
 import 'package:flowery_app/features/search/presentation/widget/item_latest_searche.dart';
 import 'package:flowery_app/features/search/presentation/widget/results_searches.dart';
@@ -54,7 +52,13 @@ class _SearchScreenState extends State<SearchScreen> {
             case SearchType.result:
               return ResultsSearches(products: state.products);
             case SearchType.onClick:
-              return ItemLatestSearch();
+              return ItemLatestSearch(
+                callBackClickLastSearch: (query) {
+                  FocusScope.of(context).unfocus();
+                  controller.text = query;
+                  context.read<SearchBloc>().add(SearchQueryChanged(query));
+                },
+              );
           }
         },
       ),
@@ -66,9 +70,9 @@ class _SearchScreenState extends State<SearchScreen> {
     context.read<SearchBloc>().state;
     return TextField(
       onChanged: (val) {
-        // print("[UI] onChanged: '$val'");
-        if (val.trim().isEmpty) {
-          // print("[UI] Dispatch FetchLatestSearches");
+        print("[UI] val: $val");
+        print("[UI] controller.text: ${controller.text}");
+        if (val.trim().isEmpty && controller.text.isEmpty) {
           context.read<SearchBloc>().add(const FetchLatestSearches());
         } else {
           // print("[UI] Dispatch SearchQueryChanged");

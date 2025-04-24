@@ -12,7 +12,7 @@ extension OccasionsCubitX on SearchState {
 
 class SearchState extends Equatable {
   final SearchType searchType;
-  final List<Item> listLatestSearches;
+  final List<SearchQuery> listLatestSearches;
   final Status stateLatestSearches;
   final List<ProductItemEntity> products;
   final Status stateSearchResults;
@@ -29,7 +29,7 @@ class SearchState extends Equatable {
 
   SearchState copyWith({
     SearchType? searchType,
-    List<Item>? listLatestSearches,
+    List<SearchQuery>? listLatestSearches,
     Status? stateLatestSearches,
     List<ProductItemEntity>? products,
     Status? stateSearchResults,

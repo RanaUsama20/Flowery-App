@@ -4,8 +4,10 @@ import 'package:flowery_app/core/enum/search_type.dart';
 import 'package:flowery_app/core/enum/status.dart';
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
+import 'package:flowery_app/features/search/data/local_database/last_search_model.dart';
+import 'package:flowery_app/features/search/data/local_database/search_last_shared_pref.dart';
 import 'package:flowery_app/features/search/domain/usecase/search_query_use_case.dart';
-import 'package:flowery_app/features/search/presentation/view_model/search_cubit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -32,6 +34,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         final result = await useCase.call(event.query);
         switch (result) {
           case SuccessResult<List<ProductItemEntity>>():
+            result.data.isNotEmpty
+                ? await SearchLastSharedPref.addQuery(
+                    SearchQuery(
+                      id: UniqueKey().toString(),
+                      title: event.query,
+                      dateTime: DateTime.now(),
+                    ),
+                  )
+                : null;
             emit(state.copyWith(
               products: result.data,
               stateSearchResults: Status.success,
@@ -50,24 +61,16 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     on<FetchLatestSearches>(
       (event, emit) async {
-        print("[Bloc] FetchLatestSearches");
         emit(state.copyWith(
           searchType: SearchType.onClick,
           stateLatestSearches: Status.loading,
         ));
-
-        // emit(state.copyWith(
-        //   searchType: SearchType.onClick,
-        //   stateLatestSearches: Status.success,
-        //   listLatestSearches: itemsLastSearches,
-        // ));
-      },
-      //   transformer: restartable(),
-    );
-
-    on<PerformSearch>(
-      (event, emit) async {
-        emit(state.copyWith(searchType: SearchType.result));
+        List<SearchQuery> itemsLastSearches = await SearchLastSharedPref.getAllQueries();
+        emit(state.copyWith(
+          searchType: SearchType.onClick,
+          stateLatestSearches: Status.success,
+          listLatestSearches: itemsLastSearches,
+        ));
       },
     );
   }
