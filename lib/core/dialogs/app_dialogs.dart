@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
-import 'package:flowery_app/core/dialogs/loading_widget.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 

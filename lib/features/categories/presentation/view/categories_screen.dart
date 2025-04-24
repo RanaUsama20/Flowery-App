@@ -16,6 +16,7 @@ import '../../../product_details/presentation/models/product_details_model.dart'
 import '../../domain/entity/get_all_categories_entity.dart';
 import '../../domain/entity/get_products_by_id_entity.dart';
 import '../view_model/cubit/categories_cubit.dart';
+import '../widgets/bottom_sheet.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key});
@@ -67,7 +68,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             } else if (state is SuccessState) {
               return buildBody(state.allCategories ?? [], state.products ?? []);
             } else if (state is CategoriesError) {
-              return Center(child: Text(LocaleKeys.Error.tr()));
+              return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Text(LocaleKeys.Error_Service_unavailable.tr(),
+
+                        style: Theme.of(context).textTheme.headlineLarge),
+                  ));
             }
             return const Center(child: CircularProgressIndicator());
           },
@@ -86,8 +93,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
                   child: Row(
                     children: [
                       Expanded(
@@ -101,8 +107,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onTapOutside: (_) =>
-                              FocusManager.instance.primaryFocus?.unfocus(),
+                          onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
                         ),
                       ),
                       const SizedBox(width: 8),
@@ -135,22 +140,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           setState(() {
                             selectedIndex = index;
                           });
-                          categories
-                              .getProductsById(allCategories[index].id ?? "");
+                          categories.getProductsById(allCategories[index].id ?? "");
                         },
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 12.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 allCategories[index].name ?? '',
-                                style: AppTheme.lightTheme.textTheme.titleSmall
-                                    ?.copyWith(
-                                  color: isSelected
-                                      ? AppColors.pink
-                                      : AppColors.gray,
+                                style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(
+                                  color: isSelected ? AppColors.pink : AppColors.gray,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
@@ -158,9 +158,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               Container(
                                 height: 2,
                                 width: 40,
-                                color: isSelected
-                                    ? AppColors.pink
-                                    : AppColors.gray,
+                                color: isSelected ? AppColors.pink : AppColors.gray,
                               ),
                             ],
                           ),
@@ -172,105 +170,86 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 Expanded(
                   child: products.isEmpty
                       ? Center(
-                          child: Text(
-                            LocaleKeys.Home_NoProductsInThiSection.tr(),
-                            style: AppTheme.lightTheme.textTheme.titleSmall,
-                          ),
-                        )
+                    child: Text(
+                      LocaleKeys.Home_NoProductsInThiSection.tr(),
+                      style: AppTheme.lightTheme.textTheme.titleSmall,
+                    ),
+                  )
                       : GridView.builder(
-                          controller: _scrollController,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisExtent: 260,
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                          ),
-                          itemCount: products.length,
-                          itemBuilder: (context, index) {
-                            final mappedProduct = ProductDetailsModel(
-                              id: products[index].id.toString(),
-                              price: products[index].price!.toInt(),
-                              description: products[index].description!,
-                              name: products[index].title!,
-                              images: products[index].images!,
-                              inStock: products[index].quantity != null
-                                  ? true
-                                  : false,
-                            );
-                            return InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                      context, Routes.productDetails,
-                                      arguments: mappedProduct);
+                    controller: _scrollController,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisExtent: 260,
+                      crossAxisSpacing: 12,
+                      mainAxisSpacing: 12,
+                    ),
+                    itemCount: products.length,
+                    itemBuilder: (context, index) {
+                      final mappedProduct = ProductDetailsModel(
+                        id: products[index].id.toString(),
+                        price: products[index].price!.toInt(),
+                        description: products[index].description!,
+                        name: products[index].title!,
+                        images: products[index].images!,
+                        inStock: products[index].quantity != null ? true : false,
+                      );
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.productDetails,
+                              arguments: mappedProduct);
+                        },
+                        child: BlocProvider(
+                          create: (context) => serviceLocator<CartCubit>(),
+                          child: BlocConsumer<CartCubit, CartState>(
+                            builder: (context, state) {
+                              final cartCubit = context.read<CartCubit>();
+                              return ProductCard.createProductCard(
+                                products[index].imgCover.toString(),
+                                products[index].title.toString(),
+                                products[index].priceAfterDiscount?.toInt() ?? 0,
+                                products[index].price?.toInt() ?? 0,
+                                products[index].discount?.toInt() ?? 0,
+                                onAddToCart: () {
+                                  if (_appCubit.getStateUser == StateUser.guest) {
+                                    AppDialogs.showLoginDialog(
+                                      context,
+                                      message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr(),
+                                    );
+                                  } else {
+                                    cartCubit.addProductToCart(products[index].id.toString(), 1);
+                                  }
                                 },
-                                child: BlocProvider(
-                                    create: (context) =>
-                                        serviceLocator<CartCubit>(),
-                                    child: BlocConsumer<CartCubit, CartState>(
-                                      builder: (context, state) {
-                                        final cartCubit =
-                                            context.read<CartCubit>();
-                                        return ProductCard.createProductCard(
-                                          products[index].imgCover.toString(),
-                                          products[index].title.toString(),
-                                          products[index]
-                                                  .priceAfterDiscount
-                                                  ?.toInt() ??
-                                              0,
-                                          products[index].price?.toInt() ?? 0,
-                                          products[index].discount?.toInt() ??
-                                              0,
-                                          onAddToCart: () {
-                                            if (_appCubit.getStateUser ==
-                                                StateUser.guest) {
-                                              AppDialogs.showLoginDialog(
-                                                  context,
-                                                  message: LocaleKeys
-                                                          .Error_YouHaveToLoginToUseThisFeature
-                                                      .tr());
-                                            } else {
-                                              cartCubit.addProductToCart(
-                                                  products[index].id.toString(),
-                                                  1);
-                                            }
-                                          },
-                                          productId:
-                                              products[index].id.toString(),
-                                        );
-                                      },
-                                      listener: (BuildContext context,
-                                          CartState state) {
-                                        if (state is CartSuccessState) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              backgroundColor: AppColors.green,
-                                              content: Text(
-                                                state.productCart.message
-                                                    .toString(),
-                                                style: AppTheme.lightTheme
-                                                    .textTheme.labelSmall,
-                                              ),
-                                            ),
-                                          );
-                                        } else if (state is CartErrorState) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              backgroundColor: AppColors.red,
-                                              content: Text(
-                                                LocaleKeys.Error_SoldOut.tr(),
-                                                style: AppTheme.lightTheme
-                                                    .textTheme.labelSmall,
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    )));
-                          },
+                                productId: products[index].id.toString(),
+                              );
+                            },
+                            listener: (BuildContext context, CartState state) {
+                              if (state is CartSuccessState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: AppColors.green,
+                                    content: Text(
+                                      state.productCart.message.toString(),
+                                      style: AppTheme.lightTheme.textTheme.labelSmall,
+                                    ),
+                                  ),
+                                );
+                              } else if (state is CartErrorState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    backgroundColor: AppColors.red,
+                                    content: Text(
+                                      LocaleKeys.Error_SoldOut.tr(),
+                                      style: AppTheme.lightTheme.textTheme.labelSmall,
+                                    ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                         ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -286,8 +265,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   duration: const Duration(milliseconds: 300),
                   opacity: _showFilterButton ? 1.0 : 0.0,
                   child: ElevatedButton.icon(
-                    style:
-                        AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                    style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
                       fixedSize: MaterialStatePropertyAll(const Size(120, 50)),
                       shape: MaterialStatePropertyAll(
                         RoundedRectangleBorder(
@@ -297,7 +275,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       padding: MaterialStatePropertyAll(EdgeInsets.all(6)),
                     ),
                     onPressed: () {
-                      // Filter action
+                      showFilterSheet(context, categories);
                     },
                     icon: const Icon(Icons.tune, color: AppColors.white),
                     label: Text(LocaleKeys.Home_Filter.tr(),
@@ -311,4 +289,5 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
     );
   }
+
 }

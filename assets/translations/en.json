@@ -90,7 +90,11 @@
     "Discount": "Discount",
     "TotalPrice": "Total Price",
     "Items": "Items ",
-    "EmptyCart": "Cart is empty"
+    "EmptyCart": "Cart is empty",
+    "LowestPrice": "Lowest Price",
+    "HighestPrice": "Highest Price",
+    "New": "New",
+    "Old": "Old"
 
   },
 

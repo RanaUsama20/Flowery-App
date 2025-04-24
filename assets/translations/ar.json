@@ -94,7 +94,11 @@
     "Discount": "الخصم",
     "TotalPrice": "السعر الإجمالي",
     "Items": "عناصر ",
-    "EmptyCart": "السلة فارغة"
+    "EmptyCart": "السلة فارغة",
+    "LowestPrice": "الأقل سعرًا",
+    "HighestPrice": "الأعلى سعرًا",
+    "New": "الأحدث",
+    "Old": "الأقدم"
   },
   "Error": {"error": "خطأ",
     "EmailAlreadyExists": "هذا البريد الإلكتروني موجود بالفعل.",
