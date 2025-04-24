@@ -18,14 +18,14 @@ class AppSection extends StatefulWidget {
 }
 
 class _AppSectionState extends State<AppSection> {
+  int _currentIndex = 0;
   final List<Widget> _pages = [
     const HomeScreen(),
     const CategoriesScreen(),
-    const CartScreen(), // Keep CartScreen as it is
     const ProfileScreen(),
   ];
 
-  int _currentIndex = 0;
+  Key _cartKey = UniqueKey(); // Unique key to force rebuild
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,12 @@ class _AppSectionState extends State<AppSection> {
       body: SafeArea(
         child: IndexedStack(
           index: _currentIndex,
-          children: _pages,
+          children: [
+            _pages[0],
+            _pages[1],
+            CartScreen(key: _cartKey), // 👈 Use dynamic key here
+            _pages[2],
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -42,9 +47,9 @@ class _AppSectionState extends State<AppSection> {
           setState(() {
             _currentIndex = selectedIndex;
 
-            // Force rebuild CartScreen when selected tab is "Cart"
+            // 👇 Regenerate cart key on cart tab tap
             if (_currentIndex == 2) {
-              _pages[2] = const CartScreen(key: ValueKey('cartScreen')); // Unique key for CartScreen
+              _cartKey = UniqueKey();
             }
           });
         },
@@ -73,6 +78,7 @@ class _AppSectionState extends State<AppSection> {
       ),
     );
   }
+
 
   Widget _iconBar(String image) {
     return SvgPicture.asset(
