@@ -11,6 +11,7 @@ import '../../../../core/network/common/api_result.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../cart/domain/entity/cart_data_entity.dart';
+import '../../../categories/presentation/view/stripe_payment.dart';
 import '../../domain/entity/response/cash_payment/cash_payment_response_entity.dart';
 import '../../domain/entity/response/credit_card_payment/checkout_session_entity.dart';
 import '../view_model/cubit/checkout_cubit.dart';
@@ -95,15 +96,15 @@ class _CheckoutBodyState extends State<CheckoutBody> with WidgetsBindingObserver
               );
               openStripeCheckout(result.data!.session.url, context);
             }
-            if(result is SuccessResult<CartModelEntity?>){
-              AppToast.showToast(
-                context: context,
-                title: 'LocaleKeys.checkout_title_credit_payment_success.tr()',
-                description: 'LocaleKeys.checkout_description_credit_payment_success.tr()',
-                type: ToastificationType.success,
-              );
-
-            }
+            // if(result is SuccessResult<CartModelEntity?>){
+            //   AppToast.showToast(
+            //     context: context,
+            //     title: 'LocaleKeys.checkout_title_credit_payment_success.tr()',
+            //     description: 'LocaleKeys.checkout_description_credit_payment_success.tr()',
+            //     type: ToastificationType.success,
+            //   );
+            //
+            // }
           }
           if (paymentState is BaseErrorState) {
             AppToast.showToast(
@@ -149,19 +150,25 @@ class _CheckoutBodyState extends State<CheckoutBody> with WidgetsBindingObserver
     );
   }
 }
-
 Future<void> openStripeCheckout(String url, BuildContext context) async {
-  final Uri uri = Uri.parse(url);
+  final success = await Navigator.of(context).push<bool>(
+    MaterialPageRoute(
+      builder: (context) => StripeCheckoutScreen(
+        checkoutUrl: url,
+        successUrl: "http://localhost:3000/allOrders",
+        cancelUrl: "http://localhost:3000/cart",
+      ),
+    ),
+  );
 
-  if (await canLaunchUrl(uri)) {
-    await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    ).then((_) {
-      final cubit = BlocProvider.of<CheckoutCubit>(context);
-      cubit.getCartProducts();
-      Navigator.of(context).pop();
-    });
+  if (success == true) {
+    AppToast.showToast(
+      context: context,
+      title: LocaleKeys.checkout_title_credit_payment_success.tr(),
+      description: LocaleKeys.checkout_description_credit_payment_success.tr(),
+      type: ToastificationType.success,
+    );
+    Navigator.of(context).pushNamed(Routes.appSection);
   } else {
     AppToast.showToast(
       context: context,
@@ -171,3 +178,24 @@ Future<void> openStripeCheckout(String url, BuildContext context) async {
     );
   }
 }
+// Future<void> openStripeCheckout(String url, BuildContext context) async {
+//   final Uri uri = Uri.parse(url);
+//
+//   if (await canLaunchUrl(uri)) {
+//     await launchUrl(
+//       uri,
+//       mode: LaunchMode.externalApplication,
+//     ).then((_) {
+//       final cubit = BlocProvider.of<CheckoutCubit>(context);
+//       cubit.getCartProducts();
+//       Navigator.of(context).pop();
+//     });
+//   } else {
+//     AppToast.showToast(
+//       context: context,
+//       title: LocaleKeys.checkout_title_cash_payment_fail.tr(),
+//       description: LocaleKeys.checkout_description_cash_payment_fail.tr(),
+//       type: ToastificationType.error,
+//     );
+//   }
+// }
