@@ -49,13 +49,23 @@ class _AddressScreenState extends State<AddressScreen> {
     }
     return Scaffold(
         appBar: AppBar(
-          title: InkWell(
-              onTap: ()=> Navigator.pop(context,'refresh2')
-              ,
-              child: Text(  LocaleKeys.address.tr())),
+          title: Text(LocaleKeys.address.tr()),
         ),
-        body: BlocBuilder<AddressCubit, AddressState>(
+        body: BlocConsumer<AddressCubit, AddressState>(
           bloc: _addressCubit,
+          listener: (context, state) {
+            print(state.saveUserAddress);
+            if (state.saveUserAddress is BaseLoadingState) {
+              print('Hellloooooooooooooooooooo');
+              AppDialogs.showLoadingDialog(context);
+            } else if (state.saveUserAddress is BaseErrorState) {
+              Navigator.of(context).pop();
+              final result = state.saveUserAddress as BaseErrorState;
+              AppDialogs.showFailureDialog(context, message: result.toString());
+            } else if (state.saveUserAddress is BaseSuccessState) {
+              // Navigator.pop(context, 'refresh2');
+            }
+          },
           builder: (context, state) {
             if (state.loadFiel is BaseLoadingState) {
               return Center(
@@ -198,46 +208,45 @@ class _AddressScreenState extends State<AddressScreen> {
                       SizedBox(height: 100),
                       SizedBox(
                         width: double.infinity,
-                        child: BlocListener<AddressCubit, AddressState>(
-                          bloc: _addressCubit,
-                          listener: (context, state) {
-                            if (state.saveUserAddress is BaseLoadingState) {
-                              AppDialogs.showLoadingDialog(context);
-                            } else if (state.saveUserAddress
-                                is BaseErrorState) {
-                              Navigator.of(context).pop();
-                              final result =
-                                  state.saveUserAddress as BaseErrorState;
-                              AppDialogs.showFailureDialog(context,
-                                  message: result.toString());
-                            } else if (state.saveUserAddress
-                                is BaseSuccessState) {
-                              Navigator.of(context).pop();
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (!_formKey.currentState!.validate()) {
+                              return;
                             }
+
+                            if (widget.addressEntity?.id != null) {
+                              _addressCubit.editAddress(
+                                  widget.addressEntity!.id!,
+                                  AddressRequestModel(
+                                    street:
+                                        _addressCubit.addressController.text,
+                                    phone: _addressCubit.phoneController.text,
+                                    city: cityName!,
+                                    lat: _addressCubit.latLng!.latitude
+                                        .toString(),
+                                    long: _addressCubit.latLng!.longitude
+                                        .toString(),
+                                    userName:
+                                        _addressCubit.receptController.text,
+                                  ));
+                              return;
+                            }
+
+                            _addressCubit.saveAddress(AddressRequestModel(
+                                street: _addressCubit.addressController.text,
+                                phone: _addressCubit.phoneController.text,
+                                city: cityName!,
+                                lat: _addressCubit.latLng!.latitude.toString(),
+                                long:
+                                    _addressCubit.latLng!.longitude.toString(),
+                                userName: _addressCubit.receptController.text));
+                            print('ssssswwweeeeeeeeeeeeeee');
+                            print(state.saveUserAddress);
                           },
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
-                              }
-                              
-                              
-                              _addressCubit.saveAddress(AddressRequestModel(
-                                  street: _addressCubit.addressController.text,
-                                  phone: _addressCubit.phoneController.text,
-                                  city: cityName!,
-                                  lat:
-                                      _addressCubit.latLng!.latitude.toString(),
-                                  long: _addressCubit.latLng!.longitude
-                                      .toString(),
-                                  userName:
-                                      _addressCubit.receptController.text));
-                            },
-                            style: ButtonStyle(
-                                padding: WidgetStatePropertyAll(
-                                    EdgeInsets.symmetric(vertical: 15))),
-                            child: Text('Save address'),
-                          ),
+                          style: ButtonStyle(
+                              padding: WidgetStatePropertyAll(
+                                  EdgeInsets.symmetric(vertical: 15))),
+                          child: Text('Save address'),
                         ),
                       )
                     ],

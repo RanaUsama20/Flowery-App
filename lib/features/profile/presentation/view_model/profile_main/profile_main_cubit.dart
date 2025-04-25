@@ -25,6 +25,7 @@ class ProfileMainCubit extends Cubit<ProfileMainState> {
     final result = await _getProfileDataUseCase.call();
     switch (result) {
       case SuccessResult<ProfileDataEntity>():
+      // state.profileData.user.addresses.clear();
         emit(state.copyWith(
           profileMainStatus: Status.success,
           profileData: result.data,

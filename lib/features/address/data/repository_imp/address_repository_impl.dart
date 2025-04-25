@@ -5,27 +5,28 @@ import 'package:flowery_app/features/address/data/model/address_request_model.da
 import 'package:flowery_app/features/address/domain/respository/address_repository.dart';
 import 'package:injectable/injectable.dart';
 
-@Injectable(  as: AddressRepository)
+@Injectable(as: AddressRepository)
 class HomeRepositoryImpl extends AddressRepository {
- final  ApiManager _apiManager;
- final  AddressRemoteDataSource _addressRemoteDataSource;
-HomeRepositoryImpl(this._apiManager,this._addressRemoteDataSource);
+  final ApiManager _apiManager;
+  final AddressRemoteDataSource _addressRemoteDataSource;
+  HomeRepositoryImpl(this._apiManager, this._addressRemoteDataSource);
 
   @override
-  Future<Result<String>> saveAddress(AddressRequestModel addressRequest) async{
-     final result=await  _apiManager.execute<String>(() async {
-       return  _addressRemoteDataSource.saveAddress(addressRequest);
-     });
+  Future<Result<String>> saveAddress(AddressRequestModel addressRequest) async {
+    final result = await _apiManager.execute<String>(() async {
+      return _addressRemoteDataSource.saveAddress(addressRequest);
+    });
 
-     return result; 
-    
+    return result;
   }
-  
+
   @override
-  Future<Result<String>> editAddress(String id, AddressRequestModel addressRequest)async {
-   final result=await  _apiManager.execute<String>(() async {
-       return  _addressRemoteDataSource.editAddress(id,addressRequest);
-     });
-     return result; 
+  Future<Result<String>> editAddress(
+      String id, AddressRequestModel addressRequest) async {
+    
+    final result = await _apiManager.execute<String>(() async {
+      return _addressRemoteDataSource.editAddress(id, addressRequest);
+    });
+    return result;
   }
 }

@@ -1,3 +1,4 @@
+import 'package:flowery_app/features/address/presentation/view/address_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -40,7 +41,6 @@ class AddressCard extends StatelessWidget {
                     address.city!,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
-
                 ],
               ),
             ),
@@ -49,26 +49,27 @@ class AddressCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SvgPicture.asset(SvgAssets.editSvg),
+                  InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (_) => AddressScreen(addressEntity: address,)));
+                      },
+                      child: SvgPicture.asset(SvgAssets.editSvg)),
                 ],
               ),
             ),
-                Padding(
-                  padding:
-                  const EdgeInsets.only(left: 24, right: 32, bottom: 16),
-                  child: Text(
-                    '${address.lat!.length >= 5 ? address.lat?.substring(0, 5) :address.lat}+${address.long!.length >= 5 ? address.long?.substring(0, 5) :address.long}',
-                    style: Theme.of(context).textTheme.bodySmall,
-                      maxLines:1,
-                      overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-
-
+            Padding(
+              padding: const EdgeInsets.only(left: 24, right: 32, bottom: 16),
+              child: Text(
+                '${address.lat!.length >= 5 ? address.lat?.substring(0, 5) : address.lat}+${address.long!.length >= 5 ? address.long?.substring(0, 5) : address.long}',
+                style: Theme.of(context).textTheme.bodySmall,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
       ),
     );
-
   }
 }

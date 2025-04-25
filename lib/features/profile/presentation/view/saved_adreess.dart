@@ -22,7 +22,9 @@ class _SavedAddressState extends State<SavedAddress> {
   @override
   void initState() {
     super.initState();
+
     cubit = context.read<ProfileMainCubit>();
+    // cubit.getProfileData()
   }
 
   Future<void> deleteAddress(String id) async {
@@ -45,7 +47,8 @@ class _SavedAddressState extends State<SavedAddress> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               backgroundColor: AppColors.pink,
-              content: Text(LocaleKeys.Profile_Address_deleted_successfully.tr()),
+              content:
+                  Text(LocaleKeys.Profile_Address_deleted_successfully.tr()),
             ),
           );
         } else if (state.isDeleteAddressFailure) {
@@ -85,8 +88,10 @@ class _SavedAddressState extends State<SavedAddress> {
                       itemCount: addresses.length,
                       itemBuilder: (context, index) {
                         final address = addresses[index];
-                        final String city = address.city ?? LocaleKeys.Profile_Unknown_City.tr();
-                        final String street = address.street ?? LocaleKeys.Profile_Unknown_City.tr();
+                        final String city = address.city ??
+                            LocaleKeys.Profile_Unknown_City.tr();
+                        final String street = address.street ??
+                            LocaleKeys.Profile_Unknown_City.tr();
                         final String lat = address.lat ?? 'N/A';
                         final String long = address.long ?? 'N/A';
 
@@ -102,38 +107,66 @@ class _SavedAddressState extends State<SavedAddress> {
                           elevation: 2,
                           margin: const EdgeInsets.symmetric(vertical: 8),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 3),
                             child: Column(
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Icons.location_on_outlined, size: context.sp(20)),
+                                    Icon(Icons.location_on_outlined,
+                                        size: context.sp(20)),
                                     Text(
                                       city,
-                                      style: AppTheme.lightTheme.textTheme.titleSmall,
+                                      style: AppTheme
+                                          .lightTheme.textTheme.titleSmall,
                                     ),
                                     const Spacer(),
                                     IconButton(
-                                      icon: Icon(Icons.delete, color: AppColors.pink),
-                                      onPressed: () => _showDeleteDialog(address.id ?? ''),
+                                      icon: Icon(Icons.delete,
+                                          color: AppColors.pink),
+                                      onPressed: () =>
+                                          _showDeleteDialog(address.id ?? ''),
                                     ),
                                     IconButton(
-                                      icon: Icon(Icons.edit_outlined, color: AppColors.gray),
+                                      icon: Icon(Icons.edit_outlined,
+                                          color: AppColors.gray),
                                       onPressed: () {
                                         // Navigate to edit address screen
-                                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddressScreen(addressEntity: address)));
+
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) =>
+                                                    AddressScreen(
+                                                        addressEntity:
+                                                            address)))
+                                            .then((result) {
+                                          if (result == 'refresh2') {
+                                            context
+                                                .read<ProfileMainCubit>()
+                                                .getProfileData();
+                                          }
+                                        });
+                                        ;
                                       },
                                     ),
                                   ],
                                 ),
                                 Row(
                                   children: [
-
-                                    Text(lat.length >= 5 ? lat.substring(0, 5) : lat),
+                                    Text(lat.length >= 5
+                                        ? lat.substring(0, 5)
+                                        : lat),
                                     Text('+'),
-                                    Text(long.length >= 5 ? long.substring(0, 5) : long),
-                                     Text('-'),
-                                    Expanded(child: Text(street,style: TextStyle(overflow: TextOverflow.ellipsis),)),
+                                    Text(long.length >= 5
+                                        ? long.substring(0, 5)
+                                        : long),
+                                    Text('-'),
+                                    Expanded(
+                                        child: Text(
+                                      street,
+                                      style: TextStyle(
+                                          overflow: TextOverflow.ellipsis),
+                                    )),
                                   ],
                                 ),
                                 SizedBox(height: context.hp(2)),
@@ -145,15 +178,17 @@ class _SavedAddressState extends State<SavedAddress> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom: context.hp(4), top: context.hp(6)),
+                    padding: EdgeInsets.only(
+                        bottom: context.hp(4), top: context.hp(6)),
                     child: InkWell(
                       onTap: () {
-
-                        Navigator.of(context).pushNamed(Routes.address).then((result) {
+                        Navigator.of(context)
+                            .pushNamed(Routes.address)
+                            .then((result) {
                           if (result == 'refresh2') {
                             context.read<ProfileMainCubit>().getProfileData();
                           }
-                        });;
+                        });
                       },
                       child: Container(
                         width: context.wp(90),
@@ -165,7 +200,8 @@ class _SavedAddressState extends State<SavedAddress> {
                         child: Center(
                           child: Text(
                             LocaleKeys.Profile_Add_new_address.tr(),
-                            style: AppTheme.lightTheme.textTheme.labelLarge!.copyWith(
+                            style: AppTheme.lightTheme.textTheme.labelLarge!
+                                .copyWith(
                               fontSize: 16,
                               color: AppColors.white,
                             ),

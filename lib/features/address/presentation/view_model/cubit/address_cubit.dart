@@ -20,11 +20,16 @@ class AddressCubit extends Cubit<AddressState> {
   final EditAddressUseCase _editAddressUseCase;
 
   saveAddress(AddressRequestModel addressRequest) async {
+    print('888888888888888');
     emit(state.copyWith(saveUserAddress: BaseLoadingState()));
+    print('sssssssssss');
     final ans = await _saveAddressUseCase(addressRequest);
     switch (ans) {
       case SuccessResult<String>():
-        emit(state.copyWith(saveUserAddress: BaseSuccessState(data: ans)));
+        {
+          print('succccccccccccccccccccceee');
+          print(ans);
+          emit(state.copyWith(saveUserAddress: BaseSuccessState(data: ans)));}
 
       case FailureResult():
         emit(state.copyWith(
@@ -76,7 +81,7 @@ class AddressCubit extends Cubit<AddressState> {
     emit(state.copyWith(getInfoFromLatLong: BaseLoadingState()));
     listOfArea = await loadArea();
     listOfCity = await loadGovernorates();
-    
+
     emit(state.copyWith(getInfoFromLatLong: BaseSuccessState()));
   }
 

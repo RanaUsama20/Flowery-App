@@ -18,8 +18,8 @@ abstract class AddressRetrofitClient {
       @Body() AddressRequestModel addressRequest,
       @Header('Authorization') String? token);
 
-  @PATCH(ApiConstants.address) 
-     Future<AddressResponseModel> editAddress(
+  @PATCH('${ApiConstants.editAddress}{id}')
+  Future<AddressResponseModel> editAddress(
       @Path('id') String id,
       @Body() AddressRequestModel addressRequest,
       @Header('Authorization') String? token);
