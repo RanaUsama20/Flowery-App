@@ -54,20 +54,19 @@ class _AddressScreenState extends State<AddressScreen> {
         body: BlocConsumer<AddressCubit, AddressState>(
           bloc: _addressCubit,
           listener: (context, state) {
-            print(state.saveUserAddress);
             if (state.saveUserAddress is BaseLoadingState) {
-              print('Hellloooooooooooooooooooo');
               AppDialogs.showLoadingDialog(context);
             } else if (state.saveUserAddress is BaseErrorState) {
               Navigator.of(context).pop();
               final result = state.saveUserAddress as BaseErrorState;
               AppDialogs.showFailureDialog(context, message: result.toString());
             } else if (state.saveUserAddress is BaseSuccessState) {
-              // Navigator.pop(context, 'refresh2');
+              Navigator.of(context).pop();
+              Navigator.pop(context, 'refresh2');
             }
           },
           builder: (context, state) {
-            if (state.loadFiel is BaseLoadingState) {
+            if (state.loadFile is BaseLoadingState) {
               return Center(
                 child: CircularProgressIndicator(),
               );
@@ -240,8 +239,6 @@ class _AddressScreenState extends State<AddressScreen> {
                                 long:
                                     _addressCubit.latLng!.longitude.toString(),
                                 userName: _addressCubit.receptController.text));
-                            print('ssssswwweeeeeeeeeeeeeee');
-                            print(state.saveUserAddress);
                           },
                           style: ButtonStyle(
                               padding: WidgetStatePropertyAll(
