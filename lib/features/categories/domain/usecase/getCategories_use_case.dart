@@ -7,9 +7,7 @@ import '../repository/getCategories_repository.dart';
 @injectable
 class GetCategoriesUseCase {
   GetCategoriesRepository getCategoriesRepository;
-  GetProductsByIdRepository getProductsByIdRepository;
-
-  GetCategoriesUseCase(this.getCategoriesRepository, this.getProductsByIdRepository);
+  GetCategoriesUseCase(this.getCategoriesRepository, );
 
   Future<List<CategoriesEntity>> getAllCategories() async {
     var response = await getCategoriesRepository.getAllCategories();
@@ -17,7 +15,7 @@ class GetCategoriesUseCase {
   }
 
   Future<List<ProductsEntity>?> getProductsById(String categoryId) async {
-    var response = await getProductsByIdRepository.getProductsById(categoryId);
+    var response = await getCategoriesRepository.getProductsById(categoryId);
     return response.products;
   }
 }

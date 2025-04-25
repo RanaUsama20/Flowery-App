@@ -98,15 +98,18 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                               bestSellerItem.price!,
                               bestSellerItem.discount!,
                               onAddToCart: () {
-                                if (_appCubit.getStateUser() == StateUser.guest) {
-                                  AppDialogs.showLoginDialog(context,
+                                if (_appCubit.getStateUser ==
+                                    StateUser.guest) {
+                                  AppDialogs.showLoginDialog(
+                                      context,
                                       message: LocaleKeys
-                                          .Error_YouHaveToLoginToUseThisFeature.tr());
+                                          .Error_YouHaveToLoginToUseThisFeature
+                                          .tr());
                                 } else {
                                   cartCubit.addProductToCart(
-                                      bestSellerItem.id.toString(), 1);
+                                      bestSellerItem.id.toString(),
+                                      1);
                                 }
-
                               },
                               productId: bestSellerItem.id.toString(),
                             );

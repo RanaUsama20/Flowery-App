@@ -49,7 +49,10 @@ class _AddressScreenState extends State<AddressScreen> {
     }
     return Scaffold(
         appBar: AppBar(
-          title: Text(LocaleKeys.address.tr()),
+          title: InkWell(
+              onTap: ()=> Navigator.pop(context,'refresh2')
+              ,
+              child: Text(  LocaleKeys.address.tr())),
         ),
         body: BlocBuilder<AddressCubit, AddressState>(
           bloc: _addressCubit,

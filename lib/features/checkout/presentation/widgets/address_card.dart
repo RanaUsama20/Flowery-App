@@ -53,18 +53,18 @@ class AddressCard extends StatelessWidget {
                 ],
               ),
             ),
-            Row(
-              children: [
                 Padding(
                   padding:
                   const EdgeInsets.only(left: 24, right: 32, bottom: 16),
                   child: Text(
-                    '${address.street} ${address.city}',
+                    '${address.lat!.length >= 5 ? address.lat?.substring(0, 5) :address.lat}+${address.long!.length >= 5 ? address.long?.substring(0, 5) :address.long}',
                     style: Theme.of(context).textTheme.bodySmall,
+                      maxLines:1,
+                      overflow: TextOverflow.ellipsis,
                   ),
                 ),
-              ],
-            ),
+
+
           ],
         ),
       ),
