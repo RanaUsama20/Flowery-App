@@ -231,9 +231,12 @@ class _AddressScreenState extends State<AddressScreen> {
                                         _addressCubit.addressController.text,
                                     phone: _addressCubit.phoneController.text,
                                     city: cityName!,
-                                    lat: _addressCubit.latLng!.latitude
-                                        .toString(),
-                                    long: _addressCubit.latLng!.longitude
+                                    lat: _addressCubit.latLng?.latitude == null
+                                        ? 'z'
+                                        : _addressCubit.latLng?.latitude.toString(),
+                                    long: _addressCubit.latLng?.longitude == null
+                                        ? 'z'
+                                        : _addressCubit.latLng?.longitude
                                         .toString(),
                                     userName:
                                         _addressCubit.receptController.text,
