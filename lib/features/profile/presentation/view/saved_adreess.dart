@@ -84,8 +84,8 @@ class _SavedAddressState extends State<SavedAddress> {
                       itemCount: addresses.length,
                       itemBuilder: (context, index) {
                         final address = addresses[index];
-
                         final String city = address.city ?? LocaleKeys.Profile_Unknown_City.tr();
+                        final String street = address.street ?? LocaleKeys.Profile_Unknown_City.tr();
                         final String lat = address.lat ?? 'N/A';
                         final String long = address.long ?? 'N/A';
 
@@ -126,11 +126,12 @@ class _SavedAddressState extends State<SavedAddress> {
                                 ),
                                 Row(
                                   children: [
-                                    Text(lat),
-                                    const Text(' + '),
-                                    Text(long),
-                                    const Text(' - '),
-                                    Text(city),
+
+                                    Text(lat.length >= 5 ? lat.substring(0, 5) : lat),
+                                    Text('+'),
+                                    Text(long.length >= 5 ? long.substring(0, 5) : long),
+                                     Text('-'),
+                                    Expanded(child: Text(street,style: TextStyle(overflow: TextOverflow.ellipsis),)),
                                   ],
                                 ),
                                 SizedBox(height: context.hp(2)),
@@ -146,7 +147,11 @@ class _SavedAddressState extends State<SavedAddress> {
                     child: InkWell(
                       onTap: () {
 
-                        Navigator.of(context).pushNamed(Routes.address);
+                        Navigator.of(context).pushNamed(Routes.address).then((result) {
+                          if (result == 'refresh2') {
+                            context.read<ProfileMainCubit>().getProfileData();
+                          }
+                        });;
                       },
                       child: Container(
                         width: context.wp(90),
