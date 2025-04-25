@@ -90,15 +90,7 @@ class _CheckoutBodyState extends State<CheckoutBody> with WidgetsBindingObserver
             if (result is SuccessResult<CheckoutSessionEntity?>) {
               openStripeCheckout(result.data!.session.url, context);
             }
-            // if(result is SuccessResult<CartModelEntity?>){
-            //   AppToast.showToast(
-            //     context: context,
-            //     title: 'LocaleKeys.checkout_title_credit_payment_success.tr()',
-            //     description: 'LocaleKeys.checkout_description_credit_payment_success.tr()',
-            //     type: ToastificationType.success,
-            //   );
-            //
-            // }
+
           }
           if (paymentState is BaseErrorState) {
             AppToast.showToast(
@@ -133,8 +125,8 @@ class _CheckoutBodyState extends State<CheckoutBody> with WidgetsBindingObserver
                   GiftWidget(),
                 SizedBox(height: 24),
                 BottomWidget(
+                  checkoutCubit: _checkoutCubit,
                   price: widget.price,
-                  selectedAddressId: _selectedAddressId,
                 ),
               ],
             ),

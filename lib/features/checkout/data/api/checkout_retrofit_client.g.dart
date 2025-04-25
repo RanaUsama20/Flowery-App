@@ -20,13 +20,17 @@ class _CheckoutRetrofitClient implements CheckoutRetrofitClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CashPaymentResponseDto?> cashPayment(String? token) async {
+  Future<CashPaymentResponseDto?> cashPayment(
+    ShippingRequestDto? shippingRequest,
+    String? token,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(shippingRequest?.toJson() ?? <String, dynamic>{});
     final _options = _setStreamType<CashPaymentResponseDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
@@ -51,13 +55,17 @@ class _CheckoutRetrofitClient implements CheckoutRetrofitClient {
   }
 
   @override
-  Future<CheckoutSessionDto?> creditCardPayment(String? token) async {
+  Future<CheckoutSessionDto?> creditCardPayment(
+    ShippingRequestDto? shippingRequest,
+    String? token,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(shippingRequest?.toJson() ?? <String, dynamic>{});
     final _options = _setStreamType<CheckoutSessionDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(

@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/core/theme/app_theme.dart';
-import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

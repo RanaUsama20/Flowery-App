@@ -14,36 +14,9 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   final CheckoutRemoteDataSource _checkoutRemoteDataSource;
   CheckoutRepositoryImpl(this._checkoutRemoteDataSource);
 
-  @override
-  Future<Result<CashPaymentResponseEntity?>> cashPayment() async {
-    final result = await _checkoutRemoteDataSource.cashPayment();
-
-    if (result is SuccessResult<CashPaymentResponseDto?>) {
-      return SuccessResult(result.data?.toDomain());
-    }
-    else if (result is FailureResult<CashPaymentResponseDto?>) {
-      return FailureResult(result.exception);
-    }
-    return FailureResult(Exception("Unknown error occurred"));
-  }
-
-
-  @override
-  Future<Result<CheckoutSessionEntity?>> creditCardPayment()async {
-    final result = await _checkoutRemoteDataSource.creditCardPayment();
-
-    if (result is SuccessResult<CheckoutSessionDto?>) {
-      return SuccessResult(result.data?.toDomain());
-    }
-    else if (result is FailureResult<CheckoutSessionDto?>) {
-      return FailureResult(result.exception);
-    }
-    return FailureResult(Exception("Unknown error occurred"));
-  }
-  //
   // @override
-  // Future<Result<CashPaymentResponseEntity?>> cashPayment(ShippingRequestEntity? shippingRequest) async {
-  //   final result = await _checkoutRemoteDataSource.cashPayment(shippingRequest!.toDto());
+  // Future<Result<CashPaymentResponseEntity?>> cashPayment() async {
+  //   final result = await _checkoutRemoteDataSource.cashPayment();
   //
   //   if (result is SuccessResult<CashPaymentResponseDto?>) {
   //     return SuccessResult(result.data?.toDomain());
@@ -56,8 +29,8 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   //
   //
   // @override
-  // Future<Result<CheckoutSessionEntity?>> creditCardPayment(ShippingRequestEntity? shippingRequest)async {
-  //   final result = await _checkoutRemoteDataSource.creditCardPayment(shippingRequest!.toDto());
+  // Future<Result<CheckoutSessionEntity?>> creditCardPayment()async {
+  //   final result = await _checkoutRemoteDataSource.creditCardPayment();
   //
   //   if (result is SuccessResult<CheckoutSessionDto?>) {
   //     return SuccessResult(result.data?.toDomain());
@@ -67,6 +40,33 @@ class CheckoutRepositoryImpl implements CheckoutRepository {
   //   }
   //   return FailureResult(Exception("Unknown error occurred"));
   // }
+  //
+  @override
+  Future<Result<CashPaymentResponseEntity?>> cashPayment(ShippingRequestEntity? shippingRequest) async {
+    final result = await _checkoutRemoteDataSource.cashPayment(shippingRequest!.toDto());
+
+    if (result is SuccessResult<CashPaymentResponseDto?>) {
+      return SuccessResult(result.data?.toDomain());
+    }
+    else if (result is FailureResult<CashPaymentResponseDto?>) {
+      return FailureResult(result.exception);
+    }
+    return FailureResult(Exception("Unknown error occurred"));
+  }
+
+
+  @override
+  Future<Result<CheckoutSessionEntity?>> creditCardPayment(ShippingRequestEntity? shippingRequest)async {
+    final result = await _checkoutRemoteDataSource.creditCardPayment(shippingRequest!.toDto());
+
+    if (result is SuccessResult<CheckoutSessionDto?>) {
+      return SuccessResult(result.data?.toDomain());
+    }
+    else if (result is FailureResult<CheckoutSessionDto?>) {
+      return FailureResult(result.exception);
+    }
+    return FailureResult(Exception("Unknown error occurred"));
+  }
   }
 
 

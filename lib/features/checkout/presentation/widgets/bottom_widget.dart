@@ -8,10 +8,10 @@ import '../view_model/cubit/checkout_cubit.dart';
 
 class BottomWidget extends StatelessWidget {
   final num price;
-  final String? selectedAddressId;
+  CheckoutCubit checkoutCubit;
+  static const int deliveryFee = 100;
 
-
-  const BottomWidget({super.key,required this.price,required this.selectedAddressId});
+   BottomWidget({super.key,required this.price,required this.checkoutCubit});
 
 
   @override
@@ -57,7 +57,7 @@ class BottomWidget extends StatelessWidget {
                       .copyWith(fontSize: 16),
                 ),
                 Text(
-                  " 100\$",
+                  " $deliveryFee\$",
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall!
@@ -77,7 +77,7 @@ class BottomWidget extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  '${(price + 100).toString()}\$',
+                  '${(price + deliveryFee).toString()}\$',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -89,8 +89,6 @@ class BottomWidget extends StatelessWidget {
 
                     final cubit = context.read<CheckoutCubit>();
                     cubit.placeOrder(
-                      // selectedAddressId: selectedAddressId!,
-                      // totalPrice: price + 100,
                     );
                   },
                   child: Text(

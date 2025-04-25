@@ -15,9 +15,9 @@ import '../view_model/cubit/checkout_state.dart';
 
 
 class DeliveryAddressWidget extends StatefulWidget {
-  const DeliveryAddressWidget({super.key,required this.checkoutCubit,required this.onAddressSelected});
- final  CheckoutCubit checkoutCubit;
-  final Function(String) onAddressSelected;
+  const DeliveryAddressWidget({super.key,required this.checkoutCubit, required this.onAddressSelected});
+  final  CheckoutCubit checkoutCubit;
+   final Function(String) onAddressSelected;
 
 
   @override
@@ -32,77 +32,80 @@ class _DeliveryAddressWidgetState extends State<DeliveryAddressWidget> {
     super.initState();
 
   }
-  String? _selectedAddressId;
 
 
-  void _onSelectAddress(String id) {
-    setState(() {
-      _selectedAddressId = id;
-    });
-    widget.onAddressSelected(id);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CheckoutCubit,CheckoutStates>(
-      builder: (context, state) {
-        if (state.profileState is BaseLoadingState) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        if (state.profileState is BaseHideLoadingState) {
-          Navigator.of(context).pop();
-        }
-        if (state.profileState is BaseErrorState) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            AppDialogs.showFailureDialog(
-              context,
-              message: (state.profileState as BaseErrorState).errorMessage,
-            );
-          });
-        }
-        if (state.profileState is BaseSuccessState) {
-          final profileData = (state.profileState as BaseSuccessState).data as SuccessResult<ProfileDataEntity>;
-           final addressList = profileData.data.user.addresses;
-           return Container(
-            color: AppColors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    LocaleKeys.checkout_Delivery_address.tr(),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  ...addressList.map((address) {
-                    return AddressCard(
-                      address: address,
-                      selectedAddressId: _selectedAddressId,
-                      onSelect: _onSelectAddress,
-                    );
-                  }),
-                  OutlinedButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).pushNamed(Routes.address);
+    return BlocBuilder<CheckoutCubit, CheckoutStates>(
+        builder: (context, state) {
+          if (state.profileState is BaseLoadingState) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state.profileState is BaseHideLoadingState) {
+            Navigator.of(context).pop();
+          }
+          if (state.profileState is BaseErrorState) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              AppDialogs.showFailureDialog(
+                context,
+                message: (state.profileState as BaseErrorState).errorMessage,
+              );
+            });
+          }
+          if (state.profileState is BaseSuccessState) {
+            final profileData = (state.profileState as BaseSuccessState)
+                .data as SuccessResult<ProfileDataEntity>;
+            final addressList = profileData.data.user.addresses;
+            widget.checkoutCubit.saveAddressList(addressList);
 
-                    },
-                    icon: Icon(Icons.add, color: Colors.pink),
-                    label: Text(
-                      LocaleKeys.checkout_Add_new.tr(),
-                      style: Theme.of(context)
+            return Container(
+              color: AppColors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      LocaleKeys.checkout_Delivery_address.tr(),
+                      style: Theme
+                          .of(context)
                           .textTheme
-                          .bodyMedium!
-                          .copyWith(fontSize: 14),
+                          .titleMedium,
                     ),
-                  ),
-                ],
+                    ...addressList.map((address) {
+                      return AddressCard(
+                        address: address,
+                        selectedAddressId: widget.checkoutCubit.selectedAddressId,
+                        onSelect: _onSelectAddress,
+                      );
+                    }),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Routes.address);
+                      },
+                      icon: Icon(Icons.add, color: Colors.pink),
+                      label: Text(
+                        LocaleKeys.checkout_Add_new.tr(),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontSize: 14),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-
+            );
+          }
+          return const Placeholder();
         }
-        return const Placeholder();
-      }
     );
+  } void _onSelectAddress(String id) {
+      widget.checkoutCubit.selectAddress(id);
+      widget.onAddressSelected(id);
+
+
   }
 }

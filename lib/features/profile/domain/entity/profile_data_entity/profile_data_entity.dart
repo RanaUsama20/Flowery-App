@@ -23,7 +23,7 @@ class UserEntity extends Equatable {
   final String photo;
   final String role;
   final List wishlist;
-  final List addresses;
+  final List<AddressEntity> addresses;
 
   const UserEntity({
     this.sId = '',

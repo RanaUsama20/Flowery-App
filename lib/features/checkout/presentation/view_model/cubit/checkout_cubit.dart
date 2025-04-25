@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/features/checkout/domain/entity/request/shipping_request_entity.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../../core/base_state/base_state.dart';
@@ -22,8 +23,8 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
 
   final GetProfileDataUseCase _getProfileDataUseCase;
 
-  CheckoutCubit(this._cashPaymentUseCase, this._creditCardPaymentUseCase,this._cartUseCase,
-      this._getProfileDataUseCase)
+  CheckoutCubit(this._cashPaymentUseCase, this._creditCardPaymentUseCase,
+      this._cartUseCase, this._getProfileDataUseCase)
       : super(CheckoutStates());
   void doIntent(CheckoutAction action) {
     switch (action) {
@@ -34,6 +35,16 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
         setSelectedPaymentMethod(methodAction.method);
         break;
     }
+  }
+
+  List<AddressEntity> addresses = [];
+  void saveAddressList(List<AddressEntity> list) {
+    addresses = list;
+  }
+
+  String? selectedAddressId;
+  void selectAddress(String addressId) {
+    selectedAddressId = addressId;
   }
 
   String _selectedMethod = "";
@@ -49,7 +60,7 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
     switch (result) {
       case SuccessResult<ProfileDataEntity>():
         {
-        emit(state.copyWith(profileState: BaseHideLoadingState()));
+          emit(state.copyWith(profileState: BaseHideLoadingState()));
           emit(state.copyWith(profileState: BaseSuccessState(data: result)));
         }
       case FailureResult<ProfileDataEntity>():
@@ -71,15 +82,13 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
     switch (result) {
       case SuccessResult<CartModelEntity>():
         {
-          if(result.numOfCartItems == 0){
+          if (result.numOfCartItems == 0) {
             emit(state.copyWith(creditCardState: BaseSuccessState()));
-          }
-          else{
+          } else {
             emit(
               state.copyWith(
-                creditCardState: BaseErrorState(
-                  errorMessage: 'payment not done'
-                ),
+                creditCardState:
+                    BaseErrorState(errorMessage: 'payment not done'),
               ),
             );
           }
@@ -97,10 +106,8 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
         }
     }
   }
-  Future<void> placeOrder(
-    // required String selectedAddressId,
-    // required num totalPrice,
-  ) async {
+
+  Future<void> placeOrder() async {
     if (_selectedMethod.isEmpty) {
       emit(state.copyWith(
         paymentState: BaseErrorState(
@@ -111,52 +118,46 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
       return;
     }
 
-    // if (selectedAddressId.isEmpty) {
-    //   emit(state.copyWith(
-    //     paymentState: BaseErrorState(
-    //       errorMessage: 'Please select a shipping address',
-    //       exception: Exception('No address selected'),
-    //     ),
-    //   ));
-    //   return;
-    // }
+    if (selectedAddressId == null || addresses.isEmpty) {
+      emit(state.copyWith(
+        paymentState: BaseErrorState(
+          errorMessage: 'Please select a shipping address',
+          exception: Exception('No address selected'),
+        ),
+      ));
+      return;
+    }
+
+    final selectedAddress = addresses.firstWhere(
+      (element) => element.id == selectedAddressId,
+    );
 
     if (_selectedMethod == LocaleKeys.checkout_Cash_on_delivery.tr()) {
-      // await _cashPayment(selectedAddressId);
-      await _cashPayment();
+      await _cashPayment(selectedAddress);
     } else if (_selectedMethod == LocaleKeys.checkout_Credit_card.tr()) {
-// await _creditCardPayment(selectedAddressId, totalPrice);
-await _creditCardPayment();
-
+      await _creditCardPayment(selectedAddress);
     }
   }
 
   Future<CashPaymentResponseEntity?> _cashPayment(
-      ) async {
-    // final profileData = (state.baseState as BaseSuccessState).data
-    // as SuccessResult<ProfileDataEntity>;
-    // print('$profileData immm heere in cubittttttttt');
-    // final selectedAddress = profileData.data.user.addresses
-    //     .firstWhere((address) => address.id == selectedAddressId);
-
-    // final requestEntity = ShippingRequestEntity(
-    //   phone: selectedAddress.phone,
-    //   city: selectedAddress.city,
-    //   lat: selectedAddress.lat,
-    //   long: selectedAddress.long,
-    //   street: selectedAddress.street,
-    // );
+      AddressEntity selectedAddress) async {
+    ShippingRequestEntity requestEntity = ShippingRequestEntity(
+        shippingAddress: ShippingAddressEntity(
+            street: selectedAddress.street ?? '' ,
+            phone: selectedAddress.phone ?? '',
+            city: selectedAddress.city ?? '',
+            lat: selectedAddress.lat ?? '', long: selectedAddress.long ?? '')
+    );
 
     emit(state.copyWith(paymentState: BaseLoadingState()));
 
-    final result = await _cashPaymentUseCase.call();
+    final result = await _cashPaymentUseCase.call(requestEntity);
 
     switch (result) {
       case SuccessResult<CashPaymentResponseEntity?>():
         {
           emit(state.copyWith(paymentState: BaseHideLoadingState()));
           emit(state.copyWith(paymentState: BaseSuccessState(data: result)));
-
         }
       case FailureResult<CashPaymentResponseEntity?>():
         {
@@ -172,30 +173,25 @@ await _creditCardPayment();
     return null;
   }
 
-  Future<CheckoutSessionEntity?> _creditCardPayment() async {
-    // final profileData = (state.profileState as BaseSuccessState).data
-    //     as SuccessResult<ProfileDataEntity>;
-    // final selectedAddress = profileData.data.user.addresses
-    //     .firstWhere((address) => address.id == selectedAddressId);
-    //
-    // final requestEntity = ShippingRequestEntity(
-    //   phone: selectedAddress.phone,
-    //   city: selectedAddress.city,
-    //   lat: selectedAddress.lat,
-    //   long: selectedAddress.long,
-    //   street: selectedAddress.street,
-    // );
+  Future<CheckoutSessionEntity?> _creditCardPayment(
+      AddressEntity selectedAddress) async {
+    ShippingRequestEntity requestEntity = ShippingRequestEntity(
+      shippingAddress: ShippingAddressEntity(
+          street: selectedAddress.street ?? '' ,
+          phone: selectedAddress.phone ?? '',
+          city: selectedAddress.city ?? '',
+          lat: selectedAddress.lat ?? '', long: selectedAddress.long ?? '')
+        );
 
     emit(state.copyWith(paymentState: BaseLoadingState()));
 
-    final result = await _creditCardPaymentUseCase.call();
+    final result = await _creditCardPaymentUseCase.call(requestEntity);
 
     switch (result) {
       case SuccessResult<CheckoutSessionEntity?>():
         {
           emit(state.copyWith(paymentState: BaseHideLoadingState()));
           emit(state.copyWith(paymentState: BaseSuccessState(data: result)));
-
         }
       case FailureResult<CheckoutSessionEntity?>():
         {

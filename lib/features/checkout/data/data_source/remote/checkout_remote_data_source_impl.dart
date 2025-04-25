@@ -15,57 +15,57 @@ class CheckoutRemoteDataSourceImpl implements CheckoutRemoteDataSource {
 
   CheckoutRemoteDataSourceImpl(this._checkoutRetrofitClient, this._apiManager);
   @override
-  Future<Result<CashPaymentResponseDto?>> cashPayment() async {
+  // Future<Result<CashPaymentResponseDto?>> cashPayment() async {
+  //   final token = await SaveLocal.getString("token");
+  //   final fullToken = "Bearer $token";
+  //
+  //   final response = await _apiManager.execute<CashPaymentResponseDto?>(
+  //         () async {
+  //       return await _checkoutRetrofitClient.cashPayment(fullToken);
+  //     },
+  //   );
+  //
+  //   return response;
+  // }
+  // @override
+  // Future<Result<CheckoutSessionDto?>> creditCardPayment() async {
+  //   final token = await SaveLocal.getString("token");
+  //   final fullToken = "Bearer $token";
+  //
+  //   final response = await _apiManager.execute<CheckoutSessionDto?>(
+  //         () async {
+  //       return await _checkoutRetrofitClient.creditCardPayment(fullToken);
+  //     },
+  //   );
+  //
+  //   return response;
+  // }
+  @override
+  Future<Result<CashPaymentResponseDto?>> cashPayment(ShippingRequestDto? shippingRequest) async {
     final token = await SaveLocal.getString("token");
     final fullToken = "Bearer $token";
 
     final response = await _apiManager.execute<CashPaymentResponseDto?>(
           () async {
-        return await _checkoutRetrofitClient.cashPayment(fullToken);
+        return await _checkoutRetrofitClient.cashPayment(shippingRequest, fullToken);
       },
     );
 
     return response;
   }
   @override
-  Future<Result<CheckoutSessionDto?>> creditCardPayment() async {
+  Future<Result<CheckoutSessionDto?>> creditCardPayment(ShippingRequestDto? shippingRequest) async {
     final token = await SaveLocal.getString("token");
     final fullToken = "Bearer $token";
 
     final response = await _apiManager.execute<CheckoutSessionDto?>(
           () async {
-        return await _checkoutRetrofitClient.creditCardPayment(fullToken);
+        return await _checkoutRetrofitClient.creditCardPayment(shippingRequest, fullToken);
       },
     );
 
     return response;
   }
-  // @override
-  // Future<Result<CashPaymentResponseDto?>> cashPayment(ShippingRequestDto? shippingRequest) async {
-  //   final token = await SaveLocal.getString("token");
-  //   final fullToken = "Bearer $token";
-  //
-  //   final response = await _apiManager.execute<CashPaymentResponseDto?>(
-  //         () async {
-  //       return await _checkoutRetrofitClient.cashPayment(shippingRequest, fullToken);
-  //     },
-  //   );
-  //
-  //   return response;
-  // }
-  // @override
-  // Future<Result<CheckoutSessionDto?>> creditCardPayment(ShippingRequestDto? shippingRequest) async {
-  //   final token = await SaveLocal.getString("token");
-  //   final fullToken = "Bearer $token";
-  //
-  //   final response = await _apiManager.execute<CheckoutSessionDto?>(
-  //         () async {
-  //       return await _checkoutRetrofitClient.creditCardPayment(shippingRequest, fullToken);
-  //     },
-  //   );
-  //
-  //   return response;
-  // }
 
 
 

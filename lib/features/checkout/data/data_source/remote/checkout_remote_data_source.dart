@@ -7,9 +7,9 @@ import '../../model/response/cash_payment/cash_payment_response_dto.dart';
 import '../../model/response/credit_card_payment/checkout_session_dto.dart';
 
 abstract class CheckoutRemoteDataSource {
-  // Future<Result<CashPaymentResponseDto?>> cashPayment(ShippingRequestDto? shippingRequest);
-  // Future<Result<CheckoutSessionDto?>> creditCardPayment(ShippingRequestDto? shippingRequest);
-  Future<Result<CashPaymentResponseDto?>> cashPayment();
-  Future<Result<CheckoutSessionDto?>> creditCardPayment();
+  Future<Result<CashPaymentResponseDto?>> cashPayment(ShippingRequestDto? shippingRequest);
+  Future<Result<CheckoutSessionDto?>> creditCardPayment(ShippingRequestDto? shippingRequest);
+  // Future<Result<CashPaymentResponseDto?>> cashPayment();
+  // Future<Result<CheckoutSessionDto?>> creditCardPayment();
 
 }

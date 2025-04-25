@@ -18,14 +18,14 @@ abstract class CheckoutRetrofitClient {
   factory CheckoutRetrofitClient(Dio dio) = _CheckoutRetrofitClient;
   @POST(ApiConstants.cashPaymentRoute)
   Future<CashPaymentResponseDto?> cashPayment(
-      // @Body() ShippingRequestDto? shippingRequest,
+      @Body() ShippingRequestDto? shippingRequest,
       @Header("Authorization") String? token,
 
   );
 
   @POST(ApiConstants.creditCardPaymentRoute)
   Future<CheckoutSessionDto?> creditCardPayment(
-      // @Body() ShippingRequestDto? shippingRequest,
+      @Body() ShippingRequestDto? shippingRequest,
       @Header("Authorization") String? token,
 
       );

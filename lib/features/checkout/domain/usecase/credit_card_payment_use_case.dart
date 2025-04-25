@@ -10,17 +10,17 @@ import '../repository/checkout_repository.dart';
 class CreditCardPaymentUseCase {
   final CheckoutRepository _checkoutRepository;
   CreditCardPaymentUseCase(this._checkoutRepository);
-  // Future<Result<CheckoutSessionEntity?>> call(ShippingRequestEntity? shippingRequest) async {
-  //   final result = await _checkoutRepository.creditCardPayment(shippingRequest);
-  //
-  //   return result;
-  //
-  // }
-  Future<Result<CheckoutSessionEntity?>> call() async {
-    final result = await _checkoutRepository.creditCardPayment();
+  Future<Result<CheckoutSessionEntity?>> call(ShippingRequestEntity? shippingRequest) async {
+    final result = await _checkoutRepository.creditCardPayment(shippingRequest);
 
     return result;
 
   }
+  // Future<Result<CheckoutSessionEntity?>> call() async {
+  //   final result = await _checkoutRepository.creditCardPayment();
+  //
+  //   return result;
+  //
+  // }
 
   }
