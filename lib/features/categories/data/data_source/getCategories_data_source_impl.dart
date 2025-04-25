@@ -15,17 +15,11 @@ class GetAllCategoriesDataSourceImpl implements GetAllCategoriesDataSource{
     return response.toEntity();
   }
 
-
-}
-
-@Injectable(as: GetProductsByIdDataSource )
- class GetProductsByIdDataSourceImpl implements GetProductsByIdDataSource{
-  final  CategoriesRetrofitClient apiService;
-  GetProductsByIdDataSourceImpl(this.apiService);
-
   @override
   Future<ProductsModelEntity> getProductsById(String categoryId) async{
     final response = await apiService.getProductsById(categoryId);
     return response.toEntity();
   }
+
+
 }
