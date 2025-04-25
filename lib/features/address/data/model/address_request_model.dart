@@ -2,8 +2,8 @@ class AddressRequestModel {
   final String street;
   final String phone;
   final String city;
-  final String lat;
-  final String long;
+  final String? lat;
+  final String? long;
   final String userName;
 
   AddressRequestModel(

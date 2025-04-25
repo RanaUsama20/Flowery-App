@@ -44,8 +44,10 @@ class _AddressScreenState extends State<AddressScreen> {
       _addressCubit.phoneController.text = widget.addressEntity!.phone!;
       _addressCubit.receptController.text = widget.addressEntity!.username!;
       _addressCubit.addressController.text = widget.addressEntity!.street!;
-      _addressCubit.latLng = LatLng(double.parse(widget.addressEntity!.lat!),
-          double.parse(widget.addressEntity!.long!));
+      _addressCubit.latLng = double.tryParse(widget.addressEntity!.lat!) == null
+          ? null
+          : LatLng(double.parse(widget.addressEntity!.lat!),
+              double.parse(widget.addressEntity!.long!));
     }
     return Scaffold(
         appBar: AppBar(
@@ -167,6 +169,14 @@ class _AddressScreenState extends State<AddressScreen> {
                         children: [
                           Expanded(
                               child: DropdownButtonFormField<Governorate?>(
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return 'Please select city';
+                                    }
+                                    return null;
+                                  },
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
                                   isExpanded: true,
                                   value: governorate,
                                   decoration: InputDecoration(
@@ -235,9 +245,13 @@ class _AddressScreenState extends State<AddressScreen> {
                                 street: _addressCubit.addressController.text,
                                 phone: _addressCubit.phoneController.text,
                                 city: cityName!,
-                                lat: _addressCubit.latLng!.latitude.toString(),
-                                long:
-                                    _addressCubit.latLng!.longitude.toString(),
+                                lat: _addressCubit.latLng?.latitude == null
+                                    ? 'z'
+                                    : _addressCubit.latLng?.latitude.toString(),
+                                long: _addressCubit.latLng?.longitude == null
+                                    ? 'z'
+                                    : _addressCubit.latLng?.longitude
+                                        .toString(),
                                 userName: _addressCubit.receptController.text));
                           },
                           style: ButtonStyle(
