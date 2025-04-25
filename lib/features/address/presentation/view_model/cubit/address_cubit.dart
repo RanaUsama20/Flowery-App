@@ -45,11 +45,11 @@ class AddressCubit extends Cubit<AddressState> {
     }
   }
 
-  getInfoLatLong() async {
+  getInfoLatLong({required double latitude, required double longitude}) async {
     try {
       emit(state.copyWith(getInfoFromLatLong: BaseLoadingState()));
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(latLng!.latitude, latLng!.longitude);
+          await placemarkFromCoordinates(latitude, longitude);
 
       print(
           'locality: ${placemarks[1].subAdministrativeArea}  street: ${placemarks[1].street} addminArea ${placemarks[1].administrativeArea}  code: ${placemarks[1].subLocality}');
@@ -63,6 +63,7 @@ class AddressCubit extends Cubit<AddressState> {
       if (placemarks[1].administrativeArea != null) {
         cityController.text = placemarks[1].administrativeArea!.split(' ')[0];
       }
+      latLng = LatLng(latitude, longitude);
       emit(state.copyWith(getInfoFromLatLong: BaseSuccessState()));
     } catch (e) {
       emit(state.copyWith(
@@ -75,10 +76,7 @@ class AddressCubit extends Cubit<AddressState> {
     emit(state.copyWith(getInfoFromLatLong: BaseLoadingState()));
     listOfArea = await loadArea();
     listOfCity = await loadGovernorates();
-    // Future.wait([
-    //    loadArea(), loadGovernorates()]);
-    print(listOfArea);
-    print(listOfCity);
+    
     emit(state.copyWith(getInfoFromLatLong: BaseSuccessState()));
   }
 
@@ -174,8 +172,3 @@ class Area {
     );
   }
 }
-
-// class Cordinate{
-//   String street;
-//   String  area;
-// }

@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:flowery_app/core/base_state/base_state.dart';
 import 'package:flowery_app/core/dialogs/app_dialogs.dart';
-import 'package:flowery_app/core/dialogs/app_toasts.dart';
-import 'package:flowery_app/features/address/data/model/address_model.dart';
 import 'package:flowery_app/features/address/presentation/view_model/cubit/address_cubit.dart';
 import 'package:flowery_app/features/address/presentation/view_model/cubit/address_state.dart';
 import 'package:flutter/material.dart';
@@ -29,11 +27,12 @@ class MapSampleState extends State<GoogleMapScreen> {
   );
 
   Set<Marker> setOfMarker = {};
+  LatLng? latLong;
 
   @override
   Widget build(BuildContext context) {
     final _addressCubit = BlocProvider.of<AddressCubit>(context);
-    
+
     return Scaffold(
         body: Stack(
           children: [
@@ -43,7 +42,8 @@ class MapSampleState extends State<GoogleMapScreen> {
                 setOfMarker.clear();
                 setOfMarker
                     .add(Marker(markerId: MarkerId('1'), position: value));
-                _addressCubit.latLng = LatLng(value.latitude, value.longitude);
+                latLong = LatLng(value.latitude, value.longitude);
+                // _addressCubit.latLng = LatLng(value.latitude, value.longitude);
                 // _addressCubit.getInfoLatLong();
                 // await getInforAboutLatLong(
                 //     LatLng(value.latitude, value.longitude));
@@ -63,18 +63,17 @@ class MapSampleState extends State<GoogleMapScreen> {
                   listener: (context, state) {
                     if (state.getInfoFromLatLong is BaseLoadingState) {
                     } else if (state.getInfoFromLatLong is BaseErrorState) {
-                      final ans = state.getInfoFromLatLong as BaseErrorState;
+                      final currentLocation = state.getInfoFromLatLong as BaseErrorState;
                       AppDialogs.showFailureDialog(context,
-                          message: ans.errorMessage);
+                          message: currentLocation.errorMessage);
                     } else if (state.getInfoFromLatLong is BaseSuccessState) {
                       Navigator.of(context).pop();
                     }
-                    // TODO: implement listener
                   },
                   builder: (context, state) {
                     return ElevatedButton(
                         onPressed: () {
-                          if (_addressCubit.latLng == null) {
+                          if (latLong == null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text('You have chose your location'),
@@ -84,7 +83,9 @@ class MapSampleState extends State<GoogleMapScreen> {
 
                             return;
                           }
-                          _addressCubit.getInfoLatLong();
+                          _addressCubit.getInfoLatLong(
+                              latitude: latLong!.latitude,
+                              longitude: latLong!.longitude);
                         },
                         child: state.getInfoFromLatLong is BaseLoadingState
                             ? Center(
@@ -106,15 +107,15 @@ class MapSampleState extends State<GoogleMapScreen> {
           child: FloatingActionButton(
             child: Icon(Icons.location_searching),
             onPressed: () async {
-              final ans = await getCurrentLocation();
+              final currentLocation = await getCurrentLocation();
 
-              if (ans != null) {
-                _addressCubit.latLng = LatLng(ans.latitude!, ans.longitude!);
-                _goToCurrentLocation(ans);
+              if (currentLocation != null) {
+                latLong = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+                _goToCurrentLocation(currentLocation);
                 setOfMarker.clear();
                 setOfMarker.add(Marker(
                     markerId: MarkerId('2'),
-                    position: LatLng(ans.latitude!, ans.longitude!),
+                    position: LatLng(currentLocation.latitude!, currentLocation.longitude!),
                     infoWindow: InfoWindow(title: 'Current Location'),
                     icon: BitmapDescriptor.defaultMarkerWithHue(
                         BitmapDescriptor.hueRose)));
@@ -157,8 +158,8 @@ class MapSampleState extends State<GoogleMapScreen> {
     permissionGranted = await location.hasPermission();
 
     if (permissionGranted == PermissionStatus.denied) {
-      final ans = await location.requestPermission();
-      if (ans != PermissionStatus.granted) {
+      final currentLocation = await location.requestPermission();
+      if (currentLocation != PermissionStatus.granted) {
         await permin.openAppSettings();
         return null;
       }
@@ -177,7 +178,7 @@ class MapSampleState extends State<GoogleMapScreen> {
     }
     locationData = await location.getLocation();
 
-    print('$locationData');
+    print(' bbbbbbbbbbbbbbbbbbbbbbbb $locationData');
 
     return locationData;
   }

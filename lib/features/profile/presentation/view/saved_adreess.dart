@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/core/theme/app_theme.dart';
+import 'package:flowery_app/features/address/presentation/view/address_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,6 +121,7 @@ class _SavedAddressState extends State<SavedAddress> {
                                       icon: Icon(Icons.edit_outlined, color: AppColors.gray),
                                       onPressed: () {
                                         // Navigate to edit address screen
+                                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>AddressScreen(addressEntity: address)));
                                       },
                                     ),
                                   ],
