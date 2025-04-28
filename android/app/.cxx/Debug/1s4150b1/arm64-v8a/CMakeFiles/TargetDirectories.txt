@@ -1,0 +1,2 @@
+E:/Flowery-App/android/app/.cxx/Debug/1s4150b1/arm64-v8a/CMakeFiles/edit_cache.dir
+E:/Flowery-App/android/app/.cxx/Debug/1s4150b1/arm64-v8a/CMakeFiles/rebuild_cache.dir
