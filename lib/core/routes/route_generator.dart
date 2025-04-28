@@ -8,7 +8,7 @@ import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/features/product_details/presentation/pages/product_details.dart';
 import 'package:flowery_app/features/profile/presentation/view/Terms_and_condition_screen.dart';
-import 'package:flowery_app/features/profile/presentation/view/apout_app_screen.dart';
+import 'package:flowery_app/features/profile/presentation/view/about_app_screen.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
 import 'package:flowery_app/features/search/presentation/view/main_search_screen.dart';
 import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';

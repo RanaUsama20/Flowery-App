@@ -150,7 +150,7 @@
     "OtpSentToYourEmail": "OTP sent to your email"
   },
   "profile": {
-    "MyOrder": "My order",
+    "MyOrder": "My orders",
     "SavedAddress": "Saved address",
     "Notification": "Notification",
     "Language": "Language",
@@ -159,7 +159,11 @@
     "Logout": "Logout",
     "AboutUs": "About us",
     "TermsConditions": "Terms & conditions",
-    "changeLanguage": "Change language"
+    "changeLanguage": "Change language",
+    "Track_order": "Track order",
+    "Reorder" : "Reorder",
+    "Completed" : "Completed",
+    "Active" : "Active"
   },
   "checkout": {
     "Checkout": "Checkout",
