@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'core/app/app_cubit/app_cubit_cubit.dart';
 import 'core/constants/app_values.dart';
 import 'core/di/service_locator.dart';
@@ -14,13 +17,20 @@ import 'features/cart/presentation/view_model/cart_cubit.dart';
 import 'features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 
 void main() async {
-  //debugPrintRebuildDirtyWidgets = true;
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+  String? token = await messaging.getToken();
   await Future.wait([
     configureDependencies(),
     EasyLocalization.ensureInitialized(),
     SharedPreferencesUtils.init(),
   ]);
+
   Bloc.observer = MyBlocObserver();
 
   runApp(EasyLocalization(
@@ -45,6 +55,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _checkLogin();
+    _initializeFirebaseMessaging();
   }
 
   Future<void> _checkLogin() async {
@@ -52,6 +63,46 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _isLoggedIn = token != null && token.isNotEmpty;
     });
+  }
+
+  Future<void> _initializeFirebaseMessaging() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    await messaging.requestPermission();
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        _showNotificationDialog(message);
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      if (kDebugMode) {
+      }
+      if (message.data['route'] != null) {
+        Navigator.pushNamed(context, message.data['route']);
+      }
+    });
+  }
+
+  void _showNotificationDialog(RemoteMessage message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(message.notification?.title ?? 'New Notification'),
+          content: Text(message.notification?.body ?? 'You have a new message.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -68,10 +119,9 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<AppCubit>(
           create: (_) => serviceLocator<AppCubit>(),
         ),
-        BlocProvider(
-        create: (context) => serviceLocator<CartCubit>(),
+        BlocProvider<CartCubit>(
+          create: (context) => serviceLocator<CartCubit>(),
         ),
-
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -85,6 +135,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-
-
 }

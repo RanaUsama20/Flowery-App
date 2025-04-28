@@ -214,6 +214,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                         );
                         return InkWell(
                             onTap: () {
+
                               Navigator.pushNamed(
                                   context, Routes.productDetails,
                                   arguments: mappedProduct);
