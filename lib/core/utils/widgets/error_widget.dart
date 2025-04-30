@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../generated/locale_keys.g.dart';
+import '../../constants/app_assets.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final double? height;
@@ -17,11 +19,11 @@ class EmptyStateWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Lottie.asset('assets/lotties/empty_lottie.json', height: 150, repeat: true),
+        Lottie.asset(AppLottie.emptyLottie, height: 150, repeat: true),
          Padding(
            padding: const EdgeInsets.all(16.0),
            child: Text(
-             'Oops, Looks like you haven’t completed any orders yet.',
+             LocaleKeys.profile_no_orders.tr(),
             style: Theme.of(context).textTheme.bodySmall,
                    ),
          ),
@@ -45,19 +47,19 @@ class ErrorStateWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Lottie.asset('assets/lotties/error_lottie.json', height: 110, repeat: true),
+        Lottie.asset(AppLottie.errorLottie, height: 110, repeat: true),
         SizedBox(height: 20),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            message ?? 'Oops, something went wrong! Retry?',
+            message ?? LocaleKeys.Error_general_error.tr(),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
         OutlinedButton(
           onPressed: onRetry,
           child: Text(
-           'Retry',
+            LocaleKeys.Retry.tr(),
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 16
             ),

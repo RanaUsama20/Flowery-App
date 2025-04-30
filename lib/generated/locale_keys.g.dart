@@ -126,6 +126,7 @@ abstract class  LocaleKeys {
   static const Error_Receive_timeout = 'Error.Receive_timeout';
   static const Error_Timeout_occurred = 'Error.Timeout_occurred';
   static const Error_Invalid_certificate = 'Error.Invalid_certificate';
+  static const Error_general_error = 'Error.general_error';
   static const Error_Unexpected_server_error = 'Error.Unexpected_server_error';
   static const Error_Request_cancelled = 'Error.Request_cancelled';
   static const Error_Connection_failed = 'Error.Connection_failed';
@@ -162,6 +163,7 @@ abstract class  LocaleKeys {
   static const profile_Active = 'profile.Active';
   static const profile_Delivered_on = 'profile.Delivered_on';
   static const profile_order_number = 'profile.order_number';
+  static const profile_no_orders = 'profile.no_orders';
   static const profile = 'profile';
   static const about_app_about_app_title = 'about_app.about_app_title';
   static const about_app_about_app = 'about_app.about_app';

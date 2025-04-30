@@ -19,17 +19,44 @@ class BuildOrdersList extends StatelessWidget {
       itemCount: orders!.length,
       itemBuilder: (context, index) {
         final order = orders![index];
-        return OrderCard(
-            title: order.orderItems?[0].product?.title,
-            price: order.totalPrice.toString(),
-            state: flag
-                ? '${LocaleKeys.profile_order_number.tr()} ${order.orderNumber}'
-                : LocaleKeys.profile_Delivered_on.tr(),
-            buttonText: flag
-                ? LocaleKeys.profile_Track_order.tr()
-                : LocaleKeys.profile_Reorder.tr(),
-            imageUrl: order.orderItems?[0].product?.imgCover);
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ...?order.orderItems?.map((item) {
+              final product = item.product;
+              return OrderCard(
+                title: product?.title,
+                price: order.totalPrice.toString() ?? '',
+                state: flag
+                    ? '${LocaleKeys.profile_order_number.tr()} ${order.orderNumber}'
+                    : LocaleKeys.profile_Delivered_on.tr(),
+                buttonText: flag
+                    ? LocaleKeys.profile_Track_order.tr()
+                    : LocaleKeys.profile_Reorder.tr(),
+                imageUrl: product?.imgCover,
+              );
+            }).toList(),
+          ],
+        );
       },
     );
+
+    // return ListView.builder(
+    //   itemCount: orders!.length,
+    //   itemBuilder: (context, index) {
+    //     final order = orders![index];
+    //     return OrderCard(
+    //         title: order.orderItems?[0].product?.title,
+    //         price: order.totalPrice.toString(),
+    //         state: flag
+    //             ? '${LocaleKeys.profile_order_number.tr()} ${order.orderNumber}'
+    //             : LocaleKeys.profile_Delivered_on.tr(),
+    //         buttonText: flag
+    //             ? LocaleKeys.profile_Track_order.tr()
+    //             : LocaleKeys.profile_Reorder.tr(),
+    //         imageUrl: order.orderItems?[0].product?.imgCover);
+    //   },
+    // );
   }
 }

@@ -74,3 +74,8 @@ class PngAssets {
   static const googleMap = 'assets/png/Rectangle.png';
   static const marker = 'assets/png/marker.png';
 }
+
+class AppLottie {
+  static const emptyLottie = 'assets/lotties/empty_lottie2.json';
+  static const errorLottie = 'assets/lotties/error_lottie.json';
+}
