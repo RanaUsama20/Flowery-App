@@ -158,7 +158,15 @@
     "Logout": "تسجيل الخروج",
     "AboutUs": "من نحن",
     "TermsConditions": "الشروط والأحكام",
-    "changeLanguage": "تغيير اللغة"
+    "changeLanguage": "تغيير اللغة",
+    "Track_order": "تتبع الطلب",
+    "Reorder": "إعادة الطلب",
+    "Completed": "مكتمل",
+    "Active": "نشط",
+    "Delivered_on" : "تم التسليم في 3 سبتمبر 2024",
+    "order_number" : "رقم الطلب "
+
+
   },
   "about_app": {
     "about_app_title": "حول تطبيق فلاوري",

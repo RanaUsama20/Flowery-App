@@ -1,12 +1,14 @@
 import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:flowery_app/features/profile/data/data_source/remote/profile_remote_data_source.dart';
 import 'package:flowery_app/features/profile/domain/entity/change_password/change_password__response_entity.dart';
+import 'package:flowery_app/features/profile/domain/entity/orders/orders_entity.dart';
 import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import 'package:flowery_app/features/profile/domain/repository/profile_repository.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../domain/entity/change_password/change_password__request_entity.dart';
 import '../model/response/change_password/change_password_response_model.dart';
+import '../model/response/orders/orders_response_dto.dart';
 
 @Injectable(as: ProfileRepository)
 class ProfileRepositoryImpl implements ProfileRepository {
@@ -43,5 +45,18 @@ class ProfileRepositoryImpl implements ProfileRepository {
   }
   Future<Result<String>> deleteAddress(String id) async {
     return await _profileRemoteDataSource.deleteAddress(id);
+  }
+
+  @override
+  Future<Result<OrdersResponseEntity?>> getOrders() async {
+    final result = await _profileRemoteDataSource.getOrders();
+
+    if (result is SuccessResult<OrdersResponseDto?>) {
+      return SuccessResult(result.data?.toDomain());
+    }
+    else if (result is FailureResult<OrdersResponseDto?>) {
+      return FailureResult(result.exception);
+    }
+    return FailureResult(Exception("Unknown error occurred"));
   }
 }

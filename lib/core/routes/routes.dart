@@ -22,6 +22,7 @@ class Routes {
   static const String checkout = '/checkout';
   static const String successPage = '/successPage';
 
+  static const String order = '/order';
 
 
   static const String search = '/search';

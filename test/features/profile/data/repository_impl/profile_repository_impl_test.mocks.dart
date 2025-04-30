@@ -12,6 +12,8 @@ import 'package:flowery_app/features/profile/data/model/request/change_password/
     as _i8;
 import 'package:flowery_app/features/profile/data/model/response/change_password/change_password_response_model.dart'
     as _i7;
+import 'package:flowery_app/features/profile/data/model/response/orders/orders_response_dto.dart'
+    as _i9;
 import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart'
     as _i5;
 import 'package:mockito/mockito.dart' as _i1;
@@ -81,4 +83,17 @@ class MockProfileRemoteDataSource extends _i1.Mock
             ),
           )
           as _i3.Future<_i4.Result<String>>);
+
+  @override
+  _i3.Future<_i4.Result<_i9.OrdersResponseDto?>> getOrders() =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrders, []),
+            returnValue: _i3.Future<_i4.Result<_i9.OrdersResponseDto?>>.value(
+              _i6.dummyValue<_i4.Result<_i9.OrdersResponseDto?>>(
+                this,
+                Invocation.method(#getOrders, []),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<_i9.OrdersResponseDto?>>);
 }

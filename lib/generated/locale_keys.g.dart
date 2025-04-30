@@ -156,6 +156,12 @@ abstract class  LocaleKeys {
   static const profile_AboutUs = 'profile.AboutUs';
   static const profile_TermsConditions = 'profile.TermsConditions';
   static const profile_changeLanguage = 'profile.changeLanguage';
+  static const profile_Track_order = 'profile.Track_order';
+  static const profile_Reorder = 'profile.Reorder';
+  static const profile_Completed = 'profile.Completed';
+  static const profile_Active = 'profile.Active';
+  static const profile_Delivered_on = 'profile.Delivered_on';
+  static const profile_order_number = 'profile.order_number';
   static const profile = 'profile';
   static const about_app_about_app_title = 'about_app.about_app_title';
   static const about_app_about_app = 'about_app.about_app';

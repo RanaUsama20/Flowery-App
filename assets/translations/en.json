@@ -159,7 +159,14 @@
     "Logout": "Logout",
     "AboutUs": "About us",
     "TermsConditions": "Terms & conditions",
-    "changeLanguage": "Change language"
+    "changeLanguage": "Change language",
+    "Track_order": "Track order",
+    "Reorder" : "Reorder",
+    "Completed" : "Completed",
+    "Active" : "Active",
+    "Delivered_on" : "Delivered on 3Sep 2024",
+    "order_number" : "Order number "
+
   },
   "checkout": {
     "Checkout": "Checkout",

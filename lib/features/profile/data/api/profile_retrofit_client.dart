@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flowery_app/core/network/remote/api_constants.dart';
+import 'package:flowery_app/features/profile/data/model/response/orders/orders_response_dto.dart';
 import 'package:flowery_app/features/profile/data/model/response/profile_data/profile_data_dto.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
@@ -35,6 +36,9 @@ abstract class ProfileRetrofitClient {
 
   @DELETE('${ApiConstants.deleteAddresses}/{id}')
   Future<String> deleteAddress(@Path('id') String addressId, @Header("Authorization") String token,);
+
+  @GET(ApiConstants.ordersRoute)
+  Future<OrdersResponseDto> getOrders(@Header('Authorization') String? token);
 }
 
 
