@@ -123,7 +123,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      LocaleKeys.Authentication_DonotReceiveCode.tr(),
+                      LocaleKeys.Authentication_DidnotReceiveCode.tr(),
                       style: AppTheme.lightTheme.textTheme.labelLarge!
                           .copyWith(fontWeight: FontWeight.w400, color: AppColors.black),
                     ),

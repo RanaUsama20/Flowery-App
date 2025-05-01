@@ -40,7 +40,6 @@ abstract class  LocaleKeys {
   static const Authentication_Confirm = 'Authentication.Confirm';
   static const Authentication_Resend = 'Authentication.Resend';
   static const Authentication_DidnotReceiveCode = 'Authentication.DidnotReceiveCode';
-  static const Authentication_DonotReceiveCode = 'Authentication.DonotReceiveCode';
   static const Authentication_SubEmailVerification = 'Authentication.SubEmailVerification';
   static const Authentication_EnterCode = 'Authentication.EnterCode';
   static const Authentication_Done = 'Authentication.Done';
