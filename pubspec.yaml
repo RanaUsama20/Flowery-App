@@ -69,6 +69,7 @@ dependencies:
   rxdart: ^0.28.0
   bloc_concurrency: ^0.3.0
   bloc_test: ^10.0.0
+  lottie: ^3.3.1
   firebase_core: ^3.13.0
   firebase_crashlytics: ^4.3.5
   firebase_auth: ^5.5.2
@@ -104,6 +105,8 @@ flutter:
     - assets/png/
     - assets/svg/
     - assets/city/
+    - assets/lotties/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

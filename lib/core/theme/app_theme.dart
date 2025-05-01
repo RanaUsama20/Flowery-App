@@ -184,15 +184,20 @@ class AppTheme {
       ),
     ),
     tabBarTheme: TabBarTheme(
+      indicatorSize: TabBarIndicatorSize.tab,
       labelColor: AppColors.pink[AppColors.colorCode50],
-      unselectedLabelColor: Colors.grey,
+      unselectedLabelColor: AppColors.white[AppColors.colorCode70],
       dividerColor: Colors.transparent,
-      labelStyle: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+      labelStyle: TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 16,
+        ),
       unselectedLabelStyle:
-          TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+          TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
       indicator: UnderlineTabIndicator(
-        borderSide: BorderSide(
-            width: 3.0, color: AppColors.pink[AppColors.colorCode50]!),
+        insets: EdgeInsets.zero,
+        borderSide:
+            BorderSide(width: 3, color: AppColors.pink[AppColors.colorCode50]!),
       ),
       labelPadding: const EdgeInsets.only(right: 24),
       tabAlignment: TabAlignment.start,

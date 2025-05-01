@@ -5,6 +5,7 @@ import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.da
 import 'package:flowery_app/features/profile/data/model/request/change_password/change_password_request_model.dart';
 import 'package:flowery_app/features/profile/data/model/response/change_password/change_password_response_model.dart';
 import 'package:flowery_app/core/utils/save_local.dart';
+import 'package:flowery_app/features/profile/data/model/response/orders/orders_response_dto.dart';
 import 'package:flowery_app/features/profile/data/model/response/profile_data/profile_data_dto.dart';
 import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 import 'package:injectable/injectable.dart';
@@ -47,6 +48,8 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     }
   }
 
+
+
   @override
   Future<Result<String>> deleteAddress(String id) async{
     final result = await _apiManager.execute<String>(() async {
@@ -60,6 +63,19 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         return FailureResult<String>(result.exception);
 
     }
+  }
+
+  @override
+  Future<Result<OrdersResponseDto?>> getOrders() async {
+    final token = await SaveLocal.getString("token");
+    final fullToken = "Bearer $token";
+    final response = await _apiManager.execute<OrdersResponseDto?>(
+          () async {
+        return await _profileRetrofitClient.getOrders(fullToken);
+      },
+    );
+
+    return response;
   }
 
   }

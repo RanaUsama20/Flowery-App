@@ -54,7 +54,8 @@ class AddressCard extends StatelessWidget {
                 children: [
                   InkWell(
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
                             builder: (_) => AddressScreen(
                                   addressEntity: address,
                                 ))).then((result) {

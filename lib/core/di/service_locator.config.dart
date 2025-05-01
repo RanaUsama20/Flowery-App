@@ -152,10 +152,14 @@ import 'package:flowery_app/features/profile/domain/usecase/change_password_usec
     as _i583;
 import 'package:flowery_app/features/profile/domain/usecase/delete_adress_use_case.dart'
     as _i927;
+import 'package:flowery_app/features/profile/domain/usecase/get_orders_usecase.dart'
+    as _i937;
 import 'package:flowery_app/features/profile/domain/usecase/get_profile_data_usecase.dart'
     as _i110;
 import 'package:flowery_app/features/profile/presentation/view_model/change_password/change_password_cubit.dart'
     as _i517;
+import 'package:flowery_app/features/profile/presentation/view_model/orders/orders_cubit.dart'
+    as _i475;
 import 'package:flowery_app/features/profile/presentation/view_model/profile_main/profile_main_cubit.dart'
     as _i859;
 import 'package:flowery_app/features/search/data/api/search_retrofit_client.dart'
@@ -279,6 +283,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i969.SaveAddressUseCase(gh<_i85.AddressRepository>()));
     gh.factory<_i583.ChangePasswordUseCase>(
         () => _i583.ChangePasswordUseCase(gh<_i1025.ProfileRepository>()));
+    gh.factory<_i937.GetOrdersUseCase>(
+        () => _i937.GetOrdersUseCase(gh<_i1025.ProfileRepository>()));
     gh.factory<_i7.OccasionsUseCase>(
         () => _i7.OccasionsUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i997.ProductOccasionUseCase>(
@@ -307,6 +313,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i485.CartUseCase(gh<_i166.CartRepository>()));
     gh.factory<_i494.GetCategoriesUseCase>(
         () => _i494.GetCategoriesUseCase(gh<_i427.GetCategoriesRepository>()));
+    gh.factory<_i475.OrdersCubit>(
+        () => _i475.OrdersCubit(gh<_i937.GetOrdersUseCase>()));
     gh.factory<_i18.AddressCubit>(() => _i18.AddressCubit(
           gh<_i969.SaveAddressUseCase>(),
           gh<_i865.EditAddressUseCase>(),

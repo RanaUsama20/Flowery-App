@@ -10,6 +10,8 @@ import 'package:flowery_app/features/profile/domain/entity/change_password/chang
     as _i6;
 import 'package:flowery_app/features/profile/domain/entity/change_password/change_password__response_entity.dart'
     as _i5;
+import 'package:flowery_app/features/profile/domain/entity/orders/orders_entity.dart'
+    as _i9;
 import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart'
     as _i8;
 import 'package:flowery_app/features/profile/domain/repository/profile_repository.dart'
@@ -80,4 +82,18 @@ class MockProfileRepository extends _i1.Mock implements _i2.ProfileRepository {
             ),
           )
           as _i3.Future<_i4.Result<String>>);
+
+  @override
+  _i3.Future<_i4.Result<_i9.OrdersResponseEntity?>> getOrders() =>
+      (super.noSuchMethod(
+            Invocation.method(#getOrders, []),
+            returnValue:
+                _i3.Future<_i4.Result<_i9.OrdersResponseEntity?>>.value(
+                  _i7.dummyValue<_i4.Result<_i9.OrdersResponseEntity?>>(
+                    this,
+                    Invocation.method(#getOrders, []),
+                  ),
+                ),
+          )
+          as _i3.Future<_i4.Result<_i9.OrdersResponseEntity?>>);
 }
