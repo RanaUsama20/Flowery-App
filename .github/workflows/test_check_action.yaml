@@ -41,4 +41,4 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           file: build/app/outputs/flutter-apk/app-release.apk
           groups: tester-github-action
-          releaseNotes: "🚀 Auto-release from GitHub Actions"
+          releaseNotes: "Auto-release from GitHub Actions"
