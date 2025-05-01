@@ -151,7 +151,7 @@
     "OtpSentToYourEmail": "OTP sent to your email"
   },
   "profile": {
-    "MyOrder": "My order",
+    "MyOrder": "My orders",
     "SavedAddress": "Saved address",
     "Notification": "Notification",
     "Language": "Language",
@@ -168,7 +168,6 @@
     "Delivered_on" : "Delivered on 3Sep 2024",
     "order_number" : "Order number ",
     "no_orders" : "Oops, Looks like you haven’t completed any order yet."
-
   },
   "checkout": {
     "Checkout": "Checkout",

@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../widget/orders_body.dart';
 
+
+import 'package:flowery_app/generated/locale_keys.g.dart';
+import 'package:flutter/material.dart';
+
+
 class OrdersScreen extends StatelessWidget{
   const OrdersScreen({super.key});
 
@@ -22,6 +27,5 @@ class OrdersScreen extends StatelessWidget{
       body: OrdersBody() ,
     );
 
-  }
 
 }

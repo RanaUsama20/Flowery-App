@@ -197,31 +197,96 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             ),
                           )
                         : GridView.builder(
-                            controller: _scrollController,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 260,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                            ),
-                            itemCount: products.length,
-                            itemBuilder: (context, index) {
-                              final mappedProduct = ProductDetailsModel(
-                                id: products[index].id.toString(),
-                                price: products[index].price!.toInt(),
-                                description: products[index].description!,
-                                name: products[index].title!,
-                                images: products[index].images!,
-                                inStock: products[index].quantity != null
-                                    ? true
-                                    : false,
-                              );
-                              return InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                        context, Routes.productDetails,
-                                        arguments: mappedProduct);
+                      controller: _scrollController,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisExtent: 260,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                      ),
+                      itemCount: products.length,
+                      itemBuilder: (context, index) {
+                        final mappedProduct = ProductDetailsModel(
+                          id: products[index].id.toString(),
+                          price: products[index].price!.toInt(),
+                          description: products[index].description!,
+                          name: products[index].title!,
+                          images: products[index].images!,
+                          inStock: products[index].quantity != null
+                              ? true
+                              : false,
+                        );
+                        return InkWell(
+                            onTap: () {
+
+                              Navigator.pushNamed(
+                                  context, Routes.productDetails,
+                                  arguments: mappedProduct);
+                            },
+                            child: BlocProvider(
+                                create: (context) =>
+                                    serviceLocator<CartCubit>(),
+                                child: BlocConsumer<CartCubit, CartState>(
+                                  builder: (context, state) {
+                                    final cartCubit =
+                                    context.read<CartCubit>();
+                                    return ProductCard.createProductCard(
+                                      products[index].imgCover.toString(),
+                                      products[index].title.toString(),
+                                      products[index]
+                                          .priceAfterDiscount
+                                          ?.toInt() ??
+                                          0,
+                                      products[index].price?.toInt() ?? 0,
+                                      products[index].discount?.toInt() ??
+                                          0,
+                                      onAddToCart: () {
+                                        if (_appCubit.getStateUser ==
+                                            StateUser.guest) {
+                                          AppDialogs.showLoginDialog(
+                                              context,
+                                              message: LocaleKeys
+                                                  .Error_YouHaveToLoginToUseThisFeature
+                                                  .tr());
+                                        } else {
+                                          cartCubit.addProductToCart(
+                                              products[index].id.toString(),
+                                              1);
+                                        }
+                                      },
+                                      productId:
+                                      products[index].id.toString(),
+                                    );
+                                  },
+                                  listener: (BuildContext context,
+                                      CartState state) {
+                                    if (state is CartSuccessState) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: AppColors.green,
+                                          content: Text(
+                                            state.productCart.message
+                                                .toString(),
+                                            style: AppTheme.lightTheme
+                                                .textTheme.labelSmall,
+                                          ),
+                                        ),
+                                      );
+                                    } else if (state is CartErrorState) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: AppColors.red,
+                                          content: Text(
+                                            LocaleKeys.Error_SoldOut.tr(),
+                                            style: AppTheme.lightTheme
+                                                .textTheme.labelSmall,
+                                          ),
+                                        ),
+                                      );
+                                    }
                                   },
                                   child: BlocProvider(
                                       create: (context) =>
