@@ -25,4 +25,5 @@ class ApiConstants {
   static const String deleteAddresses ="addresses";
   static const String address='addresses';
   static const String editAddress='addresses/';
+  static const String allNotifications='notifications';
 }

@@ -21,8 +21,8 @@ class Routes {
   static const String editProfile = '/editProfile';
   static const String checkout = '/checkout';
   static const String successPage = '/successPage';
-
-
+  static const String notification='/notification';
+   
 
   static const String search = '/search';
 }

@@ -304,15 +304,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
           ),
           Spacer(),
-          Badge(
-            smallSize: 3,
-            isLabelVisible: true,
-            // largeSize: 30,
-            label: Text('3'),
-            child: SvgPicture.asset(
-              SvgAssets.notificationSvg,
-              width: 25,
-              height: 25,
+          InkWell(
+            onTap: (){
+              Navigator.of(context).pushNamed(Routes.notification);
+            },
+            child: Badge(
+              smallSize: 3,
+              isLabelVisible: true,
+              // largeSize: 30,
+              label: Text('3'),
+              child: SvgPicture.asset(
+                SvgAssets.notificationSvg,
+                width: 25,
+                height: 25,
+              ),
             ),
           )
         ],
