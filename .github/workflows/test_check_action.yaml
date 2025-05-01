@@ -21,13 +21,6 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
 
-      # - name: Run test
-      #   run: flutter test
-
-      # - name: Validate branch name
-      #   run: |
-      #     BRANCH_NAME="${{ steps.branch.outputs.name }}"
-      #     echo "Checking branch: $BRANCH_NAME"
 
       # Build APK
       - name: Build release APK
@@ -42,3 +35,11 @@ jobs:
           file: build/app/outputs/flutter-apk/app-release.apk
           groups: tester-github-action
           releaseNotes: "Auto-release from GitHub Actions"
+
+      - name: Run test
+        run: flutter test
+
+      - name: Validate branch name
+        run: |
+          BRANCH_NAME="${{ steps.branch.outputs.name }}"
+          echo "Checking branch: $BRANCH_NAME"
