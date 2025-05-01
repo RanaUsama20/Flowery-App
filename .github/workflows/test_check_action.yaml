@@ -63,5 +63,5 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           file: build/app/outputs/flutter-apk/app-release.apk
-          testers: esammww.com@gmail.com,bakkaraweja@gmail.com,amirakh098@gmail.com,johnsafwat362@gmail.com
+          testers: esammww.com@gmail.com
           releaseNotes: "🚀 Auto-release from GitHub Actions"
