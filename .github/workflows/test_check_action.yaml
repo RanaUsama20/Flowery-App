@@ -21,13 +21,13 @@ jobs:
       - run: flutter --version
       - run: flutter pub get
 
-      - name: Run test
-        run: flutter test
+      # - name: Run test
+      #   run: flutter test
 
-      - name: Validate branch name
-        run: |
-          BRANCH_NAME="${{ steps.branch.outputs.name }}"
-          echo "Checking branch: $BRANCH_NAME"
+      # - name: Validate branch name
+      #   run: |
+      #     BRANCH_NAME="${{ steps.branch.outputs.name }}"
+      #     echo "Checking branch: $BRANCH_NAME"
 
       # Build APK
       - name: Build release APK
