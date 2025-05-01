@@ -62,7 +62,11 @@ class _SavedAddressState extends State<SavedAddress> {
       },
       builder: (context, state) {
         final addresses = state.profileData.user.addresses;
+        if(state.isProfileMainLoading)
+        {
+          return  Scaffold(body: Center(child: CircularProgressIndicator()),);
 
+        }
         return Scaffold(
           body: SafeArea(
             child: Padding(
