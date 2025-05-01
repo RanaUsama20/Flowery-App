@@ -67,6 +67,7 @@
     "currentPassword": "Current Password",
     "Update": "Update",
     "ResetPassword": "Reset Password"
+
   },
   "Home": {
     "Home": "Home",
@@ -142,7 +143,8 @@
     "Service_unavailable": "Our service is temporarily down for maintenance. Please check back in a little while!",
     "DataParsingException": "There was an issue processing the data. Please try again or contact support if the issue persists.",
     "SoldOut": "Sold out",
-    "YouHaveToLoginToUseThisFeature": "You have to login to use this feature"
+    "YouHaveToLoginToUseThisFeature": "You have to login to use this feature",
+    "PleaseEnterBoEmailAndPassword": "Please make sure to enter your email and password."
 
   },
 

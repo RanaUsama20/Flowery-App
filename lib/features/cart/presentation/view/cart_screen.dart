@@ -251,7 +251,13 @@ class _CartScreenState extends State<CartScreen> {
               ),
             );
           } else if (state is CartErrorState) {
-            return Center(child: Text(state.message));
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              AppDialogs.showFailureDialog(
+                context,
+                message: state.error.message,
+                nextAction: () =>  Navigator.pushReplacementNamed(context, Routes.appSection),
+              )
+              ;});
           }
           return const Center(child: CircularProgressIndicator());
         },

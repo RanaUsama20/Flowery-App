@@ -16,9 +16,10 @@ class CartSuccessState extends CartState {
 }
 
 class CartErrorState extends CartState {
-  final String message;
-
-  CartErrorState(this.message);
+  final Failure error;
+  @override
+  List<Object> get props => [error];
+  CartErrorState( this.error);
 }
 
 

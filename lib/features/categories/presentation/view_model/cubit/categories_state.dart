@@ -5,32 +5,28 @@ abstract class CategoriesState {}
 class CategoriesInitial extends CategoriesState {}
 
 class CategoriesLoading extends CategoriesState {
-  String? loadingMessage;
-  CategoriesLoading([this.loadingMessage]);
+  final List<ProductsEntity> products;
+  final List<CategoriesEntity> allCategories;
+
+  CategoriesLoading({
+    required this.products,
+    required this.allCategories,
+  });
 }
 
 class SuccessState extends CategoriesState {
-  final List<CategoriesEntity>? allCategories;
-  final List<ProductsEntity>? products;
+  final List<CategoriesEntity> allCategories;
+  final List<ProductsEntity> products;
+  final String currentCategoryId;
 
-  SuccessState({this.allCategories, this.products});
+  SuccessState({
+    required this.allCategories,
+    required this.products,
+    required this.currentCategoryId,
+  });
 }
 
 class CategoriesError extends CategoriesState {
-  final String message;
-
-  CategoriesError(this.message);
+  final Failure error;
+  CategoriesError(this.error);
 }
-
-
-class ProductsErrorState extends CategoriesState {
-  final String error;
-
-  ProductsErrorState(this.error);
-}
-
-class FilterLoadingState extends CategoriesState {}
-
-class FilterSuccessState extends CategoriesState {}
-
-class FilterSelectedSortState extends CategoriesState {}

@@ -224,9 +224,11 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i560.CheckoutRetrofitClient>(),
               gh<_i797.ApiManager>(),
             ));
-    gh.factory<_i129.GetAllCategoriesDataSource>(() =>
-        _i48.GetAllCategoriesDataSourceImpl(
-            gh<_i557.CategoriesRetrofitClient>()));
+    gh.factory<_i129.GetAllCategoriesDataSource>(
+        () => _i48.GetAllCategoriesDataSourceImpl(
+              gh<_i557.CategoriesRetrofitClient>(),
+              gh<_i797.ApiManager>(),
+            ));
     gh.factory<_i461.SearchQueryDataSource>(() => _i66.SearchQueryDataSourceImp(
           gh<_i748.SearchRetrofitClient>(),
           gh<_i797.ApiManager>(),

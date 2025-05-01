@@ -143,6 +143,7 @@ abstract class  LocaleKeys {
   static const Error_DataParsingException = 'Error.DataParsingException';
   static const Error_SoldOut = 'Error.SoldOut';
   static const Error_YouHaveToLoginToUseThisFeature = 'Error.YouHaveToLoginToUseThisFeature';
+  static const Error_PleaseEnterBoEmailAndPassword = 'Error.PleaseEnterBoEmailAndPassword';
   static const Error = 'Error';
   static const Messages_OtpSentToYourEmail = 'Messages.OtpSentToYourEmail';
   static const Messages = 'Messages';

@@ -142,7 +142,8 @@
     "Service_unavailable": "خدمتنا متوقفة مؤقتًا للصيانة. يرجى التحقق مرة أخرى بعد قليل!",
     "DataParsingException": "حدثت مشكلة أثناء معالجة البيانات. يرجى المحاولة مجددًا أو التواصل مع الدعم إذا استمرت المشكلة.",
     "SoldOut": "غير متوفر",
-    "YouHaveToLoginToUseThisFeature": "يجب عليك تسجيل الدخول لاستخدام هذه الميزة"
+    "YouHaveToLoginToUseThisFeature": "يجب عليك تسجيل الدخول لاستخدام هذه الميزة",
+    "PleaseEnterBoEmailAndPassword": "الرجاء التأكد من إدخال البريد الإلكتروني وكلمة  المرور"
   },
   "Messages": {
     "OtpSentToYourEmail": "تم إرسال رمز OTP إلى بريدك الإلكتروني"
