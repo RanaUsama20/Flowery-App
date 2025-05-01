@@ -1,4 +1,5 @@
 import 'package:flowery_app/core/network/common/api_result.dart';
+import 'package:flowery_app/features/profile/domain/entity/orders/orders_entity.dart';
 import 'package:flowery_app/features/profile/domain/entity/profile_data_entity/profile_data_entity.dart';
 
 import '../../../../core/network/common/api_result.dart';
@@ -12,5 +13,6 @@ abstract class ProfileRepository {
 
   Future<Result<ProfileDataEntity>> getProfileData();
   Future<Result<String>> deleteAddress(String id);
+  Future<Result<OrdersResponseEntity?>> getOrders();
 
 }

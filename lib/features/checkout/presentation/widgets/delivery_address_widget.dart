@@ -82,7 +82,11 @@ class _DeliveryAddressWidgetState extends State<DeliveryAddressWidget> {
                     }),
                     OutlinedButton.icon(
                       onPressed: () {
-                        Navigator.of(context).pushNamed(Routes.address);
+                        Navigator.of(context).pushNamed(Routes.address).then((result) {
+                          if (result == 'refresh2') {
+                            context.read<CheckoutCubit>().doIntent(GetAddressAction());
+                          }
+                        });
                       },
                       icon: Icon(Icons.add, color: Colors.pink),
                       label: Text(

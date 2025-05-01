@@ -30,6 +30,7 @@ import '../../features/categories/presentation/view/sucess_page.dart';
 import '../../features/checkout/presentation/view/checkout_screen.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../../features/profile/presentation/view/change_password_screen.dart';
+import '../../features/profile/presentation/view/orders_screen.dart';
 import '../di/service_locator.dart';
 
 class RouteGenerator {
@@ -80,6 +81,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const OccasionScreen());
       case Routes.bestSeller:
         return MaterialPageRoute(builder: (_) => const BestSellerScreen());
+      case Routes.order:
+        return MaterialPageRoute(builder: (_) => const OrdersScreen());
       case Routes.categories:
         return MaterialPageRoute(builder: (_) => const CategoriesScreen());
       case Routes.changePassword:

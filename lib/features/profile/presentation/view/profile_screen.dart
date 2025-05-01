@@ -76,7 +76,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 leading: _iconSvg(SvgAssets.order),
                 trailing: _arrowIos(),
                 title: LocaleKeys.profile_MyOrder.tr(),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).pushNamed(Routes.order);
+                },
               ),
               _itemSection(
                 leading: _iconSvg(SvgAssets.location2Svg),

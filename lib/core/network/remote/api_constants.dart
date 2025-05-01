@@ -19,9 +19,8 @@ class ApiConstants {
   static const String addToCart  = "cart";
   static const String addProductToCart  = "cart";
   static const String cashPaymentRoute = "orders";
+  static const String ordersRoute = "orders";
   static const String creditCardPaymentRoute = "orders/checkout?url=http://localhost:3000";
-
-
   static const String deleteAddresses ="addresses";
   static const String address='addresses';
   static const String editAddress='addresses/';

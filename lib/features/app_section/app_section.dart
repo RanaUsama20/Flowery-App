@@ -25,7 +25,7 @@ class _AppSectionState extends State<AppSection> {
     const ProfileScreen(),
   ];
 
-  Key _cartKey = UniqueKey(); // Unique key to force rebuild
+  Key _cartKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _AppSectionState extends State<AppSection> {
           children: [
             _pages[0],
             _pages[1],
-            CartScreen(key: _cartKey), // 👈 Use dynamic key here
+            CartScreen(key: _cartKey),
             _pages[2],
           ],
         ),
