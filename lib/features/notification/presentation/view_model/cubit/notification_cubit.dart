@@ -14,7 +14,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   GetAllNotificationUseCase _getAllNotificationUseCase;
   getAllNotification({String? sort}) async {
     emit(state.copyWith(getAllNotificationState: BaseLoadingState()));
-    final ans = await _getAllNotificationUseCase(sort);
+    final ans = await _getAllNotificationUseCase("-createdAt");
     switch (ans) {
       case SuccessResult():
         {

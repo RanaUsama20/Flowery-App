@@ -138,6 +138,20 @@ import 'package:flowery_app/features/home/presentation/view_model/cubit/home_cub
     as _i373;
 import 'package:flowery_app/features/home/presentation/view_model/occasions/occasions_cubit.dart'
     as _i331;
+import 'package:flowery_app/features/notification/data/api/notification_retrofit_client.dart'
+    as _i532;
+import 'package:flowery_app/features/notification/data/data_source/notification_data_source.dart'
+    as _i1063;
+import 'package:flowery_app/features/notification/data/data_source/notification_data_source_impl.dart'
+    as _i450;
+import 'package:flowery_app/features/notification/data/repository_imp/notification_repository_impl.dart'
+    as _i100;
+import 'package:flowery_app/features/notification/domain/repositroy/notification_repository.dart'
+    as _i228;
+import 'package:flowery_app/features/notification/domain/usecase/get_all_notification_use_case.dart'
+    as _i494;
+import 'package:flowery_app/features/notification/presentation/view_model/cubit/notification_cubit.dart'
+    as _i176;
 import 'package:flowery_app/features/profile/data/api/profile_retrofit_client.dart'
     as _i106;
 import 'package:flowery_app/features/profile/data/data_source/remote/profile_remote_data_source.dart'
@@ -217,6 +231,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i748.SearchRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i960.AddressRetrofitClient>(
         () => _i960.AddressRetrofitClient(gh<_i361.Dio>()));
+    gh.factory<_i532.NotificationRetrofitClient>(
+        () => _i532.NotificationRetrofitClient(gh<_i361.Dio>()));
     gh.factory<_i1041.RegisterRemoteDataSource>(
         () => _i470.RegisterDataSourceImpl(gh<_i865.AuthRetrofitClient>()));
     gh.lazySingleton<_i127.UploadPhotoApiService>(
@@ -261,6 +277,14 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.factory<_i1025.ProfileRepository>(
         () => _i110.ProfileRepositoryImpl(gh<_i342.ProfileRemoteDataSource>()));
+    gh.factory<_i1063.NotificationDataSource>(() =>
+        _i450.NotificationDataSourceImpl(
+            gh<_i532.NotificationRetrofitClient>()));
+    gh.factory<_i228.NotificationRepository>(
+        () => _i100.NotificationRepositoryImpl(
+              gh<_i797.ApiManager>(),
+              gh<_i1063.NotificationDataSource>(),
+            ));
     gh.factory<_i301.CartRemoteDataSource>(() => _i895.CartRemoteDataSourceImpl(
           gh<_i881.CartRetrofitClient>(),
           gh<_i797.ApiManager>(),
@@ -307,6 +331,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i683.HomeUseCase(gh<_i630.HomeRepository>()));
     gh.factory<_i667.SearchBloc>(
         () => _i667.SearchBloc(gh<_i993.SearchQueryUseCase>()));
+    gh.factory<_i494.GetAllNotificationUseCase>(() =>
+        _i494.GetAllNotificationUseCase(gh<_i228.NotificationRepository>()));
     gh.factory<_i485.CartUseCase>(
         () => _i485.CartUseCase(gh<_i166.CartRepository>()));
     gh.factory<_i494.GetCategoriesUseCase>(
@@ -359,6 +385,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i255.BestSellerCubit>(
         () => _i255.BestSellerCubit(gh<_i675.BestSellerUseCase>()));
     gh.factory<_i373.HomeCubit>(() => _i373.HomeCubit(gh<_i683.HomeUseCase>()));
+    gh.factory<_i176.NotificationCubit>(
+        () => _i176.NotificationCubit(gh<_i494.GetAllNotificationUseCase>()));
     gh.factory<_i555.RegisterCubit>(
         () => _i555.RegisterCubit(gh<_i318.RegisterUseCase>()));
     gh.factory<_i170.EditProfileCubit>(() => _i170.EditProfileCubit(
