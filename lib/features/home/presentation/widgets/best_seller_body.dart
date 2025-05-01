@@ -15,6 +15,7 @@ import '../../../../core/di/service_locator.dart';
 import '../../../../core/dialogs/app_dialogs.dart';
 import '../../../../core/network/common/api_result.dart';
 import '../../../../core/theme/app_theme.dart';
+import '../../../../core/utils/widgets/error_widget.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../cart/presentation/view_model/cart_cubit.dart';
 import '../../domain/entity/best_seller/best_seller_response_entity.dart';
@@ -60,12 +61,21 @@ class _BestSellerBodyState extends State<BestSellerBody> {
               Navigator.of(context).pop();
             }
             if (state.baseState is BaseErrorState) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                AppDialogs.showFailureDialog(
-                  context,
+              // WidgetsBinding.instance.addPostFrameCallback((_) {
+              //   AppDialogs.showFailureDialog(
+              //     context,
+              //     message: (state.baseState as BaseErrorState).errorMessage,
+              //   );
+              // });
+              return Center(
+                child: ErrorStateWidget(
+                  height: 50,
+                  width: 50,
                   message: (state.baseState as BaseErrorState).errorMessage,
-                );
-              });
+                  onRetry: () => context.read<BestSellerCubit>().doIntent(GetDataAction()),
+                ),
+              );
+
             }
             if (state.baseState is BaseSuccessState) {
               final bestSellerResponse = (state.baseState as BaseSuccessState).data as SuccessResult<BestSellerResponseEntity>;
