@@ -24,7 +24,7 @@ class _SavedAddressState extends State<SavedAddress> {
     super.initState();
 
     cubit = context.read<ProfileMainCubit>();
-    // cubit.getProfileData()
+     cubit.getProfileData();
   }
 
   Future<void> deleteAddress(String id) async {
