@@ -5,6 +5,7 @@ import 'package:flowery_app/features/auth/presentation/view/reset_password_scree
 import 'package:flowery_app/features/auth/presentation/view_model/forgot_password/forgot_password_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view/best_seller_screen.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
+import 'package:flowery_app/features/notification/presentation/view/notification_screen.dart';
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/features/product_details/presentation/pages/product_details.dart';
 import 'package:flowery_app/features/profile/presentation/view/Terms_and_condition_screen.dart';
@@ -88,39 +89,37 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ChangePasswordScreen());
       case Routes.checkout:
         final price = settings.arguments as num;
-        return MaterialPageRoute(builder: (_) =>  CheckoutScreen(
-          price: price,
-        ));
+        return MaterialPageRoute(
+            builder: (_) => CheckoutScreen(
+                  price: price,
+                ));
       case Routes.mainProfile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
-        return MaterialPageRoute(builder: (_) =>  ProductDetails(
-          product: product,
-        ));
+        return MaterialPageRoute(
+            builder: (_) => ProductDetails(
+                  product: product,
+                ));
       case Routes.editProfile:
-        return MaterialPageRoute(builder: (_) =>  EditProfileScreen(
-          userData: arg as EditProfileRequest,
-
-        ));
-        case Routes.address:
-         return MaterialPageRoute(builder: (_)=>AddressScreen());
-        // return MaterialPageRoute(builder: (_) =>
-        //     ProductDetails(
-        //       product: product,
-        //     ));
-      case Routes.savedAddress:
-        return MaterialPageRoute(builder: (_) => SavedAddress(
-
-        ));
-      case Routes.aboutApp:
-        return MaterialPageRoute(builder: (_) =>  AboutAppScreen());
-      case Routes.termsAndCondition:
-        return MaterialPageRoute(builder: (_) => const TermsAndConditionScreen());
         return MaterialPageRoute(
             builder: (_) => EditProfileScreen(
                   userData: arg as EditProfileRequest,
                 ));
+      case Routes.address:
+        return MaterialPageRoute(builder: (_) => AddressScreen());
+      // return MaterialPageRoute(builder: (_) =>
+      //     ProductDetails(
+      //       product: product,
+      //     ));
+      case Routes.savedAddress:
+        return MaterialPageRoute(builder: (_) => SavedAddress());
+      case Routes.aboutApp:
+        return MaterialPageRoute(builder: (_) => AboutAppScreen());
+      case Routes.termsAndCondition:
+        return MaterialPageRoute(
+            builder: (_) => const TermsAndConditionScreen());
+
       case Routes.search:
         return MaterialPageRoute(
           builder: (_) => BlocProvider<SearchBloc>(
@@ -128,6 +127,9 @@ class RouteGenerator {
             child: const SearchScreen(),
           ),
         );
+
+      case Routes.notification:
+        return MaterialPageRoute(builder: (_) => NotificationScreen());
       // return MaterialPageRoute(builder: (_) =>
       //     ProductDetails(
       //       product: product,
