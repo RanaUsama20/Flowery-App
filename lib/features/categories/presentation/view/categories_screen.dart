@@ -57,9 +57,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return  BlocProvider(
       create: (context) => categories,
       child: Scaffold(
         body: BlocBuilder<CategoriesCubit, CategoriesState>(
@@ -69,8 +70,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             } else if (state is SuccessState) {
               return buildBody(state.allCategories ?? [], state.products ?? []);
             } else if (state is CategoriesError) {
-              return Center(
-                  child: Text(LocaleKeys.Error_Service_unavailable.tr()));
+              return Center(child: Text(LocaleKeys.Error_Service_unavailable.tr()));
             }
             return const Center(child: CircularProgressIndicator());
           },
@@ -93,7 +93,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 children: [
                   Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
                     child: Row(
                       children: [
                         Expanded(
@@ -103,20 +103,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             child: TextFormField(
                               enabled: false,
                               decoration: InputDecoration(
-                                disabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide:
-                                        BorderSide(color: AppColors.gray)),
+                                disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10),borderSide: BorderSide(color: AppColors.gray)),
                                 focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.gray),
-                                    borderRadius: BorderRadius.circular(10)),
+                                    borderSide: BorderSide(color: AppColors.gray) , borderRadius: BorderRadius.circular(10)),
+
                                 prefixIcon: Icon(
                                   Icons.search,
                                   color: AppColors.gray,
                                 ),
                                 hintText: LocaleKeys.Home_Search.tr(),
                               ),
+
                             ),
                           ),
                         ),
@@ -130,10 +127,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             border: Border.all(color: AppColors.gray),
                           ),
                           child: IconButton(
-                            icon:
-                                Icon(Icons.filter_list, color: AppColors.gray),
+                            icon: Icon(Icons.filter_list, color: AppColors.gray),
                             onPressed: () {
-                              showFilterSheet(context, categories);
+                              showFilterSheet(context,categories );
                             },
                           ),
                         ),
@@ -164,8 +160,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               children: [
                                 Text(
                                   allCategories[index].name ?? '',
-                                  style: AppTheme
-                                      .lightTheme.textTheme.titleSmall
+                                  style: AppTheme.lightTheme.textTheme.titleSmall
                                       ?.copyWith(
                                     color: isSelected
                                         ? AppColors.pink
@@ -191,11 +186,11 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   Expanded(
                     child: products.isEmpty
                         ? Center(
-                            child: Text(
-                              LocaleKeys.Home_NoProductsInThiSection.tr(),
-                              style: AppTheme.lightTheme.textTheme.titleSmall,
-                            ),
-                          )
+                      child: Text(
+                        LocaleKeys.Home_NoProductsInThiSection.tr(),
+                        style: AppTheme.lightTheme.textTheme.titleSmall,
+                      ),
+                    )
                         : GridView.builder(
                       controller: _scrollController,
                       gridDelegate:
@@ -288,76 +283,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       );
                                     }
                                   },
-                                  child: BlocProvider(
-                                      create: (context) =>
-                                          serviceLocator<CartCubit>(),
-                                      child: BlocConsumer<CartCubit, CartState>(
-                                        builder: (context, state) {
-                                          final cartCubit =
-                                              context.read<CartCubit>();
-                                          return ProductCard.createProductCard(
-                                            products[index].imgCover.toString(),
-                                            products[index].title.toString(),
-                                            products[index]
-                                                    .priceAfterDiscount
-                                                    ?.toInt() ??
-                                                0,
-                                            products[index].price?.toInt() ?? 0,
-                                            products[index].discount?.toInt() ??
-                                                0,
-                                            onAddToCart: () {
-                                              if (_appCubit.getStateUser ==
-                                                  StateUser.guest) {
-                                                AppDialogs.showLoginDialog(
-                                                    context,
-                                                    message: LocaleKeys
-                                                            .Error_YouHaveToLoginToUseThisFeature
-                                                        .tr());
-                                              } else {
-                                                cartCubit.addProductToCart(
-                                                    products[index]
-                                                        .id
-                                                        .toString(),
-                                                    1);
-                                              }
-                                            },
-                                            productId:
-                                                products[index].id.toString(),
-                                          );
-                                        },
-                                        listener: (BuildContext context,
-                                            CartState state) {
-                                          if (state is CartSuccessState) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                backgroundColor:
-                                                    AppColors.green,
-                                                content: Text(
-                                                  state.productCart.message
-                                                      .toString(),
-                                                  style: AppTheme.lightTheme
-                                                      .textTheme.labelSmall,
-                                                ),
-                                              ),
-                                            );
-                                          } else if (state is CartErrorState) {
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                backgroundColor: AppColors.red,
-                                                content: Text(
-                                                  LocaleKeys.Error_SoldOut.tr(),
-                                                  style: AppTheme.lightTheme
-                                                      .textTheme.labelSmall,
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      )));
-                            },
-                          ),
+                                )));
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -375,7 +303,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   opacity: _showFilterButton ? 1.0 : 0.0,
                   child: ElevatedButton.icon(
                     style:
-                        AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                    AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
                       fixedSize: MaterialStatePropertyAll(const Size(120, 50)),
                       shape: MaterialStatePropertyAll(
                         RoundedRectangleBorder(
@@ -385,7 +313,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       padding: MaterialStatePropertyAll(EdgeInsets.all(6)),
                     ),
                     onPressed: () {
-                      showFilterSheet(context, categories);
+                      showFilterSheet(context,categories );
                     },
                     icon: const Icon(Icons.tune, color: AppColors.white),
                     label: Text(LocaleKeys.Home_Filter.tr(),
@@ -399,6 +327,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
     );
   }
+
 
   Future<void> _onRefresh() async {
     categories.getAllCategories();
