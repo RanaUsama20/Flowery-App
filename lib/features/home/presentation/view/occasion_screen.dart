@@ -179,8 +179,18 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
           );
           return InkWell(
             onTap: () {
-              Navigator.pushNamed(context, Routes.productDetails,
-                  arguments: mappedProduct);
+              Navigator.pushNamed(
+                context,
+                Routes.productDetails,
+                arguments: ProductDetailsModel(
+                  id: products[index].id.toString(),
+                  price: products[index].price.toInt() ?? 0,
+                  description: products[index].description ?? '',
+                  name: products[index].title ?? '',
+                  images: products[index].images ?? [],
+                  inStock: (products[index].quantity ?? 1) > 0,
+                ),
+              );
             },
             child: BlocProvider(
               create: (context) => serviceLocator<CartCubit>(),
@@ -188,20 +198,23 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                 builder: (context, state) {
                   final cartCubit = context.read<CartCubit>();
                   return ProductCard.createProductCard(
-                    products[index].imgCover,
-                    products[index].title,
-                    products[index].price.toInt(),
-                    products[index].priceAfterDiscount.toInt(),
-                    products[index].discount.toInt(),
+                    products[index].imgCover.toString(),
+                    products[index].title.toString(),
+                    products[index].priceAfterDiscount.toInt() ?? 0,
+                    products[index].price.toInt() ?? 0,
+                    products[index].discount.toInt() ?? 0,
                     onAddToCart: () {
-                      if(_appCubit.getStateUser==StateUser.guest){
-                        AppDialogs.showLoginDialog(context, message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr());
-                      }
-                      else{
+                      if (_appCubit.getStateUser == StateUser.guest) {
+                        AppDialogs.showLoginDialog(
+                          context,
+                          message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr(),
+                        );
+                      } else {
                         cartCubit.addProductToCart(
-                            products[index].id.toString(), 1);
+                          products[index].id.toString(),
+                          1,
+                        );
                       }
-
                     },
                     productId: products[index].id.toString(),
                   );

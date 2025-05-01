@@ -97,14 +97,13 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                               bestSellerItem.priceAfterDiscount!,
                               bestSellerItem.price!,
                               bestSellerItem.discount!,
+                              quantity: bestSellerItem.quantity??1,
                               onAddToCart: () {
-                                if (_appCubit.getStateUser ==
-                                    StateUser.guest) {
+                                if (_appCubit.getStateUser == StateUser.guest) {
                                   AppDialogs.showLoginDialog(
-                                      context,
-                                      message: LocaleKeys
-                                          .Error_YouHaveToLoginToUseThisFeature
-                                          .tr());
+                                    context,
+                                    message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr(),
+                                  );
                                 } else {
                                   cartCubit.addProductToCart(
                                       bestSellerItem.id.toString(),
@@ -121,8 +120,7 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                                   backgroundColor: AppColors.green,
                                   content: Text(
                                     state.productCart.message.toString(),
-                                    style: AppTheme
-                                        .lightTheme.textTheme.labelSmall,
+                                    style: AppTheme.lightTheme.textTheme.labelSmall,
                                   ),
                                 ),
                               );
@@ -132,8 +130,7 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                                   backgroundColor: AppColors.red,
                                   content: Text(
                                     LocaleKeys.Error_SoldOut.tr(),
-                                    style: AppTheme
-                                        .lightTheme.textTheme.labelSmall,
+                                    style: AppTheme.lightTheme.textTheme.labelSmall,
                                   ),
                                 ),
                               );
