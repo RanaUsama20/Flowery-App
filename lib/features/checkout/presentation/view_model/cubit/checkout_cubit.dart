@@ -79,33 +79,33 @@ class CheckoutCubit extends Cubit<CheckoutStates> {
 
   Future<void> getCartProducts() async {
     final result = await _cartUseCase.getProductToCart();
+
     switch (result) {
       case SuccessResult<CartModelEntity>():
-        {
-          if (result.numOfCartItems == 0) {
-            emit(state.copyWith(creditCardState: BaseSuccessState()));
-          } else {
-            emit(
-              state.copyWith(
-                creditCardState:
-                    BaseErrorState(errorMessage: 'payment not done'),
-              ),
-            );
-          }
-        }
-      case FailureResult<CartModelEntity>():
-        {
+        final data = result.data;
+        if (data.numOfCartItems == 0) {
+          emit(state.copyWith(creditCardState: BaseSuccessState()));
+        } else {
           emit(
             state.copyWith(
-              creditCardState: BaseErrorState(
-                errorMessage: result.error.toString(),
-                exception: Exception(result.error),
-              ),
+              creditCardState:
+              BaseErrorState(errorMessage: 'payment not done'),
             ),
           );
         }
+
+      case FailureResult<CartModelEntity>():
+        emit(
+          state.copyWith(
+            creditCardState: BaseErrorState(
+              errorMessage: result.exception.toString(),
+              exception: Exception(result.exception),
+            ),
+          ),
+        );
     }
   }
+
 
   Future<void> placeOrder() async {
     if (_selectedMethod.isEmpty) {

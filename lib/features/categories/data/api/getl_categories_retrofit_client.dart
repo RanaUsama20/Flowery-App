@@ -17,4 +17,13 @@ abstract class CategoriesRetrofitClient {
 
   @GET(ApiConstants.getProductsById)
   Future<ProductsModel> getProductsById(@Query("category") String categoryId);
+
+  @GET(ApiConstants.getProductsById)
+  Future<ProductsModel> filterToProducts({
+  @Query("category") String? categoryId,
+    @Query('sort') String? sort,
+  });
+
+
+
 }

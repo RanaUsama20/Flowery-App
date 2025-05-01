@@ -1,3 +1,4 @@
+import 'package:flowery_app/core/network/common/api_result.dart';
 import 'package:injectable/injectable.dart';
 
 import '../entity/login_entity.dart';
@@ -6,7 +7,7 @@ import '../repository/auth_repository.dart';
 class LoginUseCase {
   AuthRepository loginRepository;
   LoginUseCase(this.loginRepository);
-  Future<LoginEntity?>call({required String email, required String password})async {
+  Future<Result<LoginEntity?>>call({required String email, required String password})async {
     return  await loginRepository.login(email: email, password: password);
   }
 }

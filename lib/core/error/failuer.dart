@@ -4,11 +4,9 @@ abstract class Failure {
 }
 
 class ServerFailure extends Failure {
-  ServerFailure(String message) : super(message);
+  ServerFailure(super.message);
 }
 
 class ValidationFailure extends Failure {
-  ValidationFailure(String message) : super(message);
-
-
+  ValidationFailure(super.message);
 }

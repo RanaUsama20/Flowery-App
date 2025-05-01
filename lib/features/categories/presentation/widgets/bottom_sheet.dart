@@ -22,6 +22,7 @@ void showFilterSheet(BuildContext context, CategoriesCubit cubit) {
       );
     },
   );
+
 }
 
 class FilterSheetContent extends StatefulWidget {
@@ -33,27 +34,29 @@ class FilterSheetContent extends StatefulWidget {
 
 class _FilterSheetContentState extends State<FilterSheetContent> {
   String? selectedSort;
+
+
   final Map<String, String> sortOptions = {
-    "Lowes Price": "Lowes Price",
-    "Highest Price": "Highest Price",
-    "New": "New",
-    "Old": "Old",
-    "Discount": "Discount",
+    "Lowes Price": "price",
+    "Highest Price": "-price",
+    "New": "-createdAt",
+    "Old": "createdAt",
+    "Discount": "discount",
   };
 
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.6,
-        minChildSize: 0.4,
-        maxChildSize: 0.95,
-        builder: (context, scrollController) {
-          return SingleChildScrollView(
+      expand: false,
+      initialChildSize: 0.75,
+      minChildSize: 0.5,
+      maxChildSize: 0.75,
+      builder: (context, scrollController) {
+        return SingleChildScrollView(
             controller: scrollController,
             padding: const EdgeInsets.all(16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                     LocaleKeys.Home_SortBy.tr(),
@@ -93,41 +96,50 @@ class _FilterSheetContentState extends State<FilterSheetContent> {
                   builder: (context, state) {
                     final isLoading = state is CategoriesLoading;
 
-                    return ElevatedButton.icon(
-                      onPressed: isLoading || selectedSort == null
-                          ? null
-                          : () {
-                        context
-                            .read<CategoriesCubit>()
-                            .filterProducts(sortType: selectedSort!);
-                        Navigator.pop(context);
-                      },
-                      icon: isLoading
-                          ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                          : const Icon(Icons.tune,size: 20,),
-                      label: Text(isLoading ? LocaleKeys.Loading.tr():LocaleKeys.Home_Filter.tr()),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.pink,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        minimumSize: const Size(double.infinity, 50),
-                      ),
-                    );
+                return ElevatedButton.icon(
+                  onPressed: isLoading || selectedSort == null
+                      ? null
+                      : () {
+                    final cubit = context.read<CategoriesCubit>();
+                    final currentState = cubit.state;
+
+                    if (currentState is SuccessState) {
+                      cubit.filterToProducts(
+                        categoryId: currentState.currentCategoryId,
+                        sort: selectedSort!,
+                      );
+                    }
+                    Navigator.pop(context);
                   },
-                ),
-              ],
+
+                  icon: isLoading
+                      ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                      : const Icon(Icons.tune, size: 20),
+                  label: Text(isLoading
+                      ? LocaleKeys.Loading.tr()
+                      : LocaleKeys.Home_Filter.tr()),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.pink,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                );
+              },
             ),
-          );
-         },
-        );
-    }
+          ],
+        ));
+      },
+    );
+  }
 }
+

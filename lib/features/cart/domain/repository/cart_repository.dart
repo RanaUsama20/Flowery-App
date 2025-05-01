@@ -1,11 +1,13 @@
 import 'package:flowery_app/features/cart/domain/entity/cart_data_entity.dart';
 
+import '../../../../core/network/common/api_result.dart';
+
 abstract class CartRepository{
-  Future <CartModelEntity> getProductToCart();
-  Future <CartModelEntity> addProductToCart(
+  Future <Result<CartModelEntity>> getProductToCart();
+  Future <Result<CartModelEntity>> addProductToCart(
       String productId,
       num quantity
       );
-  Future <CartModelEntity> updateProductQuantity(String cartItemId, int quantity);
-  Future <CartModelEntity> deleteProductToCart(String productId);
+  Future <Result<CartModelEntity>> updateProductQuantity(String cartItemId, int quantity);
+  Future <Result<CartModelEntity>> deleteProductToCart(String productId);
 }

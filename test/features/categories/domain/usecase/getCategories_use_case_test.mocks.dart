@@ -3,15 +3,17 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i5;
+import 'dart:async' as _i3;
 
+import 'package:flowery_app/core/network/common/api_result.dart' as _i4;
 import 'package:flowery_app/features/categories/domain/entity/get_all_categories_entity.dart'
-    as _i2;
+    as _i5;
 import 'package:flowery_app/features/categories/domain/entity/get_products_by_id_entity.dart'
-    as _i3;
+    as _i7;
 import 'package:flowery_app/features/categories/domain/repository/getCategories_repository.dart'
-    as _i4;
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:mockito/src/dummies.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -27,50 +29,57 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeGetAllCategoriesEntity_0 extends _i1.SmartFake
-    implements _i2.GetAllCategoriesEntity {
-  _FakeGetAllCategoriesEntity_0(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
-}
-
-class _FakeProductsModelEntity_1 extends _i1.SmartFake
-    implements _i3.ProductsModelEntity {
-  _FakeProductsModelEntity_1(Object parent, Invocation parentInvocation)
-    : super(parent, parentInvocation);
-}
-
 /// A class which mocks [GetCategoriesRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockGetCategoriesRepository extends _i1.Mock
-    implements _i4.GetCategoriesRepository {
+    implements _i2.GetCategoriesRepository {
   MockGetCategoriesRepository() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<_i2.GetAllCategoriesEntity> getAllCategories() =>
+  _i3.Future<_i4.Result<_i5.GetAllCategoriesEntity>> getAllCategories() =>
       (super.noSuchMethod(
             Invocation.method(#getAllCategories, []),
-            returnValue: _i5.Future<_i2.GetAllCategoriesEntity>.value(
-              _FakeGetAllCategoriesEntity_0(
-                this,
-                Invocation.method(#getAllCategories, []),
-              ),
-            ),
+            returnValue:
+                _i3.Future<_i4.Result<_i5.GetAllCategoriesEntity>>.value(
+                  _i6.dummyValue<_i4.Result<_i5.GetAllCategoriesEntity>>(
+                    this,
+                    Invocation.method(#getAllCategories, []),
+                  ),
+                ),
           )
-          as _i5.Future<_i2.GetAllCategoriesEntity>);
+          as _i3.Future<_i4.Result<_i5.GetAllCategoriesEntity>>);
 
   @override
-  _i5.Future<_i3.ProductsModelEntity> getProductsById(String? categoryId) =>
+  _i3.Future<_i4.Result<_i7.ProductsModelEntity>> getProductsById(
+    String? categoryId,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#getProductsById, [categoryId]),
-            returnValue: _i5.Future<_i3.ProductsModelEntity>.value(
-              _FakeProductsModelEntity_1(
+            returnValue: _i3.Future<_i4.Result<_i7.ProductsModelEntity>>.value(
+              _i6.dummyValue<_i4.Result<_i7.ProductsModelEntity>>(
                 this,
                 Invocation.method(#getProductsById, [categoryId]),
               ),
             ),
           )
-          as _i5.Future<_i3.ProductsModelEntity>);
+          as _i3.Future<_i4.Result<_i7.ProductsModelEntity>>);
+
+  @override
+  _i3.Future<_i4.Result<_i7.ProductsModelEntity>> filterToProducts(
+    String? categoryId,
+    String? sort,
+  ) =>
+      (super.noSuchMethod(
+            Invocation.method(#filterToProducts, [categoryId, sort]),
+            returnValue: _i3.Future<_i4.Result<_i7.ProductsModelEntity>>.value(
+              _i6.dummyValue<_i4.Result<_i7.ProductsModelEntity>>(
+                this,
+                Invocation.method(#filterToProducts, [categoryId, sort]),
+              ),
+            ),
+          )
+          as _i3.Future<_i4.Result<_i7.ProductsModelEntity>>);
 }

@@ -29,16 +29,22 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginCubit, LoginStates>(
       listener: (context, state) {
         if (state is LoginSuccessState) {
-          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message??'');
+          Navigator.of(context).pop();
+          AppDialogs.showSuccessDialog(context, message: state.loginEntity.message ?? '');
           Navigator.of(context).pushNamedAndRemoveUntil(
             Routes.appSection, (route) => false,
             arguments: true,
           );
-        }
-        else if (state is LoginLoadingState) {
+        } else if (state is LoginLoadingState) {
           AppDialogs.showLoadingDialog(context);
         } else if (state is LoginErrorState) {
-          AppDialogs.showFailureDialog(context, message: state.error.message);
+          Navigator.of(context).pop();
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            AppDialogs.showFailureDialog(
+              context,
+              message: state.error.message,
+              );
+          });
         }
       },
       child: Scaffold(

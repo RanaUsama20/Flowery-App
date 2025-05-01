@@ -3,6 +3,8 @@ import 'package:flowery_app/features/categories/domain/entity/get_all_categories
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../../core/error/failuer.dart';
+import '../../../../../core/network/common/api_result.dart';
 import '../../../../../generated/locale_keys.g.dart';
 import '../../../domain/entity/get_products_by_id_entity.dart';
 import '../../../domain/usecase/getCategories_use_case.dart';
@@ -12,86 +14,123 @@ part 'categories_state.dart';
 @injectable
 class CategoriesCubit extends Cubit<CategoriesState> {
   final GetCategoriesUseCase _categoriesUseCase;
+
   CategoriesCubit(this._categoriesUseCase) : super(CategoriesInitial());
 
   List<ProductsEntity> _allProducts = [];
   Future<List<CategoriesEntity>> getAllCategories() async {
     try {
-      final allCategories = await _categoriesUseCase.getAllCategories();
+      final result = await _categoriesUseCase.getAllCategories();
 
-      if (allCategories.isNotEmpty) {
-        final products = await _categoriesUseCase.getProductsById(allCategories[0].id ?? "");
-        _allProducts = List<ProductsEntity>.from(products ?? []);
-        emit(SuccessState(allCategories: allCategories, products: _allProducts));
-      } else {
-        _allProducts = [];
-        emit(SuccessState(allCategories: allCategories, products: []));
+      if (result is SuccessResult<GetAllCategoriesEntity>) {
+        final allCategories = result.data.categories;
+        if (allCategories.isNotEmpty) {
+          final productsResult = await _categoriesUseCase.getProductsById(allCategories[0].id);
+          if (productsResult is SuccessResult<ProductsModelEntity>) {
+            _allProducts = productsResult.data.products ?? [];
+            emit(SuccessState(
+              allCategories: allCategories,
+              products: _allProducts,
+              currentCategoryId: allCategories[0].id,
+            ));
+          } else if (productsResult is FailureResult<ProductsModelEntity>) {
+            final failure = _extractFailure(productsResult.exception);
+            emit(CategoriesError(failure.message as Failure));
+          }
+        } else {
+          emit(SuccessState(
+            allCategories: [],
+            products: [],
+            currentCategoryId: '',
+          ));
+        }
+        return allCategories;
+      } else if (result is FailureResult<GetAllCategoriesEntity>) {
+        final failure = _extractFailure(result.exception);
+        emit(CategoriesError(failure.message as Failure));
+        return [];
       }
-
-      return allCategories;
     } catch (e) {
-      emit(CategoriesError('${LocaleKeys.Home_FailedToFetchCategories.tr()}${e.toString()}'));
+      emit(CategoriesError(LocaleKeys.Home_FailedToFetchCategories.tr() as Failure));
       return [];
     }
+    return [];
   }
 
   Future<List<ProductsEntity>?> getProductsById(String categoryId) async {
     try {
       final result = await _categoriesUseCase.getProductsById(categoryId);
 
-      _allProducts = List<ProductsEntity>.from(result ?? []);
+      if (result is SuccessResult<ProductsModelEntity>) {
+        _allProducts = result.data.products ?? [];
 
-      final currentCategories = state is SuccessState
-          ? List<CategoriesEntity>.from((state as SuccessState).allCategories ?? [])
-          : <CategoriesEntity>[];
+        final currentCategories = state is SuccessState
+            ? (state as SuccessState).allCategories
+            : <CategoriesEntity>[];
 
-      emit(SuccessState(allCategories: currentCategories, products: _allProducts));
-      return _allProducts;
+        emit(SuccessState(
+          allCategories: currentCategories,
+          products: _allProducts,
+          currentCategoryId: categoryId,
+        ));
+        return _allProducts;
+      } else if (result is FailureResult<ProductsModelEntity>) {
+        final failure = _extractFailure(result.exception);
+        emit(CategoriesError(failure.message as Failure));
+        return [];
+      }
     } catch (e) {
-      emit(CategoriesError('${LocaleKeys.Home_FailedToFetchProducts.tr()}${e.toString()}'));
+      emit(CategoriesError(LocaleKeys.Home_FailedToFetchProducts.tr() as Failure));
       return [];
     }
+    return null;
   }
 
-  void filterProducts({String? sortType, num? minPrice, num? maxPrice}) {
-    minPrice = minPrice ??
-        (_allProducts.isNotEmpty
-            ? _allProducts.map((product) => product.price!).reduce((a, b) => a < b ? a : b)
-            : 0);
+  Future<List<ProductsEntity>?> filterToProducts({
+    required String categoryId,
+    required String sort,
+  }) async {
+    final currentState = state;
 
-    maxPrice = maxPrice ??
-        (_allProducts.isNotEmpty
-            ? _allProducts.map((product) => product.price!).reduce((a, b) => a > b ? a : b)
-            : 0);
-
-
-    List<ProductsEntity> filtered = _allProducts.where((product) {
-      return product.price! >= minPrice! && product.price! <= maxPrice!;
-    }).toList();
-
-
-    switch (sortType) {
-      case 'Lowes Price':
-        filtered.sort((a, b) => a.price!.compareTo(b.price!));
-        break;
-      case 'Highest Price':
-        filtered.sort((a, b) => b.price!.compareTo(a.price!));
-        break;
-      case 'New':
-        filtered.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
-        break;
-      case 'Old':
-        filtered.sort((a, b) => a.createdAt!.compareTo(b.createdAt!));
-        break;
-      case 'Discount':
-        filtered.sort((a, b) => (b.discount ?? 0).compareTo(a.discount ?? 0));
-        break;
+    if (currentState is SuccessState) {
+      emit(CategoriesLoading(
+        products: currentState.products,
+        allCategories: currentState.allCategories,
+      ));
     }
 
-    final currentCategories = state is SuccessState
-        ? List<CategoriesEntity>.from((state as SuccessState).allCategories ?? [])
-        : <CategoriesEntity>[];
+    try {
+      final result = await _categoriesUseCase.filterToProducts(categoryId, sort);
 
-    emit(SuccessState(allCategories: currentCategories, products: filtered));
+      if (result is SuccessResult<ProductsModelEntity>) {
+        _allProducts = result.data.products ?? [];
+
+        final currentCategories = currentState is SuccessState
+            ? currentState.allCategories
+            : <CategoriesEntity>[];
+
+        emit(SuccessState(
+          allCategories: currentCategories,
+          products: _allProducts,
+          currentCategoryId: categoryId,
+        ));
+        return _allProducts;
+      } else if (result is FailureResult<ProductsModelEntity>) {
+        final failure = _extractFailure(result.exception);
+        emit(CategoriesError(failure.message as Failure));
+        return [];
+      }
+    } catch (e) {
+      emit(CategoriesError(LocaleKeys.Home_FailedToFetchProducts.tr() as Failure));
+      return [];
+    }
+    return null;
+  }
+
+  Failure _extractFailure(Object exception) {
+    if (exception is Failure) {
+      return exception;
+    }
+    return ServerFailure(LocaleKeys.Error_Bad_request.tr());
   }
 }

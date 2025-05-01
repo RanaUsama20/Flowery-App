@@ -10,6 +10,7 @@ import '../../../profile/data/api/profile_retrofit_client.dart';
 import '../../domain/entity/forgot_password_response_entity.dart';
 import '../api/auth_retrofit_client.dart';
 import '../api/upload_photo_api_service.dart';
+import '../model/login/login_dto.dart';
 import '../model/request/edit_profile_request.dart';
 import '../model/request/forgot_password_request_dto.dart';
 import '../model/request/reset_password_request.dart';
@@ -83,12 +84,23 @@ class AuthDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  Future<LoginEntity?> login({required String email, required String password}) async {
-    var response = await apiService.login(email, password);
+  Future<Result<LoginEntity>> login({required String email, required String password}) async {
+    final result = await apiManager.execute<LoginDto>(() async {
+      final response = await apiService.login(email, password);
 
-    return response?.toLoginEntity();
+      if (response == null) {
+        throw Exception("Null response from login API");
+      }
+
+      return response;
+    });
+    switch (result) {
+      case SuccessResult<LoginDto>():
+        return SuccessResult<LoginEntity>(result.data.toLoginEntity());
+      case FailureResult<LoginDto>():
+        return FailureResult<LoginEntity>(result.exception);
+    }
   }
-
   @override
   Future<String> logout() async {
     final token = await SaveLocal.getString("token");

@@ -42,12 +42,26 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<LoginEntity?> login(
-      {required String email, required String password}) async {
-    var response = await authDataSource.login(email: email, password: password);
-    SharedPreferencesUtils.saveData ( key: AppValues.token, value: response?.token);
-    return response;
+  Future<Result<LoginEntity>> login({
+    required String email,
+    required String password,
+  }) async {
+    final result = await authDataSource.login(email: email, password: password);
+
+    switch (result) {
+      case SuccessResult<LoginEntity?>():
+        final data = result.data;
+        if (data == null) {
+          return FailureResult(Exception());
+        }
+        SharedPreferencesUtils.saveData(key: AppValues.token, value: data.token);
+        return SuccessResult<LoginEntity>(data);
+
+      case FailureResult<LoginEntity?>():
+        return FailureResult<LoginEntity>(result.exception);
+    }
   }
+
 
   @override
   Future<Result<ForgotPasswordResponseEntity>> forgotPassword({required String email}) {
