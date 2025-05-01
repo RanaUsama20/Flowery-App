@@ -28,26 +28,32 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     super.initState();
     _appCubit = serviceLocator<AppCubit>();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_appCubit.getStateUser ==
-          StateUser.guest) {
-        AppDialogs.showLoginDialog(
-            context,
-            message: LocaleKeys
-                .Error_YouHaveToLoginToUseThisFeature
-                .tr());
-      } else {
-        Future.microtask(() => context.read<CartCubit>().getProductToCart());
 
-      }
-    });
+    if (_appCubit.getStateUser == StateUser.login) {
+      cartCubit.getProductToCart();
+      // Future.microtask(() => context.read<CartCubit>().getProductToCart());
+    }
 
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (_appCubit.getStateUser == StateUser.login) {
+    //     // AppDialogs.showLoginDialog(
+    //     //     context,
+    //     //     message: LocaleKeys
+    //     //         .Error_YouHaveToLoginToUseThisFeature
+    //     //         .tr());
+
+    //    // Future.microtask(() => context.read<CartCubit>().getProductToCart());
+    //   } else {
+
+    //   }
+    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<CartCubit, CartState>(
+        bloc: cartCubit,
         builder: (context, state) {
           if (state is CartLoadingState) {
             return const Center(child: CircularProgressIndicator());
@@ -70,7 +76,8 @@ class _CartScreenState extends State<CartScreen> {
                         Row(children: [
                           IconButton(
                             onPressed: () {
-                              Navigator.pushReplacementNamed(context, Routes.appSection);
+                              Navigator.pushReplacementNamed(
+                                  context, Routes.appSection);
                             },
                             icon: Icon(Icons.arrow_back_ios_new_outlined),
                           ),
@@ -82,8 +89,8 @@ class _CartScreenState extends State<CartScreen> {
                               "(${state.productCart.numOfCartItems.toString() + LocaleKeys.Home_Items.tr()})",
                               style: AppTheme.lightTheme.textTheme.titleLarge
                                   ?.copyWith(
-                                  color: AppColors.gray,
-                                  fontWeight: FontWeight.w400)),
+                                      color: AppColors.gray,
+                                      fontWeight: FontWeight.w400)),
                           Spacer(),
                           IconButton(
                             onPressed: () {
@@ -178,13 +185,13 @@ class _CartScreenState extends State<CartScreen> {
                               "${LocaleKeys.Home_TotalPrice.tr()}  : ",
                               style: AppTheme.lightTheme.textTheme.titleLarge
                                   ?.copyWith(
-                                  fontSize: 16, color: AppColors.gray),
+                                      fontSize: 16, color: AppColors.gray),
                             ),
                             Spacer(),
                             Text("${state.productCart.cart?.totalPrice}",
                                 style: AppTheme.lightTheme.textTheme.titleLarge
                                     ?.copyWith(
-                                    fontSize: 16, color: AppColors.gray)),
+                                        fontSize: 16, color: AppColors.gray)),
                           ],
                         ),
                         SizedBox(
@@ -196,17 +203,18 @@ class _CartScreenState extends State<CartScreen> {
                               "${LocaleKeys.Home_Discount.tr()} : ",
                               style: AppTheme.lightTheme.textTheme.titleLarge
                                   ?.copyWith(
-                                  fontSize: 16, color: AppColors.gray),
+                                      fontSize: 16, color: AppColors.gray),
                             ),
                             Spacer(),
                             Text("${state.productCart.cart?.discount} %",
                                 style: AppTheme.lightTheme.textTheme.titleLarge
                                     ?.copyWith(
-                                    fontSize: 16, color: AppColors.gray)),
+                                        fontSize: 16, color: AppColors.gray)),
                           ],
                         ),
                         Divider(
-                          color: AppColors.black[AppColors.colorCode40]?.withOpacity(0.5),
+                          color: AppColors.black[AppColors.colorCode40]
+                              ?.withOpacity(0.5),
                           thickness: 1,
                         ),
                         Row(
@@ -237,7 +245,8 @@ class _CartScreenState extends State<CartScreen> {
                             ),
                             onPressed: () {
                               Navigator.of(context).pushNamed(Routes.checkout,
-                                  arguments:state.productCart.cart?.totalPriceAfterDiscount );
+                                  arguments: state.productCart.cart
+                                      ?.totalPriceAfterDiscount);
                             },
                             child: Text(LocaleKeys.Home_CheckOut.tr(),
                                 style: AppTheme.lightTheme.textTheme.titleSmall
@@ -255,15 +264,31 @@ class _CartScreenState extends State<CartScreen> {
               AppDialogs.showFailureDialog(
                 context,
                 message: state.error.message,
-                nextAction: () =>  Navigator.pushReplacementNamed(context, Routes.appSection),
-              )
-              ;});
+                nextAction: () =>
+                    Navigator.pushReplacementNamed(context, Routes.appSection),
+              );
+            });
           }
-          return const Center(child: CircularProgressIndicator());
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr()),
+                SizedBox(height: 20),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(Routes.login);
+                    },
+                    child: Text(LocaleKeys.Authentication_Login.tr()))
+              ],
+            ),
+          );
         },
       ),
     );
   }
 }
-
-

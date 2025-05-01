@@ -105,11 +105,12 @@ class AppDialogs {
           actions: [
             TextButton(
                 onPressed: () {
-                  Navigator.pushReplacementNamed(context, Routes.appSection);
+                  Navigator.of(context).pop();
                 },
                 child: Text(LocaleKeys.cancel.tr())),
             TextButton(
-              onPressed: () => Navigator.of(context).pushReplacementNamed(Routes.login),
+              onPressed: () =>
+                  Navigator.of(context).pushReplacementNamed(Routes.login),
               child: Text(LocaleKeys.Ok.tr()),
             ),
           ],

@@ -4,6 +4,7 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
+import 'package:flowery_app/core/utils/widgets/error_widget.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view_model/cubit/home_state.dart';
@@ -51,14 +52,21 @@ class _HomeScreenState extends State<HomeScreen> {
             if (state.homeData is BaseLoadingState) {
               return _dummyScreen(theme);
             } else if (state.homeData is BaseErrorState) {
-              final ans = state.homeData as BaseErrorState;
-              return Center(child: Text(ans.errorMessage));
+              Center(
+                child: ErrorStateWidget(
+                  height: 50,
+                  width: 50,
+                  message: (state.homeData as BaseErrorState).errorMessage,
+                  onRetry: () => _homeCubit.getHomeData(),
+                ),
+              );
             } else if (state.homeData is BaseSuccessState) {
               final ans = state.homeData as BaseSuccessState<HomeEntity>;
               return RefreshIndicator(
                 color: AppColors.pink,
-                onRefresh: _onRefresh,  // Added refresh callback
-                child: SingleChildScrollView(  // Wrapping inside scrollable widget
+                onRefresh: _onRefresh, // Added refresh callback
+                child: SingleChildScrollView(
+                  // Wrapping inside scrollable widget
                   child: Column(
                     children: [
                       SectionSearch(),
@@ -70,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           _sectionTitle(
                             LocaleKeys.Home_Categories.tr(),
-                                () {
+                            () {
                               Navigator.pushNamed(context, Routes.categories);
                             },
                           ),
@@ -97,7 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: 30,
                                           height: 30,
                                           child: CustomCacheNetworkImage(
-                                            imageUrl: ans.data?.category[index].image ?? '',
+                                            imageUrl: ans.data?.category[index]
+                                                    .image ??
+                                                '',
                                             width: double.infinity,
                                             height: double.infinity,
                                           ),
@@ -117,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
                           _sectionTitle(
                             LocaleKeys.Home_BestSeller.tr(),
-                                () {
+                            () {
                               Navigator.pushNamed(context, Routes.bestSeller);
                             },
                           ),
@@ -143,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
                           _sectionTitle(
                             LocaleKeys.Home_Occasion.tr(),
-                                () {
+                            () {
                               Navigator.pushNamed(context, Routes.occasion);
                             },
                           ),
@@ -211,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _sectionTitle(
                   LocaleKeys.Home_Categories.tr(),
-                      () {
+                  () {
                     Navigator.pushNamed(context, Routes.categories);
                   },
                 ),
@@ -251,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 _sectionTitle(
                   LocaleKeys.Home_BestSeller.tr(),
-                      () {
+                  () {
                     Navigator.pushNamed(context, Routes.bestSeller);
                   },
                 ),
@@ -277,7 +287,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text("Dummy Name",
-                                style: theme.bodyLarge, overflow: TextOverflow.ellipsis),
+                                style: theme.bodyLarge,
+                                overflow: TextOverflow.ellipsis),
                             const SizedBox(height: 3),
                             Text('223 EGP', style: theme.labelMedium)
                           ],
@@ -289,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 _sectionTitle(
                   LocaleKeys.Home_Occasion.tr(),
-                      () {
+                  () {
                     Navigator.pushNamed(context, Routes.occasion);
                   },
                 ),
@@ -311,7 +322,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const SizedBox(height: 5),
                             Text("Dummy Name",
-                                style: theme.bodyLarge, overflow: TextOverflow.ellipsis),
+                                style: theme.bodyLarge,
+                                overflow: TextOverflow.ellipsis),
                             const SizedBox(height: 3),
                             Text('223 EGP', style: theme.labelMedium)
                           ],
