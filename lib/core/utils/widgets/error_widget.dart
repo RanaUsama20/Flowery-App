@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

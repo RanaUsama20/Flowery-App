@@ -60,7 +60,6 @@ class BestSellerCubit extends Cubit<BestSellerState> {
     emit(state.copyWith(selectedProduct: mappedProduct));
   }
 
-
 }
 
 
