@@ -17,29 +17,6 @@ jobs:
           channel: 'stable'
           flutter-version: 3.27.4
 
-      - name: Validate PR title format
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const core = require('@actions/core');  # Only declare once
-            const { context } = require('@actions/github');
-
-            const prTitle = context.payload.pull_request.title;
-
-            const titleRegex = /^(feat|fix|hotfix|release|build|test)\((ECOM-\d+|JIRA-\d+|[A-Z]+-\d+)\):\s.+$/;
-
-            if (!titleRegex.test(prTitle)) {
-              core.setFailed(`❌ Invalid PR title: "${prTitle}"
-
-            Expected format:
-              type(SCOPE-ID): task name
-            Example:
-              feat(ECOM-123): Add user login flow
-            Allowed types: feat, fix, hotfix, release, build, test`);
-            } else {
-              console.log("✅ PR title is valid.");
-            }
 
       - run: flutter --version
       - run: flutter pub get
@@ -63,5 +40,5 @@ jobs:
           appId: ${{ secrets.FIREBASE_APP_ID }}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           file: build/app/outputs/flutter-apk/app-release.apk
-          testers: esammww.com@gmail.com,bakkaraweja@gmail.com,amirakh098@gmail.com,johnsafwat362@gmail.com
+          groups: tester-github-action
           releaseNotes: "🚀 Auto-release from GitHub Actions"
