@@ -131,8 +131,8 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.lightTheme,
         title: AppValues.appTitle,
         onGenerateRoute: RouteGenerator.getRoute,
-       // initialRoute: _isLoggedIn! ? Routes.appSection : Routes.login,
-        initialRoute: Routes.login,
+      initialRoute: _isLoggedIn! ? Routes.appSection : Routes.login,
+        // initialRoute: Routes.login,
 
       ),
     );

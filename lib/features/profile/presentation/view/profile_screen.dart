@@ -3,6 +3,7 @@ import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/constants/app_fonts_family.dart';
 import 'package:flowery_app/core/constants/app_values.dart';
+import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/dialogs/app_dialogs.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
@@ -15,7 +16,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../core/utils/widgets/error_widget.dart';
 import '../../../auth/data/model/request/edit_profile_request.dart';
+import '../view_model/profile_main/profile_main_cubit.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -24,28 +27,50 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
+
 class _ProfileScreenState extends State<ProfileScreen> {
+  late ProfileMainCubit cubit;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    cubit = serviceLocator<ProfileMainCubit>();
+    cubit.getProfileData();
+  }
   bool isOn = true;
   @override
   Widget build(BuildContext context) {
+   return  BlocBuilder<ProfileMainCubit, ProfileMainState>(
+      builder: (context, state) {
+        if (state.isProfileMainLoading) {
+          return Skeletonizer(
+            child: _topSectionDetails(
+              email: "Mohamed@gmail.com",
+              name: "Mohamed",
+              imageUrl: imageUrl,
+            ),
+          );
+        }
+        if (state.isProfileMainFailure) {
+          return Center(
+            child: ErrorStateWidget(
+                height: 50,
+                width: 50,
+                message: state.errorMessage,
+                onRetry: () =>
+                    context.read<ProfileMainCubit>().getProfileData()),
+          );
+        }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         _customAppBar(),
         const SizedBox(height: 16),
-        BlocBuilder<ProfileMainCubit, ProfileMainState>(
-          builder: (context, state) {
-            if (state.isProfileMainLoading) {
-              return Skeletonizer(
-                child: _topSectionDetails(
-                  email: "Mohamed@gmail.com",
-                  name: "Mohamed",
-                  imageUrl: imageUrl,
-                ),
-              );
-            }
-            if (state.isProfileMainSuccess) {
-              return _topSectionDetails(
+        Expanded(
+          child: Column(
+            children: [
+              _topSectionDetails(
                 email: state.profileData.user.email,
                 editProfileData: EditProfileRequest(
                     firstName: state.profileData.user.firstName,
@@ -54,140 +79,135 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     phone: state.profileData.user.phone,
                     url: state.profileData.user.photo),
                 name:
-                    "${state.profileData.user.firstName} ${state.profileData.user.lastName}",
+                "${state.profileData.user.firstName} ${state.profileData.user.lastName}",
                 imageUrl: state.profileData.user.photo,
-              );
-            }
-            return Skeletonizer(
-              child: _topSectionDetails(
-                email: "MohamedEssam@gmail.come",
-                name: "Mohamed Essam Eid",
-                imageUrl: imageUrl,
               ),
-            );
-          },
-        ),
-        const SizedBox(height: 32),
-        Expanded(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _itemSection(
-                leading: _iconSvg(SvgAssets.order),
-                trailing: _arrowIos(),
-                title: LocaleKeys.profile_MyOrder.tr(),
-                onTap: () {
-                  Navigator.of(context).pushNamed(Routes.order);
-                },
-              ),
-              _itemSection(
-                leading: _iconSvg(SvgAssets.location2Svg),
-                trailing: _arrowIos(),
-                title: LocaleKeys.profile_SavedAddress.tr(),
-                onTap: () {
-                  final state = context.read<ProfileMainCubit>().state;
+              const SizedBox(height: 32),
+              Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        _itemSection(
+                          leading: _iconSvg(SvgAssets.order),
+                          trailing: _arrowIos(),
+                          title: LocaleKeys.profile_MyOrder.tr(),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Routes.order);
+                          },
+                        ),
+                        _itemSection(
+                          leading: _iconSvg(SvgAssets.location2Svg),
+                          trailing: _arrowIos(),
+                          title: LocaleKeys.profile_SavedAddress.tr(),
+                          onTap: () {
+                            final state = context.read<ProfileMainCubit>().state;
 
-                  if (state.isProfileMainSuccess) {
-                    print("------------------------------");
-                    print(state.profileData.user.addresses,);
-                    Navigator.pushNamed(
-                      context,
-                      Routes.savedAddress,
-                      arguments: state.profileData.user.addresses,
-
-                    ).then((result) {
-                      if (result == 'refresh') {
-                        context.read<ProfileMainCubit>().getProfileData();
-                      }
-                    });
-                  }
-                },
-              ),
-              SizedBox(height: 16),
-              const Divider(),
-              SizedBox(height: 16),
-              _itemSection(
-                leading:
-                CustomSwitch(
-                    width: 42,
-                    height: 20,
-                  value: isOn,
-                  onChanged: (value) {
-                    setState(() {
-                      isOn = value;
-                    });
-                  },
-                ),
-                trailing: _arrowIos(),
-                title: LocaleKeys.profile_Notification.tr(),
-                onTap: () {},
-              ),
-              SizedBox(height: 16),
-              const Divider(),
-              SizedBox(height: 16),
-              _itemSection(
-                leading: _iconSvg(SvgAssets.translate),
-                trailing: Text(
-                  context.locale.languageCode == AppValues.english
-                      ? LocaleKeys.profile_English.tr()
-                      : LocaleKeys.profile_Arabic.tr(),
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                title: LocaleKeys.profile_Language.tr(),
-                onTap: () {
-                  _showBottomSheetLang();
-                },
-              ),
-              _itemSection(
-                trailing: _arrowIos(),
-                title: LocaleKeys.profile_AboutUs.tr(),
-                onTap: () {
-
-                  Navigator.of(context).pushNamed(Routes.aboutApp);
-                },
-              ),
-              _itemSection(
-                trailing: _arrowIos(),
-                title: LocaleKeys.profile_TermsConditions.tr(),
-                onTap: () {
-                  Navigator.of(context).pushNamed(Routes.termsAndCondition);
-
-                },
-              ),
-              SizedBox(height: 16),
-              const Divider(),
-              SizedBox(height: 16),
-              BlocListener<ProfileMainCubit, ProfileMainState>(
-                listener: (context, state) {
-                  if (state.isLogoutLoading) {
-                    AppDialogs.showLoadingDialog(context);
-                  } else if (state.isLogoutSuccess) {
-                    Navigator.pushNamed(context, Routes.appSection);
-                  } else if (state.isLogoutFailure) {
-                    AppDialogs.showFailureDialog(context,
-                        message: state.logOutMessageResponse);
-                  }
-                },
-                child: _itemSection(
-                  trailing: Icon(Icons.login_outlined),
-                  title: LocaleKeys.profile_Logout.tr(),
-                  onTap: () {
-                    context.read<ProfileMainCubit>().logout();
-                  },
-                ),
-              ),
-              const SizedBox(),
-              Text(
-                "v 6.3.0 - (446)",
-                style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: AppColors.white[AppColors.colorCode90],
+                            if (state.isProfileMainSuccess) {
+                              print("------------------------------");
+                              print(
+                                state.profileData.user.addresses,
+                              );
+                              Navigator.pushNamed(
+                                context,
+                                Routes.savedAddress,
+                                arguments: state.profileData.user.addresses,
+                              ).then((result) {
+                                if (result == 'refresh') {
+                                  context
+                                      .read<ProfileMainCubit>()
+                                      .getProfileData();
+                                }
+                              });
+                            }
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        const Divider(),
+                        SizedBox(height: 16),
+                        _itemSection(
+                          leading: CustomSwitch(
+                            width: 42,
+                            height: 20,
+                            value: isOn,
+                            onChanged: (value) {
+                              setState(() {
+                                isOn = value;
+                              });
+                            },
+                          ),
+                          trailing: _arrowIos(),
+                          title: LocaleKeys.profile_Notification.tr(),
+                          onTap: () {},
+                        ),
+                        SizedBox(height: 16),
+                        const Divider(),
+                        SizedBox(height: 16),
+                        _itemSection(
+                          leading: _iconSvg(SvgAssets.translate),
+                          trailing: Text(
+                            context.locale.languageCode == AppValues.english
+                                ? LocaleKeys.profile_English.tr()
+                                : LocaleKeys.profile_Arabic.tr(),
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                          title: LocaleKeys.profile_Language.tr(),
+                          onTap: () {
+                            _showBottomSheetLang();
+                          },
+                        ),
+                        _itemSection(
+                          trailing: _arrowIos(),
+                          title: LocaleKeys.profile_AboutUs.tr(),
+                          onTap: () {
+                            Navigator.of(context).pushNamed(Routes.aboutApp);
+                          },
+                        ),
+                        _itemSection(
+                          trailing: _arrowIos(),
+                          title: LocaleKeys.profile_TermsConditions.tr(),
+                          onTap: () {
+                            Navigator.of(context)
+                                .pushNamed(Routes.termsAndCondition);
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        const Divider(),
+                        SizedBox(height: 16),
+                        BlocListener<ProfileMainCubit, ProfileMainState>(
+                          listener: (context, state) {
+                            if (state.isLogoutLoading) {
+                              AppDialogs.showLoadingDialog(context);
+                            } else if (state.isLogoutSuccess) {
+                              Navigator.pushNamed(context, Routes.appSection);
+                            } else if (state.isLogoutFailure) {
+                              AppDialogs.showFailureDialog(context,
+                                  message: state.logOutMessageResponse);
+                            }
+                          },
+                          child: _itemSection(
+                            trailing: Icon(Icons.login_outlined),
+                            title: LocaleKeys.profile_Logout.tr(),
+                            onTap: () {
+                              context.read<ProfileMainCubit>().logout();
+                            },
+                          ),
+                        ),
+                        const SizedBox(),
+                        Text(
+                          "v 6.3.0 - (446)",
+                          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            color: AppColors.white[AppColors.colorCode90],
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                textAlign: TextAlign.center,
-              ),
+                  ))
             ],
           ),
-        ))
-      ],
+        )]);
+
+      },
     );
   }
 
@@ -307,7 +327,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           Spacer(),
           InkWell(
-            onTap: (){
+            onTap: () {
               Navigator.of(context).pushNamed(Routes.notification);
             },
             child: Badge(
