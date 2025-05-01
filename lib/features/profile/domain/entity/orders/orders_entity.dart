@@ -1,16 +1,16 @@
+import 'package:equatable/equatable.dart';
 
-
-class OrdersResponseEntity {
+class OrdersResponseEntity extends Equatable {
   final String? message;
   final List<OrdersEntity>? orders;
 
-  OrdersResponseEntity({this.message, this.orders});
+  const OrdersResponseEntity({this.message, this.orders});
 
-
+  @override
+  List<Object?> get props => [message, orders];
 }
 
-
-class OrdersEntity {
+class OrdersEntity extends Equatable {
   final String? id;
   final String? user;
   final List<OrderItemsEntity>? orderItems;
@@ -24,7 +24,7 @@ class OrdersEntity {
   final String? orderNumber;
   final int? v;
 
-  OrdersEntity({
+  const OrdersEntity({
     this.id,
     this.user,
     this.orderItems,
@@ -39,26 +39,41 @@ class OrdersEntity {
     this.v,
   });
 
-
+  @override
+  List<Object?> get props => [
+    id,
+    user,
+    orderItems,
+    totalPrice,
+    paymentType,
+    isPaid,
+    isDelivered,
+    state,
+    createdAt,
+    updatedAt,
+    orderNumber,
+    v,
+  ];
 }
 
-class OrderItemsEntity {
+class OrderItemsEntity extends Equatable {
   final ProductEntity? product;
   final int? price;
   final int? quantity;
   final String? id;
 
-  OrderItemsEntity({
+  const OrderItemsEntity({
     this.product,
     this.price,
     this.quantity,
     this.id,
   });
 
-
+  @override
+  List<Object?> get props => [product, price, quantity, id];
 }
 
-class ProductEntity {
+class ProductEntity extends Equatable {
   final String? id;
   final String? title;
   final String? slug;
@@ -78,7 +93,7 @@ class ProductEntity {
   final double? rateAvg;
   final int? rateCount;
 
-  ProductEntity({
+  const ProductEntity({
     this.id,
     this.title,
     this.slug,
@@ -99,4 +114,25 @@ class ProductEntity {
     this.rateCount,
   });
 
+  @override
+  List<Object?> get props => [
+    id,
+    title,
+    slug,
+    description,
+    imgCover,
+    images,
+    price,
+    priceAfterDiscount,
+    quantity,
+    category,
+    occasion,
+    createdAt,
+    updatedAt,
+    v,
+    discount,
+    sold,
+    rateAvg,
+    rateCount,
+  ];
 }

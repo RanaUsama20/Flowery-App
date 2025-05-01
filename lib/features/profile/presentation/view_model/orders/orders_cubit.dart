@@ -1,5 +1,4 @@
 import 'package:flowery_app/core/constants/app_values.dart';
-import 'package:flowery_app/features/home/presentation/view_model/cubit/best_seller/best_seller_state.dart';
 import 'package:flowery_app/features/profile/domain/usecase/get_orders_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -30,7 +29,6 @@ class OrdersCubit extends Cubit<OrdersState> {
     switch (result) {
       case SuccessResult<OrdersResponseEntity?>():
         {
-          print('result issssssss $result');
           final orders = result.data?.orders ?? [];
           final active = orders.where((o) {
             final status = o.state?.toLowerCase();

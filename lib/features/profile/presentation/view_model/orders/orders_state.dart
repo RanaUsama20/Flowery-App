@@ -10,14 +10,14 @@ class OrdersState extends Equatable {
 
 
  const OrdersState({
-  this.baseState,
+   this.baseState,
   this.activeOrders,
   this.completedOrders
 
  });
 
  OrdersState copyWith({
-  BaseState? baseState,
+   BaseState? baseState,
   List<OrdersEntity>? activeOrders,
   List<OrdersEntity>? completedOrders
 
