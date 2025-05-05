@@ -22,6 +22,13 @@ class AppSection extends StatefulWidget {
 class _AppSectionState extends State<AppSection> {
   int _currentIndex = 0;
   Key _cartKey = UniqueKey();
+  late Future<List<Widget>> _pagesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _pagesFuture = _getPages();
+  }
 
   Future<List<Widget>> _getPages() async {
     final token = await SharedPreferencesUtils.getString(AppValues.token);
@@ -31,20 +38,21 @@ class _AppSectionState extends State<AppSection> {
         ? [
       const HomeScreen(),
       const CategoriesScreen(),
+      CartScreen(key: _cartKey), // Use key to reload cart
       const ProfileScreen(),
     ]
         : [
       const HomeScreen(),
       const CategoriesScreen(),
-      const DidnotLoginScreen(),
-      const DidnotLoginScreen(),
+      const DidnotLoginScreen(), // Replace cart
+      const DidnotLoginScreen(), // Replace profile
     ];
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Widget>>(
-      future: _getPages(),
+      future: _pagesFuture,
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Scaffold(
@@ -65,11 +73,12 @@ class _AppSectionState extends State<AppSection> {
             type: BottomNavigationBarType.fixed,
             currentIndex: _currentIndex,
             onTap: (selectedIndex) {
+              if (selectedIndex == 2) {
+                _cartKey = UniqueKey(); // Regenerate cart key
+                _pagesFuture = _getPages(); // Rebuild future with new cart
+              }
               setState(() {
                 _currentIndex = selectedIndex;
-                if (_currentIndex == 2) {
-                  _cartKey = UniqueKey();
-                }
               });
             },
             items: [
