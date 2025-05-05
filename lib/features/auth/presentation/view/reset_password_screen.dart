@@ -47,79 +47,82 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         },
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              Text(
-                LocaleKeys.Authentication_ResetPassword.tr(),
-                style: AppTheme.lightTheme.textTheme.titleLarge,
-              ),
-              SizedBox(height: context.hp(1.5)),
-              Text(
-                LocaleKeys.Authentication_PasswordRequirements.tr(),
-                style: AppTheme.lightTheme.textTheme.titleSmall
-                    ?.copyWith(color: AppColors.gray),
-              ),
-              SizedBox(height: context.hp(3.5)),
-              TextFormField(
-                controller: _newPasswordController,
-                obscureText: true, // Make sure password is obscured
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.Authentication_NewPassword.tr(),
-                  labelStyle: AppTheme.lightTheme.textTheme.labelLarge!
-                      .copyWith(color: AppColors.gray),
-                  hintText: LocaleKeys.Authentication_EnterYourPassword.tr(),
-                  hintStyle:
-                      AppTheme.lightTheme.inputDecorationTheme.labelStyle!.copyWith(
-                    fontSize: context.sp(16),
-                    color: Color(0xFFA6A6A6),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Text(
+                  LocaleKeys.Authentication_ResetPassword.tr(),
+                  style: AppTheme.lightTheme.textTheme.titleLarge,
+                ),
+                SizedBox(height: context.hp(1.5)),
+                Text(
+                  LocaleKeys.Authentication_PasswordRequirements.tr(),
+                  style: AppTheme.lightTheme.textTheme.titleSmall
+                      ?.copyWith(color: AppColors.gray),
+                ),
+                SizedBox(height: context.hp(3.5)),
+                TextFormField(
+                  controller: _newPasswordController,
+                  obscureText: true, // Make sure password is obscured
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.Authentication_NewPassword.tr(),
+                    labelStyle: AppTheme.lightTheme.textTheme.labelLarge!
+                        .copyWith(color: AppColors.gray),
+                    hintText: LocaleKeys.Authentication_EnterYourPassword.tr(),
+                    hintStyle:
+                        AppTheme.lightTheme.inputDecorationTheme.labelStyle!.copyWith(
+                      fontSize: context.sp(16),
+                      color: Color(0xFFA6A6A6),
+                    ),
+                    border: AppTheme.lightTheme.inputDecorationTheme.border,
+                    focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
+                    errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
+                    focusedErrorBorder:
+                        AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
                   ),
-                  border: AppTheme.lightTheme.inputDecorationTheme.border,
-                  focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
-                  errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
-                  focusedErrorBorder:
-                      AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                  keyboardType: TextInputType.text,
+                  validator: (value) => Validator.validatePassword(value),
                 ),
-                keyboardType: TextInputType.text,
-                validator: (value) => Validator.validatePassword(value),
-              ),
-              SizedBox(height: context.hp(2.5)),
-              TextFormField(
-                controller: _confirmPasswordController,
-                obscureText: true, // Make sure password is obscured
-                decoration: InputDecoration(
-                  labelText: LocaleKeys.Authentication_ConfirmPassword.tr(),
-                  labelStyle: AppTheme.lightTheme.inputDecorationTheme.labelStyle,
-                  hintText: LocaleKeys.Authentication_ConfirmPassword.tr(),
-                  hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
-                  border: AppTheme.lightTheme.inputDecorationTheme.border,
-                  focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
-                  errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
-                  focusedErrorBorder:
-                      AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                SizedBox(height: context.hp(2.5)),
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  obscureText: true, // Make sure password is obscured
+                  decoration: InputDecoration(
+                    labelText: LocaleKeys.Authentication_ConfirmPassword.tr(),
+                    labelStyle: AppTheme.lightTheme.inputDecorationTheme.labelStyle,
+                    hintText: LocaleKeys.Authentication_ConfirmPassword.tr(),
+                    hintStyle: AppTheme.lightTheme.inputDecorationTheme.hintStyle,
+                    border: AppTheme.lightTheme.inputDecorationTheme.border,
+                    focusedBorder: AppTheme.lightTheme.inputDecorationTheme.focusedBorder,
+                    errorBorder: AppTheme.lightTheme.inputDecorationTheme.errorBorder,
+                    focusedErrorBorder:
+                        AppTheme.lightTheme.inputDecorationTheme.focusedErrorBorder,
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+                  ),
+                  keyboardType: TextInputType.text,
+                  validator: (value) =>
+                      Validator.validateConfirmPassword(value, _newPasswordController.text),
                 ),
-                keyboardType: TextInputType.text,
-                validator: (value) =>
-                    Validator.validateConfirmPassword(value, _newPasswordController.text),
-              ),
-              SizedBox(height: context.hp(4.5)),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    context
-                        .read<ForgotPasswordCubit>()
-                        .resetPassword(_newPasswordController.text);
-                  }
-                },
-                style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
-                  minimumSize: WidgetStatePropertyAll(Size(double.infinity, 48)),
+                SizedBox(height: context.hp(4.5)),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      context
+                          .read<ForgotPasswordCubit>()
+                          .resetPassword(_newPasswordController.text);
+                    }
+                  },
+                  style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                    minimumSize: WidgetStatePropertyAll(Size(double.infinity, 48)),
+                  ),
+                  child: Text(LocaleKeys.Authentication_Confirm.tr()),
                 ),
-                child: Text(LocaleKeys.Authentication_Confirm.tr()),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

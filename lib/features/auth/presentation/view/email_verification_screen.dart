@@ -34,12 +34,12 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
           if (state.isVerifyResetCodeLoading) {
             AppDialogs.showLoadingDialog(context);
           }
-          if (state.isVerifyResetCodeSuccess) {
+         else  if (state.isVerifyResetCodeSuccess) {
             context.pop();
             context.pushNamed(Routes.resetPassword,
                 arguments: context.read<ForgotPasswordCubit>());
           }
-          if (state.isVerifyResetCodeError) {
+          else if (state.isVerifyResetCodeError) {
             context.pop();
             AppToast.showToast(
               context: context,
@@ -48,7 +48,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               type: ToastificationType.error,
             );
           }
-          if (state.isForgotPasswordSuccess) {
+         else  if (state.isForgotPasswordSuccess) {
             context.pop();
             context.pop();
             AppToast.showToast(
@@ -58,10 +58,10 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
               type: ToastificationType.success,
             );
           }
-          if (state.isForgotPasswordLoading) {
+          else if (state.isForgotPasswordLoading) {
             AppDialogs.showLoadingDialog(context);
           }
-          if (state.isForgotPasswordError) {
+         else  if (state.isForgotPasswordError) {
             context.pop();
             AppToast.showToast(
               context: context,

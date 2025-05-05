@@ -13,14 +13,15 @@ class DidnotLoginScreen extends StatelessWidget {
     return Scaffold(
 
       body: Center(
-        child: ErrorStateWidget(
-        height: context.hp(70),
-        width: 400,
-          message: "please log in to use this future ",
-            functionMessage: "log in",
-            lottie: AppLottie.loginLottie,
-            onRetry: () => Navigator.of(context).pushNamed(Routes.login),
-            ),
+        child: SingleChildScrollView(
+          child: LoginStateWidget(
+          height: context.hp(70),
+            message: "please log in to use this future ",
+              functionMessage: "log in",
+              lottie: AppLottie.loginLottie,
+              onRetry: () => Navigator.of(context).pushNamed(Routes.login),
+              ),
+        ),
     ),
 
 

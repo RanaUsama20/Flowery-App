@@ -49,6 +49,8 @@ class ForgotPasswordCubit extends Cubit<ForgetPasswordState> {
   }
 
   Future<void> resetPassword(String newPassword) async {
+    print(newPassword);
+    print("-------------------------------");
     emit(state.copyWith(resPasswordStatus: Status.loading));
     log(state.email.toString());
     final result =

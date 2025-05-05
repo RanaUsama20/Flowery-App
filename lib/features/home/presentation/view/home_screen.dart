@@ -17,6 +17,7 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../widgets/custom_card.dart';
 import '../widgets/section_location.dart';
 import '../widgets/section_search.dart';
+import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _onRefresh() async {
-    // Trigger the data reload (same as in initState)
     await _homeCubit.getHomeData();
   }
 
@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (state.homeData is BaseLoadingState) {
               return _dummyScreen(theme);
             } else if (state.homeData is BaseErrorState) {
-              Center(
+              return Center(
                 child: ErrorStateWidget(
                   height: 50,
                   width: 50,
@@ -64,21 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
               final ans = state.homeData as BaseSuccessState<HomeEntity>;
               return RefreshIndicator(
                 color: AppColors.pink,
-                onRefresh: _onRefresh, // Added refresh callback
+                onRefresh: _onRefresh,
                 child: SingleChildScrollView(
-                  // Wrapping inside scrollable widget
                   child: Column(
                     children: [
                       SectionSearch(),
                       const SizedBox(height: 20),
                       SectionLocation(),
                       const SizedBox(height: 10),
-                      // List of sections, categories, best sellers, etc.
                       Column(
                         children: [
                           _sectionTitle(
                             LocaleKeys.Home_Categories.tr(),
-                            () {
+                                () {
                               Navigator.pushNamed(context, Routes.categories);
                             },
                           ),
@@ -92,34 +90,50 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.lightPink,
-                                        borderRadius: BorderRadius.circular(20),
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: ProductDetailsModel(
+                                        id: ans.data!.category[index].id!,
+                                        name: ans.data!.category[index].name!,
+                                        description: 'Category Description', // Adjust as needed
+                                        images: ans.data!.category[index].image != null
+                                            ? [ans.data!.category[index].image!] // Wrap it in a list if it's not null
+                                            : [],
+                                        price: 0, // Adjust as needed
+                                        inStock: true, // Adjust as needed
                                       ),
-                                      child: Center(
-                                        child: SizedBox(
-                                          width: 30,
-                                          height: 30,
-                                          child: CustomCacheNetworkImage(
-                                            imageUrl: ans.data?.category[index]
-                                                    .image ??
-                                                '',
-                                            width: double.infinity,
-                                            height: double.infinity,
+                                    );
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.lightPink,
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Center(
+                                          child: SizedBox(
+                                            width: 30,
+                                            height: 30,
+                                            child: CustomCacheNetworkImage(
+                                              imageUrl: ans.data?.category[index].image ?? '',
+                                              width: double.infinity,
+                                              height: double.infinity,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      ans.data!.category[index].name!,
-                                      style: theme.labelMedium,
-                                    )
-                                  ],
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        ans.data!.category[index].name!,
+                                        style: theme.labelMedium,
+                                      ),
+                                    ],
+                                  ),
                                 );
                               },
                             ),
@@ -127,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
                           _sectionTitle(
                             LocaleKeys.Home_BestSeller.tr(),
-                            () {
+                                () {
                               Navigator.pushNamed(context, Routes.bestSeller);
                             },
                           ),
@@ -141,11 +155,28 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: ans.data!.bestSeller.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return CardOfItem.cardType(
-                                  image: ans.data!.bestSeller[index].imgCover!,
-                                  price: ans.data!.bestSeller[index].price,
-                                  title: ans.data!.bestSeller[index].title,
-                                  type: TypeOfCard.Big,
+                                final product = ans.data!.bestSeller[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments: ProductDetailsModel(
+                                        id: product.id!,
+                                        name: product.title!,
+                                        description: product.description ?? '',
+                                        images: product.images ?? [],
+                                        price: product.price!,
+                                        inStock: product.quantity==0?false:true,
+                                      ),
+                                    );
+                                  },
+                                  child: CardOfItem.cardType(
+                                    image: product.imgCover!,
+                                    price: product.price,
+                                    title: product.title,
+                                    type: TypeOfCard.Big,
+                                  ),
                                 );
                               },
                             ),
@@ -153,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 10),
                           _sectionTitle(
                             LocaleKeys.Home_Occasion.tr(),
-                            () {
+                                () {
                               Navigator.pushNamed(context, Routes.occasion);
                             },
                           ),
@@ -163,10 +194,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return CardOfItem.cardType(
-                                  image: ans.data!.occasion[index].image!,
-                                  title: ans.data!.occasion[index].name,
-                                  type: TypeOfCard.Small,
+                                final product = ans.data!.occasion[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      Routes.productDetails,
+                                      arguments:  ProductDetailsModel(
+                                        id: ans.data!.category[index].id!,
+                                        name: ans.data!.category[index].name!,
+                                        description: 'Category Description', // Adjust as needed
+                                        images: ans.data!.category[index].image != null
+                                            ? [ans.data!.category[index].image!] // Wrap it in a list if it's not null
+                                            : [],
+                                        price: 0, // Adjust as needed
+                                        inStock: true, // Adjust as needed
+                                      ),
+                                    );
+                                  },
+                                  child: CardOfItem.cardType(
+                                    image: product.image!,
+                                    title: product.name,
+                                    type: TypeOfCard.Small,
+                                  ),
                                 );
                               },
                               separatorBuilder: (context, index) {
@@ -203,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
         TextButton(
           onPressed: onPressed,
           child: Text(LocaleKeys.Home_ViewAll.tr()),
-        )
+        ),
       ],
     );
   }
@@ -221,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 _sectionTitle(
                   LocaleKeys.Home_Categories.tr(),
-                  () {
+                      () {
                     Navigator.pushNamed(context, Routes.categories);
                   },
                 ),
@@ -252,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "Dummy Name",
                             style: theme.labelMedium,
-                          )
+                          ),
                         ],
                       );
                     },
@@ -261,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 _sectionTitle(
                   LocaleKeys.Home_BestSeller.tr(),
-                  () {
+                      () {
                     Navigator.pushNamed(context, Routes.bestSeller);
                   },
                 ),
@@ -300,7 +350,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const SizedBox(height: 10),
                 _sectionTitle(
                   LocaleKeys.Home_Occasion.tr(),
-                  () {
+                      () {
                     Navigator.pushNamed(context, Routes.occasion);
                   },
                 ),
@@ -321,11 +371,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: AppColors.paleBlue,
                             ),
                             const SizedBox(height: 5),
-                            Text("Dummy Name",
+                            Text("Dummy Occasion Name",
                                 style: theme.bodyLarge,
                                 overflow: TextOverflow.ellipsis),
-                            const SizedBox(height: 3),
-                            Text('223 EGP', style: theme.labelMedium)
                           ],
                         ),
                       );
@@ -338,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
