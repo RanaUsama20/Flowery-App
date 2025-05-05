@@ -199,17 +199,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () {
                                     Navigator.pushNamed(
                                       context,
-                                      Routes.productDetails,
-                                      arguments:  ProductDetailsModel(
-                                        id: ans.data!.category[index].id!,
-                                        name: ans.data!.category[index].name!,
-                                        description: 'Category Description', // Adjust as needed
-                                        images: ans.data!.category[index].image != null
-                                            ? [ans.data!.category[index].image!] // Wrap it in a list if it's not null
-                                            : [],
-                                        price: 0, // Adjust as needed
-                                        inStock: true, // Adjust as needed
-                                      ),
+                                      Routes.occasion,
+                                      arguments: {
+                                        'occasionId': product.id, // assuming this exists
+                                        'occasionIndex': index, // or use index if occasionId not available
+                                      },
                                     );
                                   },
                                   child: CardOfItem.cardType(
