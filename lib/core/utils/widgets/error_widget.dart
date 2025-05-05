@@ -36,9 +36,11 @@ class ErrorStateWidget extends StatelessWidget {
   final double? height;
   final double? width;
   final String? message;
+ final String? functionMessage;
   final VoidCallback? onRetry;
+  final String? lottie;
 
-  const ErrorStateWidget({this.height, this.width, this.onRetry, this.message});
+  const ErrorStateWidget({this.height, this.width, this.onRetry, this.message,this.functionMessage,this.lottie});
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +48,7 @@ class ErrorStateWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Lottie.asset(AppLottie.errorLottie, height: 110, repeat: true),
-        SizedBox(height: 20),
+        Lottie.asset( lottie??AppLottie.errorLottie, height: height, repeat: true),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
@@ -58,7 +59,7 @@ class ErrorStateWidget extends StatelessWidget {
         OutlinedButton(
           onPressed: onRetry,
           child: Text(
-            LocaleKeys.Retry.tr(),
+functionMessage??"retry",
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontSize: 16
             ),

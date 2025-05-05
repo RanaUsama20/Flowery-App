@@ -15,6 +15,7 @@ import 'core/utils/app_shared_preference.dart';
 import 'core/utils/bloc_observer.dart';
 import 'features/cart/presentation/view_model/cart_cubit.dart';
 import 'features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,11 @@ void main() async {
   ]);
 
   Bloc.observer = MyBlocObserver();
+SystemChrome.setPreferredOrientations([
+  DeviceOrientation.portraitDown,
+  DeviceOrientation.portraitUp,
 
+]);
   runApp(EasyLocalization(
     supportedLocales: AppValues.supportedLocales,
     fallbackLocale: AppValues.englishLocale,

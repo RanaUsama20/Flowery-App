@@ -78,4 +78,6 @@ class PngAssets {
 class AppLottie {
   static const emptyLottie = 'assets/lotties/empty_lottie2.json';
   static const errorLottie = 'assets/lotties/error_lottie.json';
+  static const loginLottie = 'assets/lotties/login_lottie.json';
+
 }
