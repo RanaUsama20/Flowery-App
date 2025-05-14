@@ -29,7 +29,7 @@ void main() {
 
   );
   SuccessResult<OrdersResponseEntity?> ordersResult = SuccessResult(orders);
-  provideDummy<SuccessResult<OrdersResponseEntity?>>(ordersResult);
+  provideDummy<Result<OrdersResponseEntity?>>(ordersResult);
 
   group('orders cubit test', (){
     //
@@ -52,8 +52,8 @@ void main() {
     setUpAll((){
       getOrdersUseCase = MockGetOrdersUseCase();
 
-      Result<OrdersResponseEntity?> ordersResult = SuccessResult(orders);
-      provideDummy<Result<OrdersResponseEntity?>>(ordersResult);
+      // Result<OrdersResponseEntity?> ordersResult = SuccessResult(orders);
+      // provideDummy<Result<OrdersResponseEntity?>>(ordersResult);
       when(getOrdersUseCase.call()).thenAnswer((_) async => ordersResult );
 
     });

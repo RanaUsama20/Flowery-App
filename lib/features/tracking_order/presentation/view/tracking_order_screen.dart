@@ -5,14 +5,14 @@ import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class TrackOrederScreen extends StatefulWidget {
-  const TrackOrederScreen({super.key});
+class TrackOrderScreen extends StatefulWidget {
+  const TrackOrderScreen({super.key});
 
   @override
-  State<TrackOrederScreen> createState() => _TrackOrederScreenState();
+  State<TrackOrderScreen> createState() => _TrackOrderScreenState();
 }
 
-class _TrackOrederScreenState extends State<TrackOrederScreen> {
+class _TrackOrderScreenState extends State<TrackOrderScreen> {
   final steps = [
     {'title': 'Received your order', 'date': '03 Sep 2024 - 2:10'},
     {'title': 'Preparing your order', 'date': '03 Sep 2024 - 2:10'},

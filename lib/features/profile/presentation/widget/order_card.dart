@@ -4,6 +4,8 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/routes/routes.dart';
+
 class OrderCard extends StatelessWidget {
   String? title;
   String? price;
@@ -73,7 +75,9 @@ class OrderCard extends StatelessWidget {
                         child: SizedBox(
                           height: 30,
                           child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Routes.trackOrders);
+                            },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 48, vertical: 0),
