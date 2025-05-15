@@ -122,8 +122,7 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (_) => const TermsAndConditionScreen());
       case Routes.trackOrders:
-        return MaterialPageRoute(
-            builder: (_) => const TrackOrderScreen());
+        return MaterialPageRoute(builder: (_) => const TrackOrderScreen());
 
       case Routes.search:
         return MaterialPageRoute(
@@ -140,7 +139,8 @@ class RouteGenerator {
       //       product: product,
       //     ));
       case Routes.trackOrederScreen:
-      return MaterialPageRoute(builder: (_)=>TrackOrederScreen());
+        return MaterialPageRoute(builder: (_) => TrackOrderScreen());
+
       default:
         return _undefinedRoute();
     }
