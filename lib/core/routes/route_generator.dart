@@ -32,6 +32,7 @@ import '../../features/checkout/presentation/view/checkout_screen.dart';
 import '../../features/home/presentation/view/home_screen.dart';
 import '../../features/profile/presentation/view/change_password_screen.dart';
 import '../../features/profile/presentation/view/orders_screen.dart';
+import '../../features/tracking_order/presentation/view/tracking_order_screen.dart';
 import '../di/service_locator.dart';
 
 class RouteGenerator {
@@ -120,6 +121,9 @@ class RouteGenerator {
       case Routes.termsAndCondition:
         return MaterialPageRoute(
             builder: (_) => const TermsAndConditionScreen());
+      case Routes.trackOrders:
+        return MaterialPageRoute(
+            builder: (_) => const TrackOrderScreen());
 
       case Routes.search:
         return MaterialPageRoute(
