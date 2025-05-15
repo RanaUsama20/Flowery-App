@@ -1,6 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/routes/routes.dart';
+import 'package:flowery_app/features/tracking_order/presentation/view/google_map_tracking_screen.dart';
+import 'package:flowery_app/features/tracking_order/presentation/widget/section_estimate.dart';
+import 'package:flowery_app/features/tracking_order/presentation/widget/section_info_of_driver.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,7 +25,6 @@ class _TrackOrederScreenState extends State<TrackOrederScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(LocaleKeys.profile_Track_order.tr()),
@@ -33,61 +36,18 @@ class _TrackOrederScreenState extends State<TrackOrederScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Estimated arrival',
-                      style: theme.textTheme.bodySmall!
-                          .copyWith(fontSize: 14, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      '03 Sep 2024, 11:00 AM',
-                      style: theme.textTheme.titleSmall,
-                    ),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child:
+                      SectionEstimate(estimateTime: '03 Sep 2024, 11:00 AM')),
               SizedBox(height: 16),
               Divider(
                 color: AppColors.white[AppColors.colorCode70],
               ),
               SizedBox(height: 40),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      SvgAssets.deliveryBoySvg,
-                      width: 36,
-                      height: 36,
-                    ),
-                    Expanded(
-                        child: ListTile(
-                      title: Text(
-                        'Muhamed',
-                        style: theme.textTheme.labelMedium,
-                      ),
-                      subtitle: FittedBox(
-                        alignment: Alignment.centerLeft,
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          'Is your delivery hero for today',
-                          style: theme.textTheme.bodyMedium!
-                              .copyWith(color: AppColors.gray),
-                        ),
-                      ),
-                    )),
-                    SvgPicture.asset(SvgAssets.callPinkSvg),
-                    SizedBox(width: 20),
-                    SvgPicture.asset(SvgAssets.whatsappSvg),
-                  ],
-                ),
-              ),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SectionInfoOfDriver(
+                      driverName: 'Muhamed', phoneNumber: '0215555000')),
               SizedBox(height: 40),
               Align(
                   alignment: Alignment.center,
@@ -149,6 +109,17 @@ class _TrackOrederScreenState extends State<TrackOrederScreen> {
                   );
                 }),
               ),
+              SizedBox(height: 20),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (_) => GoogleMapTrackingScreen()));
+                      // Navigator.of(context).pushNamed(Routes.);
+                    },
+                    child: Text('Show map'),
+                  ))
             ],
           ),
         ),

@@ -25,7 +25,7 @@ class Routes {
   static const String order = '/order';
 
   static const String notification='/notification';
-   
+  static const String trackOrederScreen='/trackOrder';
 
   static const String search = '/search';
 }

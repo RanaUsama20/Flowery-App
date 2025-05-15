@@ -14,6 +14,7 @@ import 'package:flowery_app/features/profile/presentation/view/profile_screen.da
 import 'package:flowery_app/features/search/presentation/view/main_search_screen.dart';
 import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart';
 import 'package:flowery_app/features/profile/presentation/view/saved_adreess.dart';
+import 'package:flowery_app/features/tracking_order/presentation/view/tracking_order_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -134,6 +135,8 @@ class RouteGenerator {
       //     ProductDetails(
       //       product: product,
       //     ));
+      case Routes.trackOrederScreen:
+      return MaterialPageRoute(builder: (_)=>TrackOrederScreen());
       default:
         return _undefinedRoute();
     }
