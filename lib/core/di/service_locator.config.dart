@@ -9,11 +9,13 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart' as _i826;
 import 'package:flowery_app/core/logger/logger_module.dart' as _i495;
 import 'package:flowery_app/core/network/remote/api_manager.dart' as _i797;
 import 'package:flowery_app/core/network/remote/dio_module.dart' as _i338;
+import 'package:flowery_app/core/network/remote/fire_base_module.dart' as _i892;
 import 'package:flowery_app/features/address/data/api/address_retrofit_client.dart'
     as _i960;
 import 'package:flowery_app/features/address/data/data_source/address_remote_data_source.dart'
@@ -190,6 +192,18 @@ import 'package:flowery_app/features/search/domain/usecase/search_query_use_case
     as _i993;
 import 'package:flowery_app/features/search/presentation/view_model/bloc/search_bloc.dart'
     as _i667;
+import 'package:flowery_app/features/tracking_order/data/data_source/remote/fire_base/track_order_data_source.dart'
+    as _i246;
+import 'package:flowery_app/features/tracking_order/data/data_source/remote/fire_base/track_order_data_source_impl.dart'
+    as _i918;
+import 'package:flowery_app/features/tracking_order/data/repository_impl/track_order_repository_impl.dart'
+    as _i679;
+import 'package:flowery_app/features/tracking_order/domain/repository/track_order_repository.dart'
+    as _i689;
+import 'package:flowery_app/features/tracking_order/domain/usecase/track_order_details_usecase.dart'
+    as _i328;
+import 'package:flowery_app/features/tracking_order/presentation/view_model/cubit/track_order_cubit.dart'
+    as _i734;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:logger/logger.dart' as _i974;
@@ -208,6 +222,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final loggerModule = _$LoggerModule();
     final dioModule = _$DioModule();
+    final fireBaseModule = _$FireBaseModule();
     gh.singleton<_i826.AppCubit>(() => _i826.AppCubit());
     gh.singleton<_i797.ApiManager>(() => _i797.ApiManager());
     gh.lazySingleton<_i974.Logger>(() => loggerModule.loggerProvider);
@@ -215,6 +230,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i361.Dio>(() => dioModule.provideDio());
     gh.lazySingleton<_i528.PrettyDioLogger>(
         () => dioModule.providerInterceptor());
+    gh.lazySingleton<_i974.FirebaseFirestore>(
+        () => fireBaseModule.provideFireBase());
+    gh.factory<_i246.TrackOrderDataSource>(
+        () => _i918.TrackOrderDataSourceImpl(gh<_i974.FirebaseFirestore>()));
     gh.lazySingleton<_i865.AuthRetrofitClient>(
         () => _i865.AuthRetrofitClient(gh<_i361.Dio>()));
     gh.lazySingleton<_i881.CartRetrofitClient>(
@@ -261,6 +280,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i797.ApiManager>(),
           gh<_i438.AddressRemoteDataSource>(),
         ));
+    gh.factory<_i689.TrackOrderRepository>(
+        () => _i679.TrackOrderRepositoryImpl(gh<_i246.TrackOrderDataSource>()));
     gh.factory<_i630.HomeRepository>(() => _i271.HomeRepositoryImpl(
           gh<_i797.ApiManager>(),
           gh<_i3.HomeRemoteDataSource>(),
@@ -287,6 +308,8 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i797.ApiManager>(),
               gh<_i1063.NotificationDataSource>(),
             ));
+    gh.factory<_i328.TrackOrderDetailsUsecase>(
+        () => _i328.TrackOrderDetailsUsecase(gh<_i689.TrackOrderRepository>()));
     gh.factory<_i301.CartRemoteDataSource>(() => _i895.CartRemoteDataSourceImpl(
           gh<_i881.CartRetrofitClient>(),
           gh<_i797.ApiManager>(),
@@ -350,6 +373,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i192.CashPaymentUseCase(gh<_i533.CheckoutRepository>()));
     gh.factory<_i406.CreditCardPaymentUseCase>(
         () => _i406.CreditCardPaymentUseCase(gh<_i533.CheckoutRepository>()));
+    gh.factory<_i734.TrackOrderCubit>(
+        () => _i734.TrackOrderCubit(gh<_i328.TrackOrderDetailsUsecase>()));
     gh.factory<_i371.ForgotPasswordUseCase>(
         () => _i371.ForgotPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i226.LogoutUseCase>(
@@ -407,3 +432,5 @@ extension GetItInjectableX on _i174.GetIt {
 class _$LoggerModule extends _i495.LoggerModule {}
 
 class _$DioModule extends _i338.DioModule {}
+
+class _$FireBaseModule extends _i892.FireBaseModule {}

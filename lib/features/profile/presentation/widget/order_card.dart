@@ -13,13 +13,15 @@ class OrderCard extends StatelessWidget {
   String? state;
   String? buttonText;
   String? imageUrl;
+  String? numberOfOrder;
   OrderCard(
       {super.key,
       required this.title,
       required this.price,
       required this.state,
       required this.buttonText,
-        required this.imageUrl});
+      required this.numberOfOrder,
+      required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +40,11 @@ class OrderCard extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-             Image.network(
-               height: 109,
-                 width: 127,
-                 fit: BoxFit.cover,
-                 imageUrl ?? PngAssets.flowerCard),
+              Image.network(
+                  height: 109,
+                  width: 127,
+                  fit: BoxFit.cover,
+                  imageUrl ?? PngAssets.flowerCard),
               SizedBox(
                 width: 16,
               ),
@@ -77,7 +79,9 @@ class OrderCard extends StatelessWidget {
                           height: 30,
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context).pushNamed(Routes.trackOrders);
+                              Navigator.of(context).pushNamed(
+                                  Routes.trackOrders,
+                                  arguments: numberOfOrder);
                             },
                             style: ElevatedButton.styleFrom(
                               padding: EdgeInsets.symmetric(

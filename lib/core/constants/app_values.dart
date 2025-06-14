@@ -20,4 +20,5 @@ abstract class AppValues {
   // shared preferences keys
   static const String stateUser = "StateUser";
   static const String token = "token";
+  static const String userId='userId';
 }

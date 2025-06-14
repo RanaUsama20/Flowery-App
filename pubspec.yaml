@@ -74,6 +74,7 @@ dependencies:
   firebase_crashlytics: ^4.3.5
   firebase_auth: ^5.5.2
   firebase_messaging: ^15.2.5
+  cloud_firestore:
   # hive: ^2.2.3
   # hive_flutter: ^1.1.0
 

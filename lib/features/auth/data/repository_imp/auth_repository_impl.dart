@@ -13,17 +13,15 @@ import '../data_source/auth_data_source.dart';
 import '../data_source/remote/register_remote_data_source.dart';
 import '../model/request/register_request_model.dart';
 
-
 @Injectable(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
-
   final RegisterRemoteDataSource _registerRemoteDataSource;
   final AuthDataSource authDataSource;
 
   final ApiManager _apiManager;
 
-  AuthRepositoryImpl(this._registerRemoteDataSource, this._apiManager,
-      this.authDataSource);
+  AuthRepositoryImpl(
+      this._registerRemoteDataSource, this._apiManager, this.authDataSource);
 
   @override
   Future<Result<String>> register(RegisterRequestModel registerRequest) async {
@@ -34,8 +32,8 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<String>>logout()async{
-    final ans=await _apiManager.execute<String>((){
+  Future<Result<String>> logout() async {
+    final ans = await _apiManager.execute<String>(() {
       return authDataSource.logout();
     });
     return ans;
@@ -54,7 +52,10 @@ class AuthRepositoryImpl implements AuthRepository {
         if (data == null) {
           return FailureResult(Exception());
         }
-        SharedPreferencesUtils.saveData(key: AppValues.token, value: data.token);
+        await SharedPreferencesUtils.saveData(
+            key: AppValues.token, value: data.token);
+        await SharedPreferencesUtils.saveData(
+            key: AppValues.userId, value: data.user!.id);
         return SuccessResult<LoginEntity>(data);
 
       case FailureResult<LoginEntity?>():
@@ -62,9 +63,9 @@ class AuthRepositoryImpl implements AuthRepository {
     }
   }
 
-
   @override
-  Future<Result<ForgotPasswordResponseEntity>> forgotPassword({required String email}) {
+  Future<Result<ForgotPasswordResponseEntity>> forgotPassword(
+      {required String email}) {
     return authDataSource.forgotPassword(email: email);
   }
 
@@ -75,20 +76,19 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  Future<Result<ForgotPasswordResponseEntity>> verifyResetCode({required String code}) {
+  Future<Result<ForgotPasswordResponseEntity>> verifyResetCode(
+      {required String code}) {
     return authDataSource.verifyResetCode(code: code);
   }
 
   @override
-  Future<Result<String>> editProfile(EditProfileRequest request) async{
+  Future<Result<String>> editProfile(EditProfileRequest request) async {
     final result = await authDataSource.editProfile(request);
     return result;
   }
-  Future<Result<String>> uploadPhoto(File request) async{
+
+  Future<Result<String>> uploadPhoto(File request) async {
     final result = await authDataSource.uploadPhoto(request);
     return result;
   }
 }
-
-
-

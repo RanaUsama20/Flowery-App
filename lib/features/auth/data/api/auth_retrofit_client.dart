@@ -26,7 +26,7 @@ abstract class AuthRetrofitClient {
    @GET(ApiConstants.logOut)
   Future<String> logout(@Header('Authorization') String? token);
 
-
+ 
 
   @POST(ApiConstants.loginRoute)
   Future<LoginDto?> login(

@@ -47,6 +47,7 @@ class BuildOrdersList extends StatelessWidget {
       itemBuilder: (context, index) {
         final order = orders![index];
         return OrderCard(
+          numberOfOrder:order.orderNumber,
             title: order.id,
             price: order.totalPrice.toString(),
             state: flag
