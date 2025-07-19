@@ -181,12 +181,12 @@ class _CartScreenState extends State<CartScreen> {
         children: [
           _buildSummaryRow(LocaleKeys.Home_TotalPrice.tr(), "${cart.totalPrice}"),
           const SizedBox(height: 10),
-          _buildSummaryRow(LocaleKeys.Home_Discount.tr(), "${cart.discount} %"),
+          _buildSummaryRow(LocaleKeys.Home_Discount.tr(), "${cart.discount ?? 0} %"),
           Divider(
             color: AppColors.black[AppColors.colorCode40]?.withOpacity(0.5),
             thickness: 1,
           ),
-          _buildSummaryRow(LocaleKeys.Home_PriceAfterDiscount.tr(), "${cart.totalPriceAfterDiscount}"),
+          _buildSummaryRow(LocaleKeys.Home_PriceAfterDiscount.tr(), "${cart.totalPriceAfterDiscount ?? cart.totalPrice}"),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: ElevatedButton(
@@ -197,7 +197,7 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.checkout, arguments: cart.totalPriceAfterDiscount);
+                Navigator.of(context).pushNamed(Routes.checkout, arguments: cart.totalPrice);
               },
               child: Text(
                 LocaleKeys.Home_CheckOut.tr(),

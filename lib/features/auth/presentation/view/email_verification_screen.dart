@@ -35,6 +35,7 @@ class _EmailVerificationScreenState extends State<EmailVerificationScreen> {
             AppDialogs.showLoadingDialog(context);
           }
           if (state.isVerifyResetCodeSuccess) {
+            log("Verification successful, navigating to ResetPasswordScreen...");
             context.pop();
             context.pushNamed(Routes.resetPassword,
                 arguments: context.read<ForgotPasswordCubit>());

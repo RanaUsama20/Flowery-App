@@ -104,9 +104,9 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                             return ProductCard.createProductCard(
                               bestSellerItem.imgCover!,
                               bestSellerItem.title!,
-                              bestSellerItem.priceAfterDiscount!,
+                              bestSellerItem.priceAfterDiscount ?? bestSellerItem.price!,
                               bestSellerItem.price!,
-                              bestSellerItem.discount!,
+                              bestSellerItem.discount ?? 0,
                               quantity: bestSellerItem.quantity??1,
                               onAddToCart: () {
                                 if (_appCubit.getStateUser == StateUser.guest) {
