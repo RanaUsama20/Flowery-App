@@ -24,12 +24,12 @@ class OccasionsCubit extends Cubit<OccasionsState> {
     emit(state.copyWith(occasionsStatus: Status.loading, productsStatus: Status.loading));
     final result = await occasionsUseCase.call();
     switch (result) {
-      case SuccessResult<OccasionsEntity>():
+      case SuccessResult<OccasionsResponseEntity>():
         await getProductsByOccasion(result.data.occasions[0].id);
         emit(state.copyWith(
             occasionsStatus: Status.success, occasionsList: result.data.occasions));
 
-      case FailureResult<OccasionsEntity>():
+      case FailureResult<OccasionsResponseEntity>():
         emit(state.copyWith(
             occasionsStatus: Status.failure, occasionError: result.exception.toString()));
     }

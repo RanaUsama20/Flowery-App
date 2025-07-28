@@ -70,9 +70,11 @@ class RouteGenerator {
         );
       case Routes.appSection:
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
-                  BlocProvider(create: (context) => serviceLocator<CartCubit>())
-                ], child: const AppSection()));
+          builder: (_) => MultiBlocProvider(
+            providers: [BlocProvider(create: (context) => serviceLocator<CartCubit>())],
+            child: const AppSection(),
+          ),
+        );
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.successPage:
@@ -90,35 +92,28 @@ class RouteGenerator {
       case Routes.checkout:
         final price = settings.arguments as num;
         return MaterialPageRoute(
-            builder: (_) => CheckoutScreen(
-                  price: price,
-                ));
+          builder: (_) => CheckoutScreen(price: price),
+        );
       case Routes.mainProfile:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());
       case Routes.productDetails:
         final product = settings.arguments as ProductDetailsModel;
         return MaterialPageRoute(
-            builder: (_) => ProductDetails(
-                  product: product,
-                ));
+          builder: (_) => ProductDetails(product: product),
+        );
       case Routes.editProfile:
         return MaterialPageRoute(
-            builder: (_) => EditProfileScreen(
-                  userData: arg as EditProfileRequest,
-                ));
+          builder: (_) => EditProfileScreen(userData: arg as EditProfileRequest),
+        );
       case Routes.address:
         return MaterialPageRoute(builder: (_) => AddressScreen());
-      // return MaterialPageRoute(builder: (_) =>
-      //     ProductDetails(
-      //       product: product,
-      //     ));
+
       case Routes.savedAddress:
         return MaterialPageRoute(builder: (_) => SavedAddress());
       case Routes.aboutApp:
         return MaterialPageRoute(builder: (_) => AboutAppScreen());
       case Routes.termsAndCondition:
-        return MaterialPageRoute(
-            builder: (_) => const TermsAndConditionScreen());
+        return MaterialPageRoute(builder: (_) => const TermsAndConditionScreen());
 
       case Routes.search:
         return MaterialPageRoute(
@@ -130,10 +125,7 @@ class RouteGenerator {
 
       case Routes.notification:
         return MaterialPageRoute(builder: (_) => NotificationScreen());
-      // return MaterialPageRoute(builder: (_) =>
-      //     ProductDetails(
-      //       product: product,
-      //     ));
+
       default:
         return _undefinedRoute();
     }

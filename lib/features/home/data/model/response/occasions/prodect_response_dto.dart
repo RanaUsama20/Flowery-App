@@ -1,20 +1,14 @@
-import 'package:flowery_app/features/home/domain/entity/occasions_entity.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'occasion_tab_response_dto.dart';
-
 part 'prodect_response_dto.g.dart';
 
 @JsonSerializable()
 class ProductResponseDto {
   final String? message;
-  final MetadataTabResponseDto? metadata;
   final List<ProductItemResponseDto>? products;
 
   ProductResponseDto({
     this.message,
-    this.metadata,
     this.products,
   });
 
@@ -22,7 +16,6 @@ class ProductResponseDto {
       _$ProductResponseDtoFromJson(json);
   ProductEntity toEntity() => ProductEntity(
         message: message ?? '',
-        metadata: metadata?.toEntity() ?? MetadataEntity(),
         products: products?.map((product) => product.toEntity()).toList() ?? [],
       );
 }

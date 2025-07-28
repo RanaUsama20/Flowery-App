@@ -1,13 +1,9 @@
-import 'package:flowery_app/features/home/domain/entity/occasions_entity.dart';
-
 class ProductEntity {
   final String message;
-  final MetadataEntity metadata;
   final List<ProductItemEntity> products;
 
   ProductEntity({
     required this.message,
-    required this.metadata,
     required this.products,
   });
 }

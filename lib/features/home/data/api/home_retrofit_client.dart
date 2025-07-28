@@ -4,10 +4,9 @@ import 'package:flowery_app/features/home/data/model/response/best-seller/best_s
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
-import '../model/response/home_of_category_and_best_seller_and_occasion/home_of_category_and_best_seller_and_occasion.dart';
+import '../model/response/home/home_dto.dart';
 import '../model/response/occasions/occasion_tab_response_dto.dart';
 import '../model/response/occasions/prodect_response_dto.dart';
-
 
 part 'home_retrofit_client.g.dart';
 
@@ -19,9 +18,10 @@ abstract class HomeRetrofitClient {
 
   @GET(ApiConstants.bestSellerRoute)
   Future<BestSellerResponseDto> getBestSeller();
+
   @GET(ApiConstants.homeRoute)
-  Future<HomeOfCategoryAndBestSellerAndOccasion>getHomedata(
-      @Header('Authorization') String? token);
+  Future<HomeDto> getHomeData(@Header('Authorization') String? token);
+
   @GET(ApiConstants.occasions)
   Future<OccasionsTabResponseDto> getTabOccasions();
 

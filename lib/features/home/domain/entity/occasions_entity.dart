@@ -1,35 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-class OccasionsEntity extends Equatable {
+class OccasionsResponseEntity extends Equatable {
   final String message;
-  final MetadataEntity metadata;
   final List<OccasionEntity> occasions;
 
-  const OccasionsEntity({
+  const OccasionsResponseEntity({
     required this.message,
-    required this.metadata,
     required this.occasions,
   });
 
   @override
-  List<Object?> get props => [message, metadata, occasions];
-}
-
-class MetadataEntity extends Equatable {
-  final num currentPage;
-  final num limit;
-  final num totalPages;
-  final num totalItems;
-
-  const MetadataEntity({
-    this.currentPage = 0,
-    this.limit = 0,
-    this.totalPages = 0,
-    this.totalItems = 0,
-  });
-
-  @override
-  List<Object?> get props => [currentPage, limit, totalPages, totalItems];
+  List<Object?> get props => [message, occasions];
 }
 
 class OccasionEntity extends Equatable {
@@ -37,8 +18,6 @@ class OccasionEntity extends Equatable {
   final String name;
   final String slug;
   final String image;
-  final String createdAt;
-  final String updatedAt;
   final num productsCount;
 
   const OccasionEntity({
@@ -46,11 +25,9 @@ class OccasionEntity extends Equatable {
     required this.name,
     required this.slug,
     required this.image,
-    required this.createdAt,
-    required this.updatedAt,
     required this.productsCount,
   });
 
   @override
-  List<Object?> get props => [id, name, slug, image, createdAt, updatedAt, productsCount];
+  List<Object?> get props => [id, name, slug, image, productsCount];
 }

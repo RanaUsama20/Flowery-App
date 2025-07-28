@@ -10,8 +10,7 @@ class SvgAssets {
   static const checkSvg = 'assets/svg/check.svg';
   static const checkCircleSvg = 'assets/svg/check_circle.svg';
   static const checklistSvg = 'assets/svg/Checklist.svg';
-  static const defaultMarkerComponentSvg =
-      'assets/svg/Default marker component.svg';
+  static const defaultMarkerComponentSvg = 'assets/svg/Default marker component.svg';
   static const deleteSvg = 'assets/svg/delete.svg';
   static const deliveryBoySvg = 'assets/svg/Delivery Boy.svg';
   static const diamondSvg = 'assets/svg/Diamond.svg';
@@ -62,8 +61,6 @@ class SvgAssets {
   static const marker = 'assets/svg/marker.svg';
   static const blackScheduleSvg = 'assets/svg/black_schedule.svg';
   static const editSvg = 'assets/svg/edit.svg';
-
-
 }
 
 class PngAssets {

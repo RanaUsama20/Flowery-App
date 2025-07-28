@@ -22,9 +22,6 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-
-  String? token = await messaging.getToken();
   await Future.wait([
     configureDependencies(),
     EasyLocalization.ensureInitialized(),
@@ -77,8 +74,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      if (kDebugMode) {
-      }
+      if (kDebugMode) {}
       if (message.data['route'] != null) {
         Navigator.pushNamed(context, message.data['route']);
       }
@@ -131,9 +127,8 @@ class _MyAppState extends State<MyApp> {
         theme: AppTheme.lightTheme,
         title: AppValues.appTitle,
         onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute: _isLoggedIn! ? Routes.appSection : Routes.login,
+        initialRoute: _isLoggedIn! ? Routes.appSection : Routes.login,
         // initialRoute: Routes.login,
-
       ),
     );
   }

@@ -9,10 +9,6 @@ part of 'prodect_response_dto.dart';
 ProductResponseDto _$ProductResponseDtoFromJson(Map<String, dynamic> json) =>
     ProductResponseDto(
       message: json['message'] as String?,
-      metadata: json['metadata'] == null
-          ? null
-          : MetadataTabResponseDto.fromJson(
-              json['metadata'] as Map<String, dynamic>),
       products: (json['products'] as List<dynamic>?)
           ?.map(
               (e) => ProductItemResponseDto.fromJson(e as Map<String, dynamic>))
@@ -22,7 +18,6 @@ ProductResponseDto _$ProductResponseDtoFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ProductResponseDtoToJson(ProductResponseDto instance) =>
     <String, dynamic>{
       'message': instance.message,
-      'metadata': instance.metadata,
       'products': instance.products,
     };
 

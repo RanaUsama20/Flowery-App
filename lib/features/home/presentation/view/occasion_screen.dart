@@ -13,7 +13,6 @@ import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-
 import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../cart/presentation/view_model/cart_cubit.dart';
@@ -34,20 +33,19 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
   @override
   void initState() {
     super.initState();
-    _appCubit=serviceLocator.get<AppCubit>();
-    // _tabController = TabController(length: 10, vsync: this);
+    _appCubit = serviceLocator.get<AppCubit>();
   }
 
-  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            icon: Icon(Icons.arrow_back_ios_new_outlined)),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: Icon(Icons.arrow_back_ios_new_outlined),
+        ),
         leadingWidth: 25,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,62 +96,14 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
     );
   }
 
-  Widget _buildDummyTabBar() {
-    return Skeletonizer(
-      enabled: true,
-      child: DefaultTabController(
-        length: 10,
-        child: TabBar(
-          isScrollable: true,
-          tabs: [
-            Tab(text: 'Wedding'),
-            Tab(text: 'Graduation'),
-            Tab(text: 'Birthday'),
-            Tab(text: 'Katb Ketab'),
-            Tab(text: 'Engagement'),
-            Tab(text: 'Thank you'),
-            Tab(text: 'Get well'),
-            Tab(text: 'Wedding'),
-            Tab(text: 'Engagement'),
-            Tab(text: 'Birthday'),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildTabBar(List<Tab> tabs, Function(int index) callBack) {
     return DefaultTabController(
       length: tabs.length,
       child: TabBar(
+        indicatorSize: TabBarIndicatorSize.label,
         onTap: (value) => callBack(value),
         isScrollable: true,
         tabs: tabs,
-      ),
-    );
-  }
-
-  Widget _buildDummyProductOfOccasion() {
-    return Expanded(
-      child: Skeletonizer(
-        child: GridView.builder(
-          itemCount: 10,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 260,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemBuilder: (context, index) => ProductCard.createProductCard(
-            imageDummy,
-            "Hello User",
-            32,
-            35,
-            30,
-            onAddToCart: () {},
-            productId: '',
-          ),
-        ),
       ),
     );
   }
@@ -246,6 +196,55 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildDummyProductOfOccasion() {
+    return Expanded(
+      child: Skeletonizer(
+        child: GridView.builder(
+          itemCount: 10,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 260,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
+          itemBuilder: (context, index) => ProductCard.createProductCard(
+            imageDummy,
+            "Hello User",
+            32,
+            35,
+            30,
+            onAddToCart: () {},
+            productId: '',
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDummyTabBar() {
+    return Skeletonizer(
+      enabled: true,
+      child: DefaultTabController(
+        length: 10,
+        child: TabBar(
+          isScrollable: true,
+          tabs: [
+            Tab(text: 'Wedding'),
+            Tab(text: 'Graduation'),
+            Tab(text: 'Birthday'),
+            Tab(text: 'Katb Ketab'),
+            Tab(text: 'Engagement'),
+            Tab(text: 'Thank you'),
+            Tab(text: 'Get well'),
+            Tab(text: 'Wedding'),
+            Tab(text: 'Engagement'),
+            Tab(text: 'Birthday'),
+          ],
+        ),
       ),
     );
   }

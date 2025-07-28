@@ -4,7 +4,7 @@ import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
-import 'package:flowery_app/features/home/presentation/view_model/cubit/best_seller/best_seller_cubit.dart';
+import 'package:flowery_app/features/home/presentation/view_model/best_seller/best_seller_cubit.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +18,8 @@ import '../../../../core/theme/app_theme.dart';
 import '../../../../core/utils/widgets/error_widget.dart';
 import '../../../../generated/locale_keys.g.dart';
 import '../../../cart/presentation/view_model/cart_cubit.dart';
-import '../../domain/entity/best_seller/best_seller_response_entity.dart';
-import '../view_model/cubit/best_seller/best_seller_state.dart';
+import '../../domain/entity/best_seller_response_entity.dart';
+import '../view_model/best_seller/best_seller_state.dart';
 
 class BestSellerBody extends StatefulWidget {
   const BestSellerBody({super.key});
@@ -29,7 +29,6 @@ class BestSellerBody extends StatefulWidget {
 }
 
 class _BestSellerBodyState extends State<BestSellerBody> {
-
   late BestSellerCubit cubit;
   late AppCubit _appCubit;
   @override
@@ -72,19 +71,20 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                   height: 50,
                   width: 50,
                   message: (state.baseState as BaseErrorState).errorMessage,
-                  onRetry: () => context.read<BestSellerCubit>().doIntent(GetDataAction()),
+                  onRetry: () =>
+                      context.read<BestSellerCubit>().doIntent(GetDataAction()),
                 ),
               );
-
             }
             if (state.baseState is BaseSuccessState) {
-              final bestSellerResponse = (state.baseState as BaseSuccessState).data as SuccessResult<BestSellerResponseEntity>;
+              final bestSellerResponse = (state.baseState as BaseSuccessState).data
+                  as SuccessResult<BestSellerResponseEntity>;
               final bestSellerList = bestSellerResponse.data.bestSeller;
               return Padding(
                 padding: const EdgeInsets.all(16),
                 child: GridView.builder(
                   itemCount: bestSellerList?.length,
-                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisExtent: 260,
                     crossAxisSpacing: 12,
@@ -93,8 +93,10 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                   itemBuilder: (context, index) {
                     final bestSellerItem = bestSellerList![index];
                     return InkWell(
-                      onTap: (){
-                        context.read<BestSellerCubit>().doIntent(ProductSelectedAction(bestSellerItem));
+                      onTap: () {
+                        context
+                            .read<BestSellerCubit>()
+                            .doIntent(ProductSelectedAction(bestSellerItem));
                       },
                       child: BlocProvider(
                         create: (context) => serviceLocator<CartCubit>(),
@@ -107,17 +109,17 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                               bestSellerItem.priceAfterDiscount!,
                               bestSellerItem.price!,
                               bestSellerItem.discount!,
-                              quantity: bestSellerItem.quantity??1,
+                              quantity: bestSellerItem.quantity ?? 1,
                               onAddToCart: () {
                                 if (_appCubit.getStateUser == StateUser.guest) {
                                   AppDialogs.showLoginDialog(
                                     context,
-                                    message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr(),
+                                    message: LocaleKeys
+                                        .Error_YouHaveToLoginToUseThisFeature.tr(),
                                   );
                                 } else {
                                   cartCubit.addProductToCart(
-                                      bestSellerItem.id.toString(),
-                                      1);
+                                      bestSellerItem.id.toString(), 1);
                                 }
                               },
                               productId: bestSellerItem.id.toString(),
@@ -152,11 +154,9 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                   },
                 ),
               );
-
             }
             return const Placeholder();
           }),
     );
-
   }
 }

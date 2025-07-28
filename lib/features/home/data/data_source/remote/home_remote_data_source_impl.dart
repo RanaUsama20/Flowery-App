@@ -31,15 +31,14 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   }
 
   @override
-  Future<HomeEntity> getHomedata() async {
+  Future<HomeEntity> getHomeData() async {
     final token = await SaveLocal.getString("token");
-    print('token from home $token');
-    final result = await _homeRetrofitClient.getHomedata(token);
-    return result.toHomeEntity();
+    final result = await _homeRetrofitClient.getHomeData(token);
+    return result.toEntity();
   }
 
   @override
-  Future<Result<OccasionsEntity>> getTabOccasions() async {
+  Future<Result<OccasionsResponseEntity>> getTabOccasions() async {
     Result<OccasionsTabResponseDto> result =
         await _apiManager.execute<OccasionsTabResponseDto>(() async {
       return await _homeRetrofitClient.getTabOccasions();
@@ -47,9 +46,9 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
 
     switch (result) {
       case SuccessResult<OccasionsTabResponseDto>():
-        return SuccessResult<OccasionsEntity>(result.data.toEntity());
+        return SuccessResult<OccasionsResponseEntity>(result.data.toEntity());
       case FailureResult<OccasionsTabResponseDto>():
-        return FailureResult<OccasionsEntity>(result.exception);
+        return FailureResult<OccasionsResponseEntity>(result.exception);
     }
   }
 

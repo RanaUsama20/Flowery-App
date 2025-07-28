@@ -58,11 +58,11 @@ class SectionSearch extends StatelessWidget {
       ],
     );
   }
-}
 
-OutlineInputBorder outLineBorder() {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(10),
-    borderSide: BorderSide(color: AppColors.white[AppColors.colorCode70]!),
-  );
+  OutlineInputBorder outLineBorder() {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(color: AppColors.white[AppColors.colorCode70]!),
+    );
+  }
 }

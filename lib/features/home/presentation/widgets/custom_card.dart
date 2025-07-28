@@ -1,39 +1,41 @@
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
+import 'package:flowery_app/features/home/domain/entity/best_seller_response_entity.dart';
+import 'package:flowery_app/features/home/domain/entity/occasions_entity.dart';
 import 'package:flutter/material.dart';
 
-enum TypeOfCard { Big, Small }
+sealed class TypeCard {}
 
-class CardOfItem {
-  static CustomCard cardType(
-      {required String image, String? title, int? price, required TypeOfCard type}) {
-    if (type == TypeOfCard.Big) {
-      return BigCard(
-        image: image,
-        price: price,
-        title: title,
-      );
-    } else {
-      return SmallCard(
-        image: image,
-        title: title!,
-      );
+class BestSellerCard extends TypeCard {
+  BestSellerCard({required this.bestSellerEntity});
+  final BestSellerEntity bestSellerEntity;
+}
+
+class OccasionCard extends TypeCard {
+  OccasionCard({required this.occasionEntity});
+  final OccasionEntity occasionEntity;
+}
+
+abstract class FactoryCardsWidget {
+  static CustomCardWidget cardType(TypeCard type) {
+    switch (type) {
+      case BestSellerCard():
+        return BestSellerCardWidget(type);
+      case OccasionCard():
+        return OccasionCardWidget(type);
     }
   }
 }
 
-abstract class CustomCard extends StatelessWidget {
-  const CustomCard({super.key});
+abstract class CustomCardWidget extends StatelessWidget {
+  const CustomCardWidget({super.key});
 
   @override
   Widget build(BuildContext context);
 }
 
-class BigCard extends CustomCard {
-  final String? image;
-  final String? title;
-  final int? price;
-  const BigCard(
-      {super.key, required this.image, required this.price, required this.title});
+class BestSellerCardWidget extends CustomCardWidget {
+  const BestSellerCardWidget(this.bestSellerCard, {super.key});
+  final BestSellerCard bestSellerCard;
 
   @override
   Widget build(BuildContext context) {
@@ -46,26 +48,37 @@ class BigCard extends CustomCard {
           SizedBox(
             height: 150,
             child: CustomCacheNetworkImage(
-              imageUrl: image!,
+              imageUrl: bestSellerCard.bestSellerEntity.imgCover,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
             ),
           ),
           const SizedBox(height: 5),
-          Text(title!, style: theme.bodyLarge, overflow: TextOverflow.ellipsis),
+          Text(
+            bestSellerCard.bestSellerEntity.title,
+            style: theme.bodyLarge,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
           const SizedBox(height: 3),
-          Text('$price EGP', style: theme.labelMedium)
+          Text(
+            '${bestSellerCard.bestSellerEntity.price} EGP',
+            style: theme.labelMedium!.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          )
         ],
       ),
     );
   }
 }
 
-class SmallCard extends CustomCard {
-  final String image;
-  final String title;
-  const SmallCard({super.key, required this.image, required this.title});
+class OccasionCardWidget extends CustomCardWidget {
+  const OccasionCardWidget(this.occasionCard, {super.key});
+  final OccasionCard occasionCard;
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
@@ -77,14 +90,14 @@ class SmallCard extends CustomCard {
           SizedBox(
             height: 150,
             child: CustomCacheNetworkImage(
-              imageUrl: image,
+              imageUrl: occasionCard.occasionEntity.image,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
             ),
           ),
           const SizedBox(height: 5),
-          Text(title, style: theme.labelMedium)
+          Text(occasionCard.occasionEntity.name, style: theme.labelMedium)
         ],
       ),
     );

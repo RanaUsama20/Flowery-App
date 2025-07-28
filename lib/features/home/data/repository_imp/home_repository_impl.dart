@@ -5,7 +5,7 @@ import 'package:flowery_app/core/network/remote/api_manager.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../domain/entity/best_seller/best_seller_response_entity.dart';
+import '../../domain/entity/best_seller_response_entity.dart';
 import '../../domain/entity/occasions_entity.dart';
 import '../../domain/entity/prodect_entity.dart';
 import '../../domain/repository/home_repository.dart';
@@ -19,25 +19,25 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<Result<HomeEntity>> getHomedata() async {
     final ans = await _apiManager.execute<HomeEntity>(() {
-      return _homeRemoteDataSource.getHomedata();
+      return _homeRemoteDataSource.getHomeData();
     });
     return ans;
   }
+
   @override
   Future<Result<BestSellerResponseEntity>> getBestSeller() async {
     final result = await _homeRemoteDataSource.getBestSeller();
 
     if (result is SuccessResult<BestSellerResponseDto>) {
-      return SuccessResult(result.data.toDomain());
+      return SuccessResult(result.data.toEntity());
     } else if (result is FailureResult<BestSellerResponseDto>) {
       return FailureResult(result.exception);
     }
     return FailureResult(Exception("Unknown error occurred"));
-
   }
 
   @override
-  Future<Result<OccasionsEntity>> getTabOccasions() {
+  Future<Result<OccasionsResponseEntity>> getTabOccasions() {
     return _homeRemoteDataSource.getTabOccasions();
   }
 
@@ -45,11 +45,4 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Result<ProductEntity>> getProductsByOccasion(String occasionId) {
     return _homeRemoteDataSource.getProductsByOccasion(occasionId);
   }
-
 }
-
-
-
-
-
-

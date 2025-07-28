@@ -7,5 +7,5 @@ import 'package:injectable/injectable.dart';
 class OccasionsUseCase {
   HomeRepository homeRepository;
   OccasionsUseCase(this.homeRepository);
-  Future<Result<OccasionsEntity>> call() => homeRepository.getTabOccasions();
+  Future<Result<OccasionsResponseEntity>> call() => homeRepository.getTabOccasions();
 }

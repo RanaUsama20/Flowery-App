@@ -3,12 +3,11 @@ import 'package:flowery_app/features/home/domain/entity/occasions_entity.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 
-import 'package:flowery_app/features/home/domain/entity/best_seller/best_seller_response_entity.dart';
+import 'package:flowery_app/features/home/domain/entity/best_seller_response_entity.dart';
 
-abstract class HomeRepository{
-
-Future<Result<BestSellerResponseEntity>> getBestSeller();
-  Future<Result<HomeEntity>>getHomedata();
-  Future<Result<OccasionsEntity>> getTabOccasions();
+abstract class HomeRepository {
+  Future<Result<BestSellerResponseEntity>> getBestSeller();
+  Future<Result<HomeEntity>> getHomedata();
+  Future<Result<OccasionsResponseEntity>> getTabOccasions();
   Future<Result<ProductEntity>> getProductsByOccasion(String occasionId);
 }
