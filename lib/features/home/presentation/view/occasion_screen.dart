@@ -134,11 +134,11 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                 Routes.productDetails,
                 arguments: ProductDetailsModel(
                   id: products[index].id.toString(),
-                  price: products[index].price.toInt() ?? 0,
-                  description: products[index].description ?? '',
-                  name: products[index].title ?? '',
-                  images: products[index].images ?? [],
-                  inStock: (products[index].quantity ?? 1) > 0,
+                  price: products[index].price.toInt(),
+                  description: products[index].description,
+                  name: products[index].title,
+                  images: products[index].images,
+                  inStock: (products[index].quantity) > 0,
                 ),
               );
             },
