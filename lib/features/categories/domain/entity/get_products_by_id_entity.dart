@@ -1,11 +1,11 @@
-class ProductsModelEntity {
+class ProductsOfCategoryResponseEntity {
   String? message;
-  List<ProductsEntity>? products;
+  List<ProductsOfCategoryEntity>? products;
 
-  ProductsModelEntity({this.message, this.products});
+  ProductsOfCategoryResponseEntity({this.message, this.products});
 }
 
-class ProductsEntity{
+class ProductsOfCategoryEntity {
   String? id;
   String? title;
   String? slug;
@@ -24,7 +24,7 @@ class ProductsEntity{
   num? sold;
   num? rateAvg;
   num? rateCount;
-  ProductsEntity({
+  ProductsOfCategoryEntity({
     this.id,
     this.title,
     this.slug,
@@ -42,6 +42,6 @@ class ProductsEntity{
     this.discount,
     this.sold,
     this.rateAvg,
-    this.rateCount
-});
+    this.rateCount,
+  });
 }

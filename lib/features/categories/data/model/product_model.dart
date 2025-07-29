@@ -1,6 +1,5 @@
 import '../../domain/entity/get_products_by_id_entity.dart';
 
-
 class ProductsModel {
   final String? message;
   final List<Products>? products;
@@ -13,9 +12,8 @@ class ProductsModel {
   factory ProductsModel.fromJson(Map<String, dynamic> json) {
     return ProductsModel(
       message: json['message'],
-      products: (json['products'] as List<dynamic>?)
-          ?.map((e) => Products.fromJson(e))
-          .toList(),
+      products:
+          (json['products'] as List<dynamic>?)?.map((e) => Products.fromJson(e)).toList(),
     );
   }
 
@@ -26,12 +24,11 @@ class ProductsModel {
     };
   }
 
-  ProductsModelEntity toEntity() => ProductsModelEntity(
-    message: message,
-    products: products?.map((v) => v.toEntity()).toList(),
-  );
+  ProductsOfCategoryResponseEntity toEntity() => ProductsOfCategoryResponseEntity(
+        message: message,
+        products: products?.map((v) => v.toEntity()).toList(),
+      );
 }
-
 
 class Products {
   final String? id;
@@ -81,9 +78,7 @@ class Products {
       slug: json['slug'],
       description: json['description'],
       imgCover: json['imgCover'],
-      images: (json['images'] as List<dynamic>?)
-          ?.map((e) => e.toString())
-          .toList(),
+      images: (json['images'] as List<dynamic>?)?.map((e) => e.toString()).toList(),
       price: json['price'],
       priceAfterDiscount: json['priceAfterDiscount'],
       quantity: json['quantity'],
@@ -122,24 +117,24 @@ class Products {
     };
   }
 
-  ProductsEntity toEntity() => ProductsEntity(
-    id: id,
-    title: title,
-    slug: slug,
-    description: description,
-    imgCover: imgCover,
-    images: images,
-    price: price,
-    priceAfterDiscount: priceAfterDiscount,
-    quantity: quantity,
-    category: category,
-    occasion: occasion,
-    createdAt: createdAt,
-    updatedAt: updatedAt,
-    v: v,
-    discount: discount,
-    sold: sold,
-    rateAvg: rateAvg,
-    rateCount: rateCount,
-  );
+  ProductsOfCategoryEntity toEntity() => ProductsOfCategoryEntity(
+        id: id,
+        title: title,
+        slug: slug,
+        description: description,
+        imgCover: imgCover,
+        images: images,
+        price: price,
+        priceAfterDiscount: priceAfterDiscount,
+        quantity: quantity,
+        category: category,
+        occasion: occasion,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        v: v,
+        discount: discount,
+        sold: sold,
+        rateAvg: rateAvg,
+        rateCount: rateCount,
+      );
 }

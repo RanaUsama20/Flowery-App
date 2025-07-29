@@ -7,15 +7,15 @@ import '../../theme/app_theme.dart';
 
 class ProductCard {
   static Widget createProductCard(
-      String imageProduct,
-      String title,
-      int price,
-      int oldPrice,
-      int discount, {
-        required String productId,
-        int quantity = 1,
-        required void Function() onAddToCart,
-      }) {
+    String imageProduct,
+    String title,
+    int price,
+    int oldPrice,
+    int discount, {
+    required String productId,
+    int quantity = 1,
+    required void Function() onAddToCart,
+  }) {
     return IntrinsicWidth(
       child: Card(
         color: AppColors.white,
@@ -60,9 +60,10 @@ class ProductCard {
                       children: [
                         Text(
                           '$price ${LocaleKeys.Home_EGP.tr()}',
-                          maxLines: 1,overflow: TextOverflow.ellipsis,
-                          style: AppTheme.lightTheme.textTheme.labelMedium
-                              ?.copyWith(fontWeight: FontWeight.w500,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTheme.lightTheme.textTheme.labelMedium?.copyWith(
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         Spacer(
@@ -70,7 +71,8 @@ class ProductCard {
                         ),
                         Text(
                           '$oldPrice',
-                          maxLines: 1,overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                             fontSize: 12,
                             decoration: TextDecoration.lineThrough,
@@ -79,7 +81,8 @@ class ProductCard {
                         const SizedBox(width: 4),
                         Text(
                           '$discount%',
-                          maxLines: 1,overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTheme.lightTheme.textTheme.bodySmall?.copyWith(
                             fontSize: 11,
                             color: AppColors.green,
@@ -134,9 +137,3 @@ class ActionButton extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-

@@ -8,58 +8,56 @@ import '../model/categories.dart';
 import '../model/product_model.dart';
 import 'getCategories_data_source.dart';
 
-@Injectable(as: GetAllCategoriesDataSource )
-class GetAllCategoriesDataSourceImpl implements GetAllCategoriesDataSource{
-  final  CategoriesRetrofitClient apiService;
+@Injectable(as: GetAllCategoriesDataSource)
+class GetAllCategoriesDataSourceImpl implements GetAllCategoriesDataSource {
+  final CategoriesRetrofitClient apiService;
   final ApiManager apiManager;
   GetAllCategoriesDataSourceImpl(this.apiService, this.apiManager);
 
-@override
-Future<Result<GetAllCategoriesEntity>> getAllCategories() async {
-  final result = await apiManager.execute<GetAllCategories>(() async {
-   final response =await apiService.getAllCategories();
-    return response;
-  });
-  switch (result) {
-    case SuccessResult<GetAllCategories>():
-      return SuccessResult<GetAllCategoriesEntity>(result.data.toEntity());
-    case FailureResult<GetAllCategories>():
-      return FailureResult<GetAllCategoriesEntity>(result.exception);
-  }
-}
-
   @override
-  Future<Result<ProductsModelEntity>> getProductsById(String categoryId) async {
-    final result = await apiManager.execute<ProductsModel>(() async {
-      final response =await apiService.getProductsById(categoryId);
+  Future<Result<GetAllCategoriesEntity>> getAllCategories() async {
+    final result = await apiManager.execute<GetAllCategories>(() async {
+      final response = await apiService.getAllCategories();
       return response;
     });
     switch (result) {
-      case SuccessResult<ProductsModel>():
-        return SuccessResult<ProductsModelEntity>(result.data.toEntity());
-      case FailureResult<ProductsModel>():
-        return FailureResult<ProductsModelEntity>(result.exception);
+      case SuccessResult<GetAllCategories>():
+        return SuccessResult<GetAllCategoriesEntity>(result.data.toEntity());
+      case FailureResult<GetAllCategories>():
+        return FailureResult<GetAllCategoriesEntity>(result.exception);
     }
   }
 
   @override
-  Future<Result<ProductsModelEntity>> filterToProducts(String categoryId ,String sort)async {
+  Future<Result<ProductsOfCategoryResponseEntity>> getProductsById(
+      String categoryId) async {
     final result = await apiManager.execute<ProductsModel>(() async {
-      final response = await apiService.filterToProducts(categoryId: categoryId ,sort: sort);
+      final response = await apiService.getProductsById(categoryId);
       return response;
     });
     switch (result) {
       case SuccessResult<ProductsModel>():
-        return SuccessResult<ProductsModelEntity>(result.data.toEntity());
+        return SuccessResult<ProductsOfCategoryResponseEntity>(result.data.toEntity());
       case FailureResult<ProductsModel>():
-        return FailureResult<ProductsModelEntity>(result.exception);
+        return FailureResult<ProductsOfCategoryResponseEntity>(result.exception);
     }
   }
 
-
-
-
-
+  @override
+  Future<Result<ProductsOfCategoryResponseEntity>> filterToProducts(
+      String categoryId, String sort) async {
+    final result = await apiManager.execute<ProductsModel>(() async {
+      final response =
+          await apiService.filterToProducts(categoryId: categoryId, sort: sort);
+      return response;
+    });
+    switch (result) {
+      case SuccessResult<ProductsModel>():
+        return SuccessResult<ProductsOfCategoryResponseEntity>(result.data.toEntity());
+      case FailureResult<ProductsModel>():
+        return FailureResult<ProductsOfCategoryResponseEntity>(result.exception);
+    }
+  }
 
 // @override
 // Future<Result<ModelEntity>> functionName() async {
@@ -73,15 +71,4 @@ Future<Result<GetAllCategoriesEntity>> getAllCategories() async {
 //       return FailureResult<ProductEntity>(result.exception);
 //   }
 // }
-
-
-
-
-
-
-
-
-
-
-
 }

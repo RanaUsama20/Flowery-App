@@ -7,11 +7,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import 'getCategories_repository_impl_test.mocks.dart';
+
 @GenerateMocks([GetAllCategoriesDataSource])
 void main() {
   late MockGetAllCategoriesDataSource mockDataSource;
   late GetCategoriesRepositoryImpl repository;
-
 
   setUp(() {
     mockDataSource = MockGetAllCategoriesDataSource();
@@ -19,27 +19,20 @@ void main() {
   });
 
   test('should return GetAllCategoriesEntity from dataSource', () async {
-
     final mockEntity = GetAllCategoriesEntity(categories: []);
-    when(mockDataSource.getAllCategories())
-        .thenAnswer((_) async => mockEntity);
-
+    when(mockDataSource.getAllCategories()).thenAnswer((_) async => mockEntity);
 
     final result = await repository.getAllCategories();
-
 
     expect(result, equals(mockEntity));
     verify(mockDataSource.getAllCategories()).called(1);
   });
 
-
-
   test('should return ProductsModelEntity from dataSource by categoryId', () async {
-    final mockEntity = ProductsModelEntity();
+    final mockEntity = ProductsOfCategoryResponseEntity();
     const categoryId = '123';
 
-    when(mockDataSource.getProductsById(categoryId))
-        .thenAnswer((_) async => mockEntity);
+    when(mockDataSource.getProductsById(categoryId)).thenAnswer((_) async => mockEntity);
 
     final result = await repository.getProductsById(categoryId);
 

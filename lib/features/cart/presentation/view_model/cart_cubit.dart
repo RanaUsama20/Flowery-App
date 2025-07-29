@@ -17,18 +17,16 @@ part 'cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   final CartUseCase _cartUseCase;
   CartModelEntity? _localCart;
-
-  // الحصول على حالة المستخدم من AppCubit
-  final AppCubit _appCubit = serviceLocator<AppCubit>();
-
   CartCubit(this._cartUseCase) : super(CartInitialState());
 
-  // فحص إذا كان المستخدم Guest
+  final AppCubit _appCubit = serviceLocator<AppCubit>();
+
   bool get _isGuest => _appCubit.getStateUser == StateUser.guest;
 
   Future<void> addProductToCart(String productId, num quantity) async {
     if (_isGuest) {
-      emit(CartErrorState(ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
+      emit(CartErrorState(
+          ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
       return;
     }
 
@@ -48,7 +46,8 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> getProductToCart() async {
     if (_isGuest) {
-      emit(CartErrorState(ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
+      emit(CartErrorState(
+          ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
       return;
     }
 
@@ -69,7 +68,8 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> deleteProductToCart(String cartItemId) async {
     if (_isGuest) {
-      emit(CartErrorState(ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
+      emit(CartErrorState(
+          ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
       return;
     }
 
@@ -89,7 +89,8 @@ class CartCubit extends Cubit<CartState> {
 
   Future<void> updateProductQuantity(String productId, int quantity) async {
     if (_isGuest) {
-      emit(CartErrorState(ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
+      emit(CartErrorState(
+          ServerFailure(LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr())));
       return;
     }
 

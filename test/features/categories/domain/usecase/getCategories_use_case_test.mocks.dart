@@ -10,7 +10,7 @@ import 'package:flowery_app/features/categories/domain/entity/get_all_categories
     as _i5;
 import 'package:flowery_app/features/categories/domain/entity/get_products_by_id_entity.dart'
     as _i7;
-import 'package:flowery_app/features/categories/domain/repository/getCategories_repository.dart'
+import 'package:flowery_app/features/categories/domain/repository/get_categories_repository.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i6;
@@ -29,12 +29,12 @@ import 'package:mockito/src/dummies.dart' as _i6;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [GetCategoriesRepository].
+/// A class which mocks [CategoriesRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetCategoriesRepository extends _i1.Mock
-    implements _i2.GetCategoriesRepository {
-  MockGetCategoriesRepository() {
+class MockCategoriesRepository extends _i1.Mock
+    implements _i2.CategoriesRepository {
+  MockCategoriesRepository() {
     _i1.throwOnMissingStub(this);
   }
 
@@ -53,33 +53,37 @@ class MockGetCategoriesRepository extends _i1.Mock
           as _i3.Future<_i4.Result<_i5.GetAllCategoriesEntity>>);
 
   @override
-  _i3.Future<_i4.Result<_i7.ProductsModelEntity>> getProductsById(
+  _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>> getProductsById(
     String? categoryId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#getProductsById, [categoryId]),
-            returnValue: _i3.Future<_i4.Result<_i7.ProductsModelEntity>>.value(
-              _i6.dummyValue<_i4.Result<_i7.ProductsModelEntity>>(
+            returnValue: _i3.Future<
+              _i4.Result<_i7.ProductsOfCategoryResponseEntity>
+            >.value(
+              _i6.dummyValue<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>(
                 this,
                 Invocation.method(#getProductsById, [categoryId]),
               ),
             ),
           )
-          as _i3.Future<_i4.Result<_i7.ProductsModelEntity>>);
+          as _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>);
 
   @override
-  _i3.Future<_i4.Result<_i7.ProductsModelEntity>> filterToProducts(
+  _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>> filterToProducts(
     String? categoryId,
     String? sort,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#filterToProducts, [categoryId, sort]),
-            returnValue: _i3.Future<_i4.Result<_i7.ProductsModelEntity>>.value(
-              _i6.dummyValue<_i4.Result<_i7.ProductsModelEntity>>(
+            returnValue: _i3.Future<
+              _i4.Result<_i7.ProductsOfCategoryResponseEntity>
+            >.value(
+              _i6.dummyValue<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>(
                 this,
                 Invocation.method(#filterToProducts, [categoryId, sort]),
               ),
             ),
           )
-          as _i3.Future<_i4.Result<_i7.ProductsModelEntity>>);
+          as _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>);
 }

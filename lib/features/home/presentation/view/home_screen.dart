@@ -2,9 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/base_state/base_state.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flowery_app/core/utils/widgets/error_widget.dart';
+import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
+import 'package:flowery_app/features/categories/presentation/view_model/categories_cubit.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';
 import 'package:flowery_app/features/home/presentation/view_model/home/home_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view_model/home/home_state.dart';
@@ -54,8 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               final ans = state.homeData as BaseSuccessState<HomeEntity>;
               return RefreshIndicator(
                 color: AppColors.pink,
-                onRefresh: () =>
-                    context.read<HomeCubit>().getHomeData(), // Added refresh callback
+                onRefresh: () => context.read<HomeCubit>().getHomeData(),
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -68,7 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           _sectionTitle(
                             LocaleKeys.Home_Categories.tr(),
                             () {
-                              Navigator.pushNamed(context, Routes.categories);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (newContext) => BlocProvider<CategoriesCubit>(
+                                    create: (context) =>
+                                        serviceLocator<CategoriesCubit>(),
+                                    child: CategoriesScreen(),
+                                  ),
+                                ),
+                              );
                             },
                           ),
                           const SizedBox(height: 10),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../generated/locale_keys.g.dart';
 import '../../../../core/routes/routes.dart';
 
 class SuccessPage extends StatelessWidget {
@@ -26,7 +24,7 @@ class SuccessPage extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   Routes.appSection,
-                      (route) => false,
+                  (route) => false,
                 );
               },
               child: Text('LocaleKeys.checkout_back_to_home.tr()'),

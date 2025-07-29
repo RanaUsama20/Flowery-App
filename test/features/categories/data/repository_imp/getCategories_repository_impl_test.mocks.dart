@@ -53,33 +53,37 @@ class MockGetAllCategoriesDataSource extends _i1.Mock
           as _i3.Future<_i4.Result<_i5.GetAllCategoriesEntity>>);
 
   @override
-  _i3.Future<_i4.Result<_i7.ProductsModelEntity>> getProductsById(
+  _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>> getProductsById(
     String? categoryId,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#getProductsById, [categoryId]),
-            returnValue: _i3.Future<_i4.Result<_i7.ProductsModelEntity>>.value(
-              _i6.dummyValue<_i4.Result<_i7.ProductsModelEntity>>(
+            returnValue: _i3.Future<
+              _i4.Result<_i7.ProductsOfCategoryResponseEntity>
+            >.value(
+              _i6.dummyValue<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>(
                 this,
                 Invocation.method(#getProductsById, [categoryId]),
               ),
             ),
           )
-          as _i3.Future<_i4.Result<_i7.ProductsModelEntity>>);
+          as _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>);
 
   @override
-  _i3.Future<_i4.Result<_i7.ProductsModelEntity>> filterToProducts(
+  _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>> filterToProducts(
     String? categoryId,
     String? sort,
   ) =>
       (super.noSuchMethod(
             Invocation.method(#filterToProducts, [categoryId, sort]),
-            returnValue: _i3.Future<_i4.Result<_i7.ProductsModelEntity>>.value(
-              _i6.dummyValue<_i4.Result<_i7.ProductsModelEntity>>(
+            returnValue: _i3.Future<
+              _i4.Result<_i7.ProductsOfCategoryResponseEntity>
+            >.value(
+              _i6.dummyValue<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>(
                 this,
                 Invocation.method(#filterToProducts, [categoryId, sort]),
               ),
             ),
           )
-          as _i3.Future<_i4.Result<_i7.ProductsModelEntity>>);
+          as _i3.Future<_i4.Result<_i7.ProductsOfCategoryResponseEntity>>);
 }

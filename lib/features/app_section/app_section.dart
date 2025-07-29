@@ -3,6 +3,7 @@ import 'package:flowery_app/core/constants/app_assets.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
+import 'package:flowery_app/features/categories/presentation/view_model/categories_cubit.dart';
 import 'package:flowery_app/features/home/presentation/view/home_screen.dart';
 import 'package:flowery_app/features/home/presentation/view_model/home/home_cubit.dart';
 import 'package:flowery_app/features/profile/presentation/view/profile_screen.dart';
@@ -27,7 +28,10 @@ class _AppSectionState extends State<AppSection> {
       create: (context) => serviceLocator.get<HomeCubit>(),
       child: const HomeScreen(),
     ),
-    const CategoriesScreen(),
+    BlocProvider<CategoriesCubit>(
+      create: (context) => serviceLocator.get<CategoriesCubit>(),
+      child: const CategoriesScreen(),
+    ),
     const CartScreen(),
     const ProfileScreen(),
   ];

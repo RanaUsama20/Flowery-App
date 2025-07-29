@@ -1,22 +1,21 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
-import 'package:flowery_app/core/dialogs/app_dialogs.dart';
-import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
 import 'package:flowery_app/core/utils/widgets/card.dart';
+import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/di/service_locator.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/routes/routes.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../generated/locale_keys.g.dart';
-import '../../../cart/presentation/view_model/cart_cubit.dart';
 import '../../../product_details/presentation/models/product_details_model.dart';
-import '../../domain/entity/get_all_categories_entity.dart';
 import '../../domain/entity/get_products_by_id_entity.dart';
-import '../view_model/cubit/categories_cubit.dart';
+import '../view_model/categories_cubit.dart';
 import '../widgets/bottom_sheet.dart';
 
 class CategoriesScreen extends StatefulWidget {
@@ -27,323 +26,250 @@ class CategoriesScreen extends StatefulWidget {
 }
 
 class _CategoriesScreenState extends State<CategoriesScreen> {
-  final CategoriesCubit categories = serviceLocator<CategoriesCubit>();
-  final ScrollController _scrollController = ScrollController();
-
-  int selectedIndex = 0;
-  bool _showFilterButton = true;
-  late AppCubit _appCubit;
-
+  int _indexCategory = 0;
+  String sortSort = '';
   @override
   void initState() {
     super.initState();
-    _appCubit = serviceLocator.get<AppCubit>();
-    categories.getAllCategories();
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.reverse) {
-        if (_showFilterButton) setState(() => _showFilterButton = false);
-      } else if (_scrollController.position.userScrollDirection ==
-          ScrollDirection.forward) {
-        if (!_showFilterButton) setState(() => _showFilterButton = true);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
+    context.read<CategoriesCubit>().getCategories();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => categories,
-      child:  Scaffold(
-      body: BlocListener<CategoriesCubit, CategoriesState>(
-    listener: (context, state) {
-      if (state is CategoriesError) {
-        AppDialogs.showFailureDialog(
-          context,
-          message: state.error.message,
-          nextAction: () =>  Navigator.pushReplacementNamed(context, Routes.appSection),
-        );
-      }
-    },
-    child: BlocBuilder<CategoriesCubit, CategoriesState>(
-      builder: (context, state) {
-        if (state is CategoriesLoading) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is SuccessState) {
-          return buildBody(
-            state.allCategories ?? [],
-            state.products ?? [],
-          );
-        } else if (state is CategoriesError) {
-          return Center(child: Text( LocaleKeys.Error_Connection_timeout.tr()));
-        }
-        return const Center(child: CircularProgressIndicator());
-      },
-    ),
-    ),
-    ),
-    );
-  }
-
-  Widget buildBody(
-      List<CategoriesEntity> allCategories, List<ProductsEntity> products) {
-    return SafeArea(
-      child: Stack(
-        children: [
-          RefreshIndicator(
-            color: AppColors.pink,
-            onRefresh: _onRefresh,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 18),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: InkWell(
-                            onTap: () => context.pushNamed(Routes.search),
-                            child: TextFormField(
-                              enabled: false,
-                              decoration: InputDecoration(
-                                disabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                    borderSide:
-                                        BorderSide(color: AppColors.gray)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.gray),
-                                    borderRadius: BorderRadius.circular(10)),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: AppColors.gray,
-                                ),
-                                hintText: LocaleKeys.Home_Search.tr(),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: AppColors.gray),
-                          ),
-                          child: IconButton(
-                            icon:
-                                Icon(Icons.filter_list, color: AppColors.gray),
-                            onPressed: () {
-                              showFilterSheet(context, categories);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 6),
-                  SizedBox(
-                    height: 60,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: allCategories.length,
-                      itemBuilder: (context, index) {
-                        bool isSelected = selectedIndex == index;
-                        return GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = index;
-                            });
-                            categories
-                                .getProductsById(allCategories[index].id ?? "");
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16.0, vertical: 12.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  allCategories[index].name ?? '',
-                                  style: AppTheme
-                                      .lightTheme.textTheme.titleSmall
-                                      ?.copyWith(
-                                    color: isSelected
-                                        ? AppColors.pink
-                                        : AppColors.gray,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Container(
-                                  height: 2,
-                                  width: 40,
-                                  color: isSelected
-                                      ? AppColors.pink
-                                      : AppColors.gray,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Expanded(
-                    child: products.isEmpty
-                        ? Center(
-                            child: Text(
-                              LocaleKeys.Home_NoProductsInThiSection.tr(),
-                              style: AppTheme.lightTheme.textTheme.titleSmall,
-                            ),
-                          )
-                        : GridView.builder(
-                            controller: _scrollController,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              mainAxisExtent: 260,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                            ),
-                            itemCount: products.length,
-                            itemBuilder: (context, index) {
-                              final mappedProduct = ProductDetailsModel(
-                                id: products[index].id.toString(),
-                                price: products[index].price!.toInt(),
-                                description: products[index].description!,
-                                name: products[index].title!,
-                                images: products[index].images!,
-                                inStock: products[index].quantity != null
-                                    ? true
-                                    : false,
-                              );
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    Routes.productDetails,
-                                    arguments: ProductDetailsModel(
-                                      id: products[index].id.toString(),
-                                      price: products[index].price?.toInt() ?? 0,
-                                      description: products[index].description ?? '',
-                                      name: products[index].title ?? '',
-                                      images: products[index].images ?? [],
-                                      inStock: (products[index].quantity ?? 1) > 0,
-                                    ),
-                                  );
-                                },
-                                child: BlocProvider(
-                                  create: (context) => serviceLocator<CartCubit>(),
-                                  child: BlocConsumer<CartCubit, CartState>(
-                                    builder: (context, state) {
-                                      final cartCubit = context.read<CartCubit>();
-                                      return ProductCard.createProductCard(
-                                        products[index].imgCover.toString(),
-                                        products[index].title.toString(),
-                                        products[index].priceAfterDiscount?.toInt() ?? 0,
-                                        products[index].price?.toInt() ?? 0,
-                                        products[index].discount?.toInt() ?? 0,
-                                        onAddToCart: () {
-                                          if (_appCubit.getStateUser == StateUser.guest) {
-                                            AppDialogs.showLoginDialog(
-                                              context,
-                                              message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr(),
-                                            );
-                                          } else {
-                                            cartCubit.addProductToCart(
-                                              products[index].id.toString(),
-                                              1,
-                                            );
-                                          }
-                                        },
-                                        productId: products[index].id.toString(),
-                                      );
-                                    },
-                                    listener: (BuildContext context, CartState state) {
-                                      if (state is CartSuccessState) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor: AppColors.green,
-                                            content: Text(
-                                              state.productCart.message.toString(),
-                                              style: AppTheme.lightTheme.textTheme.labelSmall,
-                                            ),
-                                          ),
-                                        );
-                                      } else if (state is CartErrorState) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(
-                                            backgroundColor: AppColors.red,
-                                            content: Text(
-                                              LocaleKeys.Error_SoldOut.tr(),
-                                              style: AppTheme.lightTheme.textTheme.labelSmall,
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                ),
-                              );
-
-                            },
-                          ),
-                  ),
-                ],
-              ),
+    return Scaffold(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+        child: Column(
+          spacing: 10,
+          children: [
+            _topSectionSearch(),
+            BlocBuilder<CategoriesCubit, CategoriesState>(
+              buildWhen: (previous, current) =>
+                  previous.isCategoriesLoading != current.isCategoriesLoading,
+              builder: (context, state) {
+                if (state.isCategoriesLoading || state.isCategoriesFailure) {
+                  return _buildDummyTabBar();
+                }
+                return _buildTabBar(
+                  state.categories.map((e) => Tab(text: e.name)).toList(),
+                  (index) {
+                    _indexCategory = index;
+                    context
+                        .read<CategoriesCubit>()
+                        .getProductsByCategory(state.categories[index].id);
+                  },
+                );
+              },
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              child: AnimatedSlide(
-                duration: const Duration(milliseconds: 300),
-                offset: _showFilterButton ? Offset.zero : const Offset(0, 2),
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 300),
-                  opacity: _showFilterButton ? 1.0 : 0.0,
-                  child: ElevatedButton.icon(
-                    style:
-                        AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
-                      fixedSize: MaterialStatePropertyAll(const Size(120, 50)),
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                      ),
-                      padding: MaterialStatePropertyAll(EdgeInsets.all(6)),
-                    ),
-                    onPressed: () {
-                      showFilterSheet(context, categories);
-                    },
-                    icon: const Icon(Icons.tune, color: AppColors.white),
-                    label: Text(LocaleKeys.Home_Filter.tr(),
-                        style: AppTheme.lightTheme.textTheme.labelSmall),
-                  ),
-                ),
-              ),
+            BlocBuilder<CategoriesCubit, CategoriesState>(
+              builder: (context, state) {
+                if (state.isProductsLoading || state.isProductsFailure) {
+                  return _buildDummyProductOfCategory();
+                }
+                if (state.products.isEmpty) {
+                  return _buildDummyProductOfCategory();
+                }
+                return state.resultSearchProducts.isEmpty
+                    ? _buildProductsOfCategory(state.products)
+                    : _buildProductsOfCategory(state.resultSearchProducts);
+              },
             ),
-          )
-        ],
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButton: MaterialButton(
+        onPressed: () {
+          showFilterSheet(context.read<CategoriesCubit>());
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        color: AppColors.pink,
+        child: Row(
+          spacing: 10,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              LocaleKeys.Home_Filter.tr(),
+              style: AppTheme.lightTheme.textTheme.labelSmall,
+            ),
+            const Icon(Icons.tune, color: AppColors.white)
+          ],
+        ),
       ),
     );
   }
 
-  Future<void> _onRefresh() async {
-    categories.getAllCategories();
+  Row _topSectionSearch() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: TextFormField(
+            onChanged: (query) {
+              context.read<CategoriesCubit>().searchProduct(query);
+            },
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.pink),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: AppColors.gray),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              prefixIcon: Icon(
+                Icons.search,
+                color: AppColors.gray,
+              ),
+              hintText: LocaleKeys.Home_Search.tr(),
+            ),
+          ),
+        ),
+        SizedBox(width: 8),
+        Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(6),
+            border: Border.all(color: AppColors.gray),
+          ),
+          child: IconButton(
+            icon: Icon(Icons.filter_list, color: AppColors.gray),
+            onPressed: () {
+              showFilterSheet(context.read<CategoriesCubit>());
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTabBar(List<Tab> tabs, Function(int index) callBack) {
+    return DefaultTabController(
+      length: tabs.length,
+      child: TabBar(
+        indicatorSize: TabBarIndicatorSize.label,
+        onTap: (value) => callBack(value),
+        isScrollable: true,
+        tabs: tabs,
+      ),
+    );
+  }
+
+  Widget _buildProductsOfCategory(List<ProductsOfCategoryEntity> products) {
+    return Expanded(
+      child: GridView.builder(
+        itemCount: products.length,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 260,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                Routes.productDetails,
+                arguments: ProductDetailsModel(
+                  id: products[index].id.toString(),
+                  price: products[index].price?.toInt() ?? 0,
+                  description: products[index].description ?? "",
+                  name: products[index].title ?? "",
+                  images: products[index].images ?? [],
+                  inStock: (products[index].quantity)! > 0 ? true : false,
+                ),
+              );
+            },
+            child: ProductCard.createProductCard(
+              products[index].imgCover.toString(),
+              products[index].title.toString(),
+              products[index].priceAfterDiscount?.toInt() ?? 0,
+              products[index].price?.toInt() ?? 0,
+              products[index].discount?.toInt() ?? 0,
+              onAddToCart: () {},
+              productId: products[index].id.toString(),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void showFilterSheet(CategoriesCubit cubit) {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return FilterSheetContent(
+          onPressed: () async {
+            context.pop();
+            await cubit.filterProduct(
+              cubit.state.categories[_indexCategory].id,
+              sortSort,
+            );
+          },
+          onSort: (sort) {
+            sortSort = sort ?? 'price';
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildDummyProductOfCategory() {
+    return Expanded(
+      child: Skeletonizer(
+        child: GridView.builder(
+          itemCount: 10,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 260,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+          ),
+          itemBuilder: (context, index) => ProductCard.createProductCard(
+            imageDummy,
+            "Hello User",
+            32,
+            35,
+            30,
+            onAddToCart: () {},
+            productId: '',
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDummyTabBar() {
+    return Skeletonizer(
+      enabled: true,
+      child: DefaultTabController(
+        length: 10,
+        child: TabBar(
+          isScrollable: true,
+          indicatorSize: TabBarIndicatorSize.label,
+          tabs: [
+            Tab(text: 'Wedding'),
+            Tab(text: 'Graduation'),
+            Tab(text: 'Birthday'),
+            Tab(text: 'Katb Ketab'),
+            Tab(text: 'Engagement'),
+            Tab(text: 'Thank you'),
+            Tab(text: 'Get well'),
+            Tab(text: 'Wedding'),
+            Tab(text: 'Engagement'),
+            Tab(text: 'Birthday'),
+          ],
+        ),
+      ),
+    );
   }
 }

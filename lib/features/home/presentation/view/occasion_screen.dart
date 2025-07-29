@@ -119,14 +119,6 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
           mainAxisSpacing: 12,
         ),
         itemBuilder: (context, index) {
-          final mappedProduct = ProductDetailsModel(
-            id: products[index].id.toString(),
-            price: products[index].price.toInt(),
-            description: products[index].description,
-            name: products[index].title,
-            images: products[index].images,
-            inStock: products[index].quantity != 0 ? true : false,
-          );
           return InkWell(
             onTap: () {
               Navigator.pushNamed(
@@ -150,9 +142,9 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                   return ProductCard.createProductCard(
                     products[index].imgCover.toString(),
                     products[index].title.toString(),
-                    products[index].priceAfterDiscount.toInt() ?? 0,
-                    products[index].price.toInt() ?? 0,
-                    products[index].discount.toInt() ?? 0,
+                    products[index].priceAfterDiscount.toInt(),
+                    products[index].price.toInt(),
+                    products[index].discount.toInt(),
                     onAddToCart: () {
                       if (_appCubit.getStateUser == StateUser.guest) {
                         AppDialogs.showLoginDialog(
