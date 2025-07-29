@@ -1,4 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
+import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/product_details/presentation/models/product_details_model.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
@@ -47,22 +49,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                   children: [
                     PageView.builder(
                       controller: _pageController,
-                      itemCount: images.length,
+                      itemCount: product.images.isEmpty ? 1 : images.length,
                       onPageChanged: (index) {
                         setState(() => _currentIndex = index);
                       },
                       itemBuilder: (context, index) {
                         return product.images.isEmpty
-                            ? Image.asset(
-                          images[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        )
-                            : Image.network(
-                          images[index],
-                          fit: BoxFit.cover,
-                          width: double.infinity,
-                        );
+                            ? Image.network(
+                                imageDummy,
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              )
+                            : CustomCacheNetworkImage(
+                                imageUrl: images[index],
+                                fit: BoxFit.cover,
+                                width: double.infinity,
+                              );
                       },
                     ),
                     Positioned(
@@ -110,18 +112,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                             children: [
                               Text(
                                 "${LocaleKeys.Home_Status.tr()}: ",
-                                style: AppTheme.lightTheme.textTheme.titleSmall!
-                                    .copyWith(
-                                    color: AppColors.black,
-                                    fontWeight: FontWeight.bold),
+                                style: AppTheme.lightTheme.textTheme.titleSmall!.copyWith(
+                                    color: AppColors.black, fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 product.inStock == true
                                     ? LocaleKeys.Home_InStock.tr()
                                     : LocaleKeys.Home_outStock.tr(),
-                                style: AppTheme
-                                    .lightTheme.textTheme.labelMedium!
-                                    .copyWith(
+                                style:
+                                    AppTheme.lightTheme.textTheme.labelMedium!.copyWith(
                                   color: product.inStock == true
                                       ? AppColors.black
                                       : Colors.red,
@@ -140,18 +139,14 @@ class _ProductDetailsState extends State<ProductDetails> {
                       SizedBox(height: context.hp(0.5)),
                       Text(
                         product.name,
-                        style: AppTheme.lightTheme.textTheme.titleSmall!
-                            .copyWith(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.bold),
+                        style: AppTheme.lightTheme.textTheme.titleSmall!.copyWith(
+                            color: AppColors.black, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: context.hp(1)),
                       Text(
                         LocaleKeys.Home_Description.tr(),
-                        style: AppTheme.lightTheme.textTheme.titleSmall!
-                            .copyWith(
-                            color: AppColors.black,
-                            fontWeight: FontWeight.bold),
+                        style: AppTheme.lightTheme.textTheme.titleSmall!.copyWith(
+                            color: AppColors.black, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: context.hp(0.5)),
                       Text(
@@ -171,58 +166,55 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Column(
                 children: [
                   Expanded(child: SizedBox()),
-
-
                   BlocProvider(
                     create: (context) => serviceLocator<CartCubit>(),
-                    child: BlocConsumer<CartCubit,CartState>(
+                    child: BlocConsumer<CartCubit, CartState>(
                       builder: (context, state) {
                         final cartCubit = context.read<CartCubit>();
-                        return   Padding(
+                        return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: ElevatedButton(
                             onPressed: () {
-                              cartCubit.addProductToCart(product.id.toString(),1);
+                              cartCubit.addProductToCart(product.id.toString(), 1);
                             },
                             style:
-                            AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                                AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
                               minimumSize:
-                              WidgetStatePropertyAll(Size(double.infinity, 48)),
+                                  WidgetStatePropertyAll(Size(double.infinity, 48)),
                             ),
                             child: Text(LocaleKeys.Home_AddToCart.tr()),
                           ),
                         );
-                      }, listener: (BuildContext context, CartState state) {
-                      if(state is CartSuccessState){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: AppColors.green ,
-                            content: Text(state.productCart.message.toString(),
-                              style: AppTheme.lightTheme.textTheme.labelSmall ,
+                      },
+                      listener: (BuildContext context, CartState state) {
+                        if (state is CartSuccessState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: AppColors.green,
+                              content: Text(
+                                state.productCart.message.toString(),
+                                style: AppTheme.lightTheme.textTheme.labelSmall,
+                              ),
                             ),
-                          ),
-                        );
-                      } else if(state is CartErrorState){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor: AppColors.red ,
-                            content: Text(LocaleKeys.Error_SoldOut.tr(),
-                              style: AppTheme.lightTheme.textTheme.labelSmall ,
+                          );
+                        } else if (state is CartErrorState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              backgroundColor: AppColors.red,
+                              content: Text(
+                                LocaleKeys.Error_SoldOut.tr(),
+                                style: AppTheme.lightTheme.textTheme.labelSmall,
+                              ),
                             ),
-                          ),
-                        );
-                      }
-
-
-                    },
+                          );
+                        }
+                      },
                     ),
                   ),
-
                 ],
               ),
             ),
-            SliverToBoxAdapter(
-                child: SizedBox(height: context.hp(2))),
+            SliverToBoxAdapter(child: SizedBox(height: context.hp(2))),
             // Bottom padding
           ],
         ),

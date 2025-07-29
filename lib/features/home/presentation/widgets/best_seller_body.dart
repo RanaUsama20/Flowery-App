@@ -155,26 +155,24 @@ class _BestSellerBodyState extends State<BestSellerBody> {
   }
 
   Widget _buildDummyProductOfOccasion() {
-    return Expanded(
-      child: Skeletonizer(
-        child: GridView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: 15,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisExtent: 260,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
-          ),
-          itemBuilder: (context, index) => ProductCard.createProductCard(
-            imageDummy,
-            "Hello User",
-            32,
-            35,
-            30,
-            onAddToCart: () {},
-            productId: '',
-          ),
+    return Skeletonizer(
+      child: GridView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: 15,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisExtent: 260,
+          crossAxisSpacing: 12,
+          mainAxisSpacing: 12,
+        ),
+        itemBuilder: (context, index) => ProductCard.createProductCard(
+          imageDummy,
+          "Hello User",
+          32,
+          35,
+          30,
+          onAddToCart: () {},
+          productId: '',
         ),
       ),
     );
