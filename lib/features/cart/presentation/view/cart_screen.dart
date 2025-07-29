@@ -48,7 +48,8 @@ class _CartScreenState extends State<CartScreen> {
             AppDialogs.showFailureDialog(
               context,
               message: state.error.message,
-              nextAction: () => Navigator.pushReplacementNamed(context, Routes.appSection),
+              nextAction: () =>
+                  Navigator.pushReplacementNamed(context, Routes.appSection),
             );
           }
         },
@@ -126,7 +127,7 @@ class _CartScreenState extends State<CartScreen> {
           ),
           Row(
             children: [
-              const SectionLocation(),
+              // const SectionLocation(address:context.read<CartCubit>().,),
               const Spacer(),
               IconButton(
                 onPressed: () {},
@@ -156,11 +157,15 @@ class _CartScreenState extends State<CartScreen> {
               price: product?.price ?? 0,
               quantity: quantity,
               onIncrement: () {
-                context.read<CartCubit>().updateProductQuantity(product!.id!, quantity + 1);
+                context
+                    .read<CartCubit>()
+                    .updateProductQuantity(product!.id!, quantity + 1);
               },
               onDecrement: () {
                 if (quantity > 1) {
-                  context.read<CartCubit>().updateProductQuantity(product!.id!, quantity - 1);
+                  context
+                      .read<CartCubit>()
+                      .updateProductQuantity(product!.id!, quantity - 1);
                 }
               },
               onRemove: () {
@@ -186,7 +191,8 @@ class _CartScreenState extends State<CartScreen> {
             color: AppColors.black[AppColors.colorCode40]?.withOpacity(0.5),
             thickness: 1,
           ),
-          _buildSummaryRow(LocaleKeys.Home_PriceAfterDiscount.tr(), "${cart.totalPriceAfterDiscount}"),
+          _buildSummaryRow(
+              LocaleKeys.Home_PriceAfterDiscount.tr(), "${cart.totalPriceAfterDiscount}"),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: ElevatedButton(
@@ -197,11 +203,13 @@ class _CartScreenState extends State<CartScreen> {
                 ),
               ),
               onPressed: () {
-                Navigator.of(context).pushNamed(Routes.checkout, arguments: cart.totalPriceAfterDiscount);
+                Navigator.of(context)
+                    .pushNamed(Routes.checkout, arguments: cart.totalPriceAfterDiscount);
               },
               child: Text(
                 LocaleKeys.Home_CheckOut.tr(),
-                style: AppTheme.lightTheme.textTheme.titleSmall?.copyWith(color: AppColors.white),
+                style: AppTheme.lightTheme.textTheme.titleSmall
+                    ?.copyWith(color: AppColors.white),
               ),
             ),
           ),
@@ -215,12 +223,14 @@ class _CartScreenState extends State<CartScreen> {
       children: [
         Text(
           "$label : ",
-          style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(fontSize: 16, color: AppColors.gray),
+          style: AppTheme.lightTheme.textTheme.titleLarge
+              ?.copyWith(fontSize: 16, color: AppColors.gray),
         ),
         const Spacer(),
         Text(
           value,
-          style: AppTheme.lightTheme.textTheme.titleLarge?.copyWith(fontSize: 16, color: AppColors.gray),
+          style: AppTheme.lightTheme.textTheme.titleLarge
+              ?.copyWith(fontSize: 16, color: AppColors.gray),
         ),
       ],
     );

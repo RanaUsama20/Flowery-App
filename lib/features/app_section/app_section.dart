@@ -24,7 +24,7 @@ class _AppSectionState extends State<AppSection> {
   int _currentIndex = 0;
   final List<Widget> _pages = [
     BlocProvider<HomeCubit>(
-      create: (context) => serviceLocator.get<HomeCubit>()..getHomeData(),
+      create: (context) => serviceLocator.get<HomeCubit>(),
       child: const HomeScreen(),
     ),
     const CategoriesScreen(),

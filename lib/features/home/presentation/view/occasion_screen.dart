@@ -232,6 +232,7 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
         length: 10,
         child: TabBar(
           isScrollable: true,
+          indicatorSize: TabBarIndicatorSize.label,
           tabs: [
             Tab(text: 'Wedding'),
             Tab(text: 'Graduation'),

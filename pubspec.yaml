@@ -61,9 +61,8 @@ dependencies:
   permission_handler: ^12.0.0+1
   toastification: ^3.0.2
   google_maps_flutter: ^2.12.1
-  location: ^6.0.2
-  geocoding: ^3.0.0
-  # geocoder2: ^1.4.0
+  
+  
   url_launcher: ^6.3.1
   webview_flutter: ^4.11.0
   rxdart: ^0.28.0
@@ -75,8 +74,9 @@ dependencies:
   firebase_auth: ^5.5.2
   firebase_messaging: ^15.2.5
   flutter_native_splash: ^2.4.4
-  # hive: ^2.2.3
-  # hive_flutter: ^1.1.0
+  location: ^8.0.1
+  geocoding: ^4.0.0
+  
 
 dev_dependencies:
   flutter_test:

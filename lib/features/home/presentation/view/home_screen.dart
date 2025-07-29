@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/base_state/base_state.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/routes/routes.dart';
@@ -23,6 +24,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeCubit>().getHomeData();
+    context.read<AppCubit>().getLocation();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).textTheme;
@@ -176,7 +184,6 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SectionSearch(),
           const SizedBox(height: 20),
-          SectionLocation(),
           const SizedBox(height: 10),
           Expanded(
             child: ListView(
