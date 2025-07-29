@@ -53,7 +53,7 @@ class BestSellerCubit extends Cubit<BestSellerState> {
       description: item.description,
       name: item.title,
       images: item.images,
-      inStock: item.quantity != null ? true : false,
+      inStock: item.quantity >= 0 ? true : false,
     );
 
     emit(state.copyWith(selectedProduct: mappedProduct));
