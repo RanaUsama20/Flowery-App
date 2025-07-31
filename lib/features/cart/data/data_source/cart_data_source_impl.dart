@@ -14,19 +14,17 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
   final ApiManager _apiManager;
   CartRemoteDataSourceImpl(this._cartRetrofitClient, this._apiManager);
 
-
   @override
   Future<Result<CartModelEntity>> getProductToCart() async {
     var token = await SharedPreferencesUtils.getString(AppValues.token);
-    final result = await _apiManager.execute<CartModel>(() async {
+    final result = await _apiManager.execute<CartResponseModelDto>(() async {
       final response = await _cartRetrofitClient.getProductToCart('Bearer $token');
       return response;
-
     });
     switch (result) {
-      case SuccessResult<CartModel>():
+      case SuccessResult<CartResponseModelDto>():
         return SuccessResult<CartModelEntity>(result.data.toEntity());
-      case FailureResult<CartModel>():
+      case FailureResult<CartResponseModelDto>():
         return FailureResult<CartModelEntity>(result.exception);
     }
   }
@@ -34,60 +32,49 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
   @override
   Future<Result<CartModelEntity>> addProductToCart(String productId, num quantity) async {
     var token = await SharedPreferencesUtils.getString(AppValues.token);
-    final result = await _apiManager.execute<CartModel>(() async {
-      final response = await _cartRetrofitClient.addProductToCart(  'Bearer $token', {"product": productId, "quantity": quantity});
+    final result = await _apiManager.execute<CartResponseModelDto>(() async {
+      final response = await _cartRetrofitClient.addProductToCart(
+          'Bearer $token', {"product": productId, "quantity": quantity});
       return response;
-
     });
     switch (result) {
-      case SuccessResult<CartModel>():
+      case SuccessResult<CartResponseModelDto>():
         return SuccessResult<CartModelEntity>(result.data.toEntity());
-      case FailureResult<CartModel>():
+      case FailureResult<CartResponseModelDto>():
         return FailureResult<CartModelEntity>(result.exception);
     }
   }
 
   @override
-  Future<Result<CartModelEntity>> updateProductQuantity(String productId, int quantity) async {
+  Future<Result<CartModelEntity>> updateProductQuantity(
+      String productId, int quantity) async {
     var token = await SharedPreferencesUtils.getString(AppValues.token);
-    final result = await _apiManager.execute<CartModel>(() async {
-      final response = await _cartRetrofitClient.updateProductQuantity(  'Bearer $token', productId, {"quantity": quantity});
+    final result = await _apiManager.execute<CartResponseModelDto>(() async {
+      final response = await _cartRetrofitClient
+          .updateProductQuantity('Bearer $token', productId, {"quantity": quantity});
       return response;
     });
     switch (result) {
-      case SuccessResult<CartModel>():
+      case SuccessResult<CartResponseModelDto>():
         return SuccessResult<CartModelEntity>(result.data.toEntity());
-      case FailureResult<CartModel>():
+      case FailureResult<CartResponseModelDto>():
         return FailureResult<CartModelEntity>(result.exception);
     }
   }
+
   @override
   Future<Result<CartModelEntity>> deleteProductToCart(String cartItemId) async {
     var token = await SharedPreferencesUtils.getString(AppValues.token);
-    final result = await _apiManager.execute<CartModel>(() async {
-      final response = await _cartRetrofitClient.deleteProductToCart('Bearer $token', cartItemId);
+    final result = await _apiManager.execute<CartResponseModelDto>(() async {
+      final response =
+          await _cartRetrofitClient.deleteProductToCart('Bearer $token', cartItemId);
       return response;
-
     });
     switch (result) {
-      case SuccessResult<CartModel>():
+      case SuccessResult<CartResponseModelDto>():
         return SuccessResult<CartModelEntity>(result.data.toEntity());
-      case FailureResult<CartModel>():
+      case FailureResult<CartResponseModelDto>():
         return FailureResult<CartModelEntity>(result.exception);
     }
   }
-
-//
-// @override
-// Future<Result<ModelEntity>> functionName() async {
-//   final result = await _apiManager.execute<ModelDto>(() async {
-//     return await _homeRetrofitClient.functionName();
-//   });
-//   switch (result) {
-//     case SuccessResult<ModelDto>():
-//       return SuccessResult<ModelEntity>(result.data.toEntity());
-//     case FailureResult<ModelDto>():
-//       return FailureResult<ProductEntity>(result.exception);
-//   }
-// }
 }

@@ -9,6 +9,7 @@ import '../../../../../core/network/common/api_result.dart';
 import '../../../../../generated/locale_keys.g.dart';
 import '../../../domain/entity/login_entity.dart';
 import 'login_state.dart';
+
 @injectable
 class LoginCubit extends Cubit<LoginStates> {
   final LoginUseCase loginUseCase;
@@ -20,7 +21,8 @@ class LoginCubit extends Cubit<LoginStates> {
 
     if (email.isEmpty || password.isEmpty) {
       emit(LoginErrorState(
-          ValidationFailure("${ LocaleKeys.Error_PleaseEnterBoEmailAndPassword.tr()} "),));
+        ValidationFailure("${LocaleKeys.Error_PleaseEnterBoEmailAndPassword.tr()} "),
+      ));
       return;
     }
 
@@ -31,12 +33,13 @@ class LoginCubit extends Cubit<LoginStates> {
         case SuccessResult<LoginEntity?>():
           final data = result.data;
           if (data == null) {
-            emit(LoginErrorState(ServerFailure("${ LocaleKeys.Error_PleaseEnterBoEmailAndPassword.tr()} ")));
+            emit(LoginErrorState(ServerFailure(
+                "${LocaleKeys.Error_PleaseEnterBoEmailAndPassword.tr()} ")));
             return;
           }
 
           final token = await SaveLocal.getString("token");
-          AppCubit().changeStateUser(token: token);
+          // AppCubit().changeStateUser(token: token);
           emit(LoginSuccessState(loginEntity: data));
 
         case FailureResult<LoginEntity?>():

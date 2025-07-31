@@ -20,13 +20,13 @@ class _CartRetrofitClient implements CartRetrofitClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CartModel> getProductToCart(String token) async {
+  Future<CartResponseModelDto> getProductToCart(String token) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CartModel>(
+    final _options = _setStreamType<CartResponseModelDto>(
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -37,9 +37,9 @@ class _CartRetrofitClient implements CartRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartModel _value;
+    late CartResponseModelDto _value;
     try {
-      _value = CartModel.fromJson(_result.data!);
+      _value = CartResponseModelDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -48,7 +48,7 @@ class _CartRetrofitClient implements CartRetrofitClient {
   }
 
   @override
-  Future<CartModel> addProductToCart(
+  Future<CartResponseModelDto> addProductToCart(
     String token,
     Map<String, dynamic> body,
   ) async {
@@ -58,7 +58,7 @@ class _CartRetrofitClient implements CartRetrofitClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<CartModel>(
+    final _options = _setStreamType<CartResponseModelDto>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -69,9 +69,9 @@ class _CartRetrofitClient implements CartRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartModel _value;
+    late CartResponseModelDto _value;
     try {
-      _value = CartModel.fromJson(_result.data!);
+      _value = CartResponseModelDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -80,7 +80,7 @@ class _CartRetrofitClient implements CartRetrofitClient {
   }
 
   @override
-  Future<CartModel> updateProductQuantity(
+  Future<CartResponseModelDto> updateProductQuantity(
     String token,
     String productId,
     Map<String, dynamic> body,
@@ -91,7 +91,7 @@ class _CartRetrofitClient implements CartRetrofitClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<CartModel>(
+    final _options = _setStreamType<CartResponseModelDto>(
       Options(method: 'PUT', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -102,9 +102,9 @@ class _CartRetrofitClient implements CartRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartModel _value;
+    late CartResponseModelDto _value;
     try {
-      _value = CartModel.fromJson(_result.data!);
+      _value = CartResponseModelDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -113,13 +113,16 @@ class _CartRetrofitClient implements CartRetrofitClient {
   }
 
   @override
-  Future<CartModel> deleteProductToCart(String token, String cartItemId) async {
+  Future<CartResponseModelDto> deleteProductToCart(
+    String token,
+    String cartItemId,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CartModel>(
+    final _options = _setStreamType<CartResponseModelDto>(
       Options(method: 'DELETE', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -130,9 +133,9 @@ class _CartRetrofitClient implements CartRetrofitClient {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CartModel _value;
+    late CartResponseModelDto _value;
     try {
-      _value = CartModel.fromJson(_result.data!);
+      _value = CartResponseModelDto.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

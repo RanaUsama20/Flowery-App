@@ -80,8 +80,14 @@ import 'package:flowery_app/features/cart/data/repository_impl/cart_repository_i
     as _i221;
 import 'package:flowery_app/features/cart/domain/repository/cart_repository.dart'
     as _i166;
-import 'package:flowery_app/features/cart/domain/usecase/cart_usecase.dart'
-    as _i485;
+import 'package:flowery_app/features/cart/domain/usecase/add_product_to_cart_use_case.dart'
+    as _i644;
+import 'package:flowery_app/features/cart/domain/usecase/delete_product_to_cart_use_case.dart'
+    as _i187;
+import 'package:flowery_app/features/cart/domain/usecase/get_product_cart_use_case.dart'
+    as _i8;
+import 'package:flowery_app/features/cart/domain/usecase/update_product_quantity_use_case.dart'
+    as _i62;
 import 'package:flowery_app/features/cart/presentation/view_model/cart_cubit.dart'
     as _i645;
 import 'package:flowery_app/features/categories/data/api/getl_categories_retrofit_client.dart'
@@ -345,15 +351,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i667.SearchBloc(gh<_i993.SearchQueryUseCase>()));
     gh.factory<_i494.GetAllNotificationUseCase>(() =>
         _i494.GetAllNotificationUseCase(gh<_i228.NotificationRepository>()));
-    gh.factory<_i485.CartUseCase>(
-        () => _i485.CartUseCase(gh<_i166.CartRepository>()));
     gh.factory<_i475.OrdersCubit>(
         () => _i475.OrdersCubit(gh<_i937.GetOrdersUseCase>()));
     gh.factory<_i18.AddressCubit>(() => _i18.AddressCubit(
           gh<_i969.SaveAddressUseCase>(),
           gh<_i865.EditAddressUseCase>(),
         ));
-    gh.factory<_i645.CartCubit>(() => _i645.CartCubit(gh<_i485.CartUseCase>()));
     gh.factory<_i192.CashPaymentUseCase>(
         () => _i192.CashPaymentUseCase(gh<_i533.CheckoutRepository>()));
     gh.factory<_i406.CreditCardPaymentUseCase>(
@@ -368,12 +371,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i967.ResetPasswordUseCase(gh<_i426.AuthRepository>()));
     gh.factory<_i603.VerifyResetCodeUseCase>(
         () => _i603.VerifyResetCodeUseCase(gh<_i426.AuthRepository>()));
-    gh.factory<_i643.CheckoutCubit>(() => _i643.CheckoutCubit(
-          gh<_i192.CashPaymentUseCase>(),
-          gh<_i406.CreditCardPaymentUseCase>(),
-          gh<_i485.CartUseCase>(),
-          gh<_i110.GetProfileDataUseCase>(),
-        ));
+    gh.factory<_i644.AddProductToCartUseCase>(
+        () => _i644.AddProductToCartUseCase(gh<_i166.CartRepository>()));
+    gh.factory<_i187.DeleteProductToCartUseCase>(
+        () => _i187.DeleteProductToCartUseCase(gh<_i166.CartRepository>()));
+    gh.factory<_i8.GetProductCartUseCase>(
+        () => _i8.GetProductCartUseCase(gh<_i166.CartRepository>()));
+    gh.factory<_i62.UpdateProductQuantityUseCase>(
+        () => _i62.UpdateProductQuantityUseCase(gh<_i166.CartRepository>()));
     gh.factory<_i517.ChangePasswordCubit>(
         () => _i517.ChangePasswordCubit(gh<_i583.ChangePasswordUseCase>()));
     gh.factory<_i859.ProfileMainCubit>(() => _i859.ProfileMainCubit(
@@ -405,6 +410,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i170.EditProfileCubit>(() => _i170.EditProfileCubit(
           gh<_i205.EditProfileUseCase>(),
           gh<_i728.UploadPhotoUseCase>(),
+        ));
+    gh.factory<_i645.CartCubit>(() => _i645.CartCubit(
+          gh<_i644.AddProductToCartUseCase>(),
+          gh<_i187.DeleteProductToCartUseCase>(),
+          gh<_i8.GetProductCartUseCase>(),
+          gh<_i62.UpdateProductQuantityUseCase>(),
+        ));
+    gh.factory<_i643.CheckoutCubit>(() => _i643.CheckoutCubit(
+          gh<_i192.CashPaymentUseCase>(),
+          gh<_i406.CreditCardPaymentUseCase>(),
+          gh<_i187.DeleteProductToCartUseCase>(),
+          gh<_i110.GetProfileDataUseCase>(),
         ));
     gh.factory<_i680.ForgotPasswordCubit>(() => _i680.ForgotPasswordCubit(
           gh<_i371.ForgotPasswordUseCase>(),

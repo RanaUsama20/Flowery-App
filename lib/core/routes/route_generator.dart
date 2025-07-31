@@ -70,10 +70,7 @@ class RouteGenerator {
         );
       case Routes.appSection:
         return MaterialPageRoute(
-          builder: (_) => MultiBlocProvider(
-            providers: [BlocProvider(create: (context) => serviceLocator<CartCubit>())],
-            child: const AppSection(),
-          ),
+          builder: (_) => const AppSection(),
         );
       case Routes.home:
         return MaterialPageRoute(builder: (_) => const HomeScreen());

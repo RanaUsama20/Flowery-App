@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/base_state/base_state.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/dialogs/loading_widget.dart';
-import '../../../../core/utils/widgets/error_widget.dart';
+import '../../../../core/common/widgets/error_widget.dart';
 import '../view_model/orders/orders_cubit.dart';
 import '../view_model/orders/orders_state.dart';
 import 'build_orders_list.dart';

@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
-import 'package:flowery_app/core/utils/widgets/card.dart';
+import 'package:flowery_app/core/common/widgets/product_card_app_widget.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -184,13 +184,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               );
             },
-            child: ProductCard.createProductCard(
-              products[index].imgCover.toString(),
-              products[index].title.toString(),
-              products[index].priceAfterDiscount?.toInt() ?? 0,
-              products[index].price?.toInt() ?? 0,
-              products[index].discount?.toInt() ?? 0,
-              onAddToCart: () {},
+            child: ProductCardAppWidget(
+              imageProduct: products[index].imgCover.toString(),
+              title: products[index].title.toString(),
+              price: products[index].priceAfterDiscount?.toInt() ?? 0,
+              oldPrice: products[index].price?.toInt() ?? 0,
+              discount: products[index].discount?.toInt() ?? 0,
               productId: products[index].id.toString(),
             ),
           );
@@ -234,13 +233,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
           ),
-          itemBuilder: (context, index) => ProductCard.createProductCard(
-            imageDummy,
-            "Hello User",
-            32,
-            35,
-            30,
-            onAddToCart: () {},
+          itemBuilder: (context, index) => ProductCardAppWidget(
+            imageProduct: imageDummy,
+            title: "Hello User",
+            discount: 32,
+            oldPrice: 35,
+            price: 30,
             productId: '',
           ),
         ),

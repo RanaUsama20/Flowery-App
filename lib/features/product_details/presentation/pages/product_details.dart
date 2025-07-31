@@ -166,49 +166,16 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Column(
                 children: [
                   Expanded(child: SizedBox()),
-                  BlocProvider(
-                    create: (context) => serviceLocator<CartCubit>(),
-                    child: BlocConsumer<CartCubit, CartState>(
-                      builder: (context, state) {
-                        final cartCubit = context.read<CartCubit>();
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              cartCubit.addProductToCart(product.id.toString(), 1);
-                            },
-                            style:
-                                AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
-                              minimumSize:
-                                  WidgetStatePropertyAll(Size(double.infinity, 48)),
-                            ),
-                            child: Text(LocaleKeys.Home_AddToCart.tr()),
-                          ),
-                        );
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // cartCubit.addProductToCart(product.id.toString(), 1);
                       },
-                      listener: (BuildContext context, CartState state) {
-                        if (state is CartSuccessState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: AppColors.green,
-                              content: Text(
-                                state.productCart.message.toString(),
-                                style: AppTheme.lightTheme.textTheme.labelSmall,
-                              ),
-                            ),
-                          );
-                        } else if (state is CartErrorState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              backgroundColor: AppColors.red,
-                              content: Text(
-                                LocaleKeys.Error_SoldOut.tr(),
-                                style: AppTheme.lightTheme.textTheme.labelSmall,
-                              ),
-                            ),
-                          );
-                        }
-                      },
+                      style: AppTheme.lightTheme.elevatedButtonTheme.style?.copyWith(
+                        minimumSize: WidgetStatePropertyAll(Size(double.infinity, 48)),
+                      ),
+                      child: Text(LocaleKeys.Home_AddToCart.tr()),
                     ),
                   ),
                 ],

@@ -5,7 +5,7 @@ import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/routes/routes.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
-import 'package:flowery_app/core/utils/widgets/error_widget.dart';
+import 'package:flowery_app/core/common/widgets/error_widget.dart';
 import 'package:flowery_app/features/categories/presentation/view/categories_screen.dart';
 import 'package:flowery_app/features/categories/presentation/view_model/categories_cubit.dart';
 import 'package:flowery_app/features/home/domain/entity/home_entity.dart';

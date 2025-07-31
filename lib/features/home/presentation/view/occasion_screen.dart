@@ -3,10 +3,8 @@ import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/common/screen/empty_screen.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
 import 'package:flowery_app/core/di/service_locator.dart';
-import 'package:flowery_app/core/dialogs/app_dialogs.dart';
-import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/extentions/media_query_extensions.dart';
-import 'package:flowery_app/core/utils/widgets/card.dart';
+import 'package:flowery_app/core/common/widgets/product_card_app_widget.dart';
 import 'package:flowery_app/features/home/domain/entity/prodect_entity.dart';
 import 'package:flowery_app/features/home/presentation/view_model/occasions/occasions_cubit.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
@@ -14,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../core/routes/routes.dart';
-import '../../../../core/theme/app_theme.dart';
-import '../../../cart/presentation/view_model/cart_cubit.dart';
 import '../../../product_details/presentation/models/product_details_model.dart';
 
 class OccasionScreen extends StatefulWidget {
@@ -134,57 +130,13 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
                 ),
               );
             },
-            child: BlocProvider(
-              create: (context) => serviceLocator<CartCubit>(),
-              child: BlocConsumer<CartCubit, CartState>(
-                builder: (context, state) {
-                  final cartCubit = context.read<CartCubit>();
-                  return ProductCard.createProductCard(
-                    products[index].imgCover.toString(),
-                    products[index].title.toString(),
-                    products[index].priceAfterDiscount.toInt(),
-                    products[index].price.toInt(),
-                    products[index].discount.toInt(),
-                    onAddToCart: () {
-                      if (_appCubit.getStateUser == StateUser.guest) {
-                        AppDialogs.showLoginDialog(
-                          context,
-                          message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature.tr(),
-                        );
-                      } else {
-                        cartCubit.addProductToCart(
-                          products[index].id.toString(),
-                          1,
-                        );
-                      }
-                    },
-                    productId: products[index].id.toString(),
-                  );
-                },
-                listener: (BuildContext context, CartState state) {
-                  if (state is CartSuccessState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: AppColors.green,
-                        content: Text(
-                          state.productCart.message.toString(),
-                          style: AppTheme.lightTheme.textTheme.labelSmall,
-                        ),
-                      ),
-                    );
-                  } else if (state is CartErrorState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        backgroundColor: AppColors.red,
-                        content: Text(
-                          LocaleKeys.Error_SoldOut.tr(),
-                          style: AppTheme.lightTheme.textTheme.labelSmall,
-                        ),
-                      ),
-                    );
-                  }
-                },
-              ),
+            child: ProductCardAppWidget(
+              imageProduct: products[index].imgCover,
+              title: products[index].title,
+              price: products[index].price.toInt(),
+              oldPrice: products[index].priceAfterDiscount.toInt(),
+              discount: products[index].discount.toInt(),
+              productId: products[index].id.toString(),
             ),
           );
         },
@@ -203,13 +155,12 @@ class _OccasionScreenState extends State<OccasionScreen> with TickerProviderStat
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
           ),
-          itemBuilder: (context, index) => ProductCard.createProductCard(
-            imageDummy,
-            "Hello User",
-            32,
-            35,
-            30,
-            onAddToCart: () {},
+          itemBuilder: (context, index) => ProductCardAppWidget(
+            imageProduct: imageDummy,
+            title: "Hello User",
+            discount: 32,
+            oldPrice: 35,
+            price: 30,
             productId: '',
           ),
         ),

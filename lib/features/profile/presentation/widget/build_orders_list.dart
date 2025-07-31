@@ -3,7 +3,7 @@ import 'package:flowery_app/features/profile/presentation/widget/order_card.dart
 import 'package:flowery_app/generated/locale_keys.g.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/utils/widgets/error_widget.dart';
+import '../../../../core/common/widgets/error_widget.dart';
 import '../../domain/entity/orders/orders_entity.dart';
 
 class BuildOrdersList extends StatelessWidget {

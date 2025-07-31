@@ -14,25 +14,25 @@ abstract class CartRetrofitClient {
   @factoryMethod
   factory CartRetrofitClient(Dio dio) = _CartRetrofitClient;
   @GET(ApiConstants.cart)
-  Future<CartModel> getProductToCart(
+  Future<CartResponseModelDto> getProductToCart(
     @Header("Authorization") String token,
   );
 
   @POST(ApiConstants.addToCart)
-  Future<CartModel> addProductToCart(
+  Future<CartResponseModelDto> addProductToCart(
     @Header("Authorization") String token,
     @Body() Map<String, dynamic> body,
   );
 
   @PUT("${ApiConstants.cart}{id}")
-  Future<CartModel> updateProductQuantity(
+  Future<CartResponseModelDto> updateProductQuantity(
     @Header("Authorization") String token,
     @Path("id") String productId,
     @Body() Map<String, dynamic> body,
   );
 
   @DELETE("${ApiConstants.deleteCart}{id}")
-  Future<CartModel> deleteProductToCart(
+  Future<CartResponseModelDto> deleteProductToCart(
     @Header("Authorization") String token,
     @Path("id") String cartItemId,
   );

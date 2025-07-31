@@ -1,9 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/enum/state_user.dart';
 import 'package:flowery_app/core/routes/routes.dart';
-import 'package:flowery_app/core/utils/widgets/card.dart';
+import 'package:flowery_app/core/common/widgets/product_card_app_widget.dart';
 import 'package:flowery_app/features/home/presentation/view/occasion_screen.dart';
 import 'package:flowery_app/features/home/presentation/view_model/best_seller/best_seller_cubit.dart';
 import 'package:flowery_app/generated/locale_keys.g.dart';
@@ -12,13 +11,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../core/base_state/base_state.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/dialogs/app_dialogs.dart';
 import '../../../../core/network/common/api_result.dart';
-import '../../../../core/theme/app_theme.dart';
-import '../../../../core/utils/widgets/error_widget.dart';
-import '../../../cart/presentation/view_model/cart_cubit.dart';
+import '../../../../core/common/widgets/error_widget.dart';
 import '../../domain/entity/best_seller_response_entity.dart';
 import '../view_model/best_seller/best_seller_state.dart';
 
@@ -91,57 +87,13 @@ class _BestSellerBodyState extends State<BestSellerBody> {
                           .read<BestSellerCubit>()
                           .doIntent(ProductSelectedAction(bestSellerItem));
                     },
-                    child: BlocProvider(
-                      create: (context) => serviceLocator<CartCubit>(),
-                      child: BlocConsumer<CartCubit, CartState>(
-                        builder: (context, state) {
-                          final cartCubit = context.read<CartCubit>();
-                          return ProductCard.createProductCard(
-                            bestSellerItem.imgCover,
-                            bestSellerItem.title,
-                            bestSellerItem.priceAfterDiscount,
-                            bestSellerItem.price,
-                            bestSellerItem.discount,
-                            quantity: bestSellerItem.quantity,
-                            onAddToCart: () {
-                              if (_appCubit.getStateUser == StateUser.guest) {
-                                AppDialogs.showLoginDialog(
-                                  context,
-                                  message: LocaleKeys.Error_YouHaveToLoginToUseThisFeature
-                                      .tr(),
-                                );
-                              } else {
-                                cartCubit.addProductToCart(
-                                    bestSellerItem.id.toString(), 1);
-                              }
-                            },
-                            productId: bestSellerItem.id.toString(),
-                          );
-                        },
-                        listener: (BuildContext context, CartState state) {
-                          if (state is CartSuccessState) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: AppColors.green,
-                                content: Text(
-                                  state.productCart.message.toString(),
-                                  style: AppTheme.lightTheme.textTheme.labelSmall,
-                                ),
-                              ),
-                            );
-                          } else if (state is CartErrorState) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                backgroundColor: AppColors.red,
-                                content: Text(
-                                  LocaleKeys.Error_SoldOut.tr(),
-                                  style: AppTheme.lightTheme.textTheme.labelSmall,
-                                ),
-                              ),
-                            );
-                          }
-                        },
-                      ),
+                    child: ProductCardAppWidget(
+                      imageProduct: bestSellerItem.imgCover,
+                      title: bestSellerItem.title,
+                      price: bestSellerItem.price,
+                      oldPrice: bestSellerItem.priceAfterDiscount,
+                      discount: bestSellerItem.discount,
+                      productId: bestSellerItem.id.toString(),
                     ),
                   );
                 },
@@ -165,13 +117,12 @@ class _BestSellerBodyState extends State<BestSellerBody> {
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
         ),
-        itemBuilder: (context, index) => ProductCard.createProductCard(
-          imageDummy,
-          "Hello User",
-          32,
-          35,
-          30,
-          onAddToCart: () {},
+        itemBuilder: (context, index) => ProductCardAppWidget(
+          imageProduct: imageDummy,
+          title: "Hello User",
+          discount: 32,
+          oldPrice: 35,
+          price: 30,
           productId: '',
         ),
       ),

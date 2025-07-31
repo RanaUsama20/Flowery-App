@@ -10,7 +10,6 @@ import 'package:flowery_app/core/utils/app_shared_preference.dart';
 import 'package:geocoding/geocoding.dart';
 
 import 'package:injectable/injectable.dart';
-import 'package:location/location.dart';
 part 'app_cubit_state.dart';
 
 @singleton

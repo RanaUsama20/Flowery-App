@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flowery_app/features/cart/presentation/view_model/cart_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,8 +14,6 @@ import 'core/routes/routes.dart';
 import 'core/theme/app_theme.dart';
 import 'core/utils/app_shared_preference.dart';
 import 'core/utils/bloc_observer.dart';
-import 'features/cart/presentation/view_model/cart_cubit.dart';
-import 'features/profile/presentation/view_model/profile_main/profile_main_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -109,14 +108,11 @@ class _MyAppState extends State<MyApp> {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ProfileMainCubit>(
-          create: (_) => serviceLocator<ProfileMainCubit>()..getProfileData(),
-        ),
         BlocProvider<AppCubit>(
           create: (_) => serviceLocator<AppCubit>(),
         ),
         BlocProvider<CartCubit>(
-          create: (context) => serviceLocator<CartCubit>(),
+          create: (_) => serviceLocator<CartCubit>()..getProductToCart(),
         ),
       ],
       child: MaterialApp(
