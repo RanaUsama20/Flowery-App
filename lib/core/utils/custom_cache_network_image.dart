@@ -22,7 +22,7 @@ class CustomCacheNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget image = CachedNetworkImage(
+    final Widget image = CachedNetworkImage(
       imageUrl: imageUrl,
       fit: fit,
       width: width,

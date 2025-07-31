@@ -47,7 +47,6 @@ class CartCubit extends Cubit<CartState> {
       updatingProductIds: {...state.updatingProductIds, cartItemId},
     ));
     final result = await _updateProduct.call(cartItemId, quantity);
-
     switch (result) {
       case SuccessResult<CartModelEntity>():
         final updatedSet = Set<String>.from(state.updatingProductIds)..remove(cartItemId);
@@ -67,15 +66,13 @@ class CartCubit extends Cubit<CartState> {
   Future<void> deleteProduct(String cartItemId) async {
     emit(state.copyWith(
       deleteProductStatus: Status.loading,
-      mangeAddToCartStatus: Status.loading,
     ));
     final result = await _deleteProduct.call(cartItemId);
     switch (result) {
       case SuccessResult<CartModelEntity>():
         emit(state.copyWith(
           deleteProductStatus: Status.success,
-          mangeAddToCartStatus: Status.success,
-          cartModelEntity: result.data,
+          // cartModelEntity: result.data,
         ));
       case FailureResult<CartModelEntity>():
         emit(state.copyWith(

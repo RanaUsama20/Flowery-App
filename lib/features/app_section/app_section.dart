@@ -24,31 +24,45 @@ class AppSection extends StatefulWidget {
 }
 
 class _AppSectionState extends State<AppSection> {
+  late final Widget _homePage;
+  late final HomeCubit _homeCubit;
+  late final Widget _profilePage;
+  late final ProfileMainCubit _profileMainCubit;
+  late List<Widget> _pages;
   int _currentIndex = 0;
-  final List<Widget> _pages = [
-    BlocProvider<HomeCubit>(
-      create: (context) => serviceLocator.get<HomeCubit>(),
+
+  @override
+  void initState() {
+    super.initState();
+    _homeCubit = serviceLocator.get<HomeCubit>()..getHomeData();
+    _profileMainCubit = serviceLocator.get<ProfileMainCubit>()..getProfileData();
+    _homePage = BlocProvider<HomeCubit>(
+      create: (_) => _homeCubit,
       child: const HomeScreen(),
-    ),
-    BlocProvider<CategoriesCubit>(
-      create: (context) => serviceLocator.get<CategoriesCubit>(),
-      child: const CategoriesScreen(),
-    ),
-    const CartScreen(),
-    BlocProvider<ProfileMainCubit>(
-      create: (context) => serviceLocator<ProfileMainCubit>()..getProfileData(),
+    );
+    _profilePage = BlocProvider<ProfileMainCubit>(
+      create: (_) => _profileMainCubit,
       child: const ProfileScreen(),
-    ),
-  ];
+    );
+    _pages = [
+      _homePage,
+      BlocProvider<CategoriesCubit>(
+        create: (context) => serviceLocator.get<CategoriesCubit>(),
+        child: const CategoriesScreen(),
+      ),
+      BlocProvider<CartCubit>(
+        create: (context) => serviceLocator.get<CartCubit>(),
+        child: CartScreen(),
+      ),
+      _profilePage,
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: IndexedStack(
-          index: _currentIndex,
-          children: _pages,
-        ),
+        child: _pages[_currentIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,

@@ -106,15 +106,8 @@ class _MyAppState extends State<MyApp> {
       return const Center(child: CircularProgressIndicator());
     }
 
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AppCubit>(
-          create: (_) => serviceLocator<AppCubit>(),
-        ),
-        BlocProvider<CartCubit>(
-          create: (_) => serviceLocator<CartCubit>()..getProductToCart(),
-        ),
-      ],
+    return BlocProvider<AppCubit>(
+      create: (context) => serviceLocator<AppCubit>(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: context.localizationDelegates,

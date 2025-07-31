@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/app/app_cubit/app_cubit_cubit.dart';
 import 'package:flowery_app/core/base_state/base_state.dart';
@@ -30,7 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<HomeCubit>().getHomeData();
+    log("Home Screen!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    // context.read<HomeCubit>().getHomeData();
     context.read<AppCubit>().getLocation();
   }
 

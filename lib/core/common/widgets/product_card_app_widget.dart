@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flowery_app/core/constants/app_colors.dart';
+import 'package:flowery_app/core/di/service_locator.dart';
 import 'package:flowery_app/core/utils/custom_cache_network_image.dart';
 import 'package:flowery_app/features/cart/presentation/view_model/cart_cubit.dart';
 import 'package:flutter/material.dart';
@@ -111,7 +112,10 @@ class _ProductCardAppWidgetState extends State<ProductCardAppWidget> {
                       ],
                     ),
                     const SizedBox(height: 8),
-                    ActionButton(productId: widget.productId),
+                    BlocProvider(
+                      create: (context) => serviceLocator<CartCubit>(),
+                      child: ActionButton(productId: widget.productId),
+                    ),
                   ],
                 ),
               ),
@@ -123,9 +127,19 @@ class _ProductCardAppWidgetState extends State<ProductCardAppWidget> {
   }
 }
 
-class ActionButton extends StatelessWidget {
+class ActionButton extends StatefulWidget {
   const ActionButton({super.key, required this.productId});
   final String productId;
+
+  @override
+  State<ActionButton> createState() => _ActionButtonState();
+}
+
+class _ActionButtonState extends State<ActionButton> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,16 +149,12 @@ class ActionButton extends StatelessWidget {
           previous.loadingProductIds != current.loadingProductIds,
       builder: (context, state) {
         final cubit = context.read<CartCubit>();
-        final isLoading = state.isProductLoading(productId);
-        final inCart = cubit.checkProductInCart(productId);
         return SizedBox(
           height: 30,
           child: ElevatedButton(
-            key: ValueKey(productId),
+            key: ValueKey(widget.productId),
             style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-                  backgroundColor: inCart
-                      ? WidgetStatePropertyAll(AppColors.green)
-                      : WidgetStatePropertyAll(AppColors.pink),
+                  backgroundColor: WidgetStatePropertyAll(AppColors.pink),
                   shape: WidgetStatePropertyAll(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -153,13 +163,13 @@ class ActionButton extends StatelessWidget {
                   padding: WidgetStatePropertyAll(EdgeInsets.all(6)),
                 ),
             onPressed: () async {
-              await cubit.mangeAddToCart(productId);
+              await cubit.mangeAddToCart(widget.productId);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                isLoading
+                state.mangeAddCartIsLoading
                     ? SizedBox(
                         width: 12,
                         height: 12,
@@ -171,7 +181,7 @@ class ActionButton extends StatelessWidget {
                     : Icon(Icons.shopping_cart_outlined, size: 16, color: Colors.white),
                 SizedBox(width: 12),
                 Text(
-                  cubit.checkProductInCart(productId)
+                  cubit.checkProductInCart(widget.productId)
                       ? 'Remove'
                       : LocaleKeys.Home_AddToCart.tr(),
                   style: Theme.of(context)
