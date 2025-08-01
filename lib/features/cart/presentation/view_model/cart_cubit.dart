@@ -72,7 +72,7 @@ class CartCubit extends Cubit<CartState> {
       case SuccessResult<CartModelEntity>():
         emit(state.copyWith(
           deleteProductStatus: Status.success,
-          // cartModelEntity: result.data,
+          cartModelEntity: result.data,
         ));
       case FailureResult<CartModelEntity>():
         emit(state.copyWith(

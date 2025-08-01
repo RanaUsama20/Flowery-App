@@ -37,9 +37,7 @@ class _CartScreenState extends State<CartScreen> {
               child: Column(
                 children: [
                   TopSectionCart(numOfCartItems: state.cartModelEntity.numOfCartItems),
-                  ListCartItems(
-                    products: state.cartModelEntity.cart.cartItems,
-                  ),
+                  ListCartItems(products: state.cartModelEntity.cart.cartItems),
                   SizedBox(height: 200),
                 ],
               ),
@@ -146,40 +144,51 @@ class ListCartItems extends StatefulWidget {
 
 class _ListCartItemsState extends State<ListCartItems> {
   final listKey = GlobalKey<AnimatedListState>();
+  late List<CartItemsEntity> productsItems;
+  @override
+  void initState() {
+    super.initState();
+    productsItems = List.from(widget.products);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return widget.products.isEmpty
+    return productsItems.isEmpty
         ? EmptyScreen()
         : Expanded(
             child: AnimatedList(
               key: listKey,
-              initialItemCount: widget.products.length,
+              initialItemCount: productsItems.length,
               itemBuilder: (context, index, animation) => CartItemWidget(
                 animation: animation,
-                packageProduct: widget.products[index],
+                packageProduct: productsItems[index],
                 index: index,
                 onClickProduct: () {},
-                onTapDelete: () async {
-                  final removedItem = widget.products[index];
-                  final removedProductId = removedItem.product.id;
-                  widget.products.removeAt(index);
-                  listKey.currentState?.removeItem(
-                    index,
-                    (context, animation) => CartItemWidget(
-                      packageProduct: removedItem,
-                      animation: animation,
-                      index: index,
-                      onClickProduct: () {},
-                      onTapDelete: () {},
-                    ),
-                    duration: const Duration(milliseconds: 600),
-                  );
-                  // await context.read<CartCubit>().deleteProduct(removedProductId);
-                  // await context.read<CartCubit>().deleteProduct(removedProductId);
-                },
+                onTapDelete: () => removeItem(index),
               ),
             ),
           );
+  }
+
+  void removeItem(int index) async {
+    final removedItem = productsItems[index];
+    final removedProductId = removedItem.product.id;
+    productsItems.removeAt(index);
+    listKey.currentState?.removeItem(
+      index,
+      (context, animation) => CartItemWidget(
+        packageProduct: removedItem,
+        animation: animation,
+        index: index,
+        onClickProduct: () {},
+        onTapDelete: () {},
+      ),
+      duration: const Duration(milliseconds: 600),
+    );
+    if (productsItems.isEmpty) {
+      context.read<CartCubit>().getProductToCart();
+    }
+    await context.read<CartCubit>().deleteProduct(removedProductId);
   }
 }
 
